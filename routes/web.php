@@ -25,7 +25,7 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();
 
-Route::get('/frontoffice/client/edit/', 'FrontofficeController@editClient');
+Route::get('/frontoffice/client/edit/{id}', 'FrontofficeController@editClient');
 Route::get('/frontoffice/client', 'FrontofficeController@showClient');
 Route::post('/frontoffice/editclient/', 'FrontofficeController@postEditClient');
 Route::get('/frontoffice/documents/', 'FrontofficeController@documents');
