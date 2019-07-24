@@ -1,0 +1,99 @@
+@import "../style.css";
+
+body {
+  background-color: var(--main-color);
+}
+
+.login-container {
+  margin-top: 10%;
+}
+
+@media (max-width: 991px) {
+  .login-container {
+    margin-top: 35%;
+  }
+}
+
+.logo {
+  margin: 0 auto;
+  margin-bottom: 35px;
+  width: 150px;
+}
+
+.input-group {
+  margin: 0 auto;
+}
+
+.input-group-addon {
+  background-color: var(--main-color);
+}
+
+.login-btn {
+  width: 100%;
+  background-color: var(--secondary-green);
+  color: #fff;
+}
+
+/* Checkbox */
+
+.login-checkbox {
+  position: relative;
+  padding-left: 30px;
+  cursor: pointer;
+  user-select: none;
+  color: #fff;
+}
+
+.login-checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  border: 1px solid #fff;
+  border-radius: 15%;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.login-checkbox input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.login-checkbox .checkmark:after {
+  left: 7px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: 1px solid var(--secondary-green);
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+/* final checkbox */
+
+.login-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.7);
+  padding-top: 15px;
+  display: flex;
+}
+
+.login-bottom .login-checkbox {
+  flex: 1 1 auto;
+}
+
+.login-bottom a {
+  color: var(--secondary-green);
+}
