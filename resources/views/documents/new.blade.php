@@ -15,7 +15,7 @@
                             </div>
 
                             <div class="form-group">
-                                Vendedor: <select class="form-control" name="type">
+                                Super Tipo: <select class="form-control" name="type">
                                     @foreach($types as $type)
                                         <option value="{{$type->id}}">{{$type->name}}</option>
                                     @endforeach
