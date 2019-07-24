@@ -1,0 +1,40 @@
+@import "../style.css";
+
+body {
+  background-color: var(--main-color);
+}
+
+.index-box {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.box {
+  flex: 25%;
+  max-width: 25%;
+  padding: 10px 15px;
+}
+
+.box img {
+  margin-top: 8px;
+  vertical-align: middle;
+  width: 100%;
+}
+
+.desc {
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 14px;
+  text-align: center;
+}
+
+@media screen and (max-width: 800px) {
+  .index-box {
+    justify-content: center;
+  }
+
+  .box {
+    flex: 40%;
+    max-width: 40%;
+  }
+}
