@@ -12,6 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
 
     @yield('styles')
 
@@ -24,26 +25,21 @@
 
                     <!-- Collapsed Hamburger -->
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse" aria-expanded="false">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
+                        <img style="height: 20px;" src="{{ URL::to('/') }}/img/navbar/iconmenu.png" alt="menu">
                     </button>
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/home') }}">
-                        <img style="margin-top:-10px;width:75px" src="{{ URL::to('/') }}/img/regolfood.png">
+                        <img src="{{ URL::to('/') }}/img/navbar/logoindexcolor.png" alt="logo">
                     </a>
-                  <a href="/frontoffice/cart"><img style="margin-left:25px;margin-top:10px;width:30px" src="{{ URL::to('/') }}/img/cart.png"></a>&nbsp &nbsp(<span style="margin-top:20px" id="cartvalue"></span>€)
 
+                    <a class="navbar-cart" href="/frontoffice/cart">
+                        <img src="{{ URL::to('/') }}/img/navbar/carrinhocompras.png" alt="carrinho de compras">
+                    </a><span id="cartvalue">(€)</span>
+                    
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
-                    </ul>
-
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->

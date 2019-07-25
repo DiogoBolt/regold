@@ -1,9 +1,5 @@
 @import "../style.css";
 
-body {
-  background-color: var(--main-color);
-}
-
 .index-box {
   display: flex;
   flex-flow: row wrap;
@@ -36,5 +32,9 @@ body {
   .box {
     flex: 40%;
     max-width: 40%;
+  }
+
+  .desc {
+    font-size: 12px;
   }
 }

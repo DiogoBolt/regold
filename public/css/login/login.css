@@ -1,9 +1,5 @@
 @import "../style.css";
 
-body {
-  background-color: var(--main-color);
-}
-
 .login-container {
   margin-top: 10%;
 }

@@ -1,16 +1,52 @@
 * {border-radius: 0;}
 
+/* Manel additions */
 :root {
     --main-color: #9ac266; 
     --secondary-green: darkgreen;
 }
+
+.navbar-header {
+    display: flex;
+}
+
+.navbar-toggle {
+    float: left;
+    border: 0;
+    border-right:  2px solid #ddd;
+    border-radius: 0;
+}
+
+.navbar-brand img {
+    margin-top:-4px; 
+    margin-left:-10px; 
+    width:75px;
+}
+
+.navbar-cart {
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+.navbar-cart img {
+    margin-top:15px;
+    width:25px;
+}
+
+#cartvalue {
+    margin-top: 17px;
+    margin-left: -5px;
+    margin-right: 10px;
+}
+
+/* end */
 
 body,
 html {
   height: 100%;
 }
 
-body {color: #333; font-size: 13px; line-height: 1.6;}
+body {background-color: var(--main-color); color: #333; font-size: 13px; line-height: 1.6;}
 body.header-fixed-space {padding-top: 94px;}
 body.header-fixed-space-v2 {padding-top: 135px;}
 
