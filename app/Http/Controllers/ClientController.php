@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
-use App\Client;
+use App\Customer;
 use App\DocumentSuperType;
 use App\DocumentType;
 use App\Group;
@@ -42,7 +42,7 @@ class ClientController extends Controller
         $user = Auth::user();
         if($user->sales_id == null)
         {
-            $clients = Client::from(Client::alias('c'))
+            $clients = Customer::from(Customer::alias('c'))
                 ->leftJoin(Group::alias('g'), 'c.group_id', '=', 'g.id')
                 ->select([
                     'c.id',
@@ -52,7 +52,7 @@ class ClientController extends Controller
                 ])->get();
         }else{
 
-            $clients = Client::from(Client::alias('c'))
+            $clients = Customer::from(Customer::alias('c'))
                 ->leftJoin(Group::alias('g'), 'c.group_id', '=', 'g.id')
                 ->where('c.salesman',$user->sales_id)
                 ->select([
@@ -68,7 +68,7 @@ class ClientController extends Controller
     }
 
 
-    public function newClient()
+    public function newCustomer()
     {
         $groups = Group::all();
         $salesman = Salesman::all();
@@ -76,11 +76,11 @@ class ClientController extends Controller
         return view('client.new',compact('groups','salesman'));
     }
 
-    public function addClient(Request $request)
+    public function addCustomer(Request $request)
     {
         $inputs = $request->all();
 
-        $client = new Client;
+        $client = new Customer;
 
         $client->name = $inputs['name'];
         $client->address = $inputs['address'];
@@ -108,7 +108,7 @@ class ClientController extends Controller
         $user->save();
 
 
-        $clients = Client::all();
+        $clients = Customer::all();
 
         return view('client.index',compact('clients'));
     }
@@ -144,10 +144,10 @@ class ClientController extends Controller
     }
 
 
-    public function showClient($id)
+    public function showCustomer($id)
     {
 
-        $client = Client::where('id',$id)->first();
+        $client = Customer::where('id',$id)->first();
         $group = Group::where('id',$client->group_id)->first();
         $types = DocumentType::all();
 
@@ -162,7 +162,7 @@ class ClientController extends Controller
     {
         $inputs = $request->all();
 
-        if($request->hasfile('receipt') and Client::where('id',$inputs['client'])->first() != null)
+        if($request->hasfile('receipt') and Customer::where('id',$inputs['client'])->first() != null)
         {
             $receipt = new Receipt;
 
@@ -172,7 +172,7 @@ class ClientController extends Controller
             $type = DocumentType::where('id',$inputs['type'])->first()->name;
 
             $file = $request->file('receipt');
-            $extension = $file->getClientOriginalExtension(); // getting image extension
+            $extension = $file->getCustomerOriginalExtension(); // getting image extension
             $filename =$type . date('Y-m-d').'.'.$extension;
             $file->move('uploads/'.$inputs['client'].'/', $filename);
 
@@ -245,7 +245,7 @@ class ClientController extends Controller
         $user = Auth::user();
         if($user->sales_id == null)
         {
-            $clients = Client::from(Client::alias('c'))
+            $clients = Customer::from(Customer::alias('c'))
                 ->leftJoin(Group::alias('g'), 'c.group_id', '=', 'g.id')
                 ->where('g.id',$id)
                 ->select([
@@ -256,7 +256,7 @@ class ClientController extends Controller
                 ])->get();
         }else{
 
-            $clients = Client::from(Client::alias('c'))
+            $clients = Customer::from(Customer::alias('c'))
                 ->leftJoin(Group::alias('g'), 'c.group_id', '=', 'g.id')
                 ->where('c.salesman',$user->sales_id)
                 ->where('g.id',$id)

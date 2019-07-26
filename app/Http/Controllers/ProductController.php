@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Cart;
 use App\Category;
-use App\Client;
+use App\Customer;
 use App\DocumentType;
 use App\Group;
 use App\Message;
@@ -169,7 +169,7 @@ class ProductController extends Controller
             $orders = Order::all();
         }else{
             $orders = Order::from(Order::alias('o'))
-                ->leftJoin(Client::alias('c'), 'o.client_id', '=', 'c.id')
+                ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
                 ->where('c.salesman',$user->sales_id)
                 ->get();
         }

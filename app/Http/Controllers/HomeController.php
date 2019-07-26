@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Client;
+use App\Customer;
 use App\DocumentType;
 use App\Group;
 use App\Receipt;
@@ -29,7 +29,7 @@ class HomeController extends Controller
         if($user)
         {
             if($user->client_id != null) {
-                $client = Client::where('id', $user->client_id)->first();
+                $client = Customer::where('id', $user->client_id)->first();
                 $group = Group::where('id',$client->group_id)->first();
                 $types = DocumentType::all();
 

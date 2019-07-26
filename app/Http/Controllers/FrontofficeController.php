@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Cart;
 use App\Category;
-use App\Client;
+use App\Customer;
 use App\DocumentSuperType;
 use App\DocumentType;
 use App\Group;
@@ -17,6 +17,8 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use GuzzleHttp\Client;
+
 
 class FrontofficeController extends Controller
 {
@@ -30,10 +32,10 @@ class FrontofficeController extends Controller
         $this->middleware('auth');
     }
 
-    public function showClient()
+    public function showCustomer()
     {
         $user = Auth::user();
-        $client = Client::where('id',$user->client_id)->first();
+        $client = Customer::where('id',$user->client_id)->first();
 
         $group = Group::where('id',$client->group_id)->first();
         return view('frontoffice.show',compact('client','group'));
@@ -42,7 +44,7 @@ class FrontofficeController extends Controller
     public function editClient()
     {
         $user = Auth::user();
-        $client = Client::where('id',$user->client_id)->first();
+        $client = Customer::where('id',$user->client_id)->first();
         return view('frontoffice.edit',compact('client'));
     }
 
@@ -50,7 +52,7 @@ class FrontofficeController extends Controller
     {
 
         $inputs = $request->all();
-        $client = Client::where('id',$inputs['id'])->first();
+        $client = Customer::where('id',$inputs['id'])->first();
 
         $client->address = $inputs['address'];
         $client->city = $inputs['city'];
@@ -70,7 +72,7 @@ class FrontofficeController extends Controller
     public function documents()
     {
         $user = Auth::user();
-        $client = Client::where('id',$user->client_id)->first();
+        $client = Customer::where('id',$user->client_id)->first();
 
         $group = Group::where('id',$client->group_id)->first();
         $types = DocumentType::all();
@@ -84,7 +86,7 @@ class FrontofficeController extends Controller
     public function documentsByType($type)
     {
         $user = Auth::user();
-        $client = Client::where('id',$user->client_id)->first();
+        $client = Customer::where('id',$user->client_id)->first();
 
 
         $receipts = Receipt::from(Receipt::alias('r'))
@@ -246,13 +248,21 @@ class FrontofficeController extends Controller
         $order->totaliva = $totaliva;
         $order->processed = 0;
 
+        $response =  $this->processPayment($cart,$order);
+
+        return redirect($response['url_redirect']);
+
         $order->save();
+
+
         $cart->processed = 1;
         $cart->save();
 
+
+
         $orders = Order::where('client_id',$user->client_id)->get();
 
-        return view('frontoffice.orders',compact('orders'));
+
 
     }
 
@@ -333,5 +343,83 @@ class FrontofficeController extends Controller
         }
 
         return view('frontoffice.messages',compact('messages'));
+    }
+
+
+
+    private function processPayment($cart,$order){
+
+        $orderlines = OrderLine::where('cart_id',$cart->id)->get();
+        $user = Auth::user();
+        $customer = Customer::where('id',$user->client_id)->first();
+
+        foreach($orderlines as $orderline)
+        {
+            $product = Product::where('id',$orderline->product_id)->first();
+            $orderline->name = $product->name;
+            $orderline->qt = $orderline->amount;
+        }
+
+
+        $payment = [
+            'client' => ['address' => ['address' => $customer->address,'city'=>$customer->city,'country'=>'PT'], 'email' => $customer->email,'name' => $customer->name],
+            'amount' => $order->totaliva,
+                'currency' => 'EUR',
+                'items' =>$orderlines->toArray(),
+            'ext_invoiceid' => $order->id,
+            'ext_costumerid' => $order->user_id,
+        ];
+
+        $request_data = [
+            'payment' => $payment,
+            'required_fields' => [
+//                'name' => true,
+//                'email' => true,
+//                'nif' => true,
+            ],
+            'url_cancel' => 'http://www.regolfood.pt',
+            'url_confirm' => 'http://www.regolfood.pt',
+        ];
+
+
+
+        $url = 'https://services.sandbox.meowallet.pt/api/v2/checkout';
+
+        $response = $this->http($url, $request_data);
+
+        dd($response);
+
+    }
+
+    private function http($url, $data = null, $method = null){
+
+        $authToken    = '123a6ad89ac961d885f089ff4b82b57d19c3406e';
+        $headers      = [
+            'Authorization: WalletPT ' . $authToken,
+            'Content-Type: application/json'
+        ];
+        if ($method === null) {
+            $method = $data === null ? 'GET' : 'POST';
+        }
+        $request_data = null;
+        if ($data !== null) {
+            $request_data = json_encode($data);
+            $headers[] = 'Content-Length: ' . strlen($request_data);
+        }
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        if ($request_data !== null) {
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $request_data);
+        }
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        if (env('CURL_PROXY', false)) {
+            curl_setopt($ch, CURLOPT_PROXY, env('CURL_PROXY'));
+        }
+        $response = curl_exec($ch);
+
+        return json_decode($response);
     }
 }
