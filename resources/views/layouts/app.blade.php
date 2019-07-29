@@ -12,7 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
+    <link rel="stylesheet" href="css/style.css">
 
 </head>
 <body>
@@ -31,7 +31,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/clients') }}">
-                        <img style="width:50%;height:100%" src="{{ URL::to('/') }}/regoldi.jpg">
+                        <img src="{{ URL::to('/') }}/img/navbar/logoindexcolor.png" alt="logo">
                     </a>
 
                 </div>

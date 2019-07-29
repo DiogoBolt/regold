@@ -22,9 +22,8 @@
 
     <link rel="stylesheet" href="css/style.css">
 
-
 </head>
-<body class="header-fixed header-fixed-space">
+<body class="header-fixed">
 <div class="wrapper">
     <div class="header-v6 header-classic-white header-sticky">
         <div class="navbar mega-menu" role="navigation">
@@ -38,7 +37,7 @@
                     </button>
                     <div class="navbar-brand">
                         <a href="/">
-                            <img class="shrink-logo" src="img/regolfood.png" alt="Logo Regoldi">
+                            <img class="img-responsive" src="img/navbar/logoindexcolor.png" alt="Logo Regoldi">
                         </a>
                     </div>
                 </div>
@@ -54,12 +53,11 @@
         </div>
     </div>
 
-    <div style="width: 100%; height: 500px;">
-        <div>
-            <img src="img/fabrica.jpg" class="ls-bg" alt="Slide background">
-        </div>
+    <div class="home-background">
+        <img src="img/fabrica.jpg" class="img-responsive" alt="Slide background">
     </div>
-    <div class="container content content-sm">
+
+    <div class="container content">
         <div class="headline-center">
             <h2>A EMPRESA</h2>
             <p class="text-justify">Somos uma empresa portuguesa, especializada na comercialização de compostos químicos fortemente vocacionada para a resolução dos problemas de limpeza, desinfecção, conservação e manutenção industrial e higiene profissional, com especial relevo nas tecnologias de ponta com eficiência, rapidez e economia.

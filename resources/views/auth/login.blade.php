@@ -5,7 +5,6 @@
     <link href="{{ asset('css/login/login.css') }}" rel="stylesheet">
 @endsection
 
-
 @section('content')
 <div class="container login-container">
 
