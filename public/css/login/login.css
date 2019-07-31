@@ -30,6 +30,12 @@
   color: #fff;
 }
 
+.login-btn:hover {
+  border-color: 3px solid var(--secondary-green);
+  background-color: #fff;
+  color: var(--secondary-green);
+}
+
 /* Checkbox */
 
 .login-checkbox {
@@ -37,7 +43,7 @@
   padding-left: 30px;
   cursor: pointer;
   user-select: none;
-  color: #fff;
+  color: var(--main-color);
 }
 
 .login-checkbox input {
@@ -54,7 +60,7 @@
   left: 0;
   height: 20px;
   width: 20px;
-  border: 1px solid #fff;
+  border: 1px solid var(--main-color);
   border-radius: 15%;
 }
 
