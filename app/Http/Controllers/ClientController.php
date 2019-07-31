@@ -172,7 +172,7 @@ class ClientController extends Controller
             $type = DocumentType::where('id',$inputs['type'])->first()->name;
 
             $file = $request->file('receipt');
-            $extension = $file->getCustomerOriginalExtension(); // getting image extension
+            $extension = $file->getClientOriginalExtension(); // getting image extension
             $filename =$type . date('Y-m-d').'.'.$extension;
             $file->move('uploads/'.$inputs['client'].'/', $filename);
 
