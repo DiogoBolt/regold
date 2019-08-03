@@ -3560,6 +3560,42 @@ img.img-center,.img-center img {margin-left: auto; margin-right: auto;}
      margin-top:15px;
      width:25px;
  }
+
+ .container-bar {
+    background-color: var(--main-color);
+    height: 40px;
+    margin-top: -22px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  
+  .container-bar_txt {
+    text-transform: uppercase;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    transform: translate(10px, -50%);
+  }
+  
+  .container-bar_img {
+    width: 100px;
+    background-color: #fff;
+    height: 40px;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+    position: absolute;
+    right: 0;
+    display: inline-block;
+  }
+  
+  .container-bar_img img {
+    height: 100%;
+    display: block;
+    margin: 0 auto;
+  }
  
  #cartvalue {
      margin-top: 17px;
