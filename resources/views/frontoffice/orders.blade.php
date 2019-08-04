@@ -1,15 +1,24 @@
 @extends('layouts.frontoffice')
 
+@section('styles')
+    <!-- Custom CSS -->
+    <link href="{{ asset('css/orders/orders.css') }}" rel="stylesheet">
+@endsection
+
 @section('content')
+<div class="container-bar">
+    <p class="container-bar_txt">encomendas</p>
+    <div class="container-bar_img">
+        <img src="{{ asset('img/encomendas.jpg') }}" />
+    </div>
+</div>
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Encomendas</div>
-
+            <div class="panel">
                 <div class="panel-body">
 
-                    <table class="table table-bordered">
+                    <table class="table table-responsive">
                         <tr>
                             <th>Data</th>
                             <th>Total</th>

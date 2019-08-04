@@ -1,20 +1,29 @@
 @extends('layouts.frontoffice')
 
+@section('styles')
+    <!-- Custom CSS -->
+    <link href="{{ asset('css/orders/orders.css') }}" rel="stylesheet">
+@endsection
+
 @section('content')
+<div class="container-bar">
+    <p class="container-bar_txt">encomenda</p>
+    <div class="container-bar_img">
+        <img src="{{ asset('img/encomendas.jpg') }}" />
+    </div>
+</div>
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Encomenda</div>
-
-                <div class="panel-body">
+                <div class="panel-body table-responsive">
 
                     @if($order->processed == 1)
                         <h5 style="color:green">Processado</h5>
                     @else
                         <h5 style="color:darkorange">Em Espera</h5>
                     @endif
-                    <table class="table table-bordered">
+                    <table class="table">
                         <tr>
                             <th>Img</th>
                             <th>Nome</th>
@@ -25,7 +34,7 @@
                         </tr>
                         @foreach($line_items as $item)
                             <tr>
-                                <td><img style="height:25px;width:35px" src="/uploads/products/{{$item->product->file}}"></td>
+                                <td><img src="/uploads/products/{{$item->product->file}}"></td>
                                 <td>{{$item->product->name}}</td>
                                 <td>{{$item->amount}}</td>
                                 <td>{{$item->total/$item->amount}}€</td>
