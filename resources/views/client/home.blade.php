@@ -34,10 +34,21 @@
         <div class="desc">PAGAMENTOS</div>
     </div>
 
-    <i class="box" aria-hidden="true"></i>
+    <div class="box">
+        <a title="Produtos" href="/frontoffice/produtos"><img class="img-responsive" src="{{ URL::to('/') }}/img/produtos.jpg"></a>
+        <div class="desc">PRODUTOS</div>
+    </div>
 
-{{-- <a title="Produtos" href="/frontoffice/produtos"><img style="width:100%" src="{{ URL::to('/') }}/img/produtos.jpg"></a>
-<a title="Mensagens" href="/frontoffice/messages"><img style="width:100%" src="{{ URL::to('/') }}/img/mensagens.jpg"></a>
-<a title="Documentos Contabilisticos" href="/frontoffice/documents/Contabilistico"><img style="width:100%" src="{{ URL::to('/') }}/img/relatorios.jpg"></a> --}}
+    <div class="box">
+        <a title="Mensagens" href="/frontoffice/messages"><img class="img-responsive" src="{{ URL::to('/') }}/img/mensagens.jpg"></a>
+        <div class="desc">MENSAGENS</div>
+    </div>
+
+    <div class="box">
+        <a title="Documentos Contabilisticos" href="/frontoffice/documents/Contabilistico"><img class="img-responsive" src="{{ URL::to('/') }}/img/relatorios.jpg"></a>
+        <div class="desc">DOCUMENTOS CONTABILISTICOS</div>
+    </div>
+
+    {{-- <i class="box" aria-hidden="true"></i> --}}
 
 @endsection
