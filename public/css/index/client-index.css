@@ -5,6 +5,7 @@
 
 .box {
   flex: 25%;
+  position: relative;
   max-width: 25%;
   padding: 10px 15px;
 }

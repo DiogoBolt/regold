@@ -3562,6 +3562,16 @@ img.img-center,.img-center img {margin-left: auto; margin-right: auto;}
      width:25px;
  }
 
+ .navbar-message {
+    position: relative;
+    margin-right: 25px;
+ }
+
+ .navbar-message img {
+    width: 25px;
+    margin-top: 19px; 
+ }
+
  .container-bar {
     background-color: var(--main-color);
     height: 40px;
@@ -3603,5 +3613,50 @@ img.img-center,.img-center img {margin-left: auto; margin-right: auto;}
      margin-left: -5px;
      margin-right: 10px;
  }
+
+ /* Notifications */
+ .notification {
+     background-color: #ff0000;
+     color: #fff;
+     width: 30px; 
+     height: 30px;
+     display: block;
+     border-radius: 50%;
+     font-size: 14px;
+     text-align: center;
+     line-height: 2;
+     position: absolute;
+     right: 10%;
+     top: 15%;
+ }
  
+.nav-msg {
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    line-height: 1.5;
+    right: -20%;
+}
+
+@media (max-width: 991px) {
+   .navbar-header {
+       display: flex;
+   }
+
+   .navbar-message {
+       flex: 1 0 auto;
+       margin-left: 15px;
+   }
+
+   .navbar-message img {
+       position: absolute;
+       right: 0;
+   }
+
+   .nav-msg {
+       right: -5%;
+   }
+}
+
+
  /*** End ***/

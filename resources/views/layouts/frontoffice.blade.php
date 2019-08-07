@@ -33,6 +33,11 @@
                         <img src="{{ URL::to('/') }}/img/navbar/logoindexcolor.png" alt="logo">
                     </a>
 
+                    <a class="navbar-message" href="#">
+                        <img src="{{ URL::to('/') }}/img/msgs.png" alt="mensagens" />
+                        <span class="notification nav-msg">69</span>
+                    </a>
+
                     <a class="navbar-cart" href="/frontoffice/cart">
                         <img src="{{ URL::to('/') }}/img/navbar/carrinhocompras.png" alt="carrinho de compras">
                     </a><span id="cartvalue">(€)</span>
