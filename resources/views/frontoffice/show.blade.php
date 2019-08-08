@@ -1,16 +1,25 @@
 @extends('layouts.frontoffice')
 
+@section('styles')
+    <!-- Custom CSS -->
+    <link href="{{ asset('css/client/client.css') }}" rel="stylesheet">
+@endsection
+
 @section('content')
+<div class="container-bar">
+    <p class="container-bar_txt">{{$client->name}}</p>
+    <div class="container-bar_img">
+        <a href="/frontoffice/client/edit/{{$client->id}}"><img src="/img/settings.png"></a>
+    </div>
+</div>
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">{{$client->name}} <div style="float:right"><a href="/frontoffice/client/edit/{{$client->id}}"><img src="/img/settings.png" style="margin-top:-7px;width:33px"></a></div></div>
-
                 <div class="panel-body">
 
-                    <div class="form-group" align="right">
-                        <b> Proxima Visita:</b> {{$group->next_visit}}
+                    <div class="col-sm-6">
+                        <img class="img-responsive edit-img" src="/img/navbar/logoindexcolor.png"/>
                     </div>
 
                     <div class="col-sm-6">
@@ -42,9 +51,6 @@
                         <div class="form-group">
                             <b> NIB:</b> {{$client->nib}}
                         </div>
-
-
-
                     </div>
 
                 </div>

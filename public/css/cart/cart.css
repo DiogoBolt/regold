@@ -82,14 +82,20 @@
 
 .btn-cart {
   float: right;
-  background-color: #9ac266;
-  text-transform: uppercase;
+  background-color: var(--main-color);
   color: #fff;
+  text-transform: uppercase;
   font-size: 14px;
   width: 250px;
   border-radius: 20px;
   padding-right: 10px;
   margin-top: 40px;
+}
+
+.btn-cart:hover {
+  border-color: 3px solid var(--secondary-green);
+  background-color: #fff;
+  color: var(--secondary-green);
 }
 
 @media (max-width: 991px) {
