@@ -7,6 +7,7 @@ use App\Customer;
 use App\DocumentSuperType;
 use App\DocumentType;
 use App\Group;
+use App\Message;
 use App\Receipt;
 use App\Salesman;
 use App\User;
@@ -34,7 +35,45 @@ class ClientController extends Controller
 
     public function home()
     {
-        return view('client.home');
+        $user = Auth::user();
+
+        $client = Customer::where('id',$user->client_id)->first();
+
+        $receiptsHACCP = Receipt::from(Receipt::alias('r'))
+            ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
+            ->leftJoin(DocumentSuperType::alias('dst'), 'dt.superType', '=', 'dst.id')
+            ->where('dst.name','HACCP')
+            ->where('r.client_id',$client->id)
+            ->where('viewed',0)
+            ->count();
+        $receiptsCP = Receipt::from(Receipt::alias('r'))
+            ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
+            ->leftJoin(DocumentSuperType::alias('dst'), 'dt.superType', '=', 'dst.id')
+            ->where('dst.name','Controlopragas')
+            ->where('r.client_id',$client->id)
+            ->where('viewed',0)
+            ->count();
+        $receiptsCont = Receipt::from(Receipt::alias('r'))
+            ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
+            ->leftJoin(DocumentSuperType::alias('dst'), 'dt.superType', '=', 'dst.id')
+            ->where('dst.name','Contabilistico')
+            ->where('r.client_id',$client->id)
+            ->where('viewed',0)
+            ->count();
+
+        return view('client.home',compact('receiptsCont','receiptsCP','receiptsHACCP'));
+    }
+
+    public function unreadMessages()
+    {
+        $user = Auth::user();
+
+        $client = Customer::where('id',$user->client_id)->first();
+
+        $messages = Message::where('receiver_id',$user->id)->where('viewed',0)->count();
+
+
+        return $messages;
     }
 
     public function index()

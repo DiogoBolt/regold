@@ -26,7 +26,7 @@ Route::get('/', 'HomeController@index')->name('home');
 Auth::routes();
 
 Route::get('/frontoffice/client/edit/{id}', 'FrontofficeController@editClient');
-Route::get('/frontoffice/client', 'FrontofficeController@showClient');
+Route::get('/frontoffice/client', 'FrontofficeController@showCustomer');
 Route::post('/frontoffice/editclient/', 'FrontofficeController@postEditClient');
 Route::get('/frontoffice/documents/', 'FrontofficeController@documents');
 Route::get('/frontoffice/documents/{type}', 'FrontofficeController@documentsByType');
@@ -40,6 +40,7 @@ Route::get('/frontoffice/products/{name}', 'FrontofficeController@productsByCate
 Route::get('/frontoffice/cart/delete/{id}', 'FrontofficeController@deleteLineFromCart');
 Route::get('/frontoffice/messages', 'FrontofficeController@messages');
 Route::get('/frontoffice/cartValue', 'FrontofficeController@cartValue');
+Route::get('/frontoffice/unreadMessages', 'ClientController@unreadMessages');
 Route::get('/home', 'ClientController@home');
 
 

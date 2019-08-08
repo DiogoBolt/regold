@@ -29,12 +29,7 @@ class HomeController extends Controller
         if($user)
         {
             if($user->client_id != null) {
-                $client = Customer::where('id', $user->client_id)->first();
-                $group = Group::where('id',$client->group_id)->first();
-                $types = DocumentType::all();
-
-                $receipts = Receipt::where('client_id',$client->id)->get();
-                return view('frontoffice.show', compact('client','group','types','receipts'));
+                return redirect('/home');
             }else{
                 return redirect('/clients');
             }

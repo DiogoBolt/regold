@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="limpeza, desinfecção, conservação, manutenção, industrial, higiene profissional, eficiência, rapidez, economia, regoldi, regolfood, regolpest, alimentação, quimicos, pragas, águas, industria alimentar, gama automóvel, construção civil, higiene hospitalar, limpeza geral, lavandaria, hotelaria, artes gráficas."/>
     <meta name="description" content="Somos uma empresa portuguesa, especializada na comercialização de compostos químicos.">
-    <meta name="author" content="Rui Rebelo - Designer">
+    <meta name="author" content="Diogo Araujo">
     <meta name="robots" content="index, follow"/>
 
     <meta property="og:image" content="http://regoldi.pt//img1.png"/>

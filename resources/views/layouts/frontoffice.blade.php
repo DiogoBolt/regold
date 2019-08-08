@@ -13,6 +13,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <script src="{{ asset('js/app.js') }}"></script>
 
     @yield('styles')
 
@@ -33,9 +34,9 @@
                         <img src="{{ URL::to('/') }}/img/navbar/logoindexcolor.png" alt="logo">
                     </a>
 
-                    <a class="navbar-message" href="#">
+                    <a class="navbar-message" href="/frontoffice/messages">
                         <img src="{{ URL::to('/') }}/img/msgs.png" alt="mensagens" />
-                        <span class="notification nav-msg">69</span>
+                        <span id="messages" class="notification nav-msg">0</span>
                     </a>
 
                     <a class="navbar-cart" href="/frontoffice/cart">
@@ -80,15 +81,19 @@
                 </div>
             </div>
         </nav>
+        <script>
+                $.get( "/frontoffice/cartValue", function( data ) {
+                    $( "#cartvalue" ).html( data+'€' );
+                });
+
+                $.get( "/frontoffice/unreadMessages", function( data ) {
+                    $( "#messages" ).html( data );
+                });
+        </script>
+
 
         @yield('content')
     </div>
-    <script src="{{ asset('js/app.js') }}"></script>
-    <script>
-        $.get( "/frontoffice/cartValue", function( data ) {
-            $( "#cartvalue" ).html( data );
-        });
-    </script>
 
     <!-- Scripts -->
 
