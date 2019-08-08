@@ -43,21 +43,21 @@ class ClientController extends Controller
             ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
             ->leftJoin(DocumentSuperType::alias('dst'), 'dt.superType', '=', 'dst.id')
             ->where('dst.name','HACCP')
-            ->where('r.client_id',$client->id)
+            ->where('r.client_id',$user->id)
             ->where('viewed',0)
             ->count();
         $receiptsCP = Receipt::from(Receipt::alias('r'))
             ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
             ->leftJoin(DocumentSuperType::alias('dst'), 'dt.superType', '=', 'dst.id')
             ->where('dst.name','Controlopragas')
-            ->where('r.client_id',$client->id)
+            ->where('r.client_id',$user->id)
             ->where('viewed',0)
             ->count();
         $receiptsCont = Receipt::from(Receipt::alias('r'))
             ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
             ->leftJoin(DocumentSuperType::alias('dst'), 'dt.superType', '=', 'dst.id')
             ->where('dst.name','Contabilistico')
-            ->where('r.client_id',$client->id)
+            ->where('r.client_id',$user->id)
             ->where('viewed',0)
             ->count();
 
@@ -208,12 +208,16 @@ class ClientController extends Controller
             $receipt->client_id = $inputs['client'];
             $receipt->name = date('Y-m-d');
             $receipt->document_type_id = $inputs['type'];
+            $receipt->viewed = 0;
             $type = DocumentType::where('id',$inputs['type'])->first()->name;
 
             $file = $request->file('receipt');
             $extension = $file->getClientOriginalExtension(); // getting image extension
             $filename =$type . date('Y-m-d').'.'.$extension;
             $file->move('uploads/'.$inputs['client'].'/', $filename);
+
+
+            //TODO Envio de email
 
             $receipt->file = $filename;
             $receipt->save();

@@ -88,13 +88,25 @@ class FrontofficeController extends Controller
         $user = Auth::user();
         $client = Customer::where('id',$user->client_id)->first();
 
-
         $receipts = Receipt::from(Receipt::alias('r'))
             ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
             ->leftJoin(DocumentSuperType::alias('dst'), 'dt.superType', '=', 'dst.id')
+            ->groupBy('r.id')
             ->where('dst.name',$type)
-            ->where('r.client_id',$client->id)
-            ->get();
+            ->where('r.client_id',$user->id)
+            ->get(['r.id']);
+        $ids = [];
+
+        foreach($receipts as $receipt)
+        {
+            $updated = Receipt::where('id',$receipt->id)->first();
+            $updated->viewed = 1;
+            $updated->save();
+            array_push($ids,$receipt->id);
+        }
+
+        $receipts = Receipt::whereIN('id',$ids)->get();
+
 
 
         return view('frontoffice.documentsType',compact('receipts','client','type'));
