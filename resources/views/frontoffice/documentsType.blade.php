@@ -22,13 +22,11 @@
                 </div>
                 <div class="file-body">
                     <a href="/uploads/{{$client->id}}/{{$receipt->file}}">
-                        {{-- <img class="file-body__img" src="/uploads/{{$client->id}}/{{$receipt->file}}" /> --}}
-                        <img class="file-body__img" src="/img/agenda.jpg"/>
+                        <img class="file-body__img" src="/uploads/{{$client->id}}/{{$receipt->file}}" />
                     </a>
                 </div>
             </div>
-        @endforeach
-                  
+        @endforeach       
     </div>
 </div>
 

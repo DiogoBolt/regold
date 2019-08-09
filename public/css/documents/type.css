@@ -56,10 +56,12 @@
 
 .file-body__img {
   width: 150px;
+  height: 150px;
   position: absolute;
   left: 50%;
   top: 30%;
   transform: translate(-50%, -30%);
+  background-color: var(--light-green);
 }
 
 .file-body:after {
