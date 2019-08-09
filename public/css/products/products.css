@@ -24,6 +24,7 @@
   background: no-repeat center center;
   background-size: cover;
   border: 5px solid #fff;
+  background-color: var(--light-green);
   box-shadow: 0 8px 5px rgba(0, 0, 0, 0.12);
 }
 

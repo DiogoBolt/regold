@@ -25,7 +25,7 @@
                     <div class="col-sm-6">
 
                         <div class="form-group">
-                            <b>Morada:</b>{{$client->address}}
+                            <b>Morada:</b> {{$client->address}}
                         </div>
                         <div class="form-group">
                             <b> Cidade:</b> {{$client->city}}

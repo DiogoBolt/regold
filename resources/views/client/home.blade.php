@@ -9,7 +9,7 @@
 <div class="container index-box">
 
     <div class="box">
-        <a title="Produtos" href="/frontoffice/produtos"><img class="img-responsive" src="{{ URL::to('/') }}/img/produtos.jpg"></a>
+        <a title="Produtos" href="/frontoffice/produtos"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon6.png"></a>
         <div class="desc">PRODUTOS</div>
         <span class="notification">69</span>
     </div>

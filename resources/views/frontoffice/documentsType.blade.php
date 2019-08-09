@@ -6,26 +6,29 @@
 @endsection
 
 @section('content')
-<div class="">
-    Documentos {{$type}} 
+<div class="container-bar">
+    <p class="container-bar_txt">Documentos {{$type}}</p>
+    <div class="container-bar_img">
+        <img src="/img/haccp_icon.png"></a>
+    </div>
 </div>
 <div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-body">
-
-                    <div class="col-sm-6">
-                        @foreach($receipts as $receipt)
-                            <div class="form-group">
-                                <a href="/uploads/{{$client->id}}/{{$receipt->file}}">{{$receipt->file}}</a>
-                            </div>
-                        @endforeach
-                    </div>
-
+    <div class="container-docs">
+        
+        @foreach($receipts as $receipt)
+            <div class="file">
+                <div class="file-head">
+                    {{$receipt->file}}
+                </div>
+                <div class="file-body">
+                    <a href="/uploads/{{$client->id}}/{{$receipt->file}}">
+                        {{-- <img class="file-body__img" src="/uploads/{{$client->id}}/{{$receipt->file}}" /> --}}
+                        <img class="file-body__img" src="/img/agenda.jpg"/>
+                    </a>
                 </div>
             </div>
-        </div>
+        @endforeach
+                  
     </div>
 </div>
 
