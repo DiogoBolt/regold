@@ -93,7 +93,7 @@ class FrontofficeController extends Controller
             ->leftJoin(DocumentSuperType::alias('dst'), 'dt.superType', '=', 'dst.id')
             ->groupBy('r.id')
             ->where('dst.name',$type)
-            ->where('r.client_id',$user->id)
+            ->where('r.client_id',$user->client_id)
             ->get(['r.id']);
         $ids = [];
 

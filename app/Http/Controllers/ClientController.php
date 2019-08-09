@@ -43,21 +43,21 @@ class ClientController extends Controller
             ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
             ->leftJoin(DocumentSuperType::alias('dst'), 'dt.superType', '=', 'dst.id')
             ->where('dst.name','HACCP')
-            ->where('r.client_id',$user->id)
+            ->where('r.client_id',$user->client_id)
             ->where('viewed',0)
             ->count();
         $receiptsCP = Receipt::from(Receipt::alias('r'))
             ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
             ->leftJoin(DocumentSuperType::alias('dst'), 'dt.superType', '=', 'dst.id')
             ->where('dst.name','Controlopragas')
-            ->where('r.client_id',$user->id)
+            ->where('r.client_id',$user->client_id)
             ->where('viewed',0)
             ->count();
         $receiptsCont = Receipt::from(Receipt::alias('r'))
             ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
             ->leftJoin(DocumentSuperType::alias('dst'), 'dt.superType', '=', 'dst.id')
             ->where('dst.name','Contabilistico')
-            ->where('r.client_id',$user->id)
+            ->where('r.client_id',$user->client_id)
             ->where('viewed',0)
             ->count();
 
