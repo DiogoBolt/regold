@@ -1,21 +1,24 @@
 #messages-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-wrap: wrap;
-}
-
-.msg:first-child,
-.msg:last-child {
-  margin-right: auto;
+  margin-bottom: 30px;
 }
 
 .msg {
-  border-top: 8px solid var(--main-color);
-  width: 45%;
+  width: 40%;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
   background-color: #fff;
-  margin: 10px 0;
   display: flex;
+  margin-bottom: 20px;
+}
+
+.msg.viewed {
+  border-top: 8px solid var(--main-color);
+}
+
+.msg.not-viewd {
+  border-top: 8px solid rgb(214, 18, 18);
 }
 
 .msg-info {
@@ -31,10 +34,6 @@
 }
 
 @media (max-width: 480px) {
-  #messages-container {
-    flex-direction: column;
-  }
-
   .msg {
     width: 100%;
   }

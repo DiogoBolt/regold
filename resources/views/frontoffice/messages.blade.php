@@ -15,7 +15,7 @@
     <div class="container">
         <div id="messages-container" class="box-body">
             @foreach($messages as $item)
-                <div class="row msg {{$item->name}}">
+                <div class="row msg {{$item->name}} {{$item->viewed === 1 ? 'viewed' : 'not-viewed'}}">
                     <div class="msg-img">
                         <img src="/img/message.png" />
                     </div>
@@ -25,6 +25,9 @@
                     </div>
                 </div>
             @endforeach
+
+            <i class="row msg" aria-hidden="true" style="background-color: transparent;box-shadow: none;"></i>
+                
         </div>
 
     </div>

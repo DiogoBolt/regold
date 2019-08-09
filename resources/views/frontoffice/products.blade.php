@@ -15,9 +15,6 @@
 
     <div class="container">
         <div class="products-container">
-
-
-            
             @foreach($products as $product)
                 <div class="product">
                     <div class="product-img" style="background-image: url('/uploads/products/{{$product->file}}')">
@@ -47,6 +44,7 @@
                     </div>
                 </div>
             @endforeach
+            
         </div>
     </div>
 
