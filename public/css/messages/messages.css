@@ -11,6 +11,7 @@
   background-color: #fff;
   display: flex;
   margin-bottom: 20px;
+  cursor: pointer;
 }
 
 .msg.viewed {
@@ -31,6 +32,34 @@
 
 .msg-info {
   padding: 10px;
+}
+
+/* Modal */
+
+#messageModal .modal-content {
+  background-color: var(--light-green);
+}
+
+#messageModal .modal-header button {
+  font-size: 30px;
+}
+
+#messageModal .modal-header .close {
+  margin-top: -10px;
+}
+
+#messageModal .modal-footer {
+  background-color: #fff;
+}
+
+#messageModal .modal-footer button {
+  background-color: var(--light-green);
+  font-weight: bold;
+  border: 3px solid var(--light-green);
+}
+
+#messageModal .modal-footer button:hover {
+  background-color: #fff;
 }
 
 @media (max-width: 480px) {
