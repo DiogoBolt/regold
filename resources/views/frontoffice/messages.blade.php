@@ -43,23 +43,25 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal">x</button>
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body"></div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <strong>Fechar</strong>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
-
 @endsection
 
 <script>
 
-    window.onload = function () {
+    document.addEventListener('DOMContentLoaded', function(){ 
+ 
        
         $('#messageModal').on('show.bs.modal', function (event) {
             let item = $(event.relatedTarget); 
@@ -68,9 +70,14 @@
             $(this).find('.modal-title').text(data.created_at);
             $(this).find('.modal-body').text(data.text);
 
+            if(data.viewed === 0) {
+                $(this).find('.modal-header').addClass('not-viewed');
+                $(this).find('.modal-footer button').addClass('not-viewed');
+            }
+
         });
 
-    };
+    }, false);
 
    
 

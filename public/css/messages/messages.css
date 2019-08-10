@@ -14,6 +14,13 @@
   cursor: pointer;
 }
 
+.msg-body {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .msg.viewed {
   border-top: 8px solid var(--main-color);
 }
@@ -36,41 +43,51 @@
 
 /* Modal */
 
-#messageModal .modal-content {
-  background-color: var(--light-green);
+#messageModal .modal-header {
+  background-color: var(--main-color);
+  border: none;
+}
+
+#messageModal .modal-header .modal-title,
+#messageModal .modal-header .close {
+  color: #fff;
 }
 
 #messageModal .modal-header button {
-  font-size: 30px;
-}
-
-#messageModal .modal-header .close {
-  margin-top: -10px;
+  font-size: 20px;
 }
 
 #messageModal .modal-footer {
-  background-color: #fff;
+  border: none;
+  text-align: center;
 }
 
 #messageModal .modal-footer button {
-  background-color: var(--light-green);
-  font-weight: bold;
-  border: 3px solid var(--light-green);
+  border: 2px solid var(--main-color);
+  color: var(--main-color);
 }
 
 #messageModal .modal-footer button:hover {
-  background-color: #fff;
+  background-color: var(--main-color);
+  color: #fff;
+}
+
+.modal-header.not-viewed {
+  background-color: rgb(214, 18, 18) !important;
+}
+
+button.not-viewed {
+  border: 2px solid rgb(214, 18, 18) !important;
+  color: rgb(214, 18, 18) !important;
+}
+
+button.not-viewed:hover {
+  background-color: rgb(214, 18, 18) !important;
+  color: #fff !important;
 }
 
 @media (max-width: 480px) {
   .msg {
     width: 100%;
-  }
-
-  .msg-body {
-    display: -webkit-box;
-    -webkit-line-clamp: 7;
-    -webkit-box-orient: vertical;
-    overflow: scroll;
   }
 }
