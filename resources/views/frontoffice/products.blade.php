@@ -34,10 +34,9 @@
                                 <button class="btn">adicionar</button>
                                 <input value="{{$product->id}}" name="id" type="hidden">
                                 <select name="amount">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
+                                    @for($i = 1; $i <= 20; $i++)
+                                        <option value="{{ $i }}"> {{ $i }}</option>
+                                    @endfor
                                 </select>
                             </form>
                         </div>
