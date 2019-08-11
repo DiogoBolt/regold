@@ -235,48 +235,7 @@ class FrontofficeController extends Controller
     }
 
 
-    public function processCart()
-    {
-        $user = Auth::user();
 
-        $cart = Cart::where('user_id',$user->id)->where('processed',0)->first();
-
-        if(!isset($cart))
-        {
-            $products = Product::all();
-
-            return view('frontoffice.products',compact('products'));
-        }
-
-        $total = OrderLine::where('cart_id',$cart->id)->sum('total');
-
-        $totaliva = $total + 0.23*$total;
-
-        $order = new Order;
-
-        $order->client_id = $user->client_id;
-        $order->cart_id = $cart->id;
-        $order->total = $total;
-        $order->totaliva = $totaliva;
-        $order->processed = 0;
-
-        $response =  $this->processPayment($cart,$order);
-
-        return redirect($response->url_redirect);
-
-        $order->save();
-
-
-        $cart->processed = 1;
-        $cart->save();
-
-
-
-        $orders = Order::where('client_id',$user->client_id)->get();
-
-
-
-    }
 
     public function orders()
     {
@@ -359,10 +318,76 @@ class FrontofficeController extends Controller
 
 
 
+    public function processCart()
+    {
+        $user = Auth::user();
+
+        $cart = Cart::where('user_id',$user->id)->where('processed',0)->first();
+
+        if(!isset($cart))
+        {
+            $products = Product::all();
+
+            return view('frontoffice.products',compact('products'));
+        }
+
+        $total = OrderLine::where('cart_id',$cart->id)->sum('total');
+
+        $totaliva = $total + 0.23*$total;
+
+        $order = new Order;
+
+        $order->client_id = $user->client_id;
+        $order->cart_id = $cart->id;
+        $order->total = $total;
+        $order->totaliva = $totaliva;
+        $order->processed = 0;
+
+        $response =  $this->processPayment($cart,$order);
+
+
+        return redirect($response->url_redirect);
+
+        $order->save();
+
+
+        $cart->processed = 1;
+        $cart->save();
+
+
+
+        $orders = Order::where('client_id',$user->client_id)->get();
+
+
+
+    }
+
+
+
     private function processPayment($cart,$order){
 
-        $orderlines = OrderLine::where('cart_id',$cart->id)->get();
+
         $user = Auth::user();
+
+        $orders = Order::where('client_id',$user->client_id)->where('created_at','>=',Carbon::now()->startOfMonth())->count();
+
+        if($orders > 0)
+        {
+           return $this->processSideOrder($cart,$order);
+        }else{
+           return $this->processMainOrder($cart,$order);
+        }
+
+
+
+    }
+
+
+
+    private function processSideOrder($cart,$order)
+    {
+        $user = Auth::user();
+        $orderlines = OrderLine::where('cart_id',$cart->id)->get();
         $client = Customer::where('id',$user->client_id)->first();
         $customer = Customer::where('id',$user->client_id)->first();
 
@@ -374,7 +399,85 @@ class FrontofficeController extends Controller
             $item['descr'] = $product->name;
             $item['name'] = $product->name;
             $item['qt'] = $orderline->amount;
-            $item['total'] = $orderline->total;
+            $item['amount'] = $orderline->total;
+
+            array_push($items,$item);
+        }
+
+        $options = [
+            'cost' => 10,
+        ];
+
+        if($order->totaliva < 29.90)
+        {
+            $servico = [];
+            $servico['qt'] = 1;
+            $servico['descr'] = "Portes";
+            $servico['name'] = "Portes";
+            $servico['amount'] = 5;
+
+
+            array_push($items,$servico);
+        }
+
+        $iva = [];
+        $iva['qt'] = 1;
+        $iva['descr'] = "Iva";
+        $iva['name'] = "Iva";
+        $iva['amount'] = $order->totaliva - $order->totaliva/1.23;
+
+
+        array_push($items,$iva);
+
+
+        $token = password_hash($user->id . $cart->id,PASSWORD_BCRYPT,$options);
+
+
+        $payment = [
+            'client' => ['address' => ['address' => $customer->address,'city'=>$customer->city,'country'=>'PT'], 'email' => $customer->email,'name' => $customer->name],
+            'amount' => $order->totaliva > 29.90 ? $order->totaliva : $order->totaliva+5,
+            'currency' => 'EUR',
+            'items' =>$items,
+            'ext_invoiceid' => $order->id,
+            'ext_costumerid' => $order->user_id,
+        ];
+
+        $request_data = [
+            'payment' => $payment,
+            'required_fields' => [
+//                'name' => true,
+//                'email' => true,
+//                'nif' => true,
+            ],
+            'url_cancel' => 'http://www.regolfood.pt',
+            'url_confirm' => 'http://www.regolfood.pt/frontoffice/confirm/'.$token,
+        ];
+
+
+
+        $url = 'https://services.sandbox.meowallet.pt/api/v2/checkout';
+
+        $response = $this->http($url, $request_data);
+
+        return $response;
+    }
+
+    private function processMainOrder($cart,$order)
+    {
+        $user = Auth::user();
+        $orderlines = OrderLine::where('cart_id',$cart->id)->get();
+        $client = Customer::where('id',$user->client_id)->first();
+        $customer = Customer::where('id',$user->client_id)->first();
+
+        $items =[];
+        foreach($orderlines as $orderline)
+        {
+            $product = Product::where('id',$orderline->product_id)->first();
+            $item = [];
+            $item['descr'] = $product->name;
+            $item['name'] = $product->name;
+            $item['qt'] = $orderline->amount;
+            $item['amount'] = $orderline->total;
 
             array_push($items,$item);
         }
@@ -389,7 +492,7 @@ class FrontofficeController extends Controller
             $servico['qt'] = 1;
             $servico['descr'] = "Serviço HACCP";
             $servico['name'] = "Serviço HACCP";
-            $servico['total'] = $client->contract_value - $order->totaliva;
+            $servico['amount'] = $client->contract_value - $order->totaliva;
 
 
             array_push($items,$servico);
@@ -402,8 +505,8 @@ class FrontofficeController extends Controller
         $payment = [
             'client' => ['address' => ['address' => $customer->address,'city'=>$customer->city,'country'=>'PT'], 'email' => $customer->email,'name' => $customer->name],
             'amount' => $order->totaliva > $client->contract_value ? $order->totaliva : $client->contract_value,
-                'currency' => 'EUR',
-                'items' =>$items,
+            'currency' => 'EUR',
+            'items' =>$items,
             'ext_invoiceid' => $order->id,
             'ext_costumerid' => $order->user_id,
         ];
