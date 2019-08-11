@@ -86,6 +86,37 @@
 
 @media (max-width: 480px) {
   .file {
+    width: 125px;
+    height: 200px;
+  }
+
+  .file:nth-child(even) {
     margin-right: 0;
+  }
+
+  .file-body {
+    height: 154px;
+  }
+
+  .file-body__img {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+@media (max-width: 360px) {
+  .file {
+    width: 100px;
+    height: 175px;
+  }
+
+  .file-body {
+    height: 129px;
+  }
+
+  .file-body__img {
+    width: 55px;
+    height: 55px;
+    top: 20%;
   }
 }

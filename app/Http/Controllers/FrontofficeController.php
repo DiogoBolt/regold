@@ -120,6 +120,13 @@ class FrontofficeController extends Controller
         return view('frontoffice.products',compact('products','categories'));
     }
 
+    public function categories()
+    {
+        $categories = Category::all();
+
+        return view('frontoffice.categories',compact('categories'));
+    }
+
     public function addCart(Request $request)
     {
         $inputs = $request->all();
@@ -316,9 +323,9 @@ class FrontofficeController extends Controller
         }
     }
 
-    public function productsByCategory($name)
+    public function productsByCategory($id)
     {
-        $products = Product::where('category',$name)->get();
+        $products = Product::where('category',$id)->get();
 
 
         return view('frontoffice.products',compact('products'));
@@ -346,7 +353,9 @@ class FrontofficeController extends Controller
     public function messages()
     {
         $user = Auth::user();
-        $messages = Message::where('receiver_id',$user->id)->get();
+        $messages = Message::where('receiver_id',$user->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         foreach($messages as $message)
         {
