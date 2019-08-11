@@ -440,7 +440,7 @@ class FrontofficeController extends Controller
 //                'nif' => true,
             ],
             'url_cancel' => 'http://www.regolfood.pt',
-            'url_confirm' => 'http://www.regolfood.pt/frontoffice/confirm/?token='.$token,
+            'url_confirm' => 'http://www.regolfood.pt/',
         ];
 
 
@@ -489,7 +489,7 @@ class FrontofficeController extends Controller
         }
 
 
-        $token = password_hash($user->id . $cart->id,PASSWORD_BCRYPT,$options);
+
 
 
         $payment = [
@@ -509,7 +509,7 @@ class FrontofficeController extends Controller
 //                'nif' => true,
             ],
             'url_cancel' => 'http://www.regolfood.pt',
-            'url_confirm' => 'http://www.regolfood.pt/frontoffice/confirm/?token='.$token,
+            'url_confirm' => 'http://www.regolfood.pt',
         ];
 
 
