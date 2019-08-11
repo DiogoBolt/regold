@@ -184,7 +184,6 @@ class FrontofficeController extends Controller
 
     }
 
-
     public function showCart()
     {
         $user = Auth::user();
@@ -240,9 +239,6 @@ class FrontofficeController extends Controller
         return $total;
 
     }
-
-
-
 
     public function orders()
     {
@@ -308,8 +304,7 @@ class FrontofficeController extends Controller
 
     }
 
-
-    public function messages()
+    function messages()
     {
         $user = Auth::user();
         $messages = Message::where('receiver_id',$user->id)
@@ -324,8 +319,6 @@ class FrontofficeController extends Controller
 
         return view('frontoffice.messages',compact('messages'));
     }
-
-
 
     public function processCart()
     {
@@ -354,24 +347,16 @@ class FrontofficeController extends Controller
 
         $response =  $this->processPayment($cart,$order);
 
-
         return redirect($response->url_redirect);
 
         $order->save();
 
-
         $cart->processed = 1;
         $cart->save();
 
-
-
         $orders = Order::where('client_id',$user->client_id)->get();
 
-
-
     }
-
-
 
     private function processPayment($cart,$order){
 
@@ -387,11 +372,7 @@ class FrontofficeController extends Controller
            return $this->processMainOrder($cart,$order);
         }
 
-
-
     }
-
-
 
     private function processSideOrder($cart,$order)
     {
@@ -459,7 +440,7 @@ class FrontofficeController extends Controller
 //                'nif' => true,
             ],
             'url_cancel' => 'http://www.regolfood.pt',
-            'url_confirm' => 'http://www.regolfood.pt/frontoffice/confirm/'.$token,
+            'url_confirm' => 'http://www.regolfood.pt/frontoffice/confirm/?token='.$token,
         ];
 
 
@@ -528,7 +509,7 @@ class FrontofficeController extends Controller
 //                'nif' => true,
             ],
             'url_cancel' => 'http://www.regolfood.pt',
-            'url_confirm' => 'http://www.regolfood.pt/frontoffice/confirm/'.$token,
+            'url_confirm' => 'http://www.regolfood.pt/frontoffice/confirm/?token='.$token,
         ];
 
 
@@ -541,13 +522,15 @@ class FrontofficeController extends Controller
 
     }
 
-    public function confirmPayment($token)
+    public function confirmPayment(Request $request)
     {
+        $inputs = $request->all();
+
         $user = Auth::user();
 
         $cart = Cart::where('user_id',$user->id)->first();
 
-        if(password_verify($user->id . $cart->id,$token))
+        if(password_verify($user->id . $cart->id,$inputs['token']))
         {
             $order = Order::where('cart_id',$cart->id)->first();
             $order->status = 'payed';

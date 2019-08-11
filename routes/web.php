@@ -42,7 +42,7 @@ Route::get('/frontoffice/cart/delete/{id}', 'FrontofficeController@deleteLineFro
 Route::get('/frontoffice/messages', 'FrontofficeController@messages');
 Route::get('/frontoffice/cartValue', 'FrontofficeController@cartValue');
 Route::get('/frontoffice/unreadMessages', 'ClientController@unreadMessages');
-Route::get('/frontoffice/confirm/{token}', 'ClientController@confirmPayment');
+Route::get('/frontoffice/confirm/', 'ClientController@confirmPayment');
 Route::get('/home', 'ClientController@home');
 
 

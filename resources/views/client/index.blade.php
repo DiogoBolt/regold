@@ -8,15 +8,22 @@
                 <div class="panel-heading">Clientes</div>
 
                 <div class="panel-body">
+                    <form method="get" action="/clients">
+                        <input name="search" class="form-control">
+                        <button type="submit" class="btn btn-primary">Pesquisa</button>
+
+                    </form>
 
                     <table class="table table-bordered">
                         <tr>
+                            <th>Id</th>
                             <th>Nome</th>
-                            <th>Volta</th>
+                            <th>Grupo</th>
 
                         </tr>
                         @foreach($clients as $client)
                             <tr>
+                                <td><a href="/clients/{{$client->id}}">{{$client->id}}</a></td>
                                 <td><a href="/clients/{{$client->id}}">{{$client->name}}</a></td>
                                 <td><a href="/groups/{{$client->groupid}}">{{$client->group}}</a></td>
 

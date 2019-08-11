@@ -76,13 +76,20 @@ class ClientController extends Controller
         return $messages;
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
+
+        $inputs = $request->all();
+
+        $search = $inputs['search'] ?? '';
+
         if($user->sales_id == null)
         {
             $clients = Customer::from(Customer::alias('c'))
                 ->leftJoin(Group::alias('g'), 'c.group_id', '=', 'g.id')
+                ->where('c.name','LIKE','%'.$search.'%')
+                ->orWhere('c.id','LIKE','%'.$search.'%')
                 ->select([
                     'c.id',
                     'g.id as groupid',
@@ -94,6 +101,11 @@ class ClientController extends Controller
             $clients = Customer::from(Customer::alias('c'))
                 ->leftJoin(Group::alias('g'), 'c.group_id', '=', 'g.id')
                 ->where('c.salesman',$user->sales_id)
+                ->where(function($query) use ($search)
+                {
+                    $query->where('c.name','LIKE','%'.$search.'%')
+                        ->orWhere('c.id','LIKE','%'.$search.'%');
+                })
                 ->select([
                     'c.id',
                     'g.id as groupid',
