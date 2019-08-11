@@ -522,6 +522,9 @@ class FrontofficeController extends Controller
 
 
             $order = Order::where('external_id',$inputs['token'])->first();
+            $cart = Cart::where('id',$order->cart_id)->first();
+            $cart->processed = 1;
+            $cart->save();
             if(isset($order))
             {
                 $order->status = 'payed';
