@@ -243,7 +243,7 @@ class FrontofficeController extends Controller
     public function orders()
     {
         $user = Auth::user();
-        $orders = Order::where('client_id',$user->client_id)->get();
+        $orders = Order::where('client_id',$user->client_id)->orderBy('id','DESC')->get();
 
         return view('frontoffice.orders',compact('orders'));
     }

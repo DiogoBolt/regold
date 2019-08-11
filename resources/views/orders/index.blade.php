@@ -15,6 +15,7 @@
                             <th>Total</th>
                             <th>Total + Iva</th>
                             <th>Estado</th>
+                            <th>Fatura</th>
                             <th>Detalhes</th>
 
 
@@ -25,13 +26,23 @@
                                 <td><a href="/clients/{{$order->client_id}}">{{$order->client_id}}</a></td>
                                 <td>{{number_format($order->total,2)}}€</td>
                                 <td>{{number_format($order->totaliva,2)}}€</td>
-                                @if($order->processed == 1)
-                                    <td>Processado</td>
-                                    @else
-                                    <td>Em Espera</td>
+                                <td>Em Espera</td>
+                                @if($order->receipt_id == null)
+                                    <td>
+                                    <form action="/orders/attachReceipt"  method="post" enctype="multipart/form-data">
+                                        {{ csrf_field() }}
+
+                                        <input class="form-control" type="file" name="receipt">
+                                        <input value="{{$order->id}}" type="hidden" name="order">
+                                        <button class="btn btn-success">Adicionar Fatura</button>
+                                    </form>
+                                    </td>
+                                @else
+                                    <td>FALTA</td>
                                 @endif
                                 <td><a href="/orders/{{$order->id}}">Detalhes</a></td>
-                            </tr>
+                                </tr>
+
                         @endif
                         @endforeach
 
@@ -55,11 +66,8 @@
                                     <td><a href="/clients/{{$order->client_id}}">{{$order->client_id}}</a></td>
                                     <td>{{number_format($order->total,2)}}€</td>
                                     <td>{{number_format($order->totaliva,2)}}€</td>
-                                    @if($order->processed == 1)
-                                        <td>Processado</td>
-                                    @else
-                                        <td>Em Espera</td>
-                                    @endif
+                                    <td>Processado</td>
+
                                     <td><a href="/orders/{{$order->id}}">Detalhes</a></td>
                                 </tr>
                             @endif

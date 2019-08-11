@@ -40,22 +40,21 @@ class ProductController extends Controller
     {
         $products = Product::all();
 
-        return view('product.index',compact('products'));
+        return view('product.index', compact('products'));
     }
 
 
     public function newProduct()
     {
         $categories = Category::all();
-        return view('product.new',compact('categories'));
+        return view('product.new', compact('categories'));
     }
 
     public function addProduct(Request $request)
     {
         $inputs = $request->all();
 
-        if($request->hasfile('foto'))
-        {
+        if ($request->hasfile('foto')) {
             $product = new Product;
 
 
@@ -72,7 +71,7 @@ class ProductController extends Controller
 
             $file = $request->file('foto');
             $extension = $file->getClientOriginalExtension(); // getting image extension
-            $filename =$inputs['name'] . date('Y-m-d').'.'.$extension;
+            $filename = $inputs['name'] . date('Y-m-d') . '.' . $extension;
             $file->move('uploads/products/', $filename);
 
             $product->file = $filename;
@@ -80,38 +79,38 @@ class ProductController extends Controller
 
             $file = $request->file('manual');
             $extension = $file->getClientOriginalExtension(); // getting image extension
-            $filename =$inputs['name'].'tecnica' . date('Y-m-d').'.'.$extension;
+            $filename = $inputs['name'] . 'tecnica' . date('Y-m-d') . '.' . $extension;
             $file->move('uploads/products/', $filename);
 
             $product->manual = $filename;
 
             $file = $request->file('seguranca');
             $extension = $file->getClientOriginalExtension(); // getting image extension
-            $filename =$inputs['name'].'seguranca' . date('Y-m-d').'.'.$extension;
+            $filename = $inputs['name'] . 'seguranca' . date('Y-m-d') . '.' . $extension;
             $file->move('uploads/products/', $filename);
 
             $product->seguranca = $filename;
             $product->save();
         }
         $products = Product::all();
-        return view('product.index',compact('products'));
+        return view('product.index', compact('products'));
 
     }
 
     public function editProduct($id)
     {
 
-        $product = Product::where('id',$id)->first();
+        $product = Product::where('id', $id)->first();
         $categories = Category::all();
 
-        return view('product.edit',compact('product','categories'));
+        return view('product.edit', compact('product', 'categories'));
     }
 
     public function editProductPost(Request $request)
     {
         $inputs = $request->all();
 
-        $product = Product::where('id',$inputs['id'])->first();
+        $product = Product::where('id', $inputs['id'])->first();
 
         $product->name = $inputs['name'];
         $product->price1 = $inputs['price1'];
@@ -123,7 +122,7 @@ class ProductController extends Controller
         $product->details = $inputs['details'];
         $product->category = $inputs['category'];
 
-        if($request->hasFile('foto')) {
+        if ($request->hasFile('foto')) {
             $file = $request->file('foto');
             $extension = $file->getClientOriginalExtension(); // getting image extension
             $filename = $inputs['name'] . date('Y-m-d') . '.' . $extension;
@@ -132,22 +131,20 @@ class ProductController extends Controller
             $product->file = $filename;
         }
 
-        if($request->hasFile('manual'))
-        {
+        if ($request->hasFile('manual')) {
             $file = $request->file('manual');
             $extension = $file->getClientOriginalExtension(); // getting image extension
-            $filename =$inputs['name'].'tecnica' . date('Y-m-d').'.'.$extension;
+            $filename = $inputs['name'] . 'tecnica' . date('Y-m-d') . '.' . $extension;
             $file->move('uploads/products/', $filename);
 
             $product->manual = $filename;
         }
 
 
-        if($request->hasFile('seguranca'))
-        {
+        if ($request->hasFile('seguranca')) {
             $file = $request->file('seguranca');
             $extension = $file->getClientOriginalExtension(); // getting image extension
-            $filename =$inputs['name'].'seguranca' . date('Y-m-d').'.'.$extension;
+            $filename = $inputs['name'] . 'seguranca' . date('Y-m-d') . '.' . $extension;
             $file->move('uploads/products/', $filename);
 
             $product->seguranca = $filename;
@@ -156,7 +153,7 @@ class ProductController extends Controller
         $product->save();
 
         $categories = Category::all();
-        return view('product.edit',compact('product','categories'));
+        return view('product.edit', compact('product', 'categories'));
 
     }
 
@@ -164,44 +161,42 @@ class ProductController extends Controller
     public function showOrders()
     {
         $user = Auth::user();
-        if($user->sales_id == null)
-        {
-            $orders = Order::all();
-        }else{
+        if ($user->sales_id == null) {
+            $orders = Order::orderBy('id', 'DESC')->get();
+        } else {
             $orders = Order::from(Order::alias('o'))
                 ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
-                ->where('c.salesman',$user->sales_id)
+                ->where('c.salesman', $user->sales_id)
+                ->orderBy('o.id', 'DESC')
                 ->get();
         }
 
 
-        return view('orders.index',compact('orders'));
+        return view('orders.index', compact('orders'));
     }
 
     public function viewOrder($id)
     {
-        $order = Order::where('id',$id)->first();
+        $order = Order::where('id', $id)->first();
 
-        if(!isset($order))
+        if (!isset($order))
             return back();
 
 
-        $cart = Cart::where('id',$order->cart_id)->first();
+        $cart = Cart::where('id', $order->cart_id)->first();
 
-        if(isset($cart))
-        {
+        if (isset($cart)) {
 
-            $line_items = OrderLine::where('cart_id',$cart->id)->get();
+            $line_items = OrderLine::where('cart_id', $cart->id)->get();
 
-            foreach($line_items as $item)
-            {
-                $item->product = Product::where('id',$item->product_id)->first();
+            foreach ($line_items as $item) {
+                $item->product = Product::where('id', $item->product_id)->first();
             }
 
-            $total = OrderLine::where('cart_id',$cart->id)->sum('total');
+            $total = OrderLine::where('cart_id', $cart->id)->sum('total');
 
-            return view('orders.order',compact('line_items','total','order'));
-        }else {
+            return view('orders.order', compact('line_items', 'total', 'order'));
+        } else {
 
             return back();
         }
@@ -209,7 +204,7 @@ class ProductController extends Controller
 
     public function processOrder($id)
     {
-        $order = Order::where('id',$id)->first();
+        $order = Order::where('id', $id)->first();
 
         $order->processed = 1;
 
@@ -217,7 +212,7 @@ class ProductController extends Controller
 
         $orders = Order::all();
 
-        return view('orders.index',compact('orders'));
+        return view('orders.index', compact('orders'));
     }
 
 
@@ -225,15 +220,14 @@ class ProductController extends Controller
     {
         $user = Auth::user();
 
-        if($user->sales_id != null and $user->id != $id)
-        {
+        if ($user->sales_id != null and $user->id != $id) {
             return back();
         }
-        $messages = Message::where('receiver_id',$id)->get();
+        $messages = Message::where('receiver_id', $id)->get();
 
-        $receiver = User::where('id',$id)->first();
+        $receiver = User::where('id', $id)->first();
 
-        return view('orders.messages',compact('messages','id','receiver'));
+        return view('orders.messages', compact('messages', 'id', 'receiver'));
     }
 
     public function newMessage(Request $request)
@@ -253,11 +247,11 @@ class ProductController extends Controller
         $message->save();
 
 
-        Mail::send('emails.welcome',compact('user','text'),
+        Mail::send('emails.welcome', compact('user', 'text'),
             function ($m) use ($user) {
                 /** @var \Illuminate\Mail\Message $m */
                 $m->from('suporte@regolfood.pt', 'Mensagem Regolfood');
-                $m->to($user->email,'',true);
+                $m->to($user->email, '', true);
                 $m->subject('Mensagem Regolfood');
             });
 
@@ -266,4 +260,38 @@ class ProductController extends Controller
     }
 
 
+    public function attachReceipt(Request $request)
+    {
+        $inputs = $request->all();
+
+        $order = Order::where('id',$inputs['order'])->first();
+
+        if($request->hasfile('receipt'))
+        {
+            $receipt = new Receipt;
+
+            $receipt->client_id = $order->client_id;
+            $receipt->name = date('Y-m-d');
+            $receipt->document_type_id = 2;
+            $receipt->viewed = 0;
+
+            $file = $request->file('receipt');
+            $extension = $file->getClientOriginalExtension(); // getting image extension
+            $filename ='fatura' . date('Y-m-d').'.'.$extension;
+            $file->move('uploads/'.$order->client_id.'/', $filename);
+
+
+            //TODO Envio de email
+
+            $receipt->file = $filename;
+            $receipt->save();
+        }
+
+        $order->receipt_id = $receipt->id;
+        $order->save();
+
+        return redirect('/orders');
+
+
+    }
 }
