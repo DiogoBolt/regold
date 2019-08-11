@@ -344,17 +344,13 @@ class FrontofficeController extends Controller
         $order->total = $total;
         $order->totaliva = $totaliva;
         $order->processed = 0;
+        $order->status = 'waiting_payment';
+        $order->external_id = uniqid();
+        $order->save();
 
         $response =  $this->processPayment($cart,$order);
 
         return redirect($response->url_redirect);
-
-        $order->save();
-
-        $cart->processed = 1;
-        $cart->save();
-
-        $orders = Order::where('client_id',$user->client_id)->get();
 
     }
 
@@ -440,7 +436,7 @@ class FrontofficeController extends Controller
 //                'nif' => true,
             ],
             'url_cancel' => 'http://www.regolfood.pt',
-            'url_confirm' => 'http://www.regolfood.pt/',
+            'url_confirm' => 'http://www.regolfood.pt/frontoffice/confirm/?token='.$order->external_id,
         ];
 
 
@@ -488,10 +484,6 @@ class FrontofficeController extends Controller
             array_push($items,$servico);
         }
 
-
-
-
-
         $payment = [
             'client' => ['address' => ['address' => $customer->address,'city'=>$customer->city,'country'=>'PT'], 'email' => $customer->email,'name' => $customer->name],
             'amount' => $order->totaliva > $client->contract_value ? $order->totaliva : $client->contract_value,
@@ -509,7 +501,7 @@ class FrontofficeController extends Controller
 //                'nif' => true,
             ],
             'url_cancel' => 'http://www.regolfood.pt',
-            'url_confirm' => 'http://www.regolfood.pt',
+            'url_confirm' => 'http://www.regolfood.pt/frontoffice/confirm/?token='.$order->external_id,
         ];
 
 
@@ -528,19 +520,17 @@ class FrontofficeController extends Controller
 
         $user = Auth::user();
 
-        $cart = Cart::where('user_id',$user->id)->first();
 
-        if(password_verify($user->id . $cart->id,$inputs['token']))
-        {
-            $order = Order::where('cart_id',$cart->id)->first();
-            $order->status = 'payed';
-            $order->save();
-            return redirect('/frontoffice/orders');
-        }
-
-        else{
+            $order = Order::where('external_id',$inputs['token'])->first();
+            if(isset($order))
+            {
+                $order->status = 'payed';
+                $order->save();
+                return redirect('/frontoffice/orders');
+            }
+            else{
             return 404;
-        }
+            }
 
     }
 
