@@ -62,6 +62,10 @@
                                 </select>
                             </div>
 
+                            <div class="form-group">
+                                Valor Contrato: <input class="form-control" type="number" name="value">
+                            </div>
+
 
                             <button class="btn btn-primary" onsubmit="return validateForm(this)">Criar</button>
 

@@ -134,6 +134,7 @@ class ClientController extends Controller
         $client->receipt_email = $inputs['receipt_email'];
         $client->nib = $inputs['nib'];
         $client->group_id = $inputs['group'];
+        $client->contract_value = $inputs['value'];
 
         $client->save();
 

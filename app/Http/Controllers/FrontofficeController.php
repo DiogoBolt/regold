@@ -262,7 +262,7 @@ class FrontofficeController extends Controller
 
         $response =  $this->processPayment($cart,$order);
 
-        return redirect($response['url_redirect']);
+        return redirect($response->url_redirect);
 
         $order->save();
 
@@ -363,21 +363,47 @@ class FrontofficeController extends Controller
 
         $orderlines = OrderLine::where('cart_id',$cart->id)->get();
         $user = Auth::user();
+        $client = Customer::where('id',$user->client_id)->first();
         $customer = Customer::where('id',$user->client_id)->first();
 
+        $items =[];
         foreach($orderlines as $orderline)
         {
             $product = Product::where('id',$orderline->product_id)->first();
-            $orderline->name = $product->name;
-            $orderline->qt = $orderline->amount;
+            $item = [];
+            $item['descr'] = $product->name;
+            $item['name'] = $product->name;
+            $item['qt'] = $orderline->amount;
+            $item['total'] = $orderline->total;
+
+            array_push($items,$item);
         }
+
+        $options = [
+            'cost' => 10,
+        ];
+
+        if($order->totaliva < $client->contract_value)
+        {
+            $servico = [];
+            $servico['qt'] = 1;
+            $servico['descr'] = "Serviço HACCP";
+            $servico['name'] = "Serviço HACCP";
+            $servico['total'] = $client->contract_value - $order->totaliva;
+
+
+            array_push($items,$servico);
+        }
+
+
+        $token = password_hash($user->id . $cart->id,PASSWORD_BCRYPT,$options);
 
 
         $payment = [
             'client' => ['address' => ['address' => $customer->address,'city'=>$customer->city,'country'=>'PT'], 'email' => $customer->email,'name' => $customer->name],
-            'amount' => $order->totaliva,
+            'amount' => $order->totaliva > $client->contract_value ? $order->totaliva : $client->contract_value,
                 'currency' => 'EUR',
-                'items' =>$orderlines->toArray(),
+                'items' =>$items,
             'ext_invoiceid' => $order->id,
             'ext_costumerid' => $order->user_id,
         ];
@@ -390,7 +416,7 @@ class FrontofficeController extends Controller
 //                'nif' => true,
             ],
             'url_cancel' => 'http://www.regolfood.pt',
-            'url_confirm' => 'http://www.regolfood.pt',
+            'url_confirm' => 'http://www.regolfood.pt/frontoffice/confirm/'.$token,
         ];
 
 
@@ -399,7 +425,27 @@ class FrontofficeController extends Controller
 
         $response = $this->http($url, $request_data);
 
-        dd($response);
+        return $response;
+
+    }
+
+    public function confirmPayment($token)
+    {
+        $user = Auth::user();
+
+        $cart = Cart::where('user_id',$user->id)->first();
+
+        if(password_verify($user->id . $cart->id,$token))
+        {
+            $order = Order::where('cart_id',$cart->id)->first();
+            $order->status = 'payed';
+            $order->save();
+            return redirect('/frontoffice/orders');
+        }
+
+        else{
+            return 404;
+        }
 
     }
 
