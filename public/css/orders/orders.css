@@ -1,7 +1,7 @@
 .panel {
-  background-color: transparent;
   border: none;
-  box-shadow: none;
+  box-shadow: 0 8px 5px rgba(0, 0, 0, 0.12);
+  background-color: #fff;
 }
 
 .table {
