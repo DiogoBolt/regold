@@ -424,7 +424,7 @@ class FrontofficeController extends Controller
             'amount' => $order->totaliva > 29.90 ? $order->totaliva : $order->totaliva+5,
             'currency' => 'EUR',
             'items' =>$items,
-            'ext_invoiceid' => $order->id,
+            'ext_invoiceid' => $order->external_id,
             'ext_costumerid' => $order->user_id,
         ];
 
@@ -489,7 +489,7 @@ class FrontofficeController extends Controller
             'amount' => $order->totaliva > $client->contract_value ? $order->totaliva : $client->contract_value,
             'currency' => 'EUR',
             'items' =>$items,
-            'ext_invoiceid' => $order->id,
+            'ext_invoiceid' => $order->external_id,
             'ext_costumerid' => $order->user_id,
         ];
 
