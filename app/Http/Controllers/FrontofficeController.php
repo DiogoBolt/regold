@@ -350,6 +350,8 @@ class FrontofficeController extends Controller
 
         $response =  $this->processPayment($cart,$order);
 
+        dd($response);
+
         return redirect($response->url_redirect);
 
     }
@@ -414,9 +416,6 @@ class FrontofficeController extends Controller
 
 
         array_push($items,$iva);
-
-
-        $token = password_hash($user->id . $cart->id,PASSWORD_BCRYPT,$options);
 
 
         $payment = [
@@ -484,9 +483,17 @@ class FrontofficeController extends Controller
             array_push($items,$servico);
         }
 
+        $iva = [];
+        $iva['qt'] = 1;
+        $iva['descr'] = "Iva";
+        $iva['name'] = "Iva";
+        $iva['amount'] = $order->totaliva > $client->contract_value ? $order->totaliva - $order->totaliva/1.23 : $client->contract_value - $client->contract_value/1.23;
+
+        array_push($items,$iva);
+
         $payment = [
             'client' => ['address' => ['address' => $customer->address,'city'=>$customer->city,'country'=>'PT'], 'email' => $customer->email,'name' => $customer->name],
-            'amount' => $order->totaliva > $client->contract_value ? $order->totaliva : $client->contract_value,
+            'amount' => $order->totaliva > $client->contract_value ? $order->totaliva * 1.23 : $client->contract_value * 1.23,
             'currency' => 'EUR',
             'items' =>$items,
             'ext_invoiceid' => $order->external_id,
