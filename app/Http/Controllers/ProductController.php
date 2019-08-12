@@ -225,6 +225,12 @@ class ProductController extends Controller
     {
         $user = Auth::user();
 
+        if($user->sales_id == null and $user->client_id == null)
+        {
+
+            return view('messages.massmessage');
+        }
+
         if ($user->sales_id != null and $user->id != $id) {
             return back();
         }
@@ -232,7 +238,7 @@ class ProductController extends Controller
 
         $receiver = User::where('id', $id)->first();
 
-        return view('orders.messages', compact('messages', 'id', 'receiver'));
+        return view('messages.messages', compact('messages', 'id', 'receiver'));
     }
 
     public function newMessage(Request $request)
@@ -262,6 +268,42 @@ class ProductController extends Controller
 
         return back();
 
+    }
+
+    public function newMassMessage(Request $request)
+    {
+        $user = Auth::user();
+        $inputs = $request->all();
+        $text = $inputs['message'];
+        $target = $inputs['target'];
+
+        if($target = 'clients') {
+            $clients = User::where('client_id', '!=', null)->get();
+
+            foreach ($clients as $client) {
+                $message = new Message;
+
+                $message->sender_id = $user->id;
+                $message->receiver_id = $client->id;
+                $message->text = $inputs['message'];
+                $message->viewed = 0;
+                $message->save();
+            }
+        }elseif($target = 'sales') {
+
+            $clients = User::where('sales_id', '!=', null)->get();
+
+            foreach ($clients as $client) {
+                $message = new Message;
+
+                $message->sender_id = $user->id;
+                $message->receiver_id = $client->id;
+                $message->text = $inputs['message'];
+                $message->viewed = 0;
+                $message->save();
+            }
+        }
+        return back();
     }
 
 
