@@ -13,6 +13,12 @@
         </div>
     </div>
 
+    {{-- Go Back Button --}}
+    <a class="back-btn" href="/frontoffice/categories">
+        <span class="back-btn__front"><strong>Voltar</strong></span>
+        <span class="back-btn__back"><strong>Categorias</strong></span>
+    </a>
+
     <div class="container">
         <div class="products-container">
             @foreach($products as $product)

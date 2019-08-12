@@ -6,46 +6,53 @@
 @endsection
 
 @section('content')
-<div class="container-bar">
-    <p class="container-bar_txt">encomendas</p>
-    <div class="container-bar_img">
-        <img src="{{ asset('img/encomendas.jpg') }}" />
+    <div class="container-bar">
+        <p class="container-bar_txt">encomendas</p>
+        <div class="container-bar_img">
+            <img src="{{ asset('img/encomendas.jpg') }}" />
+        </div>
     </div>
-</div>
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel">
-                <div class="panel-body">
 
-                    <table class="table table-responsive">
-                        <tr>
-                            <th>Data</th>
-                            <th>Total</th>
-                            <th>Total + Iva</th>
-                            <th>Estado</th>
+    {{-- Go Back Button --}}
+    <a class="back-btn" href="/home">
+        <span class="back-btn__front"><strong>Voltar</strong></span>
+        <span class="back-btn__back"><strong>Home</strong></span>
+    </a>
 
-                        </tr>
-                        @foreach($orders as $order)
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel">
+                    <div class="panel-body">
+
+                        <table class="table table-responsive">
                             <tr>
-                                <td><a href="/frontoffice/orders/{{$order->id}}">{{date_format($order->created_at,'d-m-y')}}</a></td>
-                                <td>{{number_format($order->total,2)}}€</td>
-                                <td>{{number_format($order->totaliva,2)}}€</td>
-                                @if($order->processed == 1)
-                                    <td>Processado</td>
-                                    @else
-                                    <td>Em Espera</td>
-                                @endif
+                                <th>Data</th>
+                                <th>Total</th>
+                                <th>Total + Iva</th>
+                                <th>Estado</th>
+
                             </tr>
+                            @foreach($orders as $order)
+                                <tr>
+                                    <td><a href="/frontoffice/orders/{{$order->id}}">{{date_format($order->created_at,'d-m-y')}}</a></td>
+                                    <td>{{number_format($order->total,2)}}€</td>
+                                    <td>{{number_format($order->totaliva,2)}}€</td>
+                                    @if($order->processed == 1)
+                                        <td>Processado</td>
+                                        @else
+                                        <td>Em Espera</td>
+                                    @endif
+                                </tr>
 
-                        @endforeach
+                            @endforeach
 
-                    </table>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 
 @endsection

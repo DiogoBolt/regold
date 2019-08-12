@@ -3643,6 +3643,50 @@ img.img-center,.img-center img {margin-left: auto; margin-right: auto;}
     right: -20%;
 }
 
+/* Back Button */
+
+.back-btn {
+    display:inline-block;
+    width:150px;
+    height: 30px;
+    text-align:center;
+    transform-style:preserve-3d;
+    margin-left: 20px;
+    font-size: 14px;
+    cursor:pointer;
+    transition:all .3s ease;
+    color: #000;
+  }
+
+  .back-btn .back-btn__front, .back-btn .back-btn__back {
+    position:absolute;
+    display:block;
+    border:2px solid var(--main-color);
+    transition:all .5s;
+    text-decoration:none;
+    width:150px;
+    height: 30px;
+    line-height: 1.9;
+    border-radius: 15px;
+  }
+
+  .back-btn .back-btn__front {
+    background-color:#fff;
+    transform:translateZ(15px);
+  }
+
+  .back-btn .back-btn__back {
+    background-color:var(--main-color);
+    color: #fff;
+    transform:rotateX(-90deg) translateZ(15px);
+  }
+
+  .back-btn:hover {
+    transform:rotateX(90deg);
+  }
+
+/* Media Queries */
+
 @media (max-width: 991px) {
    .navbar-header {
        display: flex;

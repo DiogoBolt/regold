@@ -162,7 +162,13 @@ class ProductController extends Controller
     {
         $user = Auth::user();
         if ($user->sales_id == null) {
-            $orders = Order::orderBy('id', 'DESC')->get();
+            $orders = Order::from(Order::alias('o'))
+                ->leftJoin(Receipt::alias('r'), 'r.id', '=', 'o.receipt_id')
+                ->select([
+                    'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
+                    'o.receipt_id', 'r.file'
+                ])
+                ->orderBy('o.id', 'DESC')->get();
         } else {
             $orders = Order::from(Order::alias('o'))
                 ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
@@ -170,7 +176,6 @@ class ProductController extends Controller
                 ->orderBy('o.id', 'DESC')
                 ->get();
         }
-
 
         return view('orders.index', compact('orders'));
     }

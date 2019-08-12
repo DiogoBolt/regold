@@ -44,7 +44,9 @@
                                 </form>
                                 </td>
                             @else
-                                <td>FALTA</td>
+                                <td class="form-td">
+                                    <a href="{{asset('uploads/' . $order->client_id . '/' . $order->file)}}" class="file-link"><strong>Visualizar Factura</strong></a>
+                                </td>
                             @endif
                             <td><a href="/orders/{{$order->id}}">Detalhes</a></td>
                             </tr>

@@ -12,6 +12,13 @@
             <img src="{{ asset('img/cart.png') }}" />
         </div>
     </div>
+
+    {{-- Go Back Button --}}
+    <a class="back-btn" href="/home">
+        <span class="back-btn__front"><strong>Voltar</strong></span>
+        <span class="back-btn__back"><strong>Home</strong></span>
+    </a>
+
     <div class="container">
         @if(count($line_items) > 0 )
             <div class="cart-container">
@@ -47,6 +54,13 @@
                         </div>
                     @endforeach     
             </div>
+
+            <div class="cart-info">
+                <h4>Total : {{number_format($total + 0.23*$total,2)}}€</h3>
+                <p>IVA(23) : {{number_format($total * 0.23,2)}}€</p>
+            </div>
+     
+
             <a href="/frontoffice/cart/process" class="btn btn-cart">validar carrinho</a>
         @else 
 
@@ -71,9 +85,6 @@
 <td> $item->total/$item->amount €</td>
 <td>number_format($item->total,2 €</td>
 
-
-<h5>IVA(23) : {{number_format($total * 0.23,2)}}€</h5>
-<h4>Total : {{number_format($total + 0.23*$total,2)}}€</h4>
 -->
 
 @endsection

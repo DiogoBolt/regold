@@ -13,6 +13,12 @@
         </div>
     </div>
 
+    {{-- Go Back Button --}}
+    <a class="back-btn" href="/home">
+        <span class="back-btn__front"><strong>Voltar</strong></span>
+        <span class="back-btn__back"><strong>Home</strong></span>
+    </a>
+
     <div class="container">
         <div class="categories-container">
             @foreach($categories as $category)
