@@ -96,6 +96,7 @@ Route::group(['middleware' => ['backoffice']], function () {
 
     Route::get('/messages/{id}', 'ProductController@messages');
     Route::post('/messages/new', 'ProductController@newMessage');
+    Route::post('/messages/newmassmessage', 'ProductController@newMassMessage');
 
 
 

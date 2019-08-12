@@ -350,7 +350,6 @@ class FrontofficeController extends Controller
 
         $response =  $this->processPayment($cart,$order);
 
-        dd($response);
 
         return redirect($response->url_redirect);
 
@@ -412,7 +411,7 @@ class FrontofficeController extends Controller
         $iva['qt'] = 1;
         $iva['descr'] = "Iva";
         $iva['name'] = "Iva";
-        $iva['amount'] = $order->totaliva - $order->totaliva/1.23;
+        $iva['amount'] = number_format($order->total - $order->total/1.23,2);
 
 
         array_push($items,$iva);
@@ -420,7 +419,7 @@ class FrontofficeController extends Controller
 
         $payment = [
             'client' => ['address' => ['address' => $customer->address,'city'=>$customer->city,'country'=>'PT'], 'email' => $customer->email,'name' => $customer->name],
-            'amount' => $order->totaliva > 29.90 ? $order->totaliva : $order->totaliva+5,
+            'amount' => number_format($order->total > 29.90 ? $order->total : $order->total+5,2),
             'currency' => 'EUR',
             'items' =>$items,
             'ext_invoiceid' => $order->external_id,
@@ -477,7 +476,7 @@ class FrontofficeController extends Controller
             $servico['qt'] = 1;
             $servico['descr'] = "Serviço HACCP";
             $servico['name'] = "Serviço HACCP";
-            $servico['amount'] = $client->contract_value - $order->totaliva;
+            $servico['amount'] = $client->contract_value - $order->total;
 
 
             array_push($items,$servico);
@@ -487,13 +486,13 @@ class FrontofficeController extends Controller
         $iva['qt'] = 1;
         $iva['descr'] = "Iva";
         $iva['name'] = "Iva";
-        $iva['amount'] = $order->totaliva > $client->contract_value ? $order->totaliva - $order->totaliva/1.23 : $client->contract_value - $client->contract_value/1.23;
+        $iva['amount'] = number_format($order->total > $client->contract_value ? $order->total*1.23 - $order->total : $client->contract_value*1.23 - $client->contract_value ,2);
 
         array_push($items,$iva);
 
         $payment = [
             'client' => ['address' => ['address' => $customer->address,'city'=>$customer->city,'country'=>'PT'], 'email' => $customer->email,'name' => $customer->name],
-            'amount' => $order->totaliva > $client->contract_value ? $order->totaliva * 1.23 : $client->contract_value * 1.23,
+            'amount' => number_format($order->total > $client->contract_value ? $order->total * 1.23 : $client->contract_value * 1.23,2),
             'currency' => 'EUR',
             'items' =>$items,
             'ext_invoiceid' => $order->external_id,
@@ -510,6 +509,7 @@ class FrontofficeController extends Controller
             'url_cancel' => 'http://www.regolfood.pt',
             'url_confirm' => 'http://www.regolfood.pt/frontoffice/confirm/?token='.$order->external_id,
         ];
+
 
 
 
