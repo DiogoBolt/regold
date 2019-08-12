@@ -359,7 +359,7 @@ class FrontofficeController extends Controller
 
         $user = Auth::user();
 
-        $orders = Order::where('client_id',$user->client_id)->where('created_at','>=',Carbon::now()->startOfMonth())->count();
+        $orders = Order::where('client_id',$user->client_id)->where('id','!=',$order->id)->where('created_at','>=',Carbon::now()->startOfMonth())->count();
 
         if($orders > 0)
         {
