@@ -1,12 +1,24 @@
 @extends('layouts.app')
 
+@section('styles')
+    <link href="{{ asset('css/salesman/salesman.css') }}" rel="stylesheet">
+@endsection
+
 @section('content')
+<div class="container-bar">
+    <p class="container-bar_txt">Novo Vendedor</p>
+    <div class="container-bar_img">
+        <img src="{{ asset('img/salesman.png') }}" />
+    </div>
+</div>
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Novo Vendedor</div>
                 <div class="panel-body">
+                    <div class="col-sm-6">
+                        <img class="img-responsive salesman-img" src="/img/navbar/logoindexcolor.png"/>
+                    </div>
                     <form action="/salesman/add"  method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="col-sm-6">
@@ -30,9 +42,11 @@
                                 Password: <input class="form-control" type="password" name="password">
                             </div>
 
-                            <button class="btn btn-primary" onsubmit="return validateForm(this)">Criar</button>
-
+                            <button class="btn btn-add" onsubmit="return validateForm(this)">
+                                <strong>Criar</strong>
+                            </button>
                         </div>
+        
                     </form>
                 </div>
             </div>

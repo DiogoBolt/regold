@@ -26,13 +26,12 @@
                                 name="email" value="{{ old('email') }}" 
                                 placeholder="Nome"
                                 required autofocus>
-
-                            @if ($errors->has('email'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('email') }}</strong>
-                                </span>
-                            @endif
                         </div>
+                        @if ($errors->has('email'))
+                        <span class="help-block" style="text-align: center">
+                            <strong>{{ $errors->first('email') }}</strong>
+                        </span>
+                    @endif
                     </div>
 
                     <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">

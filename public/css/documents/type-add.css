@@ -1,0 +1,32 @@
+.type-body {
+  position: relative;
+}
+
+.type-body input,
+.type-body select {
+  border: none;
+  box-shadow: none;
+  border-bottom: 3px solid var(--main-color);
+  border-radius: 0;
+}
+
+.type-body input:focus,
+.type-body select:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.type-body .col-sm-6 {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.btn-add {
+  border: 2px solid var(--main-color);
+}
+
+.btn-add:hover {
+  background-color: #fff;
+  color: var(--main-color);
+}

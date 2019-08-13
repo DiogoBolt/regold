@@ -1,0 +1,15 @@
+.btn-add {
+  width: 100%;
+}
+
+.btn-add:hover {
+  border-color: 3px solid var(--secondary-green);
+  background-color: #fff;
+  color: var(--secondary-green);
+}
+
+.salesman-img {
+  margin: 0 auto;
+  width: 150px;
+  margin-bottom: 15px;
+}

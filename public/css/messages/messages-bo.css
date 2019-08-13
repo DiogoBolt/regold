@@ -1,93 +1,50 @@
-#messages-container {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  margin-bottom: 30px;
+.messages-box {
+  width: 50%;
+  margin: 0 auto;
 }
 
-.msg {
-  width: 40%;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+.message-select {
+  width: 100%;
+  padding: 12px;
   background-color: #fff;
-  display: flex;
-  margin-bottom: 20px;
-  cursor: pointer;
-}
-
-.msg-body {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.msg.viewed {
-  border-top: 8px solid var(--main-color);
-}
-
-.msg.not-viewd {
-  border-top: 8px solid rgb(214, 18, 18);
-}
-
-.msg-info {
-  flex: 1 1 auto;
-}
-
-.msg-img img {
-  width: 100px;
-}
-
-.msg-info {
-  padding: 10px;
-}
-
-/* Modal */
-
-#messageModal .modal-header {
-  background-color: var(--main-color);
   border: none;
+  border-bottom: 3px solid var(--main-color);
+  margin-bottom: 10px;
 }
 
-#messageModal .modal-header .modal-title,
-#messageModal .modal-header .close {
-  color: #fff;
+.message-select:focus {
+  outline: none;
 }
 
-#messageModal .modal-header button {
-  font-size: 20px;
+#messagebody {
+  resize: none;
 }
 
-#messageModal .modal-footer {
-  border: none;
-  text-align: center;
-}
-
-#messageModal .modal-footer button {
+.btn-send {
+  margin-top: 10px;
   border: 2px solid var(--main-color);
+  background-color: var(--main-color);
+  padding: 6px 12px;
+  font-size: 14px;
+  width: 100%;
+  text-transform: uppercase;
+}
+
+.btn-send:hover {
+  background-color: #fff;
   color: var(--main-color);
 }
 
-#messageModal .modal-footer button:hover {
-  background-color: var(--main-color);
-  color: #fff;
-}
-
-.modal-header.not-viewed {
-  background-color: rgb(214, 18, 18) !important;
-}
-
-button.not-viewed {
-  border: 2px solid rgb(214, 18, 18) !important;
-  color: rgb(214, 18, 18) !important;
-}
-
-button.not-viewed:hover {
-  background-color: rgb(214, 18, 18) !important;
-  color: #fff !important;
-}
-
 @media (max-width: 480px) {
-  .msg {
+  .messages {
     width: 100%;
+  }
+
+  .messages-box {
+    max-width: 100% !important;
+  }
+
+  .row {
+    margin-left: 0 !important;
   }
 }

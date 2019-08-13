@@ -25,7 +25,7 @@
                             @foreach($documentTypes as $type)
                                 <tr>
                                     <td><a href="/categories/{{$type->id}}">{{$type->name}}</a></td>
-                                    <td><a href="/categories/delete/{{$type->id}}">Eliminar</a></td>
+                                    <td><a href="/categories/delete/{{$type->id}}" class="btn-del">Eliminar</a></td>
 
                                 </tr>
 
