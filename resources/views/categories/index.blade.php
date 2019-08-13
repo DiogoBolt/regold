@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-<link href="{{ asset('css/categories/categories-bo.css') }}" rel="stylesheet">
+@section('styles')
+    <link href="{{ asset('css/categories/categories-bo.css') }}" rel="stylesheet">
+@endsection
 
 @section('content')
     <div class="container-bar">

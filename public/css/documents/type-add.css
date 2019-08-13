@@ -24,9 +24,17 @@
 
 .btn-add {
   border: 2px solid var(--main-color);
+  width: 100%;
+  text-transform: uppercase;
 }
 
 .btn-add:hover {
   background-color: #fff;
   color: var(--main-color);
+}
+
+@media (max-width: 480px) {
+  .type-body .col-sm-6 {
+    position: relative;
+  }
 }

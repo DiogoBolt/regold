@@ -1,5 +1,6 @@
 .btn-add {
   width: 100%;
+  text-transform: uppercase;
 }
 
 .btn-add:hover {

@@ -58,3 +58,23 @@
   background-color: #fff;
   text-decoration: none;
 }
+
+/* ADD NEW */
+
+#add-cat input {
+  width: 100%;
+  border: none;
+  border-bottom: 3px solid var(--main-color);
+  box-shadow: none;
+  border-radius: 0;
+}
+
+#add-cat input:focus {
+  outline: none;
+}
+
+#add-cat button {
+  color: #fff;
+  width: 100%;
+  text-transform: uppercase;
+}
