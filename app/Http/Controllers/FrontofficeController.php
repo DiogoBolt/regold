@@ -411,7 +411,7 @@ class FrontofficeController extends Controller
         $iva['qt'] = 1;
         $iva['descr'] = "Iva";
         $iva['name'] = "Iva";
-        $iva['amount'] = number_format($order->total - $order->total/1.23,2);
+        $iva['amount'] = number_format($order->total*1.23 - $order->total,2);
 
 
         array_push($items,$iva);
@@ -419,7 +419,7 @@ class FrontofficeController extends Controller
 
         $payment = [
             'client' => ['address' => ['address' => $customer->address,'city'=>$customer->city,'country'=>'PT'], 'email' => $customer->email,'name' => $customer->name],
-            'amount' => number_format($order->total > 29.90 ? $order->total : $order->total+5,2),
+            'amount' => number_format($order->total > 29.90 ? $order->total*1.23 : $order->total*1.23+5,2),
             'currency' => 'EUR',
             'items' =>$items,
             'ext_invoiceid' => $order->external_id,
