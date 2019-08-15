@@ -82,7 +82,17 @@ class FrontofficeController extends Controller
         return view('frontoffice.documents',compact('client','receipts','group','types'));
     }
 
-    public function payedInvoices()
+    public function invoices()
+    {
+
+       $paidInvoices = $this->paidInvoices();
+       $unpaidInvoices = $this->unpaidInvoices();
+       $totalUnpaidAmount = $unpaidInvoices['total'];
+
+        return view('frontoffice.invoices', compact('paidInvoices', 'unpaidInvoices', 'totalUnpaidAmount'));
+    }
+
+    public function paidInvoices()
     {
         $user = Auth::user();
         $client = Customer::where('id',$user->client_id)->first();
@@ -90,10 +100,10 @@ class FrontofficeController extends Controller
 
         $receipts = Receipt::whereIn('id',$orders)->get();
 
-        return view('frontoffice.documents',compact('client','receipts'));
+        return $receipts;
     }
 
-    public function unpayedInvoices()
+    public function unpaidInvoices()
     {
         $user = Auth::user();
         $client = Customer::where('id',$user->client_id)->first();
@@ -103,7 +113,7 @@ class FrontofficeController extends Controller
 
         $total = Order::where('client_id',$client->id)->where('receipt_id',null)->where('status','waiting_payment')->sum('totaliva');
 
-        return view('frontoffice.documents',compact('client','receipts','total'));
+        return ['receipts' => $receipts, 'total' => $total];
     }
 
 
