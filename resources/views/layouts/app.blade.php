@@ -47,21 +47,16 @@
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
                         @else
-
-
-                              
-                                    <li><a class="navbar-brand" href="{{ url('/messages/'.Auth::user()->id)}}">
+                                <li>
+                                    <a href="{{ url('/messages/'.Auth::user()->id)}}">
                                         <img style="margin-top:-15px;width:50px" src="{{ URL::to('/') }}/img/message.png">
-                                    </a></li> 
-                               
+                                    </a>
+                                </li> 
 
                                 @if(Auth::user()->sales_id == null)
                                     <li>
                                         <a href="/documents">
                                             Tipos Documento
-                                            <div class="nav-bar_img">
-                                                <img src="{{ asset('img/doc-green.png') }}" />
-                                            </div>
                                         </a>
                                     </li>
                                 @endif
@@ -69,9 +64,6 @@
                                         <li>
                                             <a href="/salesman/new">
                                                 Novo Vendedor
-                                                <div class="nav-bar_img">
-                                                    <img src="{{ asset('img/salesman.png') }}" />
-                                                </div>
                                             </a>
                                        
                                         </li>
@@ -81,9 +73,6 @@
                                     <li>
                                         <a href="/products">
                                             Produtos
-                                            <div class="nav-bar_img">
-                                                <img src="{{ asset('img/produtos.jpg') }}" />
-                                            </div>
                                         </a>
                                     </li>
                                 @endif
@@ -92,27 +81,18 @@
                                     <li>
                                         <a href="/categories">
                                             Categorias
-                                            <div class="nav-bar_img">
-                                                <img src="{{ asset('img/encomendas.jpg') }}" />
-                                            </div>
                                         </a>
                                     </li>
                                 @endif
                                 <li>
                                     <a href="/groups">
                                         Voltas 
-                                        <div class="nav-bar_img">
-                                                <img src="{{ asset('img/clientes.jpg') }}" />
-                                            </div>
                                     </a>
                                 </li>
     
                                 <li>
                                     <a href="/orders">
                                         Encomendas 
-                                        <div class="nav-bar_img">
-                                                <img src="{{ asset('img/encomendas.jpg') }}" />
-                                            </div>
                                     </a>
                                 </li>
                             <li class="dropdown">
