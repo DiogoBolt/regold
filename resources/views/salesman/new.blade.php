@@ -16,8 +16,8 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <div class="col-sm-6">
-                        <img class="img-responsive salesman-img" src="/img/navbar/logoindexcolor.png"/>
+                    <div>
+                        <img class="img-responsive add-img" src="/img/navbar/logoindexcolor.png"/>
                     </div>
                     <form action="/salesman/add"  method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
@@ -31,6 +31,9 @@
                             <div class="form-group">
                                 Cidade: <input class="form-control" name="city">
                             </div>
+                           
+                        </div>
+                        <div class="col-sm-6">
                             <div class="form-group">
                                 NIF: <input id="nif" class="form-control" type="number" name="nif">
                             </div>
@@ -41,7 +44,8 @@
                             <div class="form-group">
                                 Password: <input class="form-control" type="password" name="password">
                             </div>
-
+                        </div>
+                        <div>
                             <button class="btn btn-add" onsubmit="return validateForm(this)">
                                 <strong>Criar</strong>
                             </button>

@@ -1,10 +1,15 @@
-.btn-edit:hover {
+.btn-add {
+  width: 100%;
+  text-transform: uppercase;
+}
+
+.btn-add:hover {
   border-color: 3px solid var(--secondary-green);
   background-color: #fff;
   color: var(--secondary-green);
 }
 
-.edit-img {
+.add-img {
   margin: 0 auto;
   width: 150px;
   margin-bottom: 15px;

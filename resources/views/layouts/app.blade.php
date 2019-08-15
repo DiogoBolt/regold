@@ -39,11 +39,7 @@
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
-                    </ul>
-
+            
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
@@ -53,29 +49,72 @@
                         @else
 
 
-                                <li><a class="navbar-brand" href="{{ url('/messages/'.Auth::user()->id)}}">
+                              
+                                    <li><a class="navbar-brand" href="{{ url('/messages/'.Auth::user()->id)}}">
                                         <img style="margin-top:-15px;width:50px" src="{{ URL::to('/') }}/img/message.png">
-                                    </a></li>
+                                    </a></li> 
+                               
 
-
-
-                            @if(Auth::user()->sales_id == null)
-                                <li><a href="/documents">Tipos Documento</a></li>
-                            @endif
                                 @if(Auth::user()->sales_id == null)
-                                    <li><a href="/salesman/new">Novo Vendedor</a></li>
+                                    <li>
+                                        <a href="/documents">
+                                            Tipos Documento
+                                            <div class="nav-bar_img">
+                                                <img src="{{ asset('img/doc-green.png') }}" />
+                                            </div>
+                                        </a>
+                                    </li>
                                 @endif
-
-                            @if(Auth::user()->sales_id == null)
-                                <li><a href="/products">Produtos</a></li>
-                            @endif
-
-                            @if(Auth::user()->sales_id == null)
-                                <li><a href="/categories">Categorias</a></li>
-                            @endif
-                            <li><a href="/groups">Voltas</a></li>
-
-                            <li><a href="/orders">Encomendas</a></li>
+                                    @if(Auth::user()->sales_id == null)
+                                        <li>
+                                            <a href="/salesman/new">
+                                                Novo Vendedor
+                                                <div class="nav-bar_img">
+                                                    <img src="{{ asset('img/salesman.png') }}" />
+                                                </div>
+                                            </a>
+                                       
+                                        </li>
+                                    @endif
+    
+                                @if(Auth::user()->sales_id == null)
+                                    <li>
+                                        <a href="/products">
+                                            Produtos
+                                            <div class="nav-bar_img">
+                                                <img src="{{ asset('img/produtos.jpg') }}" />
+                                            </div>
+                                        </a>
+                                    </li>
+                                @endif
+    
+                                @if(Auth::user()->sales_id == null)
+                                    <li>
+                                        <a href="/categories">
+                                            Categorias
+                                            <div class="nav-bar_img">
+                                                <img src="{{ asset('img/encomendas.jpg') }}" />
+                                            </div>
+                                        </a>
+                                    </li>
+                                @endif
+                                <li>
+                                    <a href="/groups">
+                                        Voltas 
+                                        <div class="nav-bar_img">
+                                                <img src="{{ asset('img/clientes.jpg') }}" />
+                                            </div>
+                                    </a>
+                                </li>
+    
+                                <li>
+                                    <a href="/orders">
+                                        Encomendas 
+                                        <div class="nav-bar_img">
+                                                <img src="{{ asset('img/encomendas.jpg') }}" />
+                                            </div>
+                                    </a>
+                                </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>

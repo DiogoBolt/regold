@@ -1,0 +1,22 @@
+.panel {
+  background-color: transparent;
+  border: none;
+  box-shadow: 0 8px 5px rgba(0, 0, 0, 0.12) !important;
+}
+
+.btn-add {
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.btn-add:hover {
+  border-color: 3px solid var(--secondary-green);
+  background-color: #fff;
+  color: var(--secondary-green);
+}
+
+.add-img {
+  margin: 0 auto;
+  width: 150px;
+  margin-bottom: 15px;
+}

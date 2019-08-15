@@ -1,0 +1,52 @@
+.panel {
+  border: none;
+  box-shadow: 0 8px 5px rgba(0, 0, 0, 0.12);
+  background-color: #fff;
+}
+
+.table {
+  background-color: #fff;
+}
+
+.table > tbody > tr > td,
+.table > tbody > tr > th,
+.table > tfoot > tr > td,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > thead > tr > th {
+  border-top: none;
+  vertical-align: middle;
+}
+
+.table th {
+  background-color: var(--main-color);
+  color: #fff;
+}
+
+.table tr:nth-child(odd) {
+  background-color: var(--light-green);
+}
+
+.table td img {
+  width: 100px;
+  margin: 0 auto;
+  display: block;
+}
+
+.order-info {
+  margin: 15px 0;
+  border-top: 3px solid var(--main-color);
+  border-bottom: 3px solid var(--main-color);
+  text-align: center;
+}
+
+.btn-process {
+  border: 2px solid var(--main-color);
+  background-color: #fff;
+  color: var(--main-color);
+}
+
+.btn-process:hover {
+  background-color: var(--main-color);
+  color: #fff;
+}

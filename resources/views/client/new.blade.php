@@ -1,12 +1,25 @@
 @extends('layouts.app')
 
+@section('styles')
+    <!-- Custom CSS -->
+    <link href="{{ asset('css/client/client-add.css') }}" rel="stylesheet">
+@endsection
+
 @section('content')
+<div class="container-bar">
+    <p class="container-bar_txt">novo cliente</p>
+    <div class="container-bar_img">
+        <img src="{{ asset('img/add-user.png') }}" />
+    </div>
+</div>
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Novo Cliente</div>
                 <div class="panel-body">
+                    <div>
+                        <img class="img-responsive add-img" src="/img/navbar/logoindexcolor.png"/>
+                    </div>
                     <form action="/clients/add"  method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="col-sm-6">
@@ -34,6 +47,8 @@
                             <div class="form-group">
                                 Metodo Pagamento: <input class="form-control" name="payment_method">
                             </div>
+                        </div>
+                        <div class="col-sm-6">
                             <div class="form-group">
                                 Vendedor: <select class="form-control" name="salesman">
                                     @foreach($salesman as $sales)
@@ -65,10 +80,9 @@
                             <div class="form-group">
                                 Valor Contrato: <input class="form-control" type="number" name="value">
                             </div>
-
-
-                            <button class="btn btn-primary" onsubmit="return validateForm(this)">Criar</button>
-
+                        </div>
+                        <div>
+                            <button class="btn btn-add" onsubmit="return validateForm(this)">Criar</button>
                         </div>
                     </form>
                 </div>

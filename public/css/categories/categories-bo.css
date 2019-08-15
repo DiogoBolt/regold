@@ -34,7 +34,6 @@
 }
 
 .btn-add {
-  display: block;
   border: 2px solid var(--main-color) !important;
   color: var(--main-color);
   margin: 20px 0;
@@ -74,7 +73,13 @@
 }
 
 #add-cat button {
+  border: 2px solid var(--main-color) !important;
   color: #fff;
   width: 100%;
   text-transform: uppercase;
+}
+
+#add-cat button:hover {
+  background-color: #fff;
+  color: var(--main-color) !important;
 }

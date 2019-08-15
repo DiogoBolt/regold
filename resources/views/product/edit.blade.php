@@ -1,26 +1,41 @@
 @extends('layouts.app')
 
+@section('styles')
+    <!-- Custom CSS -->
+    <link href="{{ asset('css/products/products-edit.css') }}" rel="stylesheet">
+@endsection
+
 @section('content')
+<div class="container-bar">
+    <p class="container-bar_txt">{{$product->name}}</p>
+    <div class="container-bar_img">
+        <img src="{{ asset('img/produtos.jpg') }}" />
+    </div>
+</div>
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">{{$product->name}}</div>
+            <div class="panel">
                 <div class="panel-body">
                     <form action="/products/edit"  method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <input value="{{$product->id}}" name="id" style="display:none">
+                        <div class="main-info">
+                            <div class="col-sm-6">
+                                <img src="/uploads/products/{{$product->file}}" class="img-responsive product-img">
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    Nome:<input class="form-control"  name="name" value="{{$product->name}}">
+                                </div>
+                                <div class="form-group">
+                                    Detalhes:<textarea class="form-control" name="details" >{{$product->details}}</textarea>
+                                </div>
+                            </div>
+                           
+                        </div>
                         <div class="col-sm-6">
-
-                            <img src="/uploads/products/{{$product->file}}" class="img-responsive" style="width:365px;height:365px;">
-
-                            <div class="form-group">
-                                Nome:<input class="form-control"  name="name" value="{{$product->name}}">
-                            </div>
-                            <div class="form-group">
-                                Detalhes:<textarea class="form-control"  name="details" >{{$product->details}}</textarea>
-                            </div>
-
                             <div class="form-group">
                                 Categoria : <select class="form-control" name="category">
                                     <option value="{{$product->category}}" selected>{{$product->category}}</option>
@@ -45,6 +60,8 @@
                             <div class="form-group">
                                Total Escalão 3:<input class="form-control"  name="amount3" value="{{$product->amount3}}" >
                             </div>
+                        </div>
+                        <div class="col-sm-6">
 
                             <div class="form-group">
                                 Referência:<input class="form-control"  name="ref" value="{{$product->ref}}" >
@@ -66,10 +83,9 @@
                             <div class="form-group">
                                 <a href="/uploads/products/{{$product->seguranca}}">{{$product->seguranca}}</a>
                             </div>
-
-
-                            <button class="btn btn-warning">Editar</button>
-
+                        </div>
+                        <div>
+                            <button class="btn btn-edit">Editar</button>
                         </div>
                     </form>
                 </div>
