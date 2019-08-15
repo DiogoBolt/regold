@@ -525,7 +525,6 @@ class FrontofficeController extends Controller
     {
         $inputs = $request->all();
 
-        $user = Auth::user();
 
 
             $order = Order::where('external_id',$inputs['token'])->first();
