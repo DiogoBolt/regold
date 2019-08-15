@@ -84,10 +84,13 @@ class FrontofficeController extends Controller
 
     public function invoices()
     {
+        $user = Auth::user();
+        $client = Customer::where('id',$user->client_id)->first();
 
-       $paidInvoices = $this->paidInvoices();
-       $unpaidInvoices = $this->unpaidInvoices();
-       $totalUnpaidAmount = $unpaidInvoices['total'];
+        $paidInvoices = $this->paidInvoices();
+        $unpaidInvoices = $this->unpaidInvoices();
+
+        $totalUnpaidAmount = Order::where('client_id',$client->id)->where('receipt_id',null)->where('status','waiting_payment')->sum('totaliva');
 
         return view('frontoffice.invoices', compact('paidInvoices', 'unpaidInvoices', 'totalUnpaidAmount'));
     }
@@ -107,13 +110,13 @@ class FrontofficeController extends Controller
     {
         $user = Auth::user();
         $client = Customer::where('id',$user->client_id)->first();
-        $orders = Order::where('client_id',$client->id)->where('receipt_id',null)->where('status','waiting_payment')->get(['receipt_id']);
 
-        $receipts = Receipt::whereIn('id',$orders)->get();
+       $receipts = Receipt::from(Receipt::alias('r'))
+            ->leftJoin(Order::alias('o'), 'o.invoice_id', '=', 'r.id')
+            ->where('status','waiting_payment')
+           ->get();
 
-        $total = Order::where('client_id',$client->id)->where('receipt_id',null)->where('status','waiting_payment')->sum('totaliva');
-
-        return ['receipts' => $receipts, 'total' => $total];
+        return $receipts;
     }
 
 
