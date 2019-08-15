@@ -88,10 +88,12 @@ class ClientController extends Controller
         {
             $clients = Customer::from(Customer::alias('c'))
                 ->leftJoin(Group::alias('g'), 'c.group_id', '=', 'g.id')
+                ->leftJoin(User::alias('u'), 'u.client_id', '=', 'c.id')
                 ->where('c.name','LIKE','%'.$search.'%')
                 ->orWhere('c.id','LIKE','%'.$search.'%')
                 ->select([
                     'c.id',
+                    'u.id as userid',
                     'g.id as groupid',
                     'c.name',
                     'g.name as group',
@@ -100,6 +102,7 @@ class ClientController extends Controller
 
             $clients = Customer::from(Customer::alias('c'))
                 ->leftJoin(Group::alias('g'), 'c.group_id', '=', 'g.id')
+                ->leftJoin(User::alias('u'), 'u.client_id', '=', 'c.id')
                 ->where('c.salesman',$user->sales_id)
                 ->where(function($query) use ($search)
                 {
@@ -108,6 +111,7 @@ class ClientController extends Controller
                 })
                 ->select([
                     'c.id',
+                    'u.id as userid',
                     'g.id as groupid',
                     'c.name',
                     'g.name as group',
@@ -222,11 +226,10 @@ class ClientController extends Controller
             $receipt->name = date('Y-m-d');
             $receipt->document_type_id = $inputs['type'];
             $receipt->viewed = 0;
-            $type = DocumentType::where('id',$inputs['type'])->first()->name;
 
             $file = $request->file('receipt');
             $extension = $file->getClientOriginalExtension(); // getting image extension
-            $filename =$type . date('Y-m-d').'.'.$extension;
+            $filename = $file->getClientOriginalName().'.'.$extension;
             $file->move('uploads/'.$inputs['client'].'/', $filename);
 
 
@@ -472,6 +475,13 @@ class ClientController extends Controller
         $type->delete();
 
         return back();
+    }
+
+    public function impersonateClient($id)
+    {
+        Auth::logout();
+        Auth::loginUsingId($id);
+        return redirect()->back();
     }
 
 

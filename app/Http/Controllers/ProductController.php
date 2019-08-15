@@ -225,7 +225,7 @@ class ProductController extends Controller
     {
         $user = Auth::user();
 
-        if($user->sales_id == null and $user->client_id == null)
+        if($user->sales_id == null and $user->client_id == null and $id == $user->id)
         {
 
             return view('messages.massmessage');

@@ -82,6 +82,30 @@ class FrontofficeController extends Controller
         return view('frontoffice.documents',compact('client','receipts','group','types'));
     }
 
+    public function payedInvoices()
+    {
+        $user = Auth::user();
+        $client = Customer::where('id',$user->client_id)->first();
+        $orders = Order::where('client_id',$client->id)->where('receipt_id','!=',null)->where('status','payed')->get(['receipt_id']);
+
+        $receipts = Receipt::whereIn('id',$orders)->get();
+
+        return view('frontoffice.documents',compact('client','receipts'));
+    }
+
+    public function unpayedInvoices()
+    {
+        $user = Auth::user();
+        $client = Customer::where('id',$user->client_id)->first();
+        $orders = Order::where('client_id',$client->id)->where('receipt_id',null)->where('status','waiting_payment')->get(['receipt_id']);
+
+        $receipts = Receipt::whereIn('id',$orders)->get();
+
+        $total = Order::where('client_id',$client->id)->where('receipt_id',null)->where('status','waiting_payment')->sum('totaliva');
+
+        return view('frontoffice.documents',compact('client','receipts','total'));
+    }
+
 
     public function documentsByType($type)
     {
@@ -525,22 +549,17 @@ class FrontofficeController extends Controller
     {
         $inputs = $request->all();
 
-
-
-            $order = Order::where('external_id',$inputs['token'])->first();
-            $cart = Cart::where('id',$order->cart_id)->first();
-            $cart->processed = 1;
-            $cart->save();
-            if(isset($order))
-            {
-                $order->status = 'payed';
+        if ($this->http('https://services.sandbox.meowallet.pt/api/v2/callback/verify', $request)) {
+            $order = Order::where('external_id', $inputs['ext_invoiceid'])->first();
+            if (isset($order)) {
+                if($inputs['operation_status'] == 'COMPLETED')
+                $order->status = "payed";
                 $order->save();
-                return redirect('/frontoffice/orders');
+            } else {
+                return "";
             }
-            else{
-            return 404;
-            }
-
+        }
+        return 200;
     }
 
     private function http($url, $data = null, $method = null){

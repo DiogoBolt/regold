@@ -21,13 +21,13 @@
                         <tr>
                             <th>Id</th>
                             <th>Nome</th>
-                            <th>Grupo</th>
+                            <th>Entrar</th>
                         </tr>
                         @foreach($clients as $client)
                             <tr>
                                 <td><a href="/clients/{{$client->id}}">{{$client->id}}</a></td>
                                 <td><a href="/clients/{{$client->id}}">{{$client->name}}</a></td>
-                                <td><a href="/groups/{{$client->groupid}}">{{$client->group}}</a></td>
+                                <td><a href="/clients/impersonate/{{$client->userid}}">Entrar</a></td>
                             </tr>
                         @endforeach
                     </table>
