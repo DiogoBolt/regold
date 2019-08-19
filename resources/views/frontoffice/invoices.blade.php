@@ -67,10 +67,10 @@
         invoiceSelect.addEventListener('change', function (evt) {
             let selected = evt.target.value;
 
-            if ( selected == 0 ) { /* Facturas Liquidadas */
+            if ( selected === '0' ) { /* Facturas Liquidadas */
                 unpaidDiv.style.display = 'none';
                 paidDiv.style.display = 'block';
-            } else if ( selected == 1 ) { /* Facturas por Liquidar */
+            } else if ( selected === '1' ) { /* Facturas por Liquidar */
                 unpaidDiv.style.display = 'block';
                 paidDiv.style.display = 'none';
             };

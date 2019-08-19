@@ -8,6 +8,7 @@
   border-radius: 10px;
   background-color: transparent;
   font-size: 16px;
+  cursor: pointer;
 }
 
 #invoice-select:focus {
