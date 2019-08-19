@@ -163,10 +163,11 @@ class ProductController extends Controller
         $user = Auth::user();
         if ($user->sales_id == null) {
             $orders = Order::from(Order::alias('o'))
-                ->leftJoin(Receipt::alias('r'), 'r.id', '=', 'o.receipt_id')
+                ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
+                ->where('processed',0)
                 ->select([
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                    'o.receipt_id', 'r.file'
+                    'o.receipt_id','o.created_at','c.name','c.regoldiID','o.status','o.invoice_id'
                 ])
                 ->orderBy('o.id', 'DESC')->get();
         } else {
@@ -176,6 +177,14 @@ class ProductController extends Controller
                 ->orderBy('o.id', 'DESC')
                 ->get();
         }
+
+        foreach($orders as $order)
+        {
+            $order->receipt = Receipt::where('id',$order->receipt_id)->first()->file ?? null;
+            $order->invoice = Receipt::where('id',$order->invoice_id)->first()->file ?? null;
+        }
+
+
 
         return view('orders.index', compact('orders'));
     }
@@ -324,7 +333,7 @@ class ProductController extends Controller
 
             $file = $request->file('receipt');
             $extension = $file->getClientOriginalExtension(); // getting image extension
-            $filename ='fatura' . date('Y-m-d').'.'.$extension;
+            $filename = $file->getClientOriginalName().'.'.$extension;
             $file->move('uploads/'.$order->client_id.'/', $filename);
 
 
@@ -335,6 +344,41 @@ class ProductController extends Controller
         }
 
         $order->receipt_id = $receipt->id;
+        $order->save();
+
+        return redirect('/orders');
+
+
+    }
+
+    public function attachInvoice(Request $request)
+    {
+        $inputs = $request->all();
+
+        $order = Order::where('id',$inputs['order'])->first();
+
+        if($request->hasfile('receipt'))
+        {
+            $receipt = new Receipt;
+
+            $receipt->client_id = $order->client_id;
+            $receipt->name = date('Y-m-d');
+            $receipt->document_type_id = 2;
+            $receipt->viewed = 0;
+
+            $file = $request->file('receipt');
+            $extension = $file->getClientOriginalExtension(); // getting image extension
+            $filename = $file->getClientOriginalName().'.'.$extension;
+            $file->move('uploads/'.$order->client_id.'/', $filename);
+
+
+            //TODO Envio de email
+
+            $receipt->file = $filename;
+            $receipt->save();
+        }
+
+        $order->invoice_id = $receipt->id;
         $order->save();
 
         return redirect('/orders');

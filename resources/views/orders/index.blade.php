@@ -13,26 +13,27 @@
     <div class="row">
         <div class="panel">
             <div class="panel-body table-responsive">
-                <h5 style="color:darkorange">Em Espera</h5>
                 <table class="table">
                     <tr>
-                        <th>ID Cliente</th>
+                        <th>Cliente</th>
+                        <th>ID Regoldi</th>
                         <th>Total</th>
-                        <th>Total + Iva</th>
                         <th>Estado</th>
                         <th>Fatura</th>
+                        <th>Recibo</th>
                         <th>Detalhes</th>
+                        <th>Processar</th>
                     </tr>
                     @foreach($orders as $order)
                         @if($order->processed == 0)
                         <tr>
-                            <td><a href="/clients/{{$order->client_id}}">{{$order->client_id}}</a></td>
+                            <td><a href="/clients/{{$order->client_id}}">{{$order->name}}</a></td>
+                            <td>{{$order->regoldiID}}</td>
                             <td>{{number_format($order->total,2)}}€</td>
-                            <td>{{number_format($order->totaliva,2)}}€</td>
-                            <td>Em Espera</td>
-                            @if($order->receipt_id == null)
+                            <td>{{$order->status}}</td>
+                            @if($order->invoice_id == null)
                                 <td class="form-td">
-                                <form action="/orders/attachReceipt" class="order-form" method="post" enctype="multipart/form-data">
+                                <form action="/orders/attachInvoice" class="order-form" method="post" enctype="multipart/form-data">
                                     {{ csrf_field() }}
 
                                     <input value="{{$order->id}}" type="hidden" name="order">
@@ -45,38 +46,35 @@
                                 </td>
                             @else
                                 <td class="form-td">
-                                    <a href="{{asset('uploads/' . $order->client_id . '/' . $order->file)}}" class="file-link"><strong>Visualizar Factura</strong></a>
+                                    <a href="{{asset('uploads/' . $order->client_id . '/' . $order->invoice)}}" class="file-link"><strong>Visualizar Factura</strong></a>
+                                </td>
+                            @endif
+
+                            @if($order->receipt_id == null)
+                                <td class="form-td">
+                                    <form action="/orders/attachReceipt" class="order-form" method="post" enctype="multipart/form-data">
+                                        {{ csrf_field() }}
+
+                                        <input value="{{$order->id}}" type="hidden" name="order">
+
+                                        <label for="{{$order->id}}" class="btn"><strong>Adicionar Recibo</strong></label>
+                                        <input id="{{$order->id}}" class="input-order" type="file" name="receipt">
+
+                                        <button class="btn">Associar</button>
+                                    </form>
+                                </td>
+                            @else
+                                <td class="form-td">
+                                    <a href="{{asset('uploads/' . $order->client_id . '/' . $order->receipt)}}" class="file-link"><strong>Visualizar Recibo</strong></a>
                                 </td>
                             @endif
                             <td><a href="/orders/{{$order->id}}">Detalhes</a></td>
+                            <td><a href="/orders/process/{{$order->id}}" class="btn btn-process">
+                                <strong>Processar</strong>
+                            </a></td>
                             </tr>
 
                     @endif
-                    @endforeach
-
-                </table>
-                <h5 style="color:green">Processadas</h5>
-
-                <table class="table">
-                    <tr>
-                        <th>ID Cliente</th>
-                        <th>Total</th>
-                        <th>Total + Iva</th>
-                        <th>Estado</th>
-                        <th>Detalhes</th>
-
-                    </tr>
-                    @foreach($orders as $order)
-                        @if($order->processed == 1)
-                            <tr>
-                                <td><a href="/clients/{{$order->client_id}}">{{$order->client_id}}</a></td>
-                                <td>{{number_format($order->total,2)}}€</td>
-                                <td>{{number_format($order->totaliva,2)}}€</td>
-                                <td>Processado</td>
-
-                                <td><a href="/orders/{{$order->id}}">Detalhes</a></td>
-                            </tr>
-                        @endif
                     @endforeach
 
                 </table>

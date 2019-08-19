@@ -3,6 +3,7 @@
 @section('styles')
     <!-- Custom CSS -->
     <link href="{{ asset('css/invoices/invoices.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/documents/type.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -32,7 +33,16 @@
 
                 @if ( count($paidInvoices) > 0)
                     @foreach ($paidInvoices as $invoice)
-                        <div></div>
+                        <div class="file">
+                            <div class="file-head">
+                                {{$invoice->file}}
+                            </div>
+                            <div class="file-body">
+                                <a href="/uploads/{{$invoice->client_id}}/{{$invoice->file}}">
+                                    <img class="file-body__img" src="/uploads/{{$invoice->client_id}}/{{$invoice->file}}" />
+                                </a>
+                            </div>
+                        </div>
                     @endforeach                  
                 @else
                     <h4>Não possui nenhuma factura liquidada de momento.</h4>
@@ -42,9 +52,18 @@
             <div id="unpaid">
                 <h3>Total : {{ $totalUnpaidAmount ?: 'Sem montante em dívida' }}</h3>
 
-                @if (count($unpaidInvoices['receipts']) > 0)
+                @if (count($unpaidInvoices) > 0)
                     @foreach ($unpaidInvoices as $invoice)
-                        <div></div>
+                        <div class="file">
+                            <div class="file-head">
+                                {{$invoice->file}}
+                            </div>
+                            <div class="file-body">
+                                <a href="/uploads/{{$invoice->client_id}}/{{$invoice->file}}">
+                                    <img class="file-body__img" src="/uploads/{{$invoice->client_id}}/{{$invoice->file}}" />
+                                </a>
+                            </div>
+                        </div>
                     @endforeach                  
                 @else
                     <h4>Não possui nenhuma factura para liquidar de momento.</h4>

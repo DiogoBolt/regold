@@ -93,6 +93,7 @@ Route::group(['middleware' => ['backoffice']], function () {
     Route::get('/orders/{id}', 'ProductController@viewOrder');
     Route::get('/orders/process/{id}', 'ProductController@processOrder');
     Route::post('/orders/attachReceipt', 'ProductController@attachReceipt');
+    Route::post('/orders/attachInvoice', 'ProductController@attachInvoice');
 
 
 
