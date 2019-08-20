@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Auth;
+use Illuminate\Support\Facades\Session;
 
 class redirectClient
 {
@@ -18,7 +19,7 @@ class redirectClient
     {
         $user = Auth::user();
 
-        if ($user->client_id != null) {
+        if ($user->client_id != null and $request->getRequestUri() != '/impersonate/leaveuser') {
             return redirect('/home');
         }
 

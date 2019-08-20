@@ -58,6 +58,7 @@ Route::group(['middleware' => ['backoffice']], function () {
     Route::get('/clients/group/{id}', 'ClientController@clientsByGroup');
     Route::post('/clients/addreceipt', 'ClientController@addReceipt');
     Route::get('/clients/impersonate/{id}', 'ClientController@impersonateClient');
+    Route::get('/impersonate/leaveuser', 'ClientController@leaveUser');
 
     Route::get('/salesman/new', 'ClientController@newSales');
     Route::post('/salesman/add', 'ClientController@addSales');
