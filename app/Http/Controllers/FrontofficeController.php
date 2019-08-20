@@ -101,7 +101,7 @@ class FrontofficeController extends Controller
         $client = Customer::where('id',$user->client_id)->first();
         $orders = Order::where('client_id',$client->id)->where('receipt_id','!=',null)->where('status','payed')->get(['receipt_id']);
 
-        $receipts = Receipt::whereIn('id',$orders)->get();
+        $receipts = Receipt::whereIn('id',$orders)->paginate(10);
 
         return $receipts;
     }
@@ -114,7 +114,7 @@ class FrontofficeController extends Controller
        $receipts = Receipt::from(Receipt::alias('r'))
             ->leftJoin(Order::alias('o'), 'o.invoice_id', '=', 'r.id')
             ->where('status','waiting_payment')
-           ->get();
+            ->paginate(2);
 
         return $receipts;
     }

@@ -31,18 +31,7 @@
             <div id="paid">
 
                 @if ( count($paidInvoices) > 0)
-                    @foreach ($paidInvoices as $invoice)
-                        <div class="file">
-                            <div class="file-head">
-                                {{$invoice->file}}
-                            </div>
-                            <div class="file-body">
-                                <a href="/uploads/{{$invoice->client_id}}/{{$invoice->file}}">
-                                    <img class="file-body__img" src="/uploads/{{$invoice->client_id}}/{{$invoice->file}}" />
-                                </a>
-                            </div>
-                        </div>
-                    @endforeach                  
+                    @include('frontoffice.partials.invoices-partial', ['invoices' => $paidInvoices]) 
                 @else
                     <h4>Não possui nenhuma factura liquidada de momento.</h4>
                 @endif
@@ -52,19 +41,7 @@
                 <h3>Total : {{ $totalUnpaidAmount . ' €' ?: 'Sem montante em dívida' }}</h3>
 
                 @if (count($unpaidInvoices) > 0)
-                    @foreach ($unpaidInvoices as $invoice)
-                        <div class="file">
-                            <div class="file-head">
-                                {{$invoice->file}}
-                            </div>
-                            <div class="file-body">
-                                <a href="/uploads/{{$invoice->client_id}}/{{$invoice->file}}">
-                                    <img class="file-body__img" src="/uploads/{{$invoice->client_id}}/{{$invoice->file}}" />
-                                    <div clasS="file-body__price">{{ $invoice->totaliva}} €</div>
-                                </a>
-                            </div>
-                        </div>
-                    @endforeach                  
+                    @include('frontoffice.partials.invoices-partial', ['invoices' => $unpaidInvoices])               
                 @else
                     <h4>Não possui nenhuma factura para liquidar de momento.</h4>
                 @endif
