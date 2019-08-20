@@ -78,7 +78,7 @@
                             </div>
 
                             <div class="form-group">
-                                Valor Contrato: <input class="form-control" type="number" name="value">
+                                Valor Contrato: <input class="form-control" name="value">
                             </div>
                         </div>
                         <div>
