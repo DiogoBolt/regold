@@ -14,6 +14,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class ClientController extends Controller
 {
@@ -479,10 +480,21 @@ class ClientController extends Controller
 
     public function impersonateClient($id)
     {
+        $user = Auth::user();
+        Session::put('impersonated',$user->id);
         Auth::logout();
         Auth::loginUsingId($id);
         return redirect()->back();
     }
 
+    public function leaveUser()
+    {
+        $userId = Session::get('impersonated');
+
+        Session::forget('impersonated');
+        Auth::logout();
+        Auth::loginUsingId($userId);
+        return redirect('/');
+    }
 
 }

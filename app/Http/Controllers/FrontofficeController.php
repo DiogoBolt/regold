@@ -374,8 +374,12 @@ class FrontofficeController extends Controller
 
         $totaliva = $total + 0.23*$total;
 
-        $order = new Order;
+        $order = Order::where('client_id',$user->client_id)->where('status','waiting_payment')->where('invoice_id',null)->first();
 
+        if(!isset($order))
+        {
+            $order = new Order;
+        }
         $order->client_id = $user->client_id;
         $order->cart_id = $cart->id;
         $order->total = $total;

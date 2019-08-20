@@ -193,6 +193,8 @@ class ProductController extends Controller
     {
         $order = Order::where('id', $id)->first();
 
+        $client = Customer::where('id',$order->client_id)->first();
+
         if (!isset($order))
             return back();
 
@@ -209,7 +211,7 @@ class ProductController extends Controller
 
             $total = OrderLine::where('cart_id', $cart->id)->sum('total');
 
-            return view('orders.order', compact('line_items', 'total', 'order'));
+            return view('orders.order', compact('line_items', 'total', 'order','client'));
         } else {
 
             return back();
