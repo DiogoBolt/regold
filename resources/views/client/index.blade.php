@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
-<link href="{{ asset('css/client/client-bo.css') }}" rel="stylesheet">
+@section('styles')
+    <!-- Custom CSS -->
+    <link href="{{ asset('css/client/client-bo.css') }}" rel="stylesheet">
+@endsection
 
 @section('content')
 <div class="container-bar">
@@ -32,6 +35,10 @@
                         @endforeach
                     </table>
 
+                    <div style="text-align: center;">
+                        {{ $clients->links() }}
+                    </div>
+                    
                     <a href="/clients/new" class="btn btn-add"><strong>Novo Cliente</strong></a>
                 </div>
             </div>

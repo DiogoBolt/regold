@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
-<link href="{{ asset('css/orders/orders-bo.css') }}" rel="stylesheet">
+@section('styles')
+    <!-- Custom CSS -->
+    <link href="{{ asset('css/orders/orders-bo.css') }}" rel="stylesheet">
+@endsection
 
 @section('content')
 <div class="container-bar">
@@ -26,58 +29,61 @@
                     </tr>
                     @foreach($orders as $order)
                         @if($order->processed == 0)
-                        <tr>
-                            <td><a href="/clients/{{$order->client_id}}">{{$order->name}}</a></td>
-                            <td>{{$order->regoldiID}}</td>
-                            <td>{{number_format($order->total,2)}}€</td>
-                            <td>{{$order->status}}</td>
-                            @if($order->invoice_id == null)
-                                <td class="form-td">
-                                <form action="/orders/attachInvoice" class="order-form" method="post" enctype="multipart/form-data">
-                                    {{ csrf_field() }}
-
-                                    <input value="{{$order->id}}" type="hidden" name="order">
-
-                                    <label for="{{$order->id}}" class="btn"><strong>Adicionar Factura</strong></label>
-                                    <input id="{{$order->id}}" class="input-order" type="file" name="receipt">
-                                    
-                                    <button class="btn">Associar</button>
-                                </form>
-                                </td>
-                            @else
-                                <td class="form-td">
-                                    <a href="{{asset('uploads/' . $order->client_id . '/' . $order->invoice)}}" class="file-link"><strong>Visualizar Factura</strong></a>
-                                </td>
-                            @endif
-
-                            @if($order->receipt_id == null)
-                                <td class="form-td">
-                                    <form action="/orders/attachReceipt" class="order-form" method="post" enctype="multipart/form-data">
+                            <tr>
+                                <td><a href="/clients/{{$order->client_id}}">{{$order->name}}</a></td>
+                                <td>{{$order->regoldiID}}</td>
+                                <td>{{number_format($order->total,2)}}€</td>
+                                <td>{{$order->status}}</td>
+                                @if($order->invoice_id == null)
+                                    <td class="form-td">
+                                    <form action="/orders/attachInvoice" class="order-form" method="post" enctype="multipart/form-data">
                                         {{ csrf_field() }}
 
                                         <input value="{{$order->id}}" type="hidden" name="order">
 
-                                        <label for="{{$order->id}}" class="btn"><strong>Adicionar Recibo</strong></label>
+                                        <label for="{{$order->id}}" class="btn"><strong>Adicionar Factura</strong></label>
                                         <input id="{{$order->id}}" class="input-order" type="file" name="receipt">
-
+                                        
                                         <button class="btn">Associar</button>
                                     </form>
-                                </td>
-                            @else
-                                <td class="form-td">
-                                    <a href="{{asset('uploads/' . $order->client_id . '/' . $order->receipt)}}" class="file-link"><strong>Visualizar Recibo</strong></a>
-                                </td>
-                            @endif
-                            <td><a href="/orders/{{$order->id}}">Detalhes</a></td>
-                            <td><a href="/orders/process/{{$order->id}}" class="btn btn-process">
-                                <strong>Processar</strong>
-                            </a></td>
-                            </tr>
+                                    </td>
+                                @else
+                                    <td class="form-td">
+                                        <a href="{{asset('uploads/' . $order->client_id . '/' . $order->invoice)}}" class="file-link"><strong>Visualizar Factura</strong></a>
+                                    </td>
+                                @endif
 
-                    @endif
+                                @if($order->receipt_id == null)
+                                    <td class="form-td">
+                                        <form action="/orders/attachReceipt" class="order-form" method="post" enctype="multipart/form-data">
+                                            {{ csrf_field() }}
+
+                                            <input value="{{$order->id}}" type="hidden" name="order">
+
+                                            <label for="{{$order->id}}" class="btn"><strong>Adicionar Recibo</strong></label>
+                                            <input id="{{$order->id}}" class="input-order" type="file" name="receipt">
+
+                                            <button class="btn">Associar</button>
+                                        </form>
+                                    </td>
+                                @else
+                                    <td class="form-td">
+                                        <a href="{{asset('uploads/' . $order->client_id . '/' . $order->receipt)}}" class="file-link"><strong>Visualizar Recibo</strong></a>
+                                    </td>
+                                @endif
+                                <td><a href="/orders/{{$order->id}}">Detalhes</a></td>
+                                <td><a href="/orders/process/{{$order->id}}" class="btn btn-process">
+                                    <strong>Processar</strong>
+                                </a></td>
+                                </tr>
+
+                        @endif
                     @endforeach
 
                 </table>
+                <div style="text-align:center;">
+                    {{ $orders->links() }}
+                </div>
             </div>
         </div>
     </div>

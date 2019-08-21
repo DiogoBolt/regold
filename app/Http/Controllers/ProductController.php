@@ -169,13 +169,13 @@ class ProductController extends Controller
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
                     'o.receipt_id','o.created_at','c.name','c.regoldiID','o.status','o.invoice_id'
                 ])
-                ->orderBy('o.id', 'DESC')->get();
+                ->orderBy('o.id', 'DESC')->paginate(10);
         } else {
             $orders = Order::from(Order::alias('o'))
                 ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
                 ->where('c.salesman', $user->sales_id)
                 ->orderBy('o.id', 'DESC')
-                ->get();
+                ->paginate(10);
         }
 
         foreach($orders as $order)

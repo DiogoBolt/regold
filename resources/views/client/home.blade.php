@@ -27,7 +27,7 @@
     </div>
 
     <div class="box">
-        <a title="Documentos Contabilisticos" href="/frontoffice/documents/Contabilistico"><img class="img-responsive" src="{{ URL::to('/') }}/img/relatorios.jpg"></a>
+        <a title="Documentos Contabilisticos" href="/frontoffice/documents/Contabilistico"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon7.png"></a>
         <div class="desc">DOCUMENTOS CONTABILISTICOS</div>
         @if($receiptsCont) <span class="notification">{{$receiptsCont}}</span> @endif
     </div>

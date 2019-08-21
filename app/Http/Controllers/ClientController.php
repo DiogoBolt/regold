@@ -98,8 +98,8 @@ class ClientController extends Controller
                     'g.id as groupid',
                     'c.name',
                     'g.name as group',
-                ])->get();
-        }else{
+                ])->paginate(10);
+        } else {
 
             $clients = Customer::from(Customer::alias('c'))
                 ->leftJoin(Group::alias('g'), 'c.group_id', '=', 'g.id')
@@ -116,8 +116,9 @@ class ClientController extends Controller
                     'g.id as groupid',
                     'c.name',
                     'g.name as group',
-                ])->get();
+                ])->paginate(10);
         }
+
 
         return view('client.index',compact('clients'));
 
