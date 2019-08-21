@@ -38,6 +38,7 @@ Route::get('/frontoffice/cart/process', 'FrontofficeController@processCart');
 Route::get('/frontoffice/orders', 'FrontofficeController@orders');
 Route::get('/frontoffice/orders/{id}', 'FrontofficeController@viewOrder');
 Route::get('/frontoffice/products/{id}', 'FrontofficeController@productsByCategory');
+Route::get('/frontoffice/product/{id}', 'FrontofficeController@productById');
 Route::get('/frontoffice/cart/delete/{id}', 'FrontofficeController@deleteLineFromCart');
 Route::get('/frontoffice/messages', 'FrontofficeController@messages');
 Route::get('/frontoffice/cartValue', 'FrontofficeController@cartValue');

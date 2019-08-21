@@ -318,11 +318,16 @@ class FrontofficeController extends Controller
     public function productsByCategory($id)
     {
         $products = Product::where('category',$id)->get();
-
-
+        
         return view('frontoffice.products',compact('products'));
     }
 
+    public function productById($id)
+    {
+        $product = Product::where('id', $id)->first();
+        
+        return view('frontoffice.product',compact('product'));
+    }
 
     public function deleteLineFromCart($id)
     {

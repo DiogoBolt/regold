@@ -7,7 +7,7 @@
 
 @section('content')
     <div class="container-bar">
-        <p class="container-bar_txt">loja ? produtos ?</p>
+        <p class="container-bar_txt">produtos</p>
         <div class="container-bar_img">
             <img src="{{ asset('img/encomendas.jpg') }}" />
         </div>
@@ -24,7 +24,7 @@
             @foreach($products as $product)
                 <div class="product">
                     <div class="product-img" style="background-image: url('/uploads/products/{{$product->file}}')">
-                        <a href="/frontoffice/products/{{$product->id}}"></a>
+                        <a href="/frontoffice/product/{{$product->id}}"></a>
                         <span class="product-img__price">
                             {{$product->price1}}€
                         </span>

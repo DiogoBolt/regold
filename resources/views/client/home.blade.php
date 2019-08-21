@@ -11,7 +11,6 @@
     <div class="box">
         <a title="Produtos" href="/frontoffice/categories"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon6.png"></a>
         <div class="desc">PRODUTOS</div>
-        <span class="notification">69</span>
     </div>
 
     <div class="box">
@@ -37,7 +36,6 @@
             <img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon1.png">
         </a>
         <div class="desc">ENCOMENDAS</div>
-        <span class="notification">69</span>
     </div>
 </div>
 @endsection
