@@ -221,33 +221,7 @@ class FrontofficeController extends Controller
 
     }
 
-    public function showCart()
-    {
-        $user = Auth::user();
 
-        $cart = Cart::where('user_id',$user->id)->where('processed',0)->first();
-
-        if(!isset($cart))
-        {
-            $cart = new Cart;
-            $cart->user_id = $user->id;
-            $cart->save();
-        }
-
-        $line_items = OrderLine::where('cart_id',$cart->id)->get();
-
-        foreach($line_items as $item)
-        {
-            $item->product = Product::where('id',$item->product_id)->first();
-        }
-
-        $total = OrderLine::where('cart_id',$cart->id)->sum('total');
-
-
-
-        return view('frontoffice.cart',compact('line_items','total'));
-
-    }
 
     public function cartValue()
     {
@@ -372,7 +346,7 @@ class FrontofficeController extends Controller
 
         $total = OrderLine::where('cart_id',$cart->id)->sum('total');
 
-        $totaliva = $total + 0.23*$total;
+        $totaliva = $total*1.23;
 
         $order = Order::where('client_id',$user->client_id)->where('status','waiting_payment')->where('invoice_id',null)->first();
 
@@ -393,6 +367,72 @@ class FrontofficeController extends Controller
 
 
         return redirect($response->url_redirect);
+
+    }
+
+    public function showCart()
+    {
+        $user = Auth::user();
+        $client = Customer::where('id',$user->client_id)->first();
+
+        $orders = Order::where('client_id',$user->client_id)->where('created_at','>=',Carbon::now()->startOfMonth())->count();
+
+        $cart = Cart::where('user_id',$user->id)->where('processed',0)->first();
+
+        $items =[];
+
+        if(!isset($cart))
+        {
+            $cart = new Cart;
+            $cart->user_id = $user->id;
+            $cart->save();
+        }
+
+        $line_items = OrderLine::where('cart_id',$cart->id)->get();
+
+        foreach($line_items as $item)
+        {
+            $item->product = Product::where('id',$item->product_id)->first();
+        }
+
+        $total = OrderLine::where('cart_id',$cart->id)->sum('total');
+        $totalprod = OrderLine::where('cart_id',$cart->id)->sum('total');
+
+        if($orders > 0)
+        {
+           if($total < 29.90)
+           {
+               $servico = [];
+               $servico['qt'] = 1;
+               $servico['descr'] = "Portes";
+               $servico['amount'] = 5;
+               array_push($items,$servico);
+               $total += $servico['amount'];
+           }
+
+        }else{
+            if($total < $client->contract_value)
+            {
+                $servico = [];
+                $servico['qt'] = 1;
+                $servico['descr'] = "Serviço HACCP";
+                $servico['name'] = "Serviço HACCP";
+                $servico['amount'] = $client->contract_value - $total;
+                array_push($items,$servico);
+                $total += $servico['amount'];
+            }
+
+        }
+
+        $iva = [];
+        $iva['qt'] = 1;
+        $iva['descr'] = "Iva";
+        $iva['name'] = "Iva";
+        $iva['amount'] = number_format($total*1.23 - $total,2);
+        $total += $iva['amount'];
+        array_push($items,$iva);
+
+        return view('frontoffice.cart',compact('line_items','total','items','totalprod'));
 
     }
 
@@ -436,7 +476,7 @@ class FrontofficeController extends Controller
             'cost' => 10,
         ];
 
-        if($order->totaliva < 29.90)
+        if($order->total < 29.90)
         {
             $servico = [];
             $servico['qt'] = 1;
