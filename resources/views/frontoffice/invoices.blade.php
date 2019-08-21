@@ -22,9 +22,9 @@
     <div class="container invoices-container">
        
        <select id="invoice-select">
-           <option value="" selected disabled>Escolha tipo de Factura</option>
-           <option value="0">Facturas liquidadas</option>
-           <option value="1">Facturas por liquidar</option>
+           <option id="default" value="" selected disabled>Escolha tipo de Factura</option>
+           <option id="0" value="0">Facturas liquidadas</option>
+           <option id="1" value="1">Facturas por liquidar</option>
        </select>
 
        <div id="invoices">
@@ -54,19 +54,48 @@
 @endsection
 
 <script>
-    
+
+
+    function getCookie(name) {
+        var value = "; " + document.cookie;
+        var parts = value.split("; " + name + "=");
+        if (parts.length == 2) return parts.pop().split(";").shift();
+    }
+
+    function updateSelect (paidDiv,unpaidDiv)
+    {
+        var id = getCookie("selected");
+        if(id != null)
+        {
+            if(id == 0)
+            {
+                unpaidDiv.style.display = 'none';
+                paidDiv.style.display = 'block';
+            }else{
+                unpaidDiv.style.display = 'block';
+                paidDiv.style.display = 'none';
+            }
+            $('#'+id).prop('selected', true);
+            $('#default').prop('selected', false);
+        }
+
+    }
+
     document.addEventListener("DOMContentLoaded", function() {
         const invoiceSelect = document.getElementById('invoice-select');
         const paidDiv = document.getElementById('paid'); 
         const unpaidDiv = document.getElementById('unpaid');
+        updateSelect(paidDiv,unpaidDiv);
 
         invoiceSelect.addEventListener('change', function (evt) {
             let selected = evt.target.value;
 
             if ( selected === '0' ) { /* Facturas Liquidadas */
+                document.cookie = "selected=0";
                 unpaidDiv.style.display = 'none';
                 paidDiv.style.display = 'block';
             } else if ( selected === '1' ) { /* Facturas por Liquidar */
+                document.cookie = "selected=1";
                 unpaidDiv.style.display = 'block';
                 paidDiv.style.display = 'none';
             };

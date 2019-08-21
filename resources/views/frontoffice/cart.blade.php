@@ -23,8 +23,7 @@
         @if(count($line_items) > 0 )
             <div class="cart-container">
                     @foreach($line_items as $item)
-                        <div class="cart-item">
-
+                        <div class="cart-item" style="width:50%">
                             <div class="cart-item_img">
                                 <span class="price-tag">{{number_format($item->total,2)}}€</span>
                                 <img src="/uploads/products/{{$item->product->file}}">
@@ -34,30 +33,26 @@
                                 <h3>{{$item->product->name}}</h3>
                                 <div class="cart-item_desc-txt">
                                     
-                                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                                        Quam nemo aliquid suscipit labore assumenda repudiandae alias dolores cupiditate saepe 
-                                        corporis temporibus ratione mollitia rerum aperiam ipsa, quaerat, quibusdam odio ut.
-                                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                                    
-                                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-                                        Quam nemo aliquid suscipit labore assumenda repudiandae alias dolores cupiditate saepe 
-                                        corporis temporibus ratione mollitia rerum aperiam ipsa, quaerat, quibusdam odio ut.
-                                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
+                                       {{$item->product->details}}
                         
                                 </div>
                             </div>    
                 
                             <div class="cart-item_extra">
                                 <a href="/frontoffice/cart/delete/{{$item->id}}">remover x</a>
-                                <p>{{$item->amount}}</p>
+                                <p>Quantidade:{{$item->amount}}</p>
                             </div>                    
                         </div>
                     @endforeach     
             </div>
 
             <div class="cart-info">
-                <h4>Total : {{number_format($total + 0.23*$total,2)}}€</h3>
-                <p>IVA(23) : {{number_format($total * 0.23,2)}}€</p>
+                <p>Total : {{$totalprod}}€</p>
+                @foreach($items as $item)
+                    <p>{{$item['descr']}} : {{$item['amount']}}€</p>
+                @endforeach
+                <h4>Total : {{number_format($total,2)}}€</h4>
+
             </div>
      
 
@@ -70,21 +65,5 @@
         @endif
     </div>
 
-
-<!--
-<th>Img</th>
-<th>Nome</th>
-<th>Quantidade</th>
-<th>Preço/Unidade</th>
-<th>Total</th>
-<th>Eliminar</th>
-
-<td><img style="height:25px;width:35px" src="/uploads/products/ $item->product->file "></td>
-<td> $item->product->name </td>
-<td> $item->amount </td>
-<td> $item->total/$item->amount €</td>
-<td>number_format($item->total,2 €</td>
-
--->
 
 @endsection
