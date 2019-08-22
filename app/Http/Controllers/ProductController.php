@@ -231,6 +231,35 @@ class ProductController extends Controller
         return view('orders.index', compact('orders'));
     }
 
+    public function printOrder($id)
+    {
+        $order = Order::where('id', $id)
+        ->select([
+            'client_id', 'cart_id', 'created_at'
+        ])
+        ->first();
+
+        $client = Customer::where('id',$order->client_id)
+        ->select([
+            'name', 'address', 'regoldiID'
+        ])
+        ->first();
+
+        $cart = Cart::where('id', $order->cart_id)->first();
+
+        if (isset($cart)) {
+
+            $line_items = OrderLine::where('cart_id', $cart->id)->get();
+
+            foreach ($line_items as $item) {
+                $item->product = Product::where('id', $item->product_id)->first();
+            }
+
+            return view('orders.print', compact('line_items', 'order', 'client'));
+        } else {
+            return back();
+        }
+    }
 
     public function messages($id)
     {

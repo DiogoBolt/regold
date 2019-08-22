@@ -50,3 +50,7 @@
   background-color: var(--main-color);
   color: #fff;
 }
+
+.btn-process:last-child {
+  float: right;
+}

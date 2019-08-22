@@ -54,11 +54,14 @@
                         <strong>Processar</strong>
                     </a>
 
+                    <a href="/order/print/{{$order->id}}" target="_blank" class="btn btn-process">
+                        <strong>Imprimir</strong>
+                    </a>
+
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 
 @endsection
