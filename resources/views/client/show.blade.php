@@ -45,14 +45,20 @@
                             <b> NIB:</b> {{$client->nib}}
                         </div>
                         <div class="form-group">
-                            <b> Volta :</b> {{$group->name}}
+                            <b> Id Regoldi:</b> {{$client->regoldiID}}
+                        </div>
+                        <div class="form-group">
+                            <b> Valor Contrato:</b> {{$client->contract_value}}
+                        </div>
+                        <div class="form-group">
+                            <b> Nota Transporte:</b> {{$client->transport_note}}
                         </div>
 
-                        @foreach($types as $type)
 
+                        @foreach($types as $type)
+                            <h4>{{$type->name}}</h4>
                             @foreach($receipts as $receipt)
                                 @if($receipt->document_type_id == $type->id)
-                                    <h4>{{$type->name}}</h4>
                             <div class="form-group">
                                 <a href="/uploads/{{$client->id}}/{{$receipt->file}}">{{$receipt->file}}</a>
                             </div>

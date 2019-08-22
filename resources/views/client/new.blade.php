@@ -80,6 +80,14 @@
                             <div class="form-group">
                                 Valor Contrato: <input class="form-control" name="value">
                             </div>
+
+                            <div class="form-group">
+                                Id Regoldi <input class="form-control" name="regoldiID">
+                            </div>
+
+                            <div class="form-group">
+                                Nota Transporte <textarea class="form-control" name="transport_note"></textarea>
+                            </div>
                         </div>
                         <div>
                             <button class="btn btn-add" onsubmit="return validateForm(this)">Criar</button>

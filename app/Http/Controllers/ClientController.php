@@ -153,6 +153,8 @@ class ClientController extends Controller
         $client->nib = $inputs['nib'];
         $client->group_id = $inputs['group'];
         $client->contract_value = $inputs['value'];
+        $client->regoldiID = $inputs['regoldiID'];
+        $client->transport_note = $inputs['transport_note'];
 
         $client->save();
 
