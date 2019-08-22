@@ -54,5 +54,5 @@
 
 <script>
     window.print();
-    window.close();
+    setTimeout(function () { window.close(); }, 500); 
 </script>
