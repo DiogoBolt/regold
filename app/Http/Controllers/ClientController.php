@@ -8,6 +8,7 @@ use App\DocumentSuperType;
 use App\DocumentType;
 use App\Group;
 use App\Message;
+use App\Order;
 use App\Receipt;
 use App\Salesman;
 use App\User;
@@ -98,7 +99,15 @@ class ClientController extends Controller
                     'g.id as groupid',
                     'c.name',
                     'g.name as group',
-                ])->paginate(10);
+                ])->get();
+
+            $total = Customer::from(Customer::alias('c'))
+                ->leftJoin(Group::alias('g'), 'c.group_id', '=', 'g.id')
+                ->leftJoin(User::alias('u'), 'u.client_id', '=', 'c.id')
+                ->where('c.name','LIKE','%'.$search.'%')
+                ->orWhere('c.id','LIKE','%'.$search.'%')
+                ->count();
+
         } else {
 
             $clients = Customer::from(Customer::alias('c'))
@@ -116,11 +125,41 @@ class ClientController extends Controller
                     'g.id as groupid',
                     'c.name',
                     'g.name as group',
-                ])->paginate(10);
+                ])->get();
+
+            $total = Customer::from(Customer::alias('c'))
+                ->leftJoin(Group::alias('g'), 'c.group_id', '=', 'g.id')
+                ->leftJoin(User::alias('u'), 'u.client_id', '=', 'c.id')
+                ->where('c.salesman',$user->sales_id)
+                ->where(function($query) use ($search)
+                {
+                    $query->where('c.name','LIKE','%'.$search.'%')
+                        ->orWhere('c.id','LIKE','%'.$search.'%');
+                })
+                ->count();
         }
 
+        $unpaid = 0;
 
-        return view('client.index',compact('clients'));
+        foreach($clients as $client)
+        {
+            $orders = Order::where('client_id',$client->id)->where('processed',1)->where('created_at','>=',Carbon::now()->startOfMonth())->count();
+
+            $current = Order::where('client_id',$client->id)->where('status','waiting_payment')->where('invoice_id','!=',null)->sum('total');
+
+            if($orders > 0)
+            {
+                $client->order = 1;
+            }else{
+                $client->order = 0;
+                $unpaid += 1;
+            }
+            $client->current = $current;
+        }
+
+       $clients =  $clients->sortBy('order');
+
+        return view('client.index',compact('clients','unpaid','total'));
 
     }
 

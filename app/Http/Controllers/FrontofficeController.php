@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Log;
 
 
 class FrontofficeController extends Controller
@@ -368,6 +369,10 @@ class FrontofficeController extends Controller
         $order->external_id = uniqid();
         $order->save();
 
+        $cart->processed = 1;
+
+        $cart->save();
+
         $response =  $this->processPayment($cart,$order);
 
 
@@ -380,7 +385,7 @@ class FrontofficeController extends Controller
         $user = Auth::user();
         $client = Customer::where('id',$user->client_id)->first();
 
-        $orders = Order::where('client_id',$user->client_id)->where('created_at','>=',Carbon::now()->startOfMonth())->count();
+        $orders = Order::where('client_id',$user->client_id)->where('processed',1)->where('created_at','>=',Carbon::now()->startOfMonth())->count();
 
         $cart = Cart::where('user_id',$user->id)->where('processed',0)->first();
 
@@ -446,7 +451,7 @@ class FrontofficeController extends Controller
 
         $user = Auth::user();
 
-        $orders = Order::where('client_id',$user->client_id)->where('id','!=',$order->id)->where('created_at','>=',Carbon::now()->startOfMonth())->count();
+        $orders = Order::where('client_id',$user->client_id)->where('id','!=',$order->id)->where('processed',1)->where('created_at','>=',Carbon::now()->startOfMonth())->count();
 
         if($orders > 0)
         {
@@ -520,7 +525,7 @@ class FrontofficeController extends Controller
 //                'nif' => true,
             ],
             'url_cancel' => 'http://www.regolfood.pt',
-            'url_confirm' => 'http://www.regolfood.pt/frontoffice/confirm/?token='.$order->external_id,
+            'url_confirm' => 'http://www.regolfood.pt',
         ];
 
 
@@ -593,7 +598,7 @@ class FrontofficeController extends Controller
 //                'nif' => true,
             ],
             'url_cancel' => 'http://www.regolfood.pt',
-            'url_confirm' => 'http://www.regolfood.pt/frontoffice/confirm/?token='.$order->external_id,
+            'url_confirm' => 'http://www.regolfood.pt',
         ];
 
 
@@ -618,7 +623,7 @@ class FrontofficeController extends Controller
                 $order->status = "payed";
                 $order->save();
             } else {
-                return "";
+                Log::debug($request);
             }
         }
         return 200;
