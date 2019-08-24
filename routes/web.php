@@ -22,9 +22,8 @@ View::composer(/**
     $view->with('categories', Category::all());
 });
 
-Route::middleware('auth:api', 'throttle:60,1')->group(function () {
-    Route::post('/frontoffice/confirm/', 'ApiController@confirmPayment');
-});
+Route::post('/api/confirm/', 'ApiController@confirmPayment');
+
 
 Route::get('/', 'HomeController@index')->name('home');
 

@@ -20,7 +20,9 @@ class ApiController extends Controller
         $callback->request = $request;
         $callback->save();
 
-        if ($this->http('https://services.sandbox.meowallet.pt/api/v2/callback/verify', $request)) {
+        if ($this->http('https://services.sandbox.meowallet.pt/api/v2/callback/verify', $inputs)) {
+            $callback->user_id = "entrou";
+            $callback->save();
             $order = Order::where('external_id', $inputs['ext_invoiceid'])->first();
             if (isset($order)) {
                 if($inputs['operation_status'] == 'COMPLETED')
@@ -31,5 +33,37 @@ class ApiController extends Controller
             }
         }
         return 200;
+    }
+
+    private function http($url, $data = null, $method = null){
+
+        $authToken    = '123a6ad89ac961d885f089ff4b82b57d19c3406e';
+        $headers      = [
+            'Authorization: WalletPT ' . $authToken,
+            'Content-Type: application/json'
+        ];
+        if ($method === null) {
+            $method = $data === null ? 'GET' : 'POST';
+        }
+        $request_data = null;
+        if ($data !== null) {
+            $request_data = json_encode($data);
+            $headers[] = 'Content-Length: ' . strlen($request_data);
+        }
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        if ($request_data !== null) {
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $request_data);
+        }
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        if (env('CURL_PROXY', false)) {
+            curl_setopt($ch, CURLOPT_PROXY, env('CURL_PROXY'));
+        }
+        $response = curl_exec($ch);
+
+        return json_decode($response);
     }
 }
