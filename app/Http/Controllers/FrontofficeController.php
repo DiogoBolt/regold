@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Callback;
 use App\Cart;
 use App\Category;
 use App\Customer;
@@ -615,6 +616,11 @@ class FrontofficeController extends Controller
     public function confirmPayment(Request $request)
     {
         $inputs = $request->all();
+
+        $callback = new Callback;
+
+        $callback->request = $request;
+        $callback->save();
 
         if ($this->http('https://services.sandbox.meowallet.pt/api/v2/callback/verify', $request)) {
             $order = Order::where('external_id', $inputs['ext_invoiceid'])->first();
