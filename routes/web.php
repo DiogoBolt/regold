@@ -43,7 +43,7 @@ Route::get('/frontoffice/cart/delete/{id}', 'FrontofficeController@deleteLineFro
 Route::get('/frontoffice/messages', 'FrontofficeController@messages');
 Route::get('/frontoffice/cartValue', 'FrontofficeController@cartValue');
 Route::get('/frontoffice/unreadMessages', 'ClientController@unreadMessages');
-Route::post('/frontoffice/confirm/', 'FrontofficeController@confirmPayment');
+Route::post('/frontoffice/confirm/', 'ApiController@confirmPayment');
 Route::get('/frontoffice/invoices', 'FrontofficeController@invoices')->name('invoices');
 Route::get('/home', 'ClientController@home');
 
