@@ -21,6 +21,11 @@ View::composer(/**
     'layouts.frontoffice', function($view){
     $view->with('categories', Category::all());
 });
+
+Route::middleware('auth:api', 'throttle:60,1')->group(function () {
+    Route::post('/frontoffice/confirm/', 'ApiController@confirmPayment');
+});
+
 Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();
@@ -43,7 +48,6 @@ Route::get('/frontoffice/cart/delete/{id}', 'FrontofficeController@deleteLineFro
 Route::get('/frontoffice/messages', 'FrontofficeController@messages');
 Route::get('/frontoffice/cartValue', 'FrontofficeController@cartValue');
 Route::get('/frontoffice/unreadMessages', 'ClientController@unreadMessages');
-Route::post('/frontoffice/confirm/', 'ApiController@confirmPayment');
 Route::get('/frontoffice/invoices', 'FrontofficeController@invoices')->name('invoices');
 Route::get('/home', 'ClientController@home');
 

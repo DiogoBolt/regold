@@ -10,11 +10,7 @@ use Illuminate\Support\Facades\Log;
 
 class ApiController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
 
-     * */
     public function confirmPayment(Request $request)
     {
         $inputs = $request->all();
