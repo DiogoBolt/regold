@@ -10,7 +10,8 @@
 }
 
 .salesman-img {
+  display: block;
   margin: 0 auto;
   width: 150px;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
 }

@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 <link href="{{ asset('css/orders/order.css') }}" rel="stylesheet">
 
-<div class="container" id="teste">
+<div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel">
@@ -30,9 +30,10 @@
 
                     <div class="form-group print-checkbox">
                         <b>PREPARADO : </b>
-                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
-                        <span class="checkmark"></span>
-                        
+                        <label>
+                            <input type="checkbox" />
+                            <span class="checkmark"></span>
+                        </label>
                     </div>
 
                     <table class="table table-bordered">

@@ -1,9 +1,22 @@
 @extends('layouts.app')
 
+@section('styles')
+    <!-- Custom CSS -->
+    <link href="{{ asset('css/messages/messages-bo.css') }}" rel="stylesheet">
+@endsection
+
 @section('content')
+
+    <div class="container-bar">
+        <p class="container-bar_txt">{{$receiver->name}}</p>
+        <div class="container-bar_img">
+            <img src="{{ asset('img/mensagens.jpg') }}" />
+        </div>
+    </div>
+
     <div class="container">
         <div class="panel panel-default">
-            <div class="panel-heading">{{$receiver->name}}</div>
+
             <div class="panel-body">
                 <div class="row">
                     <div class="col-xs-12">
@@ -27,15 +40,13 @@
                 @if(Auth::user()->sales_id == null)
                 <div class="row messages">
                     <form action="/messages/new" method="post">
-                        <div class="col-xs-12">
-                            <div class="input-group" style="width:400px;">
-                                {{ csrf_field() }}
-                                <textarea id="messagebody" name="message" placeholder="Escreva aqui a sua mensagem..." class="form-control"></textarea>
-                                <input value="{{$id}}" style="display:none" name="id">
-                                <span class="input-group-btn">
-                        <button type="submit" style="float:left" class="btn btn-success btn-flat">Enviar</button>
-                    </span>
-                            </div>
+                        <div class="messages-box" style="width: 400px;">
+                           
+                            {{ csrf_field() }}
+                            <textarea id="messagebody" name="message" placeholder="Escreva aqui a sua mensagem..." class="form-control"></textarea>
+                            <input value="{{$id}}" style="display:none" name="id">
+                            <button type="submit" class="btn-send"><strong>Enviar</strong></button>
+                            
                         </div>
                     </form>
 

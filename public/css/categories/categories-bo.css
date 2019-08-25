@@ -58,6 +58,41 @@
   text-decoration: none;
 }
 
+.btn-edit {
+  border: 2px solid var(--main-color);
+  width: 100%;
+  text-transform: uppercase;
+}
+
+.btn-edit:hover {
+  background-color: #fff;
+  color: var(--main-color);
+}
+
+.type-body {
+  position: relative;
+}
+
+.type-body input,
+.type-body select {
+  border: none;
+  box-shadow: none;
+  border-bottom: 3px solid var(--main-color);
+  border-radius: 0;
+}
+
+.type-body input:focus,
+.type-body select:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.type-body .col-sm-6 {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+}
+
 /* ADD NEW */
 
 #add-cat input {

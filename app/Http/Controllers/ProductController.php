@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\View;
 
 class ProductController extends Controller
 {
@@ -395,7 +396,7 @@ class ProductController extends Controller
         return view('orders.index', compact('orders','error'));
     }
 
-    public function printOrder($id)
+    public function printOrder($id, $type = 'single')
     {
         $order = Order::where('id', $id)
         ->select([
@@ -419,10 +420,27 @@ class ProductController extends Controller
                 $item->product = Product::where('id', $item->product_id)->first();
             }
 
-            return view('orders.print', compact('line_items', 'order', 'client'));
+            if($type === 'single') {
+                return view('orders.print', compact('line_items', 'order', 'client'));
+            } else if ($type === 'multiple') {
+                return ['line_items' => $line_items, 'order' => $order , 'client' => $client];
+            }
+
         } else {
             return back();
         }
+    }
+
+    public function printOrders(Request $request)
+    {
+        $printArray = explode(',', $request->printOrders[0]);
+        $printingData = [];
+
+        foreach ($printArray as $id) {
+            array_push($printingData, $this->printOrder($id, 'multiple'));
+        }
+
+        return view('orders.printAll', compact('printingData'));
     }
 
     public function messages($id)

@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
-<link href="{{ asset('css/messages/messages-bo.css') }}" rel="stylesheet">
-
+@section('styles')
+    <!-- Custom CSS -->
+    <link href="{{ asset('css/messages/messages-bo.css') }}" rel="stylesheet">
+@endsection
 
 @section('content')
     <div class="container-bar">
