@@ -3,20 +3,18 @@
 
         <table class="table table-responsive">
             <tr>
-                <th>Nome</th>
+                <th>Id</th>
                 <th>Ficheiro</th>
                 <th>Total</th>
-                <th>Total + IVA</th>
             </tr>
             @foreach($invoices as $invoice)
                 <tr>
-                    <td>{{ $invoice->name }}</td>
+                    <td>{{ $invoice->external_id }}</td>
                     <td>
-                        <a href="{{asset('uploads/' . $invoice->file)}}" 
+                        <a href="{{asset('uploads/'.Auth::user()->client_id.'/'. $invoice->file)}}"
                             class="file-link"><strong>Visualizar Factura</strong></a>
                     </td>
                     <td>{{ $invoice->total }} €</td>
-                    <td>{{ $invoice->totaliva }} €</td>
                 </tr>
             @endforeach
         </table>

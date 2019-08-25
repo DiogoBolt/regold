@@ -92,7 +92,7 @@ class FrontofficeController extends Controller
         $paidInvoices = $this->paidInvoices();
         $unpaidInvoices = $this->unpaidInvoices();
 
-        $totalUnpaidAmount = Order::where('client_id',$client->id)->where('receipt_id',null)->where('status','waiting_payment')->sum('totaliva');
+        $totalUnpaidAmount = Order::where('client_id',$client->id)->where('invoice_id','!=',null)->where('status','waiting_payment')->sum('total');
 
         return view('frontoffice.invoices', compact('paidInvoices', 'unpaidInvoices', 'totalUnpaidAmount'));
     }
@@ -101,9 +101,12 @@ class FrontofficeController extends Controller
     {
         $user = Auth::user();
         $client = Customer::where('id',$user->client_id)->first();
-        $orders = Order::where('client_id',$client->id)->where('receipt_id','!=',null)->where('status','payed')->get(['receipt_id']);
 
-        $receipts = Receipt::whereIn('id',$orders)->paginate(10);
+        $receipts = Receipt::from(Receipt::alias('r'))
+            ->leftJoin(Order::alias('o'), 'o.invoice_id', '=', 'r.id')
+            ->where('o.client_id',$client->id)
+            ->where('status','paid')
+            ->paginate(10);
 
         return $receipts;
     }
@@ -115,6 +118,7 @@ class FrontofficeController extends Controller
 
        $receipts = Receipt::from(Receipt::alias('r'))
             ->leftJoin(Order::alias('o'), 'o.invoice_id', '=', 'r.id')
+           ->where('o.client_id',$client->id)
             ->where('status','waiting_payment')
             ->paginate(10);
 

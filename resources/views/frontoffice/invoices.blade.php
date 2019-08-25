@@ -27,7 +27,10 @@
            <option id="1" value="1">Facturas por liquidar</option>
        </select>
 
+
+
        <div id="invoices">
+           <h3>Conta Corrente : {{ $totalUnpaidAmount . ' €' ?: 'Sem montante em dívida' }}</h3>
             <div id="paid">
 
                 @if ( count($paidInvoices) > 0)
@@ -38,7 +41,7 @@
 
             </div>      
             <div id="unpaid">
-                <h3>Total : {{ $totalUnpaidAmount . ' €' ?: 'Sem montante em dívida' }}</h3>
+
 
                 @if (count($unpaidInvoices) > 0)
                     @include('frontoffice.partials.invoices-partial', ['invoices' => $unpaidInvoices])               
