@@ -28,6 +28,13 @@
                         <b>CRIADA A : </b>{{$order->created_at}}
                     </div>
 
+                    <div class="form-group print-checkbox">
+                        <b>PREPARADO : </b>
+                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                        <span class="checkmark"></span>
+                        
+                    </div>
+
                     <table class="table table-bordered">
                         <tr>
                             <th>Nome</th>
@@ -53,6 +60,11 @@
 
 
 <script>
-    window.print();
-    setTimeout(function () { window.close(); }, 500); 
+
+    window.onload = function() {
+       
+        setTimeout(window.print, 500);
+        setTimeout(function () { window.close(); }, 500); 
+    };
+
 </script>

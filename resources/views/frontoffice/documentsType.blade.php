@@ -22,18 +22,22 @@
     <div class="container">
         <div class="container-docs">
             
-            @foreach($receipts as $receipt)
-                <div class="file">
-                    <div class="file-head">
-                        {{$receipt->file}}
+            @if(count($receipts) > 0)
+                @foreach($receipts as $receipt)
+                    <div class="file">
+                        <div class="file-head">
+                            {{$receipt->file}}
+                        </div>
+                        <div class="file-body">
+                            <a href="/uploads/{{$client->id}}/{{$receipt->file}}">
+                                <img class="file-body__img" src="/uploads/{{$client->id}}/{{$receipt->file}}" />
+                            </a>
+                        </div>
                     </div>
-                    <div class="file-body">
-                        <a href="/uploads/{{$client->id}}/{{$receipt->file}}">
-                            <img class="file-body__img" src="/uploads/{{$client->id}}/{{$receipt->file}}" />
-                        </a>
-                    </div>
-                </div>
-            @endforeach       
+                @endforeach      
+            @else 
+                <h2>Sem documentos associados.</h2>
+            @endif
         </div>
     </div>
 

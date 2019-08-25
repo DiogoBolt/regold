@@ -37,6 +37,23 @@
   color: #000;
   font-size: 18px;
   line-height: 2.5;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Document types */
+
+.HACCP .category-body {
+  background-color: rgb(35, 35, 216);
+}
+
+.Controlopragas .category-body {
+  background-color: rgb(200, 20, 35);
+}
+
+.Contabilistico .category-body {
+  background-color: rgb(240, 204, 44);
 }
 
 @media (max-width: 480px) {
@@ -47,5 +64,13 @@
 
   .category-body {
     height: 100px;
+  }
+
+  .category-footer {
+    font-size: 12px;
+    line-height: 2;
+    overflow: visible;
+    white-space: normal;
+    text-overflow: unset;
   }
 }
