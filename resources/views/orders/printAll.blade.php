@@ -54,6 +54,8 @@
                                 @endforeach
 
                             </table>
+
+                            <hr>
                         @endforeach
                         
                     </div>
@@ -62,11 +64,6 @@
         </div>
     </div>
                 
-
-    
-@endforeach
-
-
 <script>
 
     window.onload = function() {
