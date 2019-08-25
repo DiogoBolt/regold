@@ -122,7 +122,7 @@ class FrontofficeController extends Controller
     }
 
 
-    public function documentsByType($type)
+    public function documentsByType($super, $type)
     {
         $user = Auth::user();
         $client = Customer::where('id',$user->client_id)->first();
@@ -131,8 +131,9 @@ class FrontofficeController extends Controller
             ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
             ->leftJoin(DocumentSuperType::alias('dst'), 'dt.superType', '=', 'dst.id')
             ->groupBy('r.id')
-            ->where('dst.name',$type)
+            ->where('dst.name', $super)
             ->where('r.client_id',$user->client_id)
+            ->where('dt.id', $type )
             ->get(['r.id']);
         $ids = [];
 
@@ -146,9 +147,16 @@ class FrontofficeController extends Controller
 
         $receipts = Receipt::whereIN('id',$ids)->get();
 
-
-
         return view('frontoffice.documentsType',compact('receipts','client','type'));
+    }
+
+    public function documentsBySuper($super) 
+    {
+        $superId = DocumentSuperType::where('name', $super)->pluck('id');
+
+        $types = DocumentType::where('superType', $superId)->get();
+
+        return view('frontoffice.documentsTypes',compact('types','super'));
     }
 
     public function products()
