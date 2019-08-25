@@ -2,20 +2,17 @@
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 <link href="{{ asset('css/orders/order.css') }}" rel="stylesheet">
 
-
-@foreach ($printingData as $item)
-
-    <div style="height: 100vh;">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    <div class="panel">
-                        <div class="panel-body table-responsive">
-        
-                            <div style="text-align: center; margin-bottom: 20px;">
-                                <img src="/img/navbar/logoindexcolor.png"/>
-                            </div>
-        
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel">
+                    <div class="panel-body table-responsive">
+    
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <img src="/img/navbar/logoindexcolor.png"/>
+                        </div>
+    
+                        @foreach ($printingData as $item)    
                             <div class="form-group">
                                 <b>NOME : </b>{{ $item['client']['name'] }}
                             </div>
@@ -57,14 +54,15 @@
                                 @endforeach
 
                             </table>
-                            
-                        </div>
+                        @endforeach
+                        
                     </div>
                 </div>
             </div>
         </div>
-                
     </div>
+                
+
     
 @endforeach
 
