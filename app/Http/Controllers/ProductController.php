@@ -306,6 +306,7 @@ class ProductController extends Controller
         $order = Order::where('id', $id)->first();
         $user = Auth::user();
 
+
         if($order->status == 'paid' and $order->invoice_id != null)
         {
             $order->processed = 1;
@@ -315,6 +316,16 @@ class ProductController extends Controller
 
             $error = "Não é possivel processar esta encomenda";
         }
+        $clientUser = User::where('client_id',$order->client_id)->first();
+
+        $message = new Message;
+
+        $message->sender_id = $user->id;
+        $message->receiver_id = $clientUser->id;
+        $message->text = "A sua encomenda nº".$order->id." foi processada. Obrigado.";
+        $message->viewed = 0;
+
+        $message->save();
 
         if ($user->sales_id == null) {
             $orders = Order::from(Order::alias('o'))
@@ -505,6 +516,7 @@ class ProductController extends Controller
         $inputs = $request->all();
 
         $order = Order::where('id',$inputs['order'])->first();
+        $user = Auth::user();
 
         if($request->hasfile('receipt'))
         {
@@ -526,6 +538,17 @@ class ProductController extends Controller
             $receipt->file = $filename;
             $receipt->save();
         }
+
+        $clientUser = User::where('client_id',$order->client_id)->first();
+
+        $message = new Message;
+
+        $message->sender_id = $user->id;
+        $message->receiver_id = $clientUser->id;
+        $message->text = "Foi adicionado o recibo à sua encomenda nº".$order->id." . Obrigado.";
+        $message->viewed = 0;
+
+        $message->save();
 
         $order->receipt_id = $receipt->id;
         $order->save();
