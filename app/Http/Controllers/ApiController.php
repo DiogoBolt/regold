@@ -26,7 +26,7 @@ class ApiController extends Controller
             $order = Order::where('external_id', $inputs['ext_invoiceid'])->first();
             if (isset($order)) {
                 if($inputs['operation_status'] == 'COMPLETED')
-                    $order->status = "payed";
+                    $order->status = "paid";
                 $order->save();
             } else {
                 Log::debug($request);

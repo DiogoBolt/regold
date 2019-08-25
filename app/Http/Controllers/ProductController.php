@@ -169,13 +169,17 @@ class ProductController extends Controller
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
                     'o.receipt_id','o.created_at','c.name','c.regoldiID','o.status','o.invoice_id'
                 ])
-                ->orderBy('o.id', 'DESC')->paginate(10);
+                ->orderBy('o.id', 'DESC')->get();
         } else {
             $orders = Order::from(Order::alias('o'))
                 ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
                 ->where('c.salesman', $user->sales_id)
-                ->orderBy('o.id', 'DESC')
-                ->paginate(10);
+                ->where('processed',0)
+                ->select([
+                    'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
+                    'o.receipt_id','o.created_at','c.name','c.regoldiID','o.status','o.invoice_id'
+                ])
+                ->orderBy('o.id', 'DESC')->get();
         }
 
         foreach($orders as $order)
@@ -188,6 +192,85 @@ class ProductController extends Controller
 
         return view('orders.index', compact('orders'));
     }
+
+    public function showProcessedOrders()
+    {
+        $user = Auth::user();
+        if ($user->sales_id == null) {
+            $orders = Order::from(Order::alias('o'))
+                ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
+                ->where('processed',1)
+                ->where('receipt_id','=',null)
+                ->select([
+                    'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
+                    'o.receipt_id','o.created_at','c.name','c.regoldiID','o.status','o.invoice_id'
+                ])
+                ->orderBy('o.id', 'DESC')->get();
+        } else {
+            $orders = Order::from(Order::alias('o'))
+                ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
+                ->where('c.salesman', $user->sales_id)
+                ->where('receipt_id','=',null)
+                ->where('processed',1)
+                ->select([
+                    'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
+                    'o.receipt_id','o.created_at','c.name','c.regoldiID','o.status','o.invoice_id'
+                ])
+                ->orderBy('o.id', 'DESC')->get();
+        }
+
+        foreach($orders as $order)
+        {
+            $order->receipt = Receipt::where('id',$order->receipt_id)->first()->file ?? null;
+            $order->invoice = Receipt::where('id',$order->invoice_id)->first()->file ?? null;
+        }
+
+
+
+        return view('orders.processedOrders', compact('orders'));
+    }
+
+    public function showHistoryOrders()
+    {
+        $user = Auth::user();
+        if ($user->sales_id == null) {
+            $orders = Order::from(Order::alias('o'))
+                ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
+                ->where('processed',1)
+                ->where('receipt_id','!=',null)
+                ->where('invoice_id','!=',null)
+                ->select([
+                    'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
+                    'o.receipt_id','o.created_at','c.name','c.regoldiID','o.status','o.invoice_id'
+                ])
+                ->orderBy('o.id', 'DESC')->paginate(30);
+        } else {
+            $orders = Order::from(Order::alias('o'))
+                ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
+                ->where('c.salesman', $user->sales_id)
+                ->where('receipt_id','=',null)
+                ->where('invoice_id','=',null)
+                ->where('processed',1)
+                ->orderBy('o.id', 'DESC')
+                ->select([
+                    'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
+                    'o.receipt_id','o.created_at','c.name','c.regoldiID','o.status','o.invoice_id'
+                ])
+                ->orderBy('o.id', 'DESC')->paginate(30);
+        }
+
+        foreach($orders as $order)
+        {
+            $order->receipt = Receipt::where('id',$order->receipt_id)->first()->file ?? null;
+            $order->invoice = Receipt::where('id',$order->invoice_id)->first()->file ?? null;
+        }
+
+
+
+        return view('orders.historyOrders', compact('orders'));
+    }
+
+
 
     public function viewOrder($id)
     {
@@ -221,14 +304,84 @@ class ProductController extends Controller
     public function processOrder($id)
     {
         $order = Order::where('id', $id)->first();
+        $user = Auth::user();
 
-        $order->processed = 1;
+        if($order->status == 'paid' and $order->invoice_id != null)
+        {
+            $order->processed = 1;
+
+            $order->save();
+        }else{
+
+            $error = "Não é possivel processar esta encomenda";
+        }
+
+        if ($user->sales_id == null) {
+            $orders = Order::from(Order::alias('o'))
+                ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
+                ->where('processed',0)
+                ->select([
+                    'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
+                    'o.receipt_id','o.created_at','c.name','c.regoldiID','o.status','o.invoice_id'
+                ])
+                ->orderBy('o.id', 'DESC')->get();
+        } else {
+            $orders = Order::from(Order::alias('o'))
+                ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
+                ->where('c.salesman', $user->sales_id)
+                ->where('processed',0)
+                ->select([
+                    'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
+                    'o.receipt_id','o.created_at','c.name','c.regoldiID','o.status','o.invoice_id'
+                ])
+                ->orderBy('o.id', 'DESC')->get();
+        }
+
+        return view('orders.index', compact('orders','error'));
+    }
+
+    public function payOrder($id)
+    {
+        $order = Order::where('id', $id)->first();
+        $user = Auth::user();
+        $clientUser = User::where('client_id',$order->client_id)->first();
+
+        $order->status = 'paid';
 
         $order->save();
 
-        $orders = Order::all();
+        $message = new Message;
 
-        return view('orders.index', compact('orders'));
+        $message->sender_id = $user->id;
+        $message->receiver_id = $clientUser->id;
+        $message->text = "Pagamento da Encomenda nº".$order->id." recebida pelo vendedor ".$user->name.". Obrigado.";
+        $message->viewed = 0;
+
+        $message->save();
+
+
+        if ($user->sales_id == null) {
+            $orders = Order::from(Order::alias('o'))
+                ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
+                ->where('processed',0)
+                ->select([
+                    'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
+                    'o.receipt_id','o.created_at','c.name','c.regoldiID','o.status','o.invoice_id'
+                ])
+                ->orderBy('o.id', 'DESC')->get();
+        } else {
+            $orders = Order::from(Order::alias('o'))
+                ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
+                ->where('c.salesman', $user->sales_id)
+                ->where('processed',0)
+                ->select([
+                    'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
+                    'o.receipt_id','o.created_at','c.name','c.regoldiID','o.status','o.invoice_id'
+                ])
+                ->orderBy('o.id', 'DESC')->get();
+        }
+
+        return view('orders.index', compact('orders','error'));
     }
 
     public function printOrder($id)
@@ -377,7 +530,7 @@ class ProductController extends Controller
         $order->receipt_id = $receipt->id;
         $order->save();
 
-        return redirect('/orders');
+        return back();
 
 
     }
