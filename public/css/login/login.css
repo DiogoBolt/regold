@@ -24,7 +24,8 @@
 
 .login-btn {
   width: 100%;
-  background-color: var(--secondary-green);
+  background-color: var(--main-color);
+  border: 2px solid var(--main-color);
   color: #fff;
 }
 

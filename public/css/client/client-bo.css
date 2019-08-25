@@ -33,10 +33,15 @@
   display: block;
 }
 
+.table tr.unpaid td a {
+  color: rgb(241, 30, 30);
+}
+
 .btn-add {
   display: inline-block;
   border: 2px solid var(--main-color) !important;
   color: var(--main-color);
+  margin-top: 10px;
 }
 
 .btn-add:hover {

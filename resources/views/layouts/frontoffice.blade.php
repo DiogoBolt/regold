@@ -48,15 +48,16 @@
                         <img src="{{ URL::to('/') }}/img/navbar/logoindexcolor.png" alt="logo">
                     </a>
 
-                    <a class="navbar-message" href="/frontoffice/messages">
-                        <img src="{{ URL::to('/') }}/img/msgs.png" alt="mensagens" />
-                        <span id="messages" class="notification nav-msg">0</span>
-                    </a>
+                    @auth
+                        <a class="navbar-message" href="/frontoffice/messages">
+                            <img src="{{ URL::to('/') }}/img/msgs.png" alt="mensagens" />
+                            <span id="messages" class="notification nav-msg">0</span>
+                        </a>
 
-                    <a class="navbar-cart" href="/frontoffice/cart">
-                        <img src="{{ URL::to('/') }}/img/navbar/carrinhocompras.png" alt="carrinho de compras">
-                    </a><span id="cartvalue">(€)</span>
-                    
+                        <a class="navbar-cart" href="/frontoffice/cart">
+                            <img src="{{ URL::to('/') }}/img/navbar/carrinhocompras.png" alt="carrinho de compras">
+                        </a><span id="cartvalue">(€)</span>
+                    @endauth
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">

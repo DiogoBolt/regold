@@ -116,7 +116,7 @@ class FrontofficeController extends Controller
        $receipts = Receipt::from(Receipt::alias('r'))
             ->leftJoin(Order::alias('o'), 'o.invoice_id', '=', 'r.id')
             ->where('status','waiting_payment')
-            ->paginate(2);
+            ->paginate(10);
 
         return $receipts;
     }

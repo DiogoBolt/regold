@@ -15,8 +15,8 @@
                         <a href="{{asset('uploads/' . $invoice->file)}}" 
                             class="file-link"><strong>Visualizar Factura</strong></a>
                     </td>
-                    <td>{{ $invoice->total }}</td>
-                    <td>{{ $invoice->totaliva }}</td>
+                    <td>{{ $invoice->total }} €</td>
+                    <td>{{ $invoice->totaliva }} €</td>
                 </tr>
             @endforeach
         </table>
