@@ -32,7 +32,6 @@
                         <th>Total</th>
                         <th>Fatura</th>
                         <th>Detalhes</th>
-                        <th>Pago</th>
                         <th>Processar</th>
                         <th>Imprimir</th>
                     </tr>
@@ -63,11 +62,7 @@
 
                                 <td><a href="/orders/{{$order->id}}">Detalhes</a></td>
 
-                                @if($order->status != 'paid')
-                                    <td><a href="/orders/pay/{{$order->id}}">Pagar</a></td>
-                                @else
-                                    <td>Pago</td>
-                                @endif
+
 
                                 <td><a href="/orders/process/{{$order->id}}" class="btn btn-process">
                                     <strong>Processar</strong>

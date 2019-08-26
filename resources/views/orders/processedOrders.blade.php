@@ -23,6 +23,7 @@
                         <th>Total</th>
                         <th>Estado</th>
                         <th>Recibo</th>
+                        <th>Pago</th>
                         <th>Detalhes</th>
                     </tr>
                     @foreach($orders as $order)
@@ -48,6 +49,12 @@
                                     <td class="form-td">
                                         <a href="{{asset('uploads/' . $order->client_id . '/' . $order->receipt)}}" class="file-link"><strong>Visualizar Recibo</strong></a>
                                     </td>
+                                @endif
+
+                                @if($order->status != 'paid')
+                                    <td><a href="/orders/pay/{{$order->id}}">Pagar</a></td>
+                                @else
+                                    <td>Pago</td>
                                 @endif
                                 <td><a href="/orders/{{$order->id}}">Detalhes</a></td>
                                 </tr>

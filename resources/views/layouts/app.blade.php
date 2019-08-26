@@ -51,7 +51,14 @@
                                     <a href="{{ url('/messages/'.Auth::user()->id)}}">
                                         <img style="margin-top:-15px;width:50px" src="{{ URL::to('/') }}/img/message.png">
                                     </a>
-                                </li> 
+                                </li>
+                            @if(Auth::user()->sales_id == null)
+                            <li>
+                                <a href="/salesman">
+                                    Vendedores
+                                </a>
+                            </li>
+                            @endif
 
                                 <li>
                                     <a href="/orders">

@@ -12,6 +12,7 @@ use App\Order;
 use App\OrderLine;
 use App\Product;
 use App\Receipt;
+use App\SalesPayment;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -240,6 +241,7 @@ class ProductController extends Controller
                 ->where('processed',1)
                 ->where('receipt_id','!=',null)
                 ->where('invoice_id','!=',null)
+                ->where('status','paid')
                 ->select([
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
                     'o.receipt_id','o.created_at','c.name','c.regoldiID','o.status','o.invoice_id'
@@ -252,6 +254,7 @@ class ProductController extends Controller
                 ->where('receipt_id','=',null)
                 ->where('invoice_id','=',null)
                 ->where('processed',1)
+                ->where('status','paid')
                 ->orderBy('o.id', 'DESC')
                 ->select([
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
@@ -308,7 +311,7 @@ class ProductController extends Controller
         $user = Auth::user();
 
 
-        if($order->status == 'paid' and $order->invoice_id != null)
+        if($order->invoice_id != null)
         {
             $order->processed = 1;
 
@@ -370,6 +373,14 @@ class ProductController extends Controller
         $message->viewed = 0;
 
         $message->save();
+
+        $salesPayment = new SalesPayment;
+
+        $salesPayment->sales_id = $user->id;
+        $salesPayment->order_id = $order->id;
+        $salesPayment->value = 1.23*$order->total;
+        $salesPayment->delivered = 0;
+        $salesPayment->save();
 
 
         if ($user->sales_id == null) {
