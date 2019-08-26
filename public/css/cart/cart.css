@@ -108,7 +108,7 @@
   color: var(--secondary-green);
 }
 
-@media (max-width: 991px) {
+@media (max-width: 768px) {
   .cart-container {
     flex-direction: column;
   }
@@ -116,6 +116,7 @@
   .cart-item {
     height: 120px;
     margin: 15px 0px;
+    width: 100%;
     max-width: 100%;
   }
 
