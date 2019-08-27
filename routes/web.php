@@ -55,6 +55,8 @@ Route::get('/home', 'ClientController@home');
 Route::group(['middleware' => ['backoffice']], function () {
 
     Route::get('/salesman', 'SalesmanController@index');
+    Route::get('/salesman/{id}', 'SalesmanController@salesman');
+    Route::get('/salesman/deliver/{id}', 'SalesmanController@deliverSalesman');
 
 
     Route::get('/clients', 'ClientController@index');

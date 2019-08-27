@@ -12,6 +12,7 @@ use App\Order;
 use App\OrderLine;
 use App\Product;
 use App\Receipt;
+use App\Salesman;
 use App\SalesPayment;
 use App\User;
 use Illuminate\Http\Request;
@@ -48,6 +49,40 @@ class SalesmanController extends Controller
         }
 
         return view('salesman.index', compact('salesman'));
+    }
+
+    public function salesman($id){
+
+        if(Auth::user()->client_id == null and (Auth::user()->sales_id == null or Auth::user()->sales_id == $id))
+        {
+            $user = User::where('sales_id', '!=', $id)->first();
+            $salesman = Salesman::where('id', $id)->first();
+
+            $salesPayments = SalesPayment::where('sales_id', $id)->where('delivered', 0)->get();
+
+            $total = SalesPayment::where('sales_id', $id)->where('delivered', 0)->sum('value');
+
+            return view('salesman.show', compact('salesman', 'salesPayments', 'user', 'total'));
+
+        }else{
+            return back();
+        }
+
+    }
+
+
+    public function deliverSalesman($id)
+    {
+        if(Auth::user()->client_id == null and Auth::user()->sales_id == null) {
+            $salesPayments = SalesPayment::where('sales_id', $id)->where('delivered', 0)->get();
+
+            foreach ($salesPayments as $payment) {
+                $payment->delivered = 1;
+                $payment->save();
+            }
+        }
+
+        return back();
     }
 
 

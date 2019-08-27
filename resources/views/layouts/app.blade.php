@@ -58,6 +58,12 @@
                                     Vendedores
                                 </a>
                             </li>
+                                @else
+                                <li>
+                                    <a href="/salesman/{{Auth::user()->sales_id}}">
+                                        Conta Corrente
+                                    </a>
+                                </li>
                             @endif
 
                                 <li>
