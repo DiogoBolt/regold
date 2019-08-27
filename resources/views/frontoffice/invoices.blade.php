@@ -29,9 +29,8 @@
     <div class="container invoices-container">
        
        <select id="invoice-select">
-           <option id="default" value="" selected disabled>Escolha tipo de Factura</option>
            <option id="0" value="0">Facturas liquidadas</option>
-           <option id="1" value="1">Facturas por liquidar</option>
+           <option id="1" value="1" selected>Facturas por liquidar</option>
        </select>
 
 
