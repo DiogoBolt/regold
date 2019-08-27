@@ -31,7 +31,7 @@
     <div class="container">
        
         <div class="product">
-            <div class="product__img" style="background-image: url('/uploads/{{$product->id}}/{{$product->file}}')"></div>
+            <div class="product__img" style="background-image: url('/uploads/products/{{$product->file}}')"></div>
             <div class="product__body">
                 <div class="product__body-info">
                     <div class="product__body-info-txt">
