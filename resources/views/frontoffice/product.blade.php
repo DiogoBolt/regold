@@ -13,6 +13,15 @@
         </div>
     </div>
 
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item" aria-current="page">Home</li>
+            <li class="breadcrumb-item " aria-current="page">Categorias</li>
+            <li class="breadcrumb-item " aria-current="page">Produtos</li>
+            <li class="breadcrumb-item active" aria-current="page">Produto</li>
+        </ol>
+    </nav>
+
     {{-- Go Back Button --}}
     <a class="back-btn" href="/frontoffice/categories">
         <span class="back-btn__front"><strong>Voltar</strong></span>
@@ -30,9 +39,9 @@
                         <h3> {{ $product->name }} </h3>
                     </div>
                     <div class="product_body-info-prices">
-                        <p> {{ $product->price1 }} €</p>
-                        <p> {{ $product->price2 }} €</p>
-                        <p> {{ $product->price3 }} €</p>
+                        <p class="price-tag" data-amount="1"> {{ $product->price1 }} €</p>
+                        <p class="price-tag" data-amount="{{ $product->amount2 }}"> {{ $product->price2 }} €</p>
+                        <p class="price-tag" data-amount="{{ $product->amount3 }}"> {{ $product->price3 }} €</p>
                     </div>
                 </div>
                 <div class="product__body-desc"> {{ $product->details }}</div>
@@ -47,6 +56,16 @@
                             FICHA DE SEGURANÇA <img src="/img/download.png">
                         </a>
                     </div>
+                    <form action="/frontoffice/products/addcart/"  method="get">
+                        {{ csrf_field() }}
+                        <button class="btn btn-add">adicionar</button>
+                        <input value="{{$product->id}}" name="id" type="hidden">
+                        <select name="amount" id="amount">
+                            @for($i = 1; $i <= 20; $i++)
+                                <option value="{{ $i }}"> {{ $i }}</option>
+                            @endfor
+                        </select>
+                    </form>
                 </div>
             </div>
         </div>
@@ -54,3 +73,18 @@
     </div>
 
 @endsection
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function(event) {
+        const priceTags = document.querySelectorAll('.price-tag');
+        const select = document.getElementById('amount');
+
+        priceTags.forEach(priceTag => {
+            priceTag.addEventListener('click', function() {
+                const amount = parseInt(this.getAttribute('data-amount'));
+                select.value = amount;
+            });
+        });
+    });
+</script>

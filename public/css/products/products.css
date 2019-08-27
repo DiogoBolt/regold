@@ -68,15 +68,15 @@
   justify-content: flex-end;
 }
 
-.product-desc__add button {
-  text-transform: uppercase;
-  color: var(--main-color);
+.btn-add {
+  margin: 15px 0;
+  border: 2px solid var(--main-color);
   background-color: transparent;
-  font-size: 10px;
 }
 
-.product-desc__add select {
-  padding: 5px;
+.btn-add:hover {
+  color: #fff;
+  background-color: var(--main-color);
 }
 
 @media (max-width: 991px) {

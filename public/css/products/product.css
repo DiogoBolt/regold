@@ -33,10 +33,13 @@
 .product_body-info-prices p {
   color: var(--main-color);
   font-weight: bold;
-}
-
-.product_body-info-prices p:last-child {
-  color: #000;
+  background-color: var(--main-color);
+  padding: 3px;
+  text-align: center;
+  cursor: pointer;
+  color: #fff;
+  padding: 3px 7px;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.22);
 }
 
 .product__body-downloads {
@@ -54,6 +57,25 @@
   width: 25px;
   margin-left: 10px;
   margin-top: -5px;
+}
+
+.product__body-downloads select {
+  padding: 8px;
+  margin-left: 20px;
+}
+
+.btn-add {
+  margin: 5px 0;
+  border: 2px solid var(--main-color);
+  color: var(--main-color);
+  background-color: transparent;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.btn-add:hover {
+  color: #fff;
+  background-color: var(--main-color);
 }
 
 @media (max-width: 426px) {

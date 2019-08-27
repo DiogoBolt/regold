@@ -151,7 +151,7 @@ class FrontofficeController extends Controller
 
         $receipts = Receipt::whereIN('id',$ids)->get();
 
-        return view('frontoffice.documentsType',compact('receipts','client','type'));
+        return view('frontoffice.documentsType',compact('receipts','client','type', 'super'));
     }
 
     public function documentsBySuper($super) 
