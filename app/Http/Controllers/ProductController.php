@@ -599,7 +599,7 @@ class ProductController extends Controller
 
             $receipt->client_id = $order->client_id;
             $receipt->name = date('Y-m-d');
-            $receipt->document_type_id = 2;
+            $receipt->document_type_id = 3;
             $receipt->viewed = 0;
 
             $file = $request->file('receipt');
