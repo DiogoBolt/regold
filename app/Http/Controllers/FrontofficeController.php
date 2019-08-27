@@ -231,7 +231,7 @@ class FrontofficeController extends Controller
 
 
 
-        return redirect('/frontoffice/cart');
+        return back();
 
     }
 

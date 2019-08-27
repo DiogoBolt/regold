@@ -25,9 +25,9 @@
                         </tr>
                         @foreach($salesman as $sales)
                                 <tr>
-                                    <td><a href="/users/{{$sales->id}}">{{$sales->id}}</a></td>
-                                    <td><a href="/users/{{$sales->id}}">{{$sales->name}}</a></td>
-                                    <td><a href="/users/{{$sales->id}}">{{$sales->total}}</a></td>
+                                    <td><a href="/salesman/{{$sales->id}}">{{$sales->id}}</a></td>
+                                    <td><a href="/salesman/{{$sales->id}}">{{$sales->name}}</a></td>
+                                    <td><a href="/salesman/{{$sales->id}}">{{$sales->total}}</a></td>
                                 </tr>
                         @endforeach
                     </table>
