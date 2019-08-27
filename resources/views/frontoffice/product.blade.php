@@ -23,9 +23,9 @@
     </nav>
 
     {{-- Go Back Button --}}
-    <a class="back-btn" href="/frontoffice/categories">
+    <a class="back-btn" href="/frontoffice/products/{{ $product->category }}">
         <span class="back-btn__front"><strong>Voltar</strong></span>
-        <span class="back-btn__back"><strong>Categorias</strong></span>
+        <span class="back-btn__back"><strong>Produtos</strong></span>
     </a>
 
     <div class="container">
