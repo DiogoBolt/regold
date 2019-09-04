@@ -167,8 +167,16 @@ class FrontofficeController extends Controller
     {
         $products = Product::all();
 
-
         return view('frontoffice.products',compact('products','categories'));
+    }
+
+    public function productsSearch($search_term) {
+
+        $search_result = Product::select(['id', 'name', 'file'])
+        ->where('name', 'like', '%' . $search_term . '%')
+        ->get();
+
+        return $search_result;
     }
 
     public function categories()

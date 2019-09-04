@@ -27,6 +27,12 @@
     </a>
 
     <div class="container">
+    
+        <div class="search-container">
+            <input id="product-search" name="search" placeholder="Pesquisa de produtos.." />
+            <div id="results"></div>
+        </div>
+
         <div class="categories-container">
             @foreach($categories as $category)
                 <a class="category" href="/frontoffice/products/{{ $category->id}}">
@@ -41,3 +47,45 @@
         </div>
     </div>
 @endsection
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const searchInput = document.getElementById('product-search');
+        const searchResults = document.getElementById('results');
+
+        document.addEventListener('click', function(evt) {
+            if(evt.target !== searchInput) searchResults.innerHTML = '';
+        });
+
+        searchInput.addEventListener('input', function() {
+            let searchTerm = this.value.trim();
+
+            if(searchTerm !== '') {
+                
+                $.get(`/frontoffice/produtos/search/${searchTerm}`, function( response ) {
+
+                    if(response.length > 0) {
+                        let result = '';
+
+                        response.forEach(element => {
+                            result += `
+                            <div class="search-result">
+                                <img class="img-fluid" src="/uploads/products/${element.file}" />
+                                <a href="/frontoffice/product/${element.id}">${element.name}</a>
+                            </div>`
+                        });
+
+                        searchResults.innerHTML = result;
+                    } else {
+                        searchResults.innerHTML = '<div class="search-result">Sem resultados.</div>';
+                    }
+
+                });
+            } else {
+                searchResults.innerHTML = '';
+            }
+        });
+    });
+
+</script>

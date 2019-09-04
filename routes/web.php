@@ -37,6 +37,7 @@ Route::get('/frontoffice/documents/{type}', 'FrontofficeController@documentsBySu
 Route::get('/frontoffice/documents/{super}/{type}', 'FrontofficeController@documentsByType');
 Route::get('/frontoffice/produtos/', 'FrontofficeController@products');
 Route::any('/frontoffice/products/addcart/', 'FrontofficeController@addCart');
+Route::get('/frontoffice/produtos/search/{keyword}', 'FrontofficeController@productsSearch');
 Route::get('/frontoffice/categories/', 'FrontofficeController@categories');
 Route::get('/frontoffice/cart', 'FrontofficeController@showCart');
 Route::get('/frontoffice/cart/process', 'FrontofficeController@processCart');

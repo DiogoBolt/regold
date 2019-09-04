@@ -16,7 +16,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item" aria-current="page">Home</li>
-            <li class="breadcrumb-item " aria-current="page">Categorias</li>
+            <li class="breadcrumb-item" aria-current="page"><a href="/frontoffice/categories"><strong>Categorias</strong></a></li>
             <li class="breadcrumb-item active" aria-current="page">Produtos</li>
         </ol>
     </nav>

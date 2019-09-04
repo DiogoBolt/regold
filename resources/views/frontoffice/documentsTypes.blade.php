@@ -29,9 +29,15 @@
     <div class="container">
         <div class="categories-container">
             @foreach($types as $type)
-                <a class="category {{ $super }}" href="/frontoffice/documents/{{ $super }}/{{ $type->id}}">
+                <a class="category {{ $super }}" href="{{ $type->name === 'Faturas' ? '/frontoffice/invoices' : '/frontoffice/documents/'. $super . '/' . $type->id }}">
                     <div class="category-body">
-                        <img src="/img/logoregoldi.png" class="img-responsive" />
+                        @if($super === 'Controlopragas')
+                            <img src="/img/logo1white.png" class="img-responsive"/>
+                        @elseif($super === 'HACCP')
+                            <img src="/img/logo2white.png" class="img-responsive"/>
+                        @else 
+                            <img src="/img/logoregoldi.png" class="img-responsive" />
+                        @endif
                     </div>
                     <div class="category-footer">
                         {{ $type->name }}
