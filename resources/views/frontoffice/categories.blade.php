@@ -63,9 +63,10 @@
 
             if(searchTerm !== '') {
                 
-                $.get(`/frontoffice/produtos/search/${searchTerm}`, function( response ) {
+                $.get(`/frontoffice/produtos/search/${searchTerm}`,  response => {
+                    searchTerm = this.value.trim();
 
-                    if(response.length > 0) {
+                    if(response.length > 0 ) {
                         let result = '';
 
                         response.forEach(element => {
@@ -79,6 +80,10 @@
                         searchResults.innerHTML = result;
                     } else {
                         searchResults.innerHTML = '<div class="search-result">Sem resultados.</div>';
+                    }
+                    
+                    if(searchTerm === '')  {
+                        searchResults.innerHTML = '';
                     }
 
                 });
