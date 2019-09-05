@@ -101,11 +101,16 @@
 }
 
 #results {
+  display: none;
   text-align: left;
   position: absolute;
   width: 100%;
   background-color: var(--light-green);
   z-index: 2;
+}
+
+#product-search:focus + #results {
+  display: block;
 }
 
 .search-result {

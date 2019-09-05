@@ -33,32 +33,10 @@
         <div class="product">
             <div class="product__img" style="background-image: url('/uploads/products/{{$product->file}}')"></div>
             <div class="product__body">
-                <div class="product__body-info">
-                    <div class="product__body-info-txt">
-                        <p> Ref. {{ $product->ref }}</p>
-                        <h3> {{ $product->name }} </h3>
-                    </div>
-                    <div class="product_body-info-prices">
-                        <p class="price-tag" data-amount="1"> {{ $product->price1 }} €</p>
-                        <p class="price-tag" data-amount="{{ $product->amount2 }}"> {{ $product->price2 }} €</p>
-                        <p class="price-tag" data-amount="{{ $product->amount3 }}"> {{ $product->price3 }} €</p>
-                    </div>
-                </div>
-                <div class="product__body-desc"> {{ $product->details }}</div>
-                <div class="product__body-downloads">
-                    <div>
-                        <a href="/uploads/{{$product->id}}/{{$product->manual}}" class="btn" download>
-                            MANUAL DO PRODUTO <img src="/img/download.png">
-                        </a>
-                    </div>
-                    <div>
-                        <a href="/uploads/{{$product->id}}/{{$product->seguranca}}" class="btn" download>
-                            FICHA DE SEGURANÇA <img src="/img/download.png">
-                        </a>
-                    </div>
+                <div class="product__body-main">
                     <form action="/frontoffice/products/addcart/"  method="get">
                         {{ csrf_field() }}
-                        <button class="btn btn-add">adicionar</button>
+                        <button class="btn btn-add">Adicionar</button>
                         <input value="{{$product->id}}" name="id" type="hidden">
                         <select name="amount" id="amount">
                             @for($i = 1; $i <= 20; $i++)
@@ -66,6 +44,43 @@
                             @endfor
                         </select>
                     </form>
+                    <img src="/img/fav.png"/>
+                </div>
+                <div class="product__body-info">
+                    <h2> {{ $product->name }} </h2>
+                    <p> Ref: {{ $product->ref }}</p>  
+                    <div class="product__body-desc"> {{ $product->details }}</div>
+                </div>
+                <div class="product_body-table-prices">
+                    <table>
+                        <tr>
+                            <th>Escalão 1</th>
+                            <th>Escalão 2</th>
+                            <th>Escalão 3</th>
+                        </tr>
+                        <tr>
+                            <td class="price-amount" data-amount="1">1 unidade</td>
+                            <td class="price-amount" data-amount="{{ $product->amount2 }}">{{ $product->amount2 }} unidades</td>
+                            <td class="price-amount" data-amount="{{ $product->amount3 }}">{{ $product->amount3 }} unidades</td>
+                        </tr>
+                        <tr>
+                            <td class="price-tag">{{ $product->price1 }} €</td>
+                            <td class="price-tag">{{ $product->price2 }} €</td>
+                            <td class="price-tag">{{ $product->price3 }} €</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="product__body-downloads">
+                    <div>
+                        <a href="/uploads/{{$product->id}}/{{$product->manual}}" class="btn" download>
+                            Manual do Produto <img src="/img/download.png">
+                        </a>
+                    </div>
+                    <div>
+                        <a href="/uploads/{{$product->id}}/{{$product->seguranca}}" class="btn" download>
+                            Ficha de Segurança <img src="/img/download.png">
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -77,7 +92,7 @@
 <script>
 
     document.addEventListener("DOMContentLoaded", function(event) {
-        const priceTags = document.querySelectorAll('.price-tag');
+        const priceTags = document.querySelectorAll('.price-amount');
         const select = document.getElementById('amount');
 
         priceTags.forEach(priceTag => {

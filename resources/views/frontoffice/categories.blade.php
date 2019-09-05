@@ -53,15 +53,12 @@
     document.addEventListener("DOMContentLoaded", function() {
         const searchInput = document.getElementById('product-search');
         const searchResults = document.getElementById('results');
-
-        document.addEventListener('click', function(evt) {
-            if(evt.target !== searchInput) searchResults.innerHTML = '';
-        });
-
+        
         searchInput.addEventListener('input', function() {
             let searchTerm = this.value.trim();
 
-            if(searchTerm !== '') {
+            /* To easy the load on the database, start search after at least 3 letters */
+            if(searchTerm !== '' && searchTerm.length > 2) {
                 
                 $.get(`/frontoffice/produtos/search/${searchTerm}`,  response => {
                     searchTerm = this.value.trim();
