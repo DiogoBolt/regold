@@ -25,6 +25,7 @@
   right: 10px;
   top: 50%;
   transform: translate(10px, -50%);
+  cursor: pointer;
 }
 
 .product__body-info h2 {

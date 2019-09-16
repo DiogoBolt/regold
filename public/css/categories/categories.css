@@ -113,6 +113,11 @@
   display: block;
 }
 
+#results:hover {
+  display: block;
+}
+
+
 .search-result {
   padding: 10px;
 }

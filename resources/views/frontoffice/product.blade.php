@@ -44,7 +44,7 @@
                             @endfor
                         </select>
                     </form>
-                    <img src="/img/fav.png"/>
+                    <img id="favorite" src="/img/fav.png"/>
                 </div>
                 <div class="product__body-info">
                     <h2> {{ $product->name }} </h2>
@@ -94,6 +94,7 @@
     document.addEventListener("DOMContentLoaded", function(event) {
         const priceTags = document.querySelectorAll('.price-amount');
         const select = document.getElementById('amount');
+        const favorite = document.getElementById('favorite');
 
         priceTags.forEach(priceTag => {
             priceTag.addEventListener('click', function() {
@@ -101,5 +102,7 @@
                 select.value = amount;
             });
         });
+
+        
     });
 </script>
