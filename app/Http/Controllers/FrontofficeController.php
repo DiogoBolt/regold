@@ -8,6 +8,7 @@ use App\Category;
 use App\Customer;
 use App\DocumentSuperType;
 use App\DocumentType;
+use App\Favorite;
 use App\Group;
 use App\Message;
 use App\Order;
@@ -320,9 +321,14 @@ class FrontofficeController extends Controller
 
     public function productById($id)
     {
+        $user = Auth::user();
+
         $product = Product::where('id', $id)->first();
+        $isFavourite = Favorite::where('product_id', $id)->first();
+
+        //dd($isFavourited);
         
-        return view('frontoffice.product',compact('product'));
+        return view('frontoffice.product',compact('product', 'isFavourite'));
     }
 
     public function deleteLineFromCart($id)
