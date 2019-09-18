@@ -29,6 +29,18 @@
     <span class="back-btn__back"><strong>Produtos</strong></span>
 </a>
 
+<div id="mobile-icons">
+    <a id="mobile-msg" href="/frontoffice/messages">
+        <img src="/img/green-msg.png" alt="mensagens" />
+    </a>
+    
+    <a id="mobile-cart" href="/frontoffice/cart">
+        <img src="/img/green-cart.png" alt="carrinho de compras">
+    </a>
+</div>
+
+
+
 <div class="container">
 
     <div class="product">
@@ -81,6 +93,9 @@
                 </table>
             </div>
             <div class="product__body-downloads">
+                <button type="button" class="info-btn" data-toggle="modal" data-target="#myModal">
+                    i
+                </button>
                 <div>
                     <a href="/uploads/{{$product->id}}/{{$product->manual}}" class="btn" download>
                         Manual do Produto <img src="/img/download.png">
@@ -94,7 +109,23 @@
             </div>
         </div>
     </div>
+</div>
 
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Titulo?</h4>
+            </div>
+            <div class="modal-body">
+                <p>Texto ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 @endsection

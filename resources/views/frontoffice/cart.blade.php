@@ -9,7 +9,7 @@
     <div class="container-bar">
         <p class="container-bar_txt">carrinho</p>
         <div class="container-bar_img">
-            <img src="{{ asset('img/cart.png') }}"/>
+            <img src="{{ asset('img/green-cart.png') }}"/>
         </div>
     </div>
 
