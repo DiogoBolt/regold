@@ -98,7 +98,9 @@
                         <strong>Imprimir</strong>
                     </a>
                     <br>
+                        @if(isset($salesman))
                        <h5>Vendedor: {{$salesman->name}}</h5>
+                            @endif
 
 
 

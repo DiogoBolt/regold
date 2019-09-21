@@ -74,6 +74,8 @@
                         </div>
                     </div>
                 </form>
+
+                <a href="{{asset('RegoldiApp.apk')}}" class="file-link"><strong>Download APP</strong></a>
             </div>
         </div>
     </div>

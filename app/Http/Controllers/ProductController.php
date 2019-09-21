@@ -326,7 +326,11 @@ class ProductController extends Controller
 
 
         $salesPayment = SalesPayment::where('order_id',$id)->first();
-        $salesman = User::where('sales_id',$salesPayment->sales_id)->first();
+        if(isset($salesPayment))
+        {
+            $salesman = User::where('sales_id',$salesPayment->sales_id)->first();
+        }
+
         $cart = Cart::where('id', $order->cart_id)->first();
 
         if (isset($cart)) {
