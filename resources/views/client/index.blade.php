@@ -33,14 +33,14 @@
                             <tr>
                                 <td><a href="/clients/{{$client->id}}">{{$client->id}}</a></td>
                                 <td><a href="/clients/{{$client->id}}">{{$client->name}}</a></td>
-                                <td><a href="/clients/{{$client->id}}">{{$client->current}}</a></td>
+                                <td><a href="/unpaidOrders/{{$client->id}}">{{$client->current}}</a></td>
                                 <td><a href="/clients/impersonate/{{$client->userid}}">Entrar</a></td>
                             </tr>
                             @else
                                 <tr class="unpaid">
                                     <td><a href="/clients/{{$client->id}}">{{$client->id}}</a></td>
                                     <td><a href="/clients/{{$client->id}}">{{$client->name}}</a></td>
-                                    <td><a href="/clients/{{$client->id}}">{{$client->current}}</a></td>
+                                    <td><a href="/unpaidOrders/{{$client->id}}">{{$client->current}}</a></td>
                                     <td><a href="/clients/impersonate/{{$client->userid}}">Entrar</a></td>
                                 </tr>
                             @endif

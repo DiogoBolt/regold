@@ -3,6 +3,7 @@
 @section('styles')
     <!-- Custom CSS -->
     <link href="{{ asset('css/orders/order.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/orders/orders-bo.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -15,8 +16,8 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <div class="panel">
-                <div class="panel-body table-responsive">
+            <div class="panel" style="width:110%">
+                <div class="panel-body table-responsive" >
 
                     @if($order->processed == 1)
                         <h5 style="color:green">Processado</h5>
@@ -30,6 +31,8 @@
                             <th>Quantidade</th>
                             <th>Preço/Unidade</th>
                             <th>Total</th>
+                            <th>Fatura</th>
+                            <th>Recibo</th>
 
                         </tr>
                         @foreach($line_items as $item)
@@ -39,6 +42,43 @@
                                 <td>{{$item->amount}}</td>
                                 <td>{{$item->total/$item->amount}}€</td>
                                 <td>{{number_format($item->total,2)}}€</td>
+                                @if($order->invoice_id == null)
+                                    <td class="form-td">
+                                        <form action="/orders/attachInvoice" class="order-form" method="post" enctype="multipart/form-data">
+                                            {{ csrf_field() }}
+
+                                            <input value="{{$order->id}}" type="hidden" name="order">
+
+                                            <label for="{{$order->id}}" class="btn"><strong>Adicionar Factura</strong></label>
+                                            <input id="{{$order->id}}" class="input-order" type="file" name="receipt">
+
+                                            <button class="btn">Associar</button>
+                                        </form>
+                                    </td>
+                                @else
+                                    <td class="form-td">
+                                        <a href="{{asset('uploads/' . $order->client_id . '/' . $order->invoice)}}" class="file-link"><strong>Visualizar Factura</strong></a>
+                                    </td>
+                                @endif
+
+                                @if($order->receipt_id == null)
+                                    <td class="form-td">
+                                        <form action="/orders/attachReceipt" class="order-form" method="post" enctype="multipart/form-data">
+                                            {{ csrf_field() }}
+
+                                            <input value="{{$order->id}}" type="hidden" name="order">
+
+                                            <label for="{{$order->id}}" class="btn"><strong>Adicionar Recibo</strong></label>
+                                            <input id="{{$order->id}}" class="input-order" type="file" name="receipt">
+
+                                            <button class="btn">Associar</button>
+                                        </form>
+                                    </td>
+                                @else
+                                    <td class="form-td">
+                                        <a href="{{asset('uploads/' . $order->client_id . '/' . $order->receipt)}}" class="file-link"><strong>Visualizar Recibo</strong></a>
+                                    </td>
+                                @endif
                             </tr>
 
                         @endforeach
@@ -57,6 +97,10 @@
                     <a href="/order/print/{{$order->id}}" target="_blank" class="btn btn-process">
                         <strong>Imprimir</strong>
                     </a>
+                    <br>
+                       <h5>Vendedor: {{$salesman->name}}</h5>
+
+
 
                 </div>
             </div>
