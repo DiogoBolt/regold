@@ -212,10 +212,6 @@ class ClientController extends Controller
         return view('client.index',compact('clients'));
     }
 
-    public function newSales()
-    {
-        return view('salesman.new');
-    }
 
     public function addSales(Request $request)
     {

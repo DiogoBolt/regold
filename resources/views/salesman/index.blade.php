@@ -34,7 +34,7 @@
 
 
                     
-                    <a href="/salesman/new" class="btn btn-add"><strong>Novo Vendedor</strong></a>
+                    <a href="/salesman/new/newsalesman" class="btn btn-add"><strong>Novo Vendedor</strong></a>
                 </div>
             </div>
         </div>

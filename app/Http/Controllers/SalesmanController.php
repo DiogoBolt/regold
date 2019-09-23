@@ -70,6 +70,11 @@ class SalesmanController extends Controller
 
     }
 
+    public function newSales()
+    {
+        return view('salesman.new');
+    }
+
 
     public function deliverSalesman($id)
     {
