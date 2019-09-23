@@ -24,53 +24,53 @@
                         {{ csrf_field() }}
                         <div class="col-sm-6">
                             <div class="form-group">
-                                Nome:<input class="form-control"  name="name">
+                                Nome:<input class="form-control"  name="name" required>
                             </div>
                             <div class="form-group">
-                                Morada:<input class="form-control" name="address">
+                                Morada:<input class="form-control" name="address" required>
                             </div>
                             <div class="form-group">
-                                Cidade: <input class="form-control" name="city">
+                                Cidade: <input class="form-control" name="city" required>
                             </div>
                             <div class="form-group">
-                                NIF: <input id="nif" class="form-control" type="number" name="nif">
-                            </div>
-                            <div class="form-group">-
-                                Email Contacto: <input class="form-control" type="email" name="email">
+                                NIF: <input id="nif" class="form-control" type="number" name="nif" required>
                             </div>
                             <div class="form-group">
-                                Actividade: <input class="form-control" name="activity">
+                                Email Contacto: <input class="form-control" type="email" name="email" required>
                             </div>
                             <div class="form-group">
-                                Telefone: <input class="form-control" type="tel"  name="telephone">
+                                Actividade: <input class="form-control" name="activity" required>
                             </div>
                             <div class="form-group">
-                                Metodo Pagamento: <input class="form-control" name="payment_method">
+                                Telefone: <input class="form-control" type="tel"  name="telephone" required>
+                            </div>
+                            <div class="form-group">
+                                Metodo Pagamento: <input class="form-control" name="payment_method" required>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                Vendedor: <select class="form-control" name="salesman">
+                                Vendedor: <select class="form-control" name="salesman" required>
                                     @foreach($salesman as $sales)
                                         <option value="{{$sales->id}}">{{$sales->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
-                                Tipo Cliente: <input class="form-control" name="client_type">
+                                Tipo Cliente: <input class="form-control" name="client_type" required>
                             </div>
                             <div class="form-group">
-                                Email Faturação: <input class="form-control" type="email" name="receipt_email">
+                                Email Faturação: <input class="form-control" type="email" name="receipt_email" required>
                             </div>
                             <div class="form-group">
-                                NIB: <input class="form-control" type="number" name="nib">
+                                NIB: <input class="form-control" type="number" name="nib" required>
                             </div>
                             <div class="form-group">
-                                Password: <input class="form-control" type="password" name="password">
+                                Password: <input class="form-control" type="password" name="password" required>
                             </div>
 
                             <div class="form-group">
-                                Grupo : <select class="form-control" name="group">
+                                Grupo : <select class="form-control" name="group" required>
                                     @foreach($groups as $group)
                                         <option value="{{$group->id}}">{{$group->name}}</option>
                                     @endforeach
@@ -78,11 +78,11 @@
                             </div>
 
                             <div class="form-group">
-                                Valor Contrato: <input class="form-control" name="value">
+                                Valor Contrato: <input class="form-control" name="value" required>
                             </div>
 
                             <div class="form-group">
-                                Id Regoldi <input class="form-control" name="regoldiID">
+                                Id Regoldi <input class="form-control" name="regoldiID" required>
                             </div>
 
                             <div class="form-group">

@@ -86,9 +86,9 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="price-tag">{{ $product->price1 }} €</td>
-                        <td class="price-tag">{{ $product->price2 }} €</td>
-                        <td class="price-tag">{{ $product->price3 }} €</td>
+                        <td class="price-tag">{{ $product->price1 }}</td>
+                        <td class="price-tag">{{ $product->price2 }}</td>
+                        <td class="price-tag">{{ $product->price3 }}</td>
                     </tr>
                 </table>
             </div>

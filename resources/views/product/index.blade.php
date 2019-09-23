@@ -30,9 +30,9 @@
                     <div class="product-info">
                         <div class="product-info__header">
                             <div class="product-info__header-prices">
-                                <span>Escalão 1 : <b>{{$product->price1}}€</b></span>
-                                <span>Escalão 2 : <b>{{$product->price2}}€</b></span>
-                                <span>Escalão 3 : <b>{{$product->price3}}€</b></span>
+                                <span>Escalão 1 : <b>{{$product->price1}}</b></span>
+                                <span>Escalão 2 : <b>{{$product->price2}}</b></span>
+                                <span>Escalão 3 : <b>{{$product->price3}}</b></span>
                             </div>
                             <div class="product-info__header-title">
                                 {{$product->name}}

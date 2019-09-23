@@ -79,6 +79,7 @@
 
 .product__body-downloads {
   margin-top: 25px;
+  position: relative;
 }
 
 .product__body-downloads div a {
@@ -151,7 +152,9 @@ select {
 }
 
 .info-btn {
-  float: right;
+  position: absolute;
+  top: -20px;
+  right: 0;
   border: 2px solid var(--main-color);
   color: var(--main-color);
   background-color: #fff;
@@ -173,10 +176,14 @@ select {
   }
 
   .product__img {
-    width: 80%;
+    width: 70%;
   }
 
   #mobile-icons {
     display: inline-block;
-}
+  }
+
+  .info-btn {
+  
+  }
 }

@@ -6,6 +6,7 @@ use App\Category;
 use App\Customer;
 use App\DocumentSuperType;
 use App\DocumentType;
+use App\Favorite;
 use App\Group;
 use App\Message;
 use App\Order;
@@ -212,6 +213,15 @@ class ClientController extends Controller
         return view('client.index',compact('clients'));
     }
 
+    public function deleteCustomer($id) 
+    {
+        /* Delete user favourites */
+        $user_favorites = Favorite::where('user_id', '=', $id)->delete();
+
+        $client = Customer::where('id', $id)->first()->delete();
+
+        return ['success' => 'Client deleted'];
+    }
 
     public function addSales(Request $request)
     {
@@ -236,6 +246,15 @@ class ClientController extends Controller
         $user->save();
 
         return back();
+    }
+
+    public function deleteSales($id) 
+    {
+
+        $user_associated = User::where('sales_id', '=', $id)->first()->delete();
+        $salesman = Salesman::where('id', '=', $id)->first()->delete();
+
+        return ['success' => $id];
     }
 
 

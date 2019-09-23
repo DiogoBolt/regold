@@ -34,7 +34,7 @@
                     <div class="product-img" style="background-image: url('/uploads/products/{{$product->file}}')">
                         <a href="/frontoffice/product/{{$product->id}}"></a>
                         <span class="product-img__price">
-                            {{$product->price1}}€
+                            {{$product->price1}}
                         </span>
                     </div>
                     <div class="product-desc">
