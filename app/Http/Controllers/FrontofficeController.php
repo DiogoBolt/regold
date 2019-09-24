@@ -365,6 +365,7 @@ class FrontofficeController extends Controller
     public function processCart()
     {
         $user = Auth::user();
+        $client = Customer::where('id',$user->client_id)->first();
 
         $cart = Cart::where('user_id',$user->id)->where('processed',0)->first();
 
@@ -398,10 +399,33 @@ class FrontofficeController extends Controller
 
         $cart->save();
 
-        $response =  $this->processPayment($cart,$order);
-
-
-        return redirect($response->url_redirect);
+        switch ($client->payment_method) {
+            case "Debito Direto":
+                $message = new Message();
+                $day = Date('d');
+                if($day < 16)
+                {
+                    $message->text = "O pagamento da compra nº".$order->id. " será efetuado no dia 15 do próximo mês";
+                }else{
+                    $message->text = "O pagamento da compra nº".$order->id. " será efetuado no dia 30 do próximo mês";
+                }
+                $message->sender_id = 1;
+                $message->receiver_id = $user->id;
+                $message->viewed = 0;
+                $message->save();
+                return redirect('/frontoffice/orders');
+                break;
+            case "Contra Entrega":
+                return redirect('/frontoffice/orders');
+                break;
+            case "Fatura Contra Fatura":
+                return redirect('/frontoffice/orders');
+                break;
+            case "30 dias":
+                $response =  $this->processPayment($cart,$order);
+                return redirect($response->url_redirect);
+                break;
+        }
 
     }
 

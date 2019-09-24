@@ -99,6 +99,7 @@ class ClientController extends Controller
                     'u.id as userid',
                     'g.id as groupid',
                     'c.name',
+                    'c.regoldiID',
                     'g.name as group',
                 ])->get();
 
@@ -125,6 +126,7 @@ class ClientController extends Controller
                     'u.id as userid',
                     'g.id as groupid',
                     'c.name',
+                    'c.regoldiID',
                     'g.name as group',
                 ])->get();
 
@@ -191,7 +193,7 @@ class ClientController extends Controller
         $client->client_type = $inputs['client_type'];
         $client->receipt_email = $inputs['receipt_email'];
         $client->nib = $inputs['nib'];
-        $client->group_id = $inputs['group'];
+        $client->group_id = "";
         $client->contract_value = $inputs['value'];
         $client->regoldiID = $inputs['regoldiID'];
         $client->transport_note = $inputs['transport_note'];
