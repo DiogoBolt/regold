@@ -102,6 +102,7 @@ Route::group(['middleware' => ['backoffice']], function () {
     Route::get('/products/new', 'ProductController@newProduct');
     Route::post('/products/add', 'ProductController@addProduct');
     Route::get('/products/{id}', 'ProductController@editProduct');
+    Route::delete('/products/delete/{id}', 'ProductController@deleteProduct');
     Route::post('/products/edit', 'ProductController@editProductPost');
 
 

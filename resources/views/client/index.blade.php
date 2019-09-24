@@ -56,8 +56,8 @@
     </div>
 </div>
 
-   <!-- Modal -->
-   <div class="modal fade" id="deleteModal" role="dialog">
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -84,7 +84,6 @@
 
     document.addEventListener('DOMContentLoaded', function(){ 
     
-        
         $('#deleteModal').on('show.bs.modal', function (event) {
             let item = $(event.relatedTarget); 
             let data = item.data('item'); 

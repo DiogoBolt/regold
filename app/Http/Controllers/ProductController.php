@@ -108,6 +108,16 @@ class ProductController extends Controller
         return view('product.edit', compact('product', 'categories'));
     }
 
+    public function deleteProduct($id)
+    {
+
+        $product = Product::where('id', $id)->first();
+        $product->delete();
+
+        $products = Product::all();
+        return view('product.index', compact('products'));
+    }
+
     public function editProductPost(Request $request)
     {
         $inputs = $request->all();

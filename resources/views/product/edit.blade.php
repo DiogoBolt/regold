@@ -33,7 +33,6 @@
                                     Detalhes:<textarea class="form-control" name="details" >{{$product->details}}</textarea>
                                 </div>
                             </div>
-                           
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
@@ -85,7 +84,8 @@
                             </div>
                         </div>
                         <div>
-                            <button class="btn btn-edit">Editar</button>
+                            <button class="btn btn-edit" type="submit">Editar</button>
+                            <button class="btn btn-del" type="button" data-toggle="modal" data-target="#deleteModal">Apagar</button>
                         </div>
                     </form>
                 </div>
@@ -94,4 +94,52 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">x</button>
+                <h4 class="modal-title">Apagar Produto</h4>
+            </div>
+            <div class="modal-body">Deseja apagar este produto?</div>
+            <div class="modal-footer">
+                <button type="button" class="btn modal-del" id="delete-user">
+                    <strong>Apagar</strong>
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <strong>Cancelar</strong>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form action="/products/delete" method="post" id="delete-form">
+    {{ csrf_field() }}
+    <input type="hidden" name="_method" value="delete" />
+    <input type="hidden" value="{{$product->id}}" name="id">
+</form>
+
+
 @endsection
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function(){ 
+    
+        $('#deleteModal').on('show.bs.modal', function (event) {
+          
+            $('#delete-user').on('click', function() { 
+                $('#delete-form').submit();
+            });
+
+        });
+
+        $("#deleteModal").on("hidden.bs.modal", function () {
+            $('#delete-user').unbind('click');
+        });
+
+    }, false);
+
+</script>
