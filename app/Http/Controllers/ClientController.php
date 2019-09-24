@@ -90,21 +90,17 @@ class ClientController extends Controller
         if($user->sales_id == null)
         {
             $clients = Customer::from(Customer::alias('c'))
-                ->leftJoin(Group::alias('g'), 'c.group_id', '=', 'g.id')
                 ->leftJoin(User::alias('u'), 'u.client_id', '=', 'c.id')
                 ->where('c.name','LIKE','%'.$search.'%')
                 ->orWhere('c.id','LIKE','%'.$search.'%')
                 ->select([
                     'c.id',
                     'u.id as userid',
-                    'g.id as groupid',
                     'c.name',
                     'c.regoldiID',
-                    'g.name as group',
                 ])->get();
 
             $total = Customer::from(Customer::alias('c'))
-                ->leftJoin(Group::alias('g'), 'c.group_id', '=', 'g.id')
                 ->leftJoin(User::alias('u'), 'u.client_id', '=', 'c.id')
                 ->where('c.name','LIKE','%'.$search.'%')
                 ->orWhere('c.id','LIKE','%'.$search.'%')
@@ -113,7 +109,6 @@ class ClientController extends Controller
         } else {
 
             $clients = Customer::from(Customer::alias('c'))
-                ->leftJoin(Group::alias('g'), 'c.group_id', '=', 'g.id')
                 ->leftJoin(User::alias('u'), 'u.client_id', '=', 'c.id')
                 ->where('c.salesman',$user->sales_id)
                 ->where(function($query) use ($search)
@@ -124,10 +119,8 @@ class ClientController extends Controller
                 ->select([
                     'c.id',
                     'u.id as userid',
-                    'g.id as groupid',
                     'c.name',
                     'c.regoldiID',
-                    'g.name as group',
                 ])->get();
 
             $total = Customer::from(Customer::alias('c'))
@@ -183,7 +176,9 @@ class ClientController extends Controller
 
         $client->name = $inputs['name'];
         $client->address = $inputs['address'];
+        $client->invoice_address = $inputs['invoice_address'];
         $client->city = $inputs['city'];
+        $client->postal_code = $inputs['postal_code'];
         $client->nif = $inputs['nif'];
         $client->email = $inputs['email'];
         $client->activity = $inputs['activity'];

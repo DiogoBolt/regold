@@ -25,6 +25,9 @@
                             <b>Morada:</b> {{$client->address}}
                         </div>
                         <div class="form-group">
+                            <b>Morada Faturação:</b> {{$client->invoice_address}}
+                        </div>
+                        <div class="form-group">
                             <b> Cidade:</b> {{$client->city}}
                         </div>
                         <div class="form-group">

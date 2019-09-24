@@ -30,7 +30,13 @@
                                 Morada:<input class="form-control" name="address" required>
                             </div>
                             <div class="form-group">
+                                Morada Faturação:<input class="form-control" name="invoice_address" required>
+                            </div>
+                            <div class="form-group">
                                 Cidade: <input class="form-control" name="city" required>
+                            </div>
+                            <div class="form-group">
+                            Codigo Postal: <input class="form-control" name="postal_code" required>
                             </div>
                             <div class="form-group">
                                 NIF: <input id="nif" class="form-control" type="number" name="nif" required>
