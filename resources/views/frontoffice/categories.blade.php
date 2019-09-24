@@ -26,6 +26,10 @@
         <span class="back-btn__back"><strong>Home</strong></span>
     </a>
 
+    <a id="fav-link" href="/frontoffice/favorites">
+        <img src="/img/filled-fav.png" alt="favoritos">
+    </a>
+
     <div class="container">
     
         <div class="search-container">

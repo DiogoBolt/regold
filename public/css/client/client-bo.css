@@ -63,6 +63,16 @@
   text-decoration: none;
 }
 
+.modal-del {
+  background-color: rgb(235, 72, 72);
+}
+.modal-del:hover {
+  background-color: #fff;
+  color: rgb(235, 72, 72);
+  border-color: rgb(235, 72, 72);
+}
+
+
 /* Search */
 
 #client-search {

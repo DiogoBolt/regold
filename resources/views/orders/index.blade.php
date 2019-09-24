@@ -53,6 +53,11 @@
                                         
                                         <button class="btn">Associar</button>
                                     </form>
+                                        @if ($errors->has('receipt'))
+                                            <div class="alert-danger">
+                                                {{  $errors->first('receipt') }}
+                                            </div>
+                                        @endif
                                     </td>
                                 @else
                                     <td class="form-td">

@@ -209,14 +209,15 @@ class ClientController extends Controller
         return view('client.index',compact('clients'));
     }
 
-    public function deleteCustomer($id) 
+    public function deleteCustomer(Request $request) 
     {
         /* Delete user favourites */
-        $user_favorites = Favorite::where('user_id', '=', $id)->delete();
+        $user_favorites = Favorite::where('user_id', '=', $request->id)->delete();
 
-        $client = Customer::where('id', $id)->first()->delete();
+        $client = Customer::where('id', $request->id)->first()->delete();
+        $user_associated = User::where('client_id', '=', $request->id)->first();
 
-        return ['success' => 'Client deleted'];
+        return redirect()->to('/clients'); 
     }
 
     public function addSales(Request $request)
@@ -241,16 +242,15 @@ class ClientController extends Controller
 
         $user->save();
 
-        return back();
+        return redirect()->to('/salesman'); 
     }
 
-    public function deleteSales($id) 
+    public function deleteSales(Request $request) 
     {
+        $user_associated = User::where('sales_id', '=', $request->id)->first()->delete();
+        $salesman = Salesman::where('id', '=', $request->id)->first()->delete();
 
-        $user_associated = User::where('sales_id', '=', $id)->first()->delete();
-        $salesman = Salesman::where('id', '=', $id)->first()->delete();
-
-        return ['success' => $id];
+        return redirect()->to('/salesman'); 
     }
 
 

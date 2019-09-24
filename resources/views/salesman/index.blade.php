@@ -26,9 +26,9 @@
                         </tr>
                         @foreach($salesman as $sales)
                                 <tr>
-                                    <td><a href="/salesman/{{$sales->id}}">{{$sales->id}}</a></td>
-                                    <td><a href="/salesman/{{$sales->id}}">{{$sales->name}}</a></td>
-                                    <td><a href="/salesman/{{$sales->id}}">{{$sales->total}}</a></td>
+                                    <td><a href="/salesman/{{$sales->sales_id}}">{{$sales->sales_id}}</a></td>
+                                    <td><a href="/salesman/{{$sales->sales_id}}">{{$sales->name}}</a></td>
+                                    <td><a href="/salesman/{{$sales->sales_id}}">{{$sales->total}}</a></td>
                                     <td><button class="btn-del"  data-toggle="modal" data-target="#deleteModal" data-item="{{ $sales }}">Eliminar</button></td>
                                 </tr>
                         @endforeach
@@ -53,49 +53,47 @@
                 </div>
                 <div class="modal-body"></div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-del" id="delete-user">
+                    <button type="button" class="btn modal-del" id="delete-user">
                         <strong>Apagar</strong>
                     </button>
-                    <button type="button" class="btn btn-default" id="dismiss-modal">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
                         <strong>Cancelar</strong>
                     </button>
                 </div>
             </div>
         </div>
     </div>
+
+    <form action="/salesman/delete" method="post" id="delete-form">
+        {{ csrf_field() }}
+        <input type="hidden" name="_method" value="delete" />
+        <input type="hidden" id="sales-id" value="" name="id">
+    </form>
+    
 @endsection
 
 <script>
 
-        document.addEventListener('DOMContentLoaded', function(){ 
-        
-            
-            $('#deleteModal').on('show.bs.modal', function (event) {
-                let item = $(event.relatedTarget); 
-                let data = item.data('item'); 
+    document.addEventListener('DOMContentLoaded', function(){ 
     
-                $(this).find('.modal-body').text(`Tem a certeza que quer apagar o seguinte vendedor, ${data.name} ? `);
-    
-                $('#delete-user').on('click', function() {
-                    let clientId = data.id;
-                    $.get(`/salesman/delete/${clientId}`, function (response) {
-                        if (response.success) {
-                           //console.log(response);
-                        }
-                    });
-    
-                    $('#deleteModal').modal('hide');
-                    $('#delete-user').unbind('click');
-                });
-    
-                $('#dismiss-modal').on('click', function() {
-                    $('#deleteModal').modal('hide');
-                    $('#delete-user').unbind('click');
-                });
-    
+        $('#deleteModal').on('show.bs.modal', function (event) {
+            let item = $(event.relatedTarget); 
+            let data = item.data('item'); 
+
+            $(this).find('.modal-body').text(`Tem a certeza que quer apagar o seguinte vendedor, ${data.name} ? `);
+
+            $('#delete-user').on('click', function() { 
+                $('#sales-id').val(data.sales_id);
+                $('#delete-form').submit();
             });
-    
-        }, false);
-    
-    </script>
+
+        });
+
+        $("#deleteModal").on("hidden.bs.modal", function () {
+            $('#delete-user').unbind('click');
+        });
+
+    }, false);
+
+</script>
     

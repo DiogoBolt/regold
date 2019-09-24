@@ -98,3 +98,21 @@
 .login-bottom a {
   color: var(--secondary-green);
 }
+
+.download-link {
+  display: block;
+  text-align: center;
+}
+
+.download-link span {
+  display: inline-block;
+  padding: 5px;
+}
+
+.download-link span:first-child {
+  background-color: var(--main-color);
+  color: #fff;
+  border-top-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+

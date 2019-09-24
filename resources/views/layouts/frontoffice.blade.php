@@ -71,6 +71,9 @@
                             <li>
                                 <a href="{{ route('invoices') }}">Facturas</a>
                             </li>
+                            <li>
+                                <a href="/frontoffice/favorites">Favoritos</a>
+                            </li>
 
 
                             <li class="dropdown">
@@ -80,7 +83,6 @@
 
                                 <ul class="dropdown-menu">
                                     <li><a href="/frontoffice/client">Definicoes</a></li>
-                                    <li><a href="/frontoffice/favorites">Favoritos</a></li>
                                     <li>
                                         @if(Session::has('impersonated'))
                                             <a href="/impersonate/leaveuser">

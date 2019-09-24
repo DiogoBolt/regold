@@ -110,12 +110,10 @@ class ProductController extends Controller
 
     public function deleteProduct(Request $request)
     {
-
         $product = Product::where('id', $request->id)->first();
         $product->delete();
 
-        $products = Product::all();
-        return view('product.index', compact('products'));
+        return redirect()->to('/products'); 
     }
 
     public function editProductPost(Request $request)
@@ -705,6 +703,12 @@ class ProductController extends Controller
     public function attachInvoice(Request $request)
     {
         $inputs = $request->all();
+
+        $request->validate([
+            'receipt' => 'required',
+        ],[
+            'receipt.required' => 'Por favor associe um ficheiro.'
+        ]);
 
         $order = Order::where('id',$inputs['order'])->first();
 

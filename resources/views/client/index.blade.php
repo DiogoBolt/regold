@@ -66,10 +66,10 @@
             </div>
             <div class="modal-body"></div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-del" id="delete-user">
+                <button type="button" class="btn modal-del" id="delete-user">
                     <strong>Apagar</strong>
                 </button>
-                <button type="button" class="btn btn-default" id="dismiss-modal">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
                     <strong>Cancelar</strong>
                 </button>
             </div>
@@ -77,6 +77,11 @@
     </div>
 </div>
 
+<form action="/clients/delete" method="post" id="delete-form">
+    {{ csrf_field() }}
+    <input type="hidden" name="_method" value="delete" />
+    <input type="hidden" id="user-id" value="" name="id">
+</form>
 
 @endsection
 
@@ -90,25 +95,17 @@
 
             $(this).find('.modal-body').text(`Tem a certeza que quer apagar o seguinte cliente, ${data.name} ? `);
 
-            $('#delete-user').on('click', function() {
-                let clientId = data.id;
-                $.get(`/clients/delete/${clientId}`, function (response) {
-                    if (response.success) {
-                      // console.log(response);
-                    }
-                });
-
-                $('#deleteModal').modal('hide');
-                $('#delete-user').unbind('click');
-            });
-
-            $('#dismiss-modal').on('click', function() {
-                $('#deleteModal').modal('hide');
-                $('#delete-user').unbind('click');
+            $('#delete-user').on('click', function() { 
+                $('#user-id').val(data.id);
+                $('#delete-form').submit();
             });
 
         });
 
-    }, false);
+        $("#deleteModal").on("hidden.bs.modal", function () {
+            $('#delete-user').unbind('click');
+        });
+
+  }, false);
 
 </script>

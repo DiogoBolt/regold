@@ -25,11 +25,11 @@
                         {{ csrf_field() }}
                         <div class="col-sm-6">
                             <div class="form-group">
-                                Nome:<input class="form-control"  name="name">
+                                Nome:<input class="form-control"  name="name" required>
                             </div>
 
                             <div class="form-group">
-                                Detalhes:<input class="form-control"  name="details">
+                                Detalhes:<input class="form-control"  name="details" required>
                             </div>
 
                             <div class="form-group">
@@ -43,40 +43,40 @@
 
                         <div class="col-sm-6">
                             <div class="form-group">
-                               Imagem:  <input class="form-control" type="file" name="foto">
+                               Imagem:  <input class="form-control" type="file" name="foto" required>
                             </div>
 
                             <div class="form-group">
-                                Ficha Tecnica:  <input class="form-control" type="file" name="manual">
+                                Ficha Tecnica:  <input class="form-control" type="file" name="manual" required>
                             </div>
 
                             <div class="form-group">
-                                Ficha Segurança:  <input class="form-control" type="file" name="seguranca">
+                                Ficha Segurança:  <input class="form-control" type="file" name="seguranca" required>
                             </div>
                         </div>
 
                         <div class="col-sm-6">
                             <div class="form-group">
-                                Referência: <input class="form-control"  name="ref" >
+                                Referência: <input class="form-control"  name="ref" required>
                             </div>
 
                             <div class="form-group">
-                                Preço Escalão 1: <input class="form-control"  name="price1" >
+                                Preço Escalão 1: <input class="form-control"  name="price1" required>
                             </div>
                             <div class="form-group">
-                                Preço Escalão 2: <input class="form-control"  name="price2" >
+                                Preço Escalão 2: <input class="form-control"  name="price2" required>
                             </div>
                         </div>
 
                         <div class="col-sm-6">
                             <div class="form-group">
-                                Preço Escalão 3: <input class="form-control"  name="price3" >
+                                Preço Escalão 3: <input class="form-control"  name="price3" required>
                             </div>
                             <div class="form-group">
-                                Total Escalão 2: <input class="form-control"  name="amount2" >
+                                Total Escalão 2: <input class="form-control"  name="amount2" required>
                             </div>
                             <div class="form-group">
-                                Total Escalão 3: <input class="form-control"  name="amount3" >
+                                Total Escalão 3: <input class="form-control"  name="amount3" required>
                             </div>
                         </div>
                         <div>
