@@ -205,8 +205,27 @@ class ClientController extends Controller
 
 
         $clients = Customer::all();
+        $unpaid = 0;
 
-        return view('client.index',compact('clients'));
+        foreach($clients as $client)
+        {
+            $orders = Order::where('client_id',$client->id)->where('processed',1)->where('created_at','>=',Carbon::now()->startOfMonth())->count();
+
+            $current = Order::where('client_id',$client->id)->where('status','waiting_payment')->where('invoice_id','!=',null)->sum('total');
+
+            if($orders > 0)
+            {
+                $client->order = 1;
+            }else{
+                $client->order = 0;
+                $unpaid += 1;
+            }
+            $client->current = $current;
+        }
+        $total = $clients->count();
+
+
+        return view('client.index',compact('clients','unpaid','total'));
     }
 
     public function deleteCustomer($id) 
