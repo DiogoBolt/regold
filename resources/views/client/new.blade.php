@@ -45,7 +45,13 @@
                                 Telefone: <input class="form-control" type="tel"  name="telephone" required>
                             </div>
                             <div class="form-group">
-                                Metodo Pagamento: <input class="form-control" name="payment_method" required>
+                                Metodo Pagamento:  <select class="form-control" name="payment_method" required>
+                                        <option value="Debito Direto">Débito Direto</option>
+                                        <option value="Contra Entrega">Contra Entrega</option>
+                                        <option value="Fatura Contra Fatura">Fatura Contra Fatura</option>
+                                        <option value="30 dias">30 dias</option>
+
+                                </select>
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -67,14 +73,6 @@
                             </div>
                             <div class="form-group">
                                 Password: <input class="form-control" type="password" name="password" required>
-                            </div>
-
-                            <div class="form-group">
-                                Grupo : <select class="form-control" name="group" required>
-                                    @foreach($groups as $group)
-                                        <option value="{{$group->id}}">{{$group->name}}</option>
-                                    @endforeach
-                                </select>
                             </div>
 
                             <div class="form-group">
