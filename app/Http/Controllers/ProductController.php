@@ -108,10 +108,10 @@ class ProductController extends Controller
         return view('product.edit', compact('product', 'categories'));
     }
 
-    public function deleteProduct($id)
+    public function deleteProduct(Request $request)
     {
 
-        $product = Product::where('id', $id)->first();
+        $product = Product::where('id', $request->id)->first();
         $product->delete();
 
         $products = Product::all();
