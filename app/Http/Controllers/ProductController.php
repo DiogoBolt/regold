@@ -177,7 +177,7 @@ class ProductController extends Controller
                 ->where('processed',0)
                 ->select([
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                    'o.receipt_id','o.created_at','c.name','c.regoldiID','o.status','o.invoice_id'
+                    'o.receipt_id','o.created_at','c.comercial_name','c.regoldiID','o.status','o.invoice_id'
                 ])
                 ->orderBy('o.id', 'DESC')->get();
         } else {
@@ -187,7 +187,7 @@ class ProductController extends Controller
                 ->where('processed',0)
                 ->select([
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                    'o.receipt_id','o.created_at','c.name','c.regoldiID','o.status','o.invoice_id'
+                    'o.receipt_id','o.created_at','c.comercial_name','c.regoldiID','o.status','o.invoice_id'
                 ])
                 ->orderBy('o.id', 'DESC')->get();
         }

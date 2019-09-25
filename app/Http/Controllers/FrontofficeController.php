@@ -368,6 +368,7 @@ class FrontofficeController extends Controller
         $client = Customer::where('id',$user->client_id)->first();
 
         $cart = Cart::where('user_id',$user->id)->where('processed',0)->first();
+        $orders = Order::where('client_id',$user->client_id)->where('processed',1)->where('created_at','>=',Carbon::now()->startOfMonth())->count();
 
         if(!isset($cart))
         {
@@ -395,56 +396,55 @@ class FrontofficeController extends Controller
         $order->external_id = uniqid();
         $order->save();
 
+        $total = $order->total;
         $cart->processed = 1;
 
         $cart->save();
-        if($total < 29.90)
-        {
-            $total += 5;
-        }
 
-        else {
-            if ($total < $client->contract_value) {
-                $total += $client->contract_value - $total;
+        if($orders > 0) {
+            if ($total < 29.90) {
+                $total += 5;
             }
-        }
-        $total = 1.23*$total;
-
-
-        switch ($client->payment_method) {
-            case "Debito Direto":
-                $message = new Message();
-                $day = Date('d');
-                if($day < 16)
-                {
-                    $message->text = "O pagamento da compra nº".$order->id. " será efetuado no dia 15 do próximo mês";
-                }else{
-                    $message->text = "O pagamento da compra nº".$order->id. " será efetuado no dia 30 do próximo mês";
+        } else {
+                if ($total < $client->contract_value) {
+                    $total += $client->contract_value - $total;
                 }
-                $message->sender_id = 1;
-                $message->receiver_id = $user->id;
-                $message->viewed = 0;
-                $message->save();
-                $order->total = $total;
-                $order->save();
-                return redirect('/frontoffice/orders');
-                break;
-            case "Contra Entrega":
-                $order->total = $total;
-                $order->save();
-                return redirect('/frontoffice/orders');
-                break;
-            case "Fatura Contra Fatura":
-                $order->total = $total;
-                $order->save();
-                return redirect('/frontoffice/orders');
-                break;
-            case "30 dias":
-                $response =  $this->processPayment($cart,$order);
-                return redirect($response->url_redirect);
-                break;
-        }
+            }
+            $total = 1.23 * $total;
 
+
+            switch ($client->payment_method) {
+                case "Debito Direto":
+                    $message = new Message();
+                    $day = Date('d');
+                    if ($day < 16) {
+                        $message->text = "O pagamento da compra nº" . $order->id . " será efetuado no dia 15 do próximo mês";
+                    } else {
+                        $message->text = "O pagamento da compra nº" . $order->id . " será efetuado no dia 30 do próximo mês";
+                    }
+                    $message->sender_id = 1;
+                    $message->receiver_id = $user->id;
+                    $message->viewed = 0;
+                    $message->save();
+                    $order->total = $total;
+                    $order->save();
+                    return redirect('/frontoffice/orders');
+                    break;
+                case "Contra Entrega":
+                    $order->total = $total;
+                    $order->save();
+                    return redirect('/frontoffice/orders');
+                    break;
+                case "Fatura Contra Fatura":
+                    $order->total = $total;
+                    $order->save();
+                    return redirect('/frontoffice/orders');
+                    break;
+                case "30 dias":
+                    $response = $this->processPayment($cart, $order);
+                    return redirect($response->url_redirect);
+                    break;
+            }
     }
 
     public function showCart()

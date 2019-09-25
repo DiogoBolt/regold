@@ -98,6 +98,7 @@ class ClientController extends Controller
                     'u.id as userid',
                     'c.name',
                     'c.regoldiID',
+                    'c.comercial_name',
                 ])->get();
 
             $total = Customer::from(Customer::alias('c'))
@@ -121,6 +122,7 @@ class ClientController extends Controller
                     'u.id as userid',
                     'c.name',
                     'c.regoldiID',
+                    'c.comercial_name',
                 ])->get();
 
             $total = Customer::from(Customer::alias('c'))
