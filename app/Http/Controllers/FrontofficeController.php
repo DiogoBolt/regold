@@ -155,7 +155,7 @@ class FrontofficeController extends Controller
         return view('frontoffice.documentsType',compact('receipts','client','type', 'super'));
     }
 
-    public function documentsBySuper($super) 
+    public function documentsBySuper($super)
     {
         $superId = DocumentSuperType::where('name', $super)->pluck('id');
 
@@ -315,7 +315,7 @@ class FrontofficeController extends Controller
     public function productsByCategory($id)
     {
         $products = Product::where('category',$id)->get();
-        
+
         return view('frontoffice.products',compact('products'));
     }
 
@@ -325,7 +325,7 @@ class FrontofficeController extends Controller
 
         $product = Product::where('id', $id)->first();
         $isFavourite = Favorite::where('product_id', $id)->first();
-        
+
         return view('frontoffice.product',compact('product', 'isFavourite'));
     }
 
@@ -398,6 +398,18 @@ class FrontofficeController extends Controller
         $cart->processed = 1;
 
         $cart->save();
+        if($total < 29.90)
+        {
+            $total += 5;
+        }
+
+        else {
+            if ($total < $client->contract_value) {
+                $total += $client->contract_value - $total;
+            }
+        }
+        $total = 1.23*$total;
+
 
         switch ($client->payment_method) {
             case "Debito Direto":
@@ -413,12 +425,18 @@ class FrontofficeController extends Controller
                 $message->receiver_id = $user->id;
                 $message->viewed = 0;
                 $message->save();
+                $order->total = $total;
+                $order->save();
                 return redirect('/frontoffice/orders');
                 break;
             case "Contra Entrega":
+                $order->total = $total;
+                $order->save();
                 return redirect('/frontoffice/orders');
                 break;
             case "Fatura Contra Fatura":
+                $order->total = $total;
+                $order->save();
                 return redirect('/frontoffice/orders');
                 break;
             case "30 dias":
@@ -556,6 +574,8 @@ class FrontofficeController extends Controller
 
         array_push($items,$iva);
 
+        $order->total = number_format($order->total > 29.90 ? $order->total*1.23 : $order->total*1.23+5,2);
+        $order->save();
 
         $payment = [
             'client' => ['address' => ['address' => $customer->address,'city'=>$customer->city,'country'=>'PT'], 'email' => $customer->email,'name' => $customer->name],
@@ -627,6 +647,10 @@ class FrontofficeController extends Controller
         $iva['descr'] = "Iva";
         $iva['name'] = "Iva";
         $iva['amount'] = number_format($order->total > $client->contract_value ? $order->total*1.23 - $order->total : $client->contract_value*1.23 - $client->contract_value ,2);
+
+
+        $order->total = number_format($order->total > $client->contract_value ? $order->total * 1.23 : $client->contract_value * 1.23,2);
+        $order->save();
 
         array_push($items,$iva);
 
