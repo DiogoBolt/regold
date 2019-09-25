@@ -126,9 +126,8 @@ select {
 #mobile-icons {
   top: 50%;
   transform: translateY(-50%);
-  position: sticky;
-  position: -webkit-sticky;
-  float: right;
+  position: fixed;
+  right: 0;
   z-index: 69;
 }
 

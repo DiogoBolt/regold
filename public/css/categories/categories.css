@@ -1,6 +1,5 @@
 .categories-container {
   margin-bottom: 30px;
-  margin-top: -65px;
   text-align: center;
 }
 
@@ -128,9 +127,9 @@
 }
 
 #fav-link {
-  z-index: 2;
-  position: sticky;
-  top: 30px;
+  position: fixed;
+  top: 30%;
+  z-index: 69;
 }
 
 #fav-link img {
@@ -162,5 +161,21 @@
 
   .HACCP img {
     top: 10px;
+  }
+
+  #fav-link {
+    top: 35%;
+  }
+}
+
+@media (max-width: 390px) {
+  #fav-link {
+    top: 40%;
+  }
+}
+
+@media (max-width: 330px) {
+  #fav-link {
+    top: 50%;
   }
 }

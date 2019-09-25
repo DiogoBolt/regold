@@ -64,14 +64,14 @@
 }
 
 .product-desc__add {
-  display: flex;
-  justify-content: flex-end;
+
 }
 
 .btn-add {
   margin: 15px 0;
   border: 2px solid var(--main-color);
   background-color: transparent;
+  float: right;
 }
 
 .btn-add:hover {
