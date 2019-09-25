@@ -197,7 +197,6 @@ class ProductController extends Controller
             $order->receipt = Receipt::where('id',$order->receipt_id)->first()->file ?? null;
             $order->invoice = Receipt::where('id',$order->invoice_id)->first()->file ?? null;
         }
-        dd($orders);
 
 
 
