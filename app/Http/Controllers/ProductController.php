@@ -657,6 +657,12 @@ class ProductController extends Controller
     {
         $inputs = $request->all();
 
+        $request->validate([
+            'receipt' => 'required',
+        ],[
+            'receipt.required' => 'Por favor associe um ficheiro.'
+        ]);
+
         $order = Order::where('id',$inputs['order'])->first();
         $user = Auth::user();
 

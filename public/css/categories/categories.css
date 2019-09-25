@@ -1,5 +1,6 @@
 .categories-container {
   margin-bottom: 30px;
+  margin-top: -65px;
   text-align: center;
 }
 
@@ -106,7 +107,7 @@
   position: absolute;
   width: 100%;
   background-color: var(--light-green);
-  z-index: 2;
+  z-index: 3;
 }
 
 #product-search:focus + #results {
@@ -116,7 +117,6 @@
 #results:hover {
   display: block;
 }
-
 
 .search-result {
   padding: 10px;
@@ -128,12 +128,9 @@
 }
 
 #fav-link {
-  position: fixed;
   z-index: 2;
-  top: auto;
-  bottom: 20px;
-  left: 20px;
-  right: auto;
+  position: sticky;
+  top: 30px;
 }
 
 #fav-link img {
@@ -154,9 +151,8 @@
   .category-footer {
     font-size: 12px;
     line-height: 2;
-    overflow: visible;
+    text-overflow: ellipsis;
     white-space: normal;
-    text-overflow: unset;
   }
 
   .Controlopragas img {

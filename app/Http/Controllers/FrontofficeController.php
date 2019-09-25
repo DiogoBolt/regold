@@ -324,7 +324,7 @@ class FrontofficeController extends Controller
         $user = Auth::user();
 
         $product = Product::where('id', $id)->first();
-        $isFavourite = Favorite::where('product_id', $id)->first();
+        $isFavourite = Favorite::where('product_id', $id)->where('user_id', $user->id)->first();
 
         return view('frontoffice.product',compact('product', 'isFavourite'));
     }

@@ -124,7 +124,6 @@ select {
 }
 
 #mobile-icons {
-  display: none;
   top: 50%;
   transform: translateY(-50%);
   position: sticky;
@@ -179,11 +178,4 @@ select {
     width: 70%;
   }
 
-  #mobile-icons {
-    display: inline-block;
-  }
-
-  .info-btn {
-  
-  }
 }
