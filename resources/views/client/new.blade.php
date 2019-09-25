@@ -27,11 +27,12 @@
                                 Nome:<input class="form-control"  name="name" required>
                             </div>
                             <div class="form-group">
-                                Morada:<input class="form-control" name="address" required>
-                            </div>
-                            <div class="form-group">
                                 Morada Faturação:<input class="form-control" name="invoice_address" required>
                             </div>
+                            <div class="form-group">
+                                Morada Entrega:<input class="form-control" name="address" required>
+                            </div>
+
                             <div class="form-group">
                                 Cidade: <input class="form-control" name="city" required>
                             </div>
@@ -45,7 +46,20 @@
                                 Email Contacto: <input class="form-control" type="email" name="email" required>
                             </div>
                             <div class="form-group">
-                                Actividade: <input class="form-control" name="activity" required>
+                                Actividade:  Tipo Cliente: <select class="form-control" name="activity" required>
+                                    <option value="Cafe / Snack Bar">Cafe / Snack Bar</option>
+                                    <option value="Salão de Chá">Salão de Chá</option>
+                                    <option value="Supermercado">Supermercado</option>
+                                    <option value="Peixaria">Peixaria</option>
+                                    <option value="Talho">Talho</option>
+                                    <option value="Restaurante">Restaurante</option>
+                                    <option value="Industria">Industria</option>
+                                    <option value="Hotel">Hotel</option>
+                                    <option value="Outro">Outro</option>
+                                    <option value="Posto Combustivel">Posto Combustivel</option>
+                                    <option value="Padaria / Pastelaria">Padaria / Pastelaria</option>
+
+                                </select>
                             </div>
                             <div class="form-group">
                                 Telefone: <input class="form-control" type="tel"  name="telephone" required>
@@ -75,7 +89,7 @@
                                 Email Faturação: <input class="form-control" type="email" name="receipt_email" required>
                             </div>
                             <div class="form-group">
-                                NIB: <input class="form-control" type="number" name="nib" required>
+                                NIB: <input class="form-control" type="number" name="nib">
                             </div>
                             <div class="form-group">
                                 Password: <input class="form-control" type="password" name="password" required>
