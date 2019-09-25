@@ -278,7 +278,6 @@ class ClientController extends Controller
     {
 
         $client = Customer::where('id',$id)->first();
-        $group = Group::where('id',$client->group_id)->first();
         $types = DocumentType::all();
 
         $user = User::where('client_id',$client->id)->first();
