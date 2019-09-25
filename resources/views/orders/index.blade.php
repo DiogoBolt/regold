@@ -38,7 +38,7 @@
                     @foreach($orders as $order)
                         @if($order->processed == 0)
                             <tr>
-                                <td><a href="/clients/{{$order->client_id}}">{{$order->name}}</a></td>
+                                <td><a href="/clients/{{$order->client_id}}">{{$order->comercial_name}}</a></td>
                                 <td>{{$order->regoldiID}}</td>
                                 <td>{{number_format($order->total,2)}}€</td>
                                 @if($order->invoice_id == null)
