@@ -24,10 +24,10 @@
                         {{ csrf_field() }}
                         <div class="col-sm-6">
                             <div class="form-group">
-                                Nome:<input class="form-control"  name="name" required>
+                                Nome Comercial:<input class="form-control"  name="name" required>
                             </div>
                             <div class="form-group">
-                                Designação Comercial:<input class="form-control"  name="comercial_names" required>
+                                Nome Faturação:<input class="form-control"  name="comercial_names" required>
                             </div>
                             <div class="form-group">
                                 Morada Faturação:<input class="form-control" name="invoice_address" required>
