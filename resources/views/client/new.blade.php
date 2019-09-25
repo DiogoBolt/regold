@@ -27,7 +27,7 @@
                                 Nome Comercial:<input class="form-control"  name="name" required>
                             </div>
                             <div class="form-group">
-                                Nome Faturação:<input class="form-control"  name="comercial_names" required>
+                                Nome Faturação:<input class="form-control"  name="comercial_name" required>
                             </div>
                             <div class="form-group">
                                 Morada Faturação:<input class="form-control" name="invoice_address" required>
