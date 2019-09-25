@@ -175,6 +175,7 @@ class ClientController extends Controller
         $client = new Customer;
 
         $client->name = $inputs['name'];
+        $client->comercial_name = $inputs['comercial_name'];
         $client->address = $inputs['address'];
         $client->invoice_address = $inputs['invoice_address'];
         $client->city = $inputs['city'];

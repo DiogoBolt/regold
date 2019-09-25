@@ -21,6 +21,7 @@
                         <img class="salesman-img img-responsive" src="/img/navbar/logoindexcolor.png"/>
                     </div>
                     <div class="col-sm-6">
+
                         <div class="form-group">
                             <b>Morada:</b> {{$client->address}}
                         </div>
@@ -50,6 +51,9 @@
                         </div>
                     </div>
                     <div class="col-sm-6">
+                        <div class="form-group">
+                            <b>Designação Comercial:</b> {{$client->comercial_name}}
+                        </div>
                         <div class="form-group">
                             <b> Vendedor:</b> {{$client->salesman}}
                         </div>
