@@ -128,7 +128,8 @@
 
 #fav-link {
   position: fixed;
-  top: 30%;
+  top: 150px;
+  right: 30px;
   z-index: 69;
 }
 
@@ -163,19 +164,4 @@
     top: 10px;
   }
 
-  #fav-link {
-    top: 35%;
-  }
-}
-
-@media (max-width: 390px) {
-  #fav-link {
-    top: 40%;
-  }
-}
-
-@media (max-width: 330px) {
-  #fav-link {
-    top: 50%;
-  }
 }
