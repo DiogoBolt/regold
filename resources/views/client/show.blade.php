@@ -19,6 +19,7 @@
                 <div class="panel-body">
                     <div>
                         <img class="salesman-img img-responsive" src="/img/navbar/logoindexcolor.png"/>
+                        <a href="/clients/edit/{{$client->id}}" class="btn btn-success">Editar</a>
                     </div>
                     <div class="col-sm-6">
 

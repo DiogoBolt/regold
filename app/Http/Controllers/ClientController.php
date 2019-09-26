@@ -164,7 +164,6 @@ class ClientController extends Controller
 
     public function newCustomer()
     {
-        $groups = Group::all();
         $salesman = Salesman::all();
 
         return view('client.new',compact('groups','salesman'));
@@ -231,13 +230,51 @@ class ClientController extends Controller
         return view('client.index',compact('clients','unpaid','total'));
     }
 
+    public function editCustomer($id)
+    {
+        $client = Customer::where('id',$id)->first();
+        $salesman = Salesman::all();
+
+        return view('client.edit',compact('client','salesman'));
+    }
+
+    public function editCustomerPost(Request $request)
+    {
+        $inputs = $request->all();
+
+        $client = Customer::where('id',$inputs['id'])->first();
+
+        $client->name = $inputs['name'];
+        $client->comercial_name = $inputs['comercial_name'];
+        $client->address = $inputs['address'];
+        $client->invoice_address = $inputs['invoice_address'];
+        $client->city = $inputs['city'];
+        $client->postal_code = $inputs['postal_code'];
+        $client->nif = $inputs['nif'];
+        $client->email = $inputs['email'];
+        $client->activity = $inputs['activity'];
+        $client->salesman = $inputs['salesman'];
+        $client->telephone = $inputs['telephone'];
+        $client->payment_method = $inputs['payment_method'];
+        $client->client_type = $inputs['client_type'];
+        $client->receipt_email = $inputs['receipt_email'];
+        $client->nib = $inputs['nib'];
+        $client->contract_value = $inputs['value'];
+        $client->regoldiID = $inputs['regoldiID'];
+        $client->transport_note = $inputs['transport_note'];
+
+        $client->save();
+        return redirect('/clients/'.$inputs['id']);
+    }
+
+
     public function deleteCustomer(Request $request) 
     {
         /* Delete user favourites */
         $user_favorites = Favorite::where('user_id', '=', $request->id)->delete();
 
         $client = Customer::where('id', $request->id)->first()->delete();
-        $user_associated = User::where('client_id', '=', $request->id)->first();
+        $user_associated = User::where('client_id', '=', $request->id)->first()->delete();
 
         return redirect()->to('/clients'); 
     }
