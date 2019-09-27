@@ -93,9 +93,8 @@
                 </table>
             </div>
             <div class="product__body-downloads">
-                <button type="button" class="info-btn" data-toggle="modal" data-target="#myModal">
-                    i
-                </button>
+                <span class="info-btn" data-toggle="modal" data-target="#myModal">&#9432;</span>
+         
                 <div>
                     <a href="/uploads/{{$product->id}}/{{$product->manual}}" class="btn" download>
                         Manual do Produto <img src="/img/download.png">

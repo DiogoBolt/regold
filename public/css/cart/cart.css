@@ -152,5 +152,9 @@
 
   .btn-cart {
     width: 180px;
+    position: absolute;
+    left: 50%;
+    float: none;
+    transform: translateX(-50%);
   }
 }
