@@ -126,7 +126,6 @@ class ClientController extends Controller
                 ])->get();
 
             $total = Customer::from(Customer::alias('c'))
-                ->leftJoin(Group::alias('g'), 'c.group_id', '=', 'g.id')
                 ->leftJoin(User::alias('u'), 'u.client_id', '=', 'c.id')
                 ->where('c.salesman',$user->sales_id)
                 ->where(function($query) use ($search)
