@@ -79,6 +79,22 @@
 
                     </div>
 
+                    <form action="/clients/addreceipt" class="order-form" method="post" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+
+                        <input value="{{$client->id}}" type="hidden" name="client">
+                        <select name="type" class="form-control">
+                            @foreach($types as $type)
+                                <option value="{{$type->id}}">{{$type->name}}</option>
+                                @endforeach
+                        </select>
+
+                        <label for="{{$client->id}}" class="btn"><strong>Adicionar Documento</strong></label>
+                        <input id="{{$client->id}}" class="input-order" type="file" name="receipt">
+
+                        <button class="btn">Associar</button>
+                    </form>
+
                 </div>
             </div>
         </div>

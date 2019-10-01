@@ -348,8 +348,17 @@ class ClientController extends Controller
 
             $receipt->file = $filename;
             $receipt->save();
+
+            $clientUser = User::where('client_id',$inputs['client'])->first();
+            $message = new Message();
+            $message->receiver_id = $clientUser->id;
+            $message->sender_id = Auth::user()->id;
+            $message->text = "Foi adicionado um documento à sua conta";
+            $message->viewed = 0;
+            $message->save();
         }
 
+        return back();
 
     }
 
