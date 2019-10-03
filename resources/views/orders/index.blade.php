@@ -31,7 +31,7 @@
                 </a>
 
                 <div class="collapse" id="collapseFilter">
-                    <form action="/orders/filter" method="post" id="filter-form">
+                    <form action="/orders/filter" method="POST" id="filter-form">
                         {{ csrf_field() }}
 
                         <div class="card card-body">
