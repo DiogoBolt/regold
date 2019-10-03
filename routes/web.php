@@ -121,6 +121,7 @@ Route::group(['middleware' => ['backoffice']], function () {
     Route::get('/orders/pay/{id}', 'ProductController@payOrder');
     Route::get('/orders/unpay/{id}', 'ProductController@unPayOrder');
     Route::post('/orders/semipay', 'ProductController@semiPayOrder');
+    Route::post('/orders/filter', 'ProductController@filterOrders');
 
 
 

@@ -169,10 +169,22 @@
   background-color: var(--main-color);
 }
 
-#print-link {
+#print-link, #filter-link {
   display: block;
   margin-bottom: 20px;
   padding: 6px 12px;
+}
+
+/* Filter */
+
+#collapseFilter .card-body {
+  border: 2px solid var(--main-color);
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+#collapseFilter .card-body .form-control{
+  margin-bottom: 10px;
 }
 
 @media (min-width: 1200px) {

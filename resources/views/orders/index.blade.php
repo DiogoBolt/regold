@@ -25,6 +25,38 @@
                     <a href="#" class="file-link" id="print-link"><strong>Imprimir Documentos (<span id="print-numbers">0</span>)</strong></a>
                     <input type="hidden" name="printOrders[]" value="" id="print-items"/>
                 </form>
+
+                <a class="file-link"  id="filter-link" data-toggle="collapse" href="#collapseFilter" role="button" aria-expanded="false" aria-controls="collapseFilter">
+                   <strong>Filtrar Encomendas</strong>
+                </a>
+
+                <div class="collapse" id="collapseFilter">
+                    <form action="/orders/filter" method="post" id="filter-form">
+                        {{ csrf_field() }}
+
+                        <div class="card card-body">
+                            <label for="client-filter">Cliente</label>
+                            <input type="text" id="client-filter" class="form-control" name="client">
+
+                            <label for="payment-filter">Método de Pagamento</label>
+                            <select class="form-control" id="payment-filter" name="payment_method">
+                                    <option value="" selected disabled>Seleccione método</option>
+                                    <option value="Debito Direto">Débito Direto</option>
+                                    <option value="Contra Entrega">Contra Entrega</option>
+                                    <option value="Fatura Contra Fatura">Fatura Contra Fatura</option>
+                                    <option value="30 dias">30 dias</option>
+                            </select>
+
+                            <label for="process-filter">Data de Processamento</label>
+                            <input type="date" id="process-filter" class="form-control" name="start_date">
+                            - entre - 
+                            <input type="date" class="form-control" name="end_date">
+
+                            <button class="btn" type="submit" form="filter-form">Filtrar</button>
+                        </div>
+                    </form>
+                </div>
+            
                 <table class="table">
                     <tr>
                         <th>Cliente</th>

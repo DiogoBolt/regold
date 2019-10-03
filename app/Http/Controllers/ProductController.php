@@ -167,7 +167,6 @@ class ProductController extends Controller
 
     }
 
-
     public function showOrders()
     {
         $user = Auth::user();
@@ -198,9 +197,30 @@ class ProductController extends Controller
             $order->invoice = Receipt::where('id',$order->invoice_id)->first()->file ?? null;
         }
 
-
-
         return view('orders.index', compact('orders'));
+    }
+
+    public function filterOrders(Request $request) 
+    {
+
+        if ($request->filled('client')) {
+           dd($request->client);
+        }
+
+        if ($request->filled('payment_method')) {
+            dd($request->payment_method);
+        }
+
+        if ($request->filled('start_date')) {
+            dd($request->start_date);
+        }
+
+        if ($request->filled('end_date')) {
+            dd($request->end_date);
+        }
+
+
+        dd('FU');
     }
 
     public function showProcessedOrders()
@@ -234,8 +254,6 @@ class ProductController extends Controller
             $order->receipt = Receipt::where('id',$order->receipt_id)->first()->file ?? null;
             $order->invoice = Receipt::where('id',$order->invoice_id)->first()->file ?? null;
         }
-
-
 
         return view('orders.processedOrders', compact('orders'));
     }
