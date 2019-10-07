@@ -31,9 +31,7 @@
                 </a>
 
                 <div class="collapse" id="collapseFilter">
-                    <form action="/orders/filter" method="POST" id="filter-form">
-                        {{ csrf_field() }}
-
+                    <form action="/orders/filter/q" method="GET" id="filter-form">
                         <div class="card card-body">
                             <label for="client-filter">Cliente</label>
                             <input type="text" id="client-filter" class="form-control" name="client">
@@ -68,7 +66,7 @@
                         <th>Imprimir</th>
                     </tr>
                     @foreach($orders as $order)
-                        @if($order->processed == 0)
+                      
                             <tr>
                                 <td><a href="/clients/{{$order->client_id}}">{{$order->comercial_name}}</a></td>
                                 <td>{{$order->regoldiID}}</td>
@@ -112,10 +110,12 @@
                                 </td>
                             </tr>
 
-                        @endif
+                        
                     @endforeach
 
                 </table>
+
+                {{ $orders->links() }}
             </div>
         </div>
     </div>
