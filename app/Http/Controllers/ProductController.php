@@ -217,6 +217,8 @@ class ProductController extends Controller
 
         if ($request->filled('payment_method')) { $filteredOrders->where('c.payment_method', '=', $request->payment_method); }
 
+        if ($request->filled('status')) { $filteredOrders->where('o.status', '=', $request->status); }
+
         if ($request->filled('start_date') && $request->filled('end_date') ) {
             $start = $request->start_date;
             $end = $request->end_date;
@@ -255,6 +257,8 @@ class ProductController extends Controller
         if ($request->filled('client')) { $filteredOrders->where('c.name', 'like', '%' . $request->client . '%'); }
 
         if ($request->filled('payment_method')) { $filteredOrders->where('c.payment_method', '=', $request->payment_method); }
+
+        if ($request->filled('status')) { $filteredOrders->where('o.status', '=', $request->status); }
 
         if ($request->filled('start_date') && $request->filled('end_date') ) {
             $start = $request->start_date;
