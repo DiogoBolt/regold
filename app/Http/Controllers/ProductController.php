@@ -504,9 +504,9 @@ class ProductController extends Controller
 
         $salesPayment = new SalesPayment;
 
-        $salesPayment->sales_id = $user->id;
+        $salesPayment->sales_id = $user->sales_id;
         $salesPayment->order_id = $order->id;
-        $salesPayment->value = 1.23*$order->total;
+        $salesPayment->value = number_format(1.23*$order->total,2);
         $salesPayment->delivered = 0;
         $salesPayment->save();
 
@@ -570,6 +570,14 @@ class ProductController extends Controller
         $neworder->cart_id = $order->cart_id;
         $neworder->processed = 1;
         $neworder->save();
+
+        $salesPayment = new SalesPayment;
+
+        $salesPayment->sales_id = $user->sales_id;
+        $salesPayment->order_id = $order->id;
+        $salesPayment->value = number_format($amount,2);
+        $salesPayment->delivered = 0;
+        $salesPayment->save();
 
         if ($user->sales_id == null) {
             $orders = Order::from(Order::alias('o'))

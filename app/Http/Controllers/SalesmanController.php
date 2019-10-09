@@ -45,7 +45,7 @@ class SalesmanController extends Controller
 
         foreach($salesman as $sales)
         {
-            $sales->total = SalesPayment::where('sales_id',$sales->id)->where('delivered',0)->sum('value');
+            $sales->total = SalesPayment::where('sales_id',$sales->sales_id)->where('delivered',0)->sum('value');
         }
 
         return view('salesman.index', compact('salesman'));
