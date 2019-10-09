@@ -41,7 +41,7 @@
                         <b>Conta Corrente</b>
                         @foreach($salesPayments as $payment)
                         <div class="form-group">
-                           <a href="/orders/{{$payment->order_id}}"> Venda:  {{$payment->order_id}}</a> / <b> Valor : {{$payment->value}}</b>
+                           <a href="/orders/{{$payment->order_id}}"> Venda:  {{$payment->order_id}}</a> / Fatura: {{$payment->invoice}}  / <b> Valor : {{$payment->value}}</b>
                         </div>
                         @endforeach
                             <div class="form-group">

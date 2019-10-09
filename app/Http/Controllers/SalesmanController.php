@@ -60,6 +60,11 @@ class SalesmanController extends Controller
 
             $salesPayments = SalesPayment::where('sales_id', $id)->where('delivered', 0)->get();
 
+            foreach($salesPayments as $payment)
+            {
+                $payment->invoice =  Order::where('id',$payment->order_id)->invoice_id;
+            }
+
             $total = SalesPayment::where('sales_id', $id)->where('delivered', 0)->sum('value');
 
             return view('salesman.show', compact('salesman', 'salesPayments', 'user', 'total'));
