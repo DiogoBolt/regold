@@ -72,5 +72,42 @@
         @endif
     </div>
 
+    <div class="modal fade" id="alertModal" role="dialog">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Aviso <span style="float: right;">&#9888;</span></h4>
+                    </div>
+                    <div class="modal-body"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-alert" data-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 @endsection
+
+<script>
+    document.addEventListener('DOMContentLoaded', function(){ 
+        const alertModal = $('#alertModal');
+
+        /* Mete aqui as condições para o gajo coiso e tal, nem precisas desses if's todos, o text pode ser uma variavel que consoante
+        coiso e tal e cenas mudas e chapas no modal */ 
+        let xpto = false;
+
+        if(xpto) {
+
+            $(this).find('.modal-body').text('O manel é um pétáculo');
+            alertModal.modal(); /* Abrir o modal */
+        } else if (xpto === 'xpto') {
+
+            $(this).find('.modal-body').text('O manel é um pétáculo');
+            alertModal.modal(); /* Abrir o modal */
+        }
+
+
+    
+
+    }, false);
+</script>

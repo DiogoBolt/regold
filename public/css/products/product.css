@@ -161,6 +161,10 @@ select {
   cursor: pointer;
 }
 
+.modal-body p {
+  text-align: justify;
+}
+
 @media (max-width: 426px) {
   .product {
     width: 100%;

@@ -109,6 +109,25 @@
   color: var(--secondary-green);
 }
 
+.modal .modal-header {
+  background-color: red;
+}
+
+.modal .modal-title {
+  color: #fff;
+  font-size: 24px;
+}
+
+.btn-alert {
+  background-color: red;
+  border-color: red;
+}
+
+.btn-alert:hover {
+  background-color: #fff;
+  color: red;
+}
+
 @media (max-width: 991px) {
   .cart-container {
     flex-direction: column;

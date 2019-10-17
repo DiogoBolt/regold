@@ -115,13 +115,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Titulo?</h4>
+                <h4 class="modal-title">Informação</h4>
             </div>
             <div class="modal-body">
-                <p>Texto ?</p>
+                <p><strong> Para ser aplicado o preço do escalão 3 é necessário adquirir mais 3 produtos diferentes, 
+                    para ser aplicado o preço do escalão 2 e necessário adquirir mais 2 produtos diferentes</strong></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-add" data-dismiss="modal">Fechar</button>
             </div>
         </div>
     </div>
