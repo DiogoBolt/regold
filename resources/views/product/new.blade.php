@@ -43,15 +43,15 @@
 
                         <div class="col-sm-6">
                             <div class="form-group">
-                               Imagem:  <input class="form-control" type="file" name="foto" required>
+                               Imagem:  <input class="form-control" type="file" name="foto" >
                             </div>
 
                             <div class="form-group">
-                                Ficha Tecnica:  <input class="form-control" type="file" name="manual" required>
+                                Ficha Tecnica:  <input class="form-control" type="file" name="manual" >
                             </div>
 
                             <div class="form-group">
-                                Ficha Segurança:  <input class="form-control" type="file" name="seguranca" required>
+                                Ficha Segurança:  <input class="form-control" type="file" name="seguranca" >
                             </div>
                         </div>
 
