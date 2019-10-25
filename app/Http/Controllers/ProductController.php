@@ -71,27 +71,32 @@ class ProductController extends Controller
             $product->category = $inputs['category'];
 
 
-            $file = $request->file('foto');
-            $extension = $file->getClientOriginalExtension(); // getting image extension
-            $filename = $inputs['name'] . date('Y-m-d') . '.' . $extension;
-            $file->move('uploads/products/', $filename);
+            if($request->hasFile('foto')) {
+                $file = $request->file('foto');
+                $extension = $file->getClientOriginalExtension(); // getting image extension
+                $filename = $inputs['name'] . date('Y-m-d') . '.' . $extension;
+                $file->move('uploads/products/', $filename);
 
-            $product->file = $filename;
+                $product->file = $filename;
+            }
 
+            if($request->hasFile('manual')) {
+                $file = $request->file('manual');
+                $extension = $file->getClientOriginalExtension(); // getting image extension
+                $filename = $inputs['name'] . 'tecnica' . date('Y-m-d') . '.' . $extension;
+                $file->move('uploads/products/', $filename);
 
-            $file = $request->file('manual');
-            $extension = $file->getClientOriginalExtension(); // getting image extension
-            $filename = $inputs['name'] . 'tecnica' . date('Y-m-d') . '.' . $extension;
-            $file->move('uploads/products/', $filename);
+                $product->manual = $filename;
+            }
 
-            $product->manual = $filename;
+            if($request->hasFile('seguranca')) {
+                $file = $request->file('seguranca');
+                $extension = $file->getClientOriginalExtension(); // getting image extension
+                $filename = $inputs['name'] . 'seguranca' . date('Y-m-d') . '.' . $extension;
+                $file->move('uploads/products/', $filename);
 
-            $file = $request->file('seguranca');
-            $extension = $file->getClientOriginalExtension(); // getting image extension
-            $filename = $inputs['name'] . 'seguranca' . date('Y-m-d') . '.' . $extension;
-            $file->move('uploads/products/', $filename);
-
-            $product->seguranca = $filename;
+                $product->seguranca = $filename;
+            }
             $product->save();
         }
         $products = Product::all();
