@@ -33,7 +33,14 @@
                                 Morada Faturação:<input class="form-control" name="invoice_address" required>
                             </div>
                             <div class="form-group">
-                                Morada Entrega:<input class="form-control" name="address">
+
+                                <a class="btn-link" data-toggle="collapse" href="#delivery" role="button" aria-expanded="false" aria-controls="delivery">
+                                    Morada Entrega
+                                </a>
+                                
+                                <div class="collapse" id="delivery">
+                                    <input class="form-control" name="address">
+                                </div>
                             </div>
 
                             <div class="form-group">

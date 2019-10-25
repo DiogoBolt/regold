@@ -99,7 +99,7 @@ class ClientController extends Controller
                     'c.name',
                     'c.regoldiID',
                     'c.comercial_name',
-                ])->get();
+                ])->paginate(15);
 
             $total = Customer::from(Customer::alias('c'))
                 ->leftJoin(User::alias('u'), 'u.client_id', '=', 'c.id')
@@ -123,7 +123,7 @@ class ClientController extends Controller
                     'c.name',
                     'c.regoldiID',
                     'c.comercial_name',
-                ])->get();
+                ])->paginate(15);
 
             $total = Customer::from(Customer::alias('c'))
                 ->leftJoin(User::alias('u'), 'u.client_id', '=', 'c.id')
@@ -154,16 +154,17 @@ class ClientController extends Controller
             $client->current = $current;
         }
 
-       $clients =  $clients->sortBy('order');
+        $links = $clients->links();
+        $clients =  $clients->sortBy('order');
 
-        return view('client.index',compact('clients','unpaid','total'));
 
+        return view('client.index',compact('clients','unpaid','total', 'links'));
     }
-
 
     public function newCustomer()
     {
         $salesman = Salesman::all();
+        $groups = [];
 
         return view('client.new',compact('groups','salesman'));
     }

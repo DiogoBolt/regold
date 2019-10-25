@@ -42,9 +42,6 @@
                         <div class="product-desc__txt">
                             {{$product->details}}
                         </div>
-                        <div class="product-desc__add">
-                            <a class="btn btn-add" href="/frontoffice/product/{{$product->id}}">ADICIONAR</a>
-                        </div>
                     </div>
                 </div>
             @endforeach

@@ -49,6 +49,11 @@
                             @endif
                         @endforeach
                     </table>
+
+                    <div class="col-xs-12">
+                        {{ $links }}
+                    </div>
+    
                     <a href="/clients/new" class="btn btn-add"><strong>Novo Cliente</strong></a>
                 </div>
             </div>
