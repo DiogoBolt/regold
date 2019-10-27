@@ -243,6 +243,8 @@ class FrontofficeController extends Controller
             }else{
                 $order->total = $product->price1 * $order->amount;
             }
+
+            $order->save();
         }
 
         $line_items = OrderLine::where('cart_id',$cart->id)->get();
@@ -253,7 +255,7 @@ class FrontofficeController extends Controller
         }
 
         $total = OrderLine::where('cart_id',$cart->id)->sum('total');
-        
+
         return back();
 
     }
