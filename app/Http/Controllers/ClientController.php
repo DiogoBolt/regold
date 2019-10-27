@@ -164,9 +164,8 @@ class ClientController extends Controller
     public function newCustomer()
     {
         $salesman = Salesman::all();
-        $groups = [];
 
-        return view('client.new',compact('groups','salesman'));
+        return view('client.new',compact('salesman'));
     }
 
     public function addCustomer(Request $request)
@@ -176,9 +175,19 @@ class ClientController extends Controller
         $client = new Customer;
 
         $client->name = $inputs['name'];
-        $client->comercial_name = $inputs['comercial_name'];
+        if($inputs['comercial_name'] == "")
+        {
+            $client->comercial_name = $client->name;
+        }else{
+            $client->comercial_name = $inputs['comercial_name'];
+        }
         $client->address = $inputs['address'];
-        $client->invoice_address = $inputs['invoice_address'];
+        if($inputs['invoice_address'] == "")
+        {
+            $client->invoice_address = $client->address;
+        }else{
+            $client->invoice_address = $inputs['invoice_address'];
+        }
         $client->city = $inputs['city'];
         $client->postal_code = $inputs['postal_code'];
         $client->nif = $inputs['nif'];
@@ -194,18 +203,19 @@ class ClientController extends Controller
         $client->regoldiID = $inputs['regoldiID'];
         $client->transport_note = $inputs['transport_note'];
 
-        $client->save();
+        if($client->save())
+        {        $user = new User;
 
-        $user = new User;
+            $user->name = $inputs['name'];
+            $user->email = $inputs['email'];
+            $user->client_id = $client->id;
+            $user->password = bcrypt($inputs['password']);
 
-        $user->name = $inputs['name'];
-        $user->email = $inputs['email'];
-        $user->client_id = $client->id;
-        $user->password = bcrypt($inputs['password']);
-
-        $user->save();
-
-
+            if(!$user->save())
+            {
+                $client->delete();
+            }
+        }
         $clients = Customer::all();
         $unpaid = 0;
 
@@ -225,9 +235,10 @@ class ClientController extends Controller
             $client->current = $current;
         }
         $total = $clients->count();
+        $links = $clients->links();
 
 
-        return view('client.index',compact('clients','unpaid','total'));
+        return view('client.index',compact('clients','unpaid','total','links'));
     }
 
     public function editCustomer($id)

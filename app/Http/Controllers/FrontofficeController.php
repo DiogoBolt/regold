@@ -229,6 +229,22 @@ class FrontofficeController extends Controller
 
         $order_line->save();
 
+        $order_lines = OrderLine::where('cart_id',$cart->id)->get();
+
+        foreach($order_lines as $order)
+        {
+            $product = Product::where('id',$order->product_id)->first();
+            if($order->amount >= $product->amount3 and count($order_lines) >= 4)
+            {
+                $order->total = $product->price3 * $order->amount;
+            }elseif($order->amount >= $product->amount2 and count($order_lines) >= 3)
+            {
+                $order->total = $product->price2 * $order->amount;
+            }else{
+                $order->total = $product->price1 * $order->amount;
+            }
+        }
+
         $line_items = OrderLine::where('cart_id',$cart->id)->get();
 
         foreach($line_items as $item)
@@ -237,9 +253,7 @@ class FrontofficeController extends Controller
         }
 
         $total = OrderLine::where('cart_id',$cart->id)->sum('total');
-
-
-
+        
         return back();
 
     }
