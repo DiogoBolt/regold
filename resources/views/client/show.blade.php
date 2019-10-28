@@ -17,9 +17,12 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <div>
+                    <div class="col-sm-12">
                         <img class="salesman-img img-responsive" src="/img/navbar/logoindexcolor.png"/>
-                        <a href="/clients/edit/{{$client->id}}" class="btn btn-success">Editar</a>
+                        
+                        <button class="btn">
+                            <a href="/clients/edit/{{$client->id}}" style="color: #fff;">Editar</a>
+                        </button>                    
                     </div>
                     <div class="col-sm-6">
 
@@ -92,9 +95,8 @@
                         <label for="{{$client->id}}" class="btn"><strong>Adicionar Documento</strong></label>
                         <input id="{{$client->id}}" class="input-order" type="file" name="receipt">
 
-                        <button class="btn">Associar</button>
+                        <button class="btn" style="margin-top: 10px">Associar</button>
                     </form>
-
                 </div>
             </div>
         </div>

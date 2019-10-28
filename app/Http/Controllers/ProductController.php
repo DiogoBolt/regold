@@ -407,9 +407,10 @@ class ProductController extends Controller
 
     public function viewOrder($id)
     {
-        $order = Order::where('id', $id)->first();
 
+        $order = Order::where('id', $id)->first();
         $client = Customer::where('id',$order->client_id)->first();
+        $salesman = null;
 
         if (!isset($order))
             return back();

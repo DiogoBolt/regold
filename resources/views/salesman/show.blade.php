@@ -17,7 +17,7 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <div>
+                    <div class="col-sm-12">
                         <img class="salesman-img img-responsive" src="/img/navbar/logoindexcolor.png"/>
                     </div>
                     <div class="col-sm-6">
@@ -40,21 +40,21 @@
                     <div class="col-sm-6">
                         <b>Conta Corrente</b>
                         @foreach($salesPayments as $payment)
-                        <div class="form-group">
-                           <a href="/orders/{{$payment->order_id}}"> Venda:  {{$payment->order_id}}</a> / Fatura: {{$payment->invoice}}  / <b> Valor : {{$payment->value}}</b>
-                        </div>
-                        @endforeach
                             <div class="form-group">
-                                <b>Total : {{$total}};</b>
+                            <a href="/orders/{{$payment->order_id}}"> Venda:  {{$payment->order_id}}</a> / Fatura: {{$payment->invoice}}  / <b> Valor : {{$payment->value}}</b>
                             </div>
+                        @endforeach
+
+                        <div class="form-group">
+                            <b>Total : {{$total}}</b>
+                        </div>
                     </div>
 
-                    @if(Auth::user()->sales_id == null and Auth::user()->client_id == null)
-
-                        <a href="/salesman/deliver/{{$salesman->id}}" onclick="confirm('Tem a certeza?')">Confirmar Recebimento</a>
-
-                    @endif
-
+                    <div class="col-sm-12">
+                        @if(Auth::user()->sales_id == null and Auth::user()->client_id == null)
+                            <a class="btn btn-add" href="/salesman/deliver/{{$salesman->id}}" onclick="confirm('Tem a certeza?')">Confirmar Recebimento</a>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>

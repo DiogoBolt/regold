@@ -15,8 +15,8 @@
 </div>
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel" style="width:110%">
+        <div class="col-md-12">
+            <div class="panel">
                 <div class="panel-body table-responsive" >
 
                     @if($order->processed == 1)
