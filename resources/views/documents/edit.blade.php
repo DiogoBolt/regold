@@ -1,11 +1,21 @@
 @extends('layouts.app')
 
+@section('styles')
+    <!-- Custom CSS -->
+    <link href="{{ asset('css/categories/categories-bo.css') }}" rel="stylesheet">
+@endsection
+
 @section('content')
+<div class="container-bar">
+    <p class="container-bar_txt">{{$type->name}}</p>
+    <div class="container-bar_img">
+        <img src="{{ asset('img/doc-green.png') }}" />
+    </div>
+</div>
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">{{$type->name}}</div>
                 <div class="panel-body">
                     <form action="/documents/edit"  method="post">
                         {{ csrf_field() }}
@@ -14,8 +24,7 @@
                             <div class="form-group">
                                 Nome:<input class="form-control"  name="name" value="{{$type->name}}">
                             </div>
-                            <button class="btn btn-warning">Editar</button>
-
+                            <button class="btn">Editar</button>
                         </div>
                     </form>
                 </div>

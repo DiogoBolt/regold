@@ -334,7 +334,7 @@ class ClientController extends Controller
 
         $receipts = Receipt::where('client_id',$client->id)->get();
 
-        return view('client.show',compact('client','receipts','group','types','user'));
+        return view('client.show',compact('client','receipts','types','user'));
     }
 
     public function addReceipt(Request $request)
