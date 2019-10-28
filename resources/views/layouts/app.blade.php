@@ -99,7 +99,7 @@
                                     @endif
                                     @if(Auth::user()->sales_id == null)
                                         <li>
-                                            <a href="/salesman/new">
+                                            <a href="/newsalesman">
                                                 Novo Vendedor
                                             </a>
 

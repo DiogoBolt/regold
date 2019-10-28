@@ -60,7 +60,7 @@ Route::group(['middleware' => ['backoffice']], function () {
 
     Route::get('/salesman', 'SalesmanController@index');
     Route::get('/salesman/{id}', 'SalesmanController@salesman');
-    Route::get('/salesman/new', 'SalesmanController@newSales');
+    Route::get('/newsalesman', 'SalesmanController@newSales');
     Route::get('/salesman/deliver/{id}', 'SalesmanController@deliverSalesman');
 
 

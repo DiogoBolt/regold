@@ -37,7 +37,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 Categoria : <select class="form-control" name="category">
-                                    <option value="{{$product->category}}" selected>{{$product->category}}</option>
+                                    <option value="{{$product->category}}" selected>{{$selected->name}}</option>
                                     @foreach($categories as $category)
                                         <option value="{{$category->id}}">{{$category->name}}</option>
                                     @endforeach

@@ -110,7 +110,9 @@ class ProductController extends Controller
         $product = Product::where('id', $id)->first();
         $categories = Category::all();
 
-        return view('product.edit', compact('product', 'categories'));
+        $selected = Category::where('id',$product->category)->first();
+
+        return view('product.edit', compact('product', 'categories','selected'));
     }
 
     public function deleteProduct(Request $request)
@@ -166,9 +168,9 @@ class ProductController extends Controller
         }
 
         $product->save();
-
+        $selected = Category::where('id',$product->category)->first();
         $categories = Category::all();
-        return view('product.edit', compact('product', 'categories'));
+        return view('product.edit', compact('product', 'categories','selected'));
 
     }
 
