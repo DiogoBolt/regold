@@ -173,7 +173,7 @@ class FrontofficeController extends Controller
 
     public function productsSearch($search_term) {
 
-        $search_result = Product::select(['id', 'name', 'file'])
+        $search_result = Product::select(['id', 'name', 'file', 'category'])
         ->where('name', 'like', '%' . $search_term . '%')
         ->get();
 

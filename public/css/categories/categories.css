@@ -107,6 +107,8 @@
   width: 100%;
   background-color: var(--light-green);
   z-index: 3;
+  max-height: 500px;
+  overflow-y: scroll;
 }
 
 #product-search:focus + #results {
@@ -137,6 +139,21 @@
   width: 60px;
   height: 60px;
 }
+
+
+/* PRODUCT ADD */
+
+.btn-new {
+  margin: 15px 0;
+  border: 2px solid var(--main-color);
+  background-color: #fff;
+}
+
+.btn-new:hover {
+  color: #fff;
+  background-color: var(--main-color);
+}
+
 
 @media (max-width: 480px) {
   .category {

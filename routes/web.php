@@ -101,9 +101,10 @@ Route::group(['middleware' => ['backoffice']], function () {
     Route::get('/categories/delete/{id}', 'ClientController@deleteCategory');
 
     Route::get('/products', 'ProductController@index');
-    Route::get('/products/new', 'ProductController@newProduct');
+    Route::get('/products/{id}', 'ProductController@productsByCategory');
+    Route::get('/newproduct', 'ProductController@newProduct');
     Route::post('/products/add', 'ProductController@addProduct');
-    Route::get('/products/{id}', 'ProductController@editProduct');
+    Route::get('/products/{cat}/{id}', 'ProductController@editProduct');
     Route::delete('/products/delete', 'ProductController@deleteProduct');
     Route::post('/products/edit', 'ProductController@editProductPost');
 

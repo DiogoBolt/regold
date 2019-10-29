@@ -40,11 +40,17 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = Product::all();
+        $categories = Category::all();
 
-        return view('product.index', compact('products'));
+        return view('product.index', compact('categories'));
     }
 
+    public function productsByCategory($id)
+    {
+        $products = Product::where('category',$id)->get();
+
+        return view('product.products',compact('products', 'id'));
+    }
 
     public function newProduct()
     {
@@ -99,12 +105,13 @@ class ProductController extends Controller
             }
             $product->save();
         }
-        $products = Product::all();
-        return view('product.index', compact('products'));
+
+        $categories = Category::all();
+        return view('product.index', compact('categories'));
 
     }
 
-    public function editProduct($id)
+    public function editProduct($cat, $id)
     {
 
         $product = Product::where('id', $id)->first();
