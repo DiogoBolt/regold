@@ -23,6 +23,14 @@
   text-align: center;
 }
 
+#myModal input {
+  margin-bottom: 10px;
+  padding: 0 5px;
+  width: 100%;
+}
+
+
+
 @media screen and (max-width: 800px) {
   .index-box {
     justify-content: space-between;

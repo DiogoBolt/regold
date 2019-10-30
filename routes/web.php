@@ -53,6 +53,8 @@ Route::get('/frontoffice/messages', 'FrontofficeController@messages');
 Route::get('/frontoffice/cartValue', 'FrontofficeController@cartValue');
 Route::get('/frontoffice/unreadMessages', 'ClientController@unreadMessages');
 Route::get('/frontoffice/invoices', 'FrontofficeController@invoices')->name('invoices');
+Route::get('/frontoffice/firstlogin', 'ClientController@checkFirstLogin');
+Route::post('/frontoffice/changePassword', 'ClientController@changePassword');
 Route::get('/home', 'ClientController@home');
 
 

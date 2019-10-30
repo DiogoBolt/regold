@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class ClientController extends Controller
 {
@@ -39,7 +40,6 @@ class ClientController extends Controller
     public function home()
     {
         $user = Auth::user();
-
         $client = Customer::where('id',$user->client_id)->first();
 
         $receiptsHACCP = Receipt::from(Receipt::alias('r'))
@@ -626,6 +626,46 @@ class ClientController extends Controller
         Auth::logout();
         Auth::loginUsingId($userId);
         return redirect('/');
+    }
+
+    public function checkFirstLogin() 
+    {
+        $user = Auth::user();
+        $customer = Customer::where('id',$user->client_id)->first();
+        $first_time_login = 0;
+
+        if (!$customer->first_login) {
+            $first_time_login = 1;
+            $customer->first_login = 1; 
+            $customer->save(); 
+        }
+
+        return $first_time_login;
+    }
+
+    public function changePassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|min:5',
+            'confirm' => 'required|same:password',
+        ],[
+            'password.required' => 'Por favor preencha o campo de password.',
+            'confirm.required' => 'Por favor preencha o campo de confirmar password.',
+            'password.min' => 'A password convém ter um mínimo de 5 caracteres.',
+            'confirm.same' => 'As duas passwords não coincidem.'
+        ]);
+
+
+        if ($validator->fails()) {
+            return ['error' => $validator->errors()->first()];
+        }
+
+        $user = Auth::user();
+        $user->password = bcrypt($request->password);
+        $user->save();
+
+        return ['success' => 'Password alterada com sucesso.'];
+
     }
 
 }
