@@ -216,7 +216,7 @@ class ClientController extends Controller
                 $client->delete();
             }
         }
-        $clients = Customer::all();
+        $clients = Customer::paginate(15);
         $unpaid = 0;
 
         foreach($clients as $client)
@@ -234,6 +234,7 @@ class ClientController extends Controller
             }
             $client->current = $current;
         }
+
         $total = $clients->count();
         $links = $clients->links();
 
