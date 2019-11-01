@@ -98,7 +98,7 @@
                                 NIB: <input class="form-control" value="{{$client->nib}}" type="number" name="nib">
                             </div>
                             <div class="form-group">
-                                Password: <input class="form-control" value="{{$client->password}}" type="password" name="password" required>
+                                Password: <input class="form-control" value="{{$client->password}}" type="password" name="password">
                             </div>
 
                             <div class="form-group">

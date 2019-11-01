@@ -7,7 +7,7 @@
 
 @section('content')
 <div class="container-bar">
-    <p class="container-bar_txt">{{ $user->name }}</p>
+    <p class="container-bar_txt">{{ $salesman->name }}</p>
     <div class="container-bar_img">
         <a href="/messages/{{$user->id}}"><img style="margin-top: -3px"  src="{{ URL::to('/') }}/img/message.png"></a>
     </div>

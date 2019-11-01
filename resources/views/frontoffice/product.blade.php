@@ -97,7 +97,7 @@
          
                 <div>
                     <a href="/uploads/{{$product->id}}/{{$product->manual}}" class="btn" download>
-                        Manual do Produto <img src="/img/download.png">
+                        Ficha Técnica <img src="/img/download.png">
                     </a>
                 </div>
                 <div>
