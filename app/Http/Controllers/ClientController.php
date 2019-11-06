@@ -101,11 +101,6 @@ class ClientController extends Controller
                     'c.comercial_name',
                 ])->paginate(15);
 
-            $total = Customer::from(Customer::alias('c'))
-                ->leftJoin(User::alias('u'), 'u.client_id', '=', 'c.id')
-                ->where('c.name','LIKE','%'.$search.'%')
-                ->orWhere('c.id','LIKE','%'.$search.'%')
-                ->count();
 
         } else {
 
@@ -127,8 +122,8 @@ class ClientController extends Controller
 
         }
 
-        $total = 15;
         $unpaid = 0;
+        $total = 15;
 
         foreach($clients as $client)
         {
