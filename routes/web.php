@@ -27,7 +27,7 @@ Route::post('/api/confirm/', 'ApiController@confirmPayment');
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/frontoffice/client/edit/{id}', 'FrontofficeController@editClient');
 Route::get('/frontoffice/client', 'FrontofficeController@showCustomer');
