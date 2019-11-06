@@ -119,7 +119,7 @@
                             </div>
 
                             <div class="form-group">
-                                Id Regoldi <input class="form-control" name="regoldiID" required>
+                                Id Regoldi <input class="form-control" name="regoldiID" >
                             </div>
 
                             <div class="form-group">
