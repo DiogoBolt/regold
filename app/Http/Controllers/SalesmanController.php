@@ -62,7 +62,7 @@ class SalesmanController extends Controller
 
             foreach($salesPayments as $payment)
             {
-                $payment->invoice =  Order::where('id',$payment->order_id)->invoice_id;
+                $payment->invoice =  Order::where('id',$payment->order_id)->first()->invoice_id;
             }
 
             $total = SalesPayment::where('sales_id', $id)->where('delivered', 0)->sum('value');
