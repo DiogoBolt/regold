@@ -521,7 +521,7 @@ class ProductController extends Controller
 
         $salesPayment->sales_id = $user->sales_id;
         $salesPayment->order_id = $order->id;
-        $salesPayment->value = number_format(1.23*$order->total,2);
+        $salesPayment->value = $order->total;
         $salesPayment->delivered = 0;
         $salesPayment->save();
 
