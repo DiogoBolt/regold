@@ -147,7 +147,7 @@ class ClientController extends Controller
         }
 
         $links = $clients->links();
-        $clients =  $clients->sortBy('order','DESC');
+        $clients =  $clients->sortByDesc('order');
 
 
         return view('client.index',compact('clients','unpaid','total', 'links'));
