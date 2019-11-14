@@ -120,7 +120,7 @@
             $.ajax({
                 method: "POST",
                 url: "/frontoffice/cart/removeitem",
-                data: { id: productId, qt: removeQuantity }
+                data: {"_token": "{{ csrf_token() }}", id: productId, qt: removeQuantity }
             }).then(
                 window.location.reload()
             )
