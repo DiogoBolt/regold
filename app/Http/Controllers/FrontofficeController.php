@@ -362,6 +362,31 @@ class FrontofficeController extends Controller
 
     }
 
+    public function removeItem(Request $request)
+    {
+        $user = Auth::user();
+        $inputs = $request->all();
+
+
+        $order_line = OrderLine::where('id',$inputs['id'])->first();
+
+        $cart = Cart::where('id',$order_line->cart_id)->first();
+
+        if($cart->user_id != $user->id || $cart->processed == 1)
+            return back();
+
+        if($inputs['qt'] == $order_line->amount)
+        {
+            $order_line->delete();
+
+        }else{
+            $order_line->amount -= $inputs['amount'];
+        }
+
+        return back();
+
+    }
+
     function messages()
     {
         $user = Auth::user();

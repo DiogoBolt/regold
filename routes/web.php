@@ -40,6 +40,7 @@ Route::any('/frontoffice/products/addcart/', 'FrontofficeController@addCart');
 Route::get('/frontoffice/produtos/search/{keyword}', 'FrontofficeController@productsSearch');
 Route::get('/frontoffice/categories/', 'FrontofficeController@categories');
 Route::get('/frontoffice/cart', 'FrontofficeController@showCart');
+Route::get('/frontoffice/cart/removeitem', 'FrontofficeController@removeItem');
 Route::get('/frontoffice/cart/process', 'FrontofficeController@processCart');
 Route::get('/frontoffice/orders', 'FrontofficeController@orders');
 Route::get('/frontoffice/orders/{id}', 'FrontofficeController@viewOrder');

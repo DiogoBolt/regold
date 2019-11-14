@@ -117,8 +117,13 @@
            const productId = $(this).data('product');
            const removeQuantity = $(this).val();
 
-           /* Do stuff */
-
+            $.ajax({
+                method: "POST",
+                url: "/frontoffice/cart/removeitem",
+                data: { id: productId, qt: removeQuantity }
+            }).done(function(){
+                window.location.reload();
+            })
         });
 
     }, false);

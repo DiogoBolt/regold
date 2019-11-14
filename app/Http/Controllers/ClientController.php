@@ -241,6 +241,7 @@ class ClientController extends Controller
         $inputs = $request->all();
 
         $client = Customer::where('id',$inputs['id'])->first();
+        $user = User::where('client_id',$client->id)->first();
 
         $client->name = $inputs['name'];
         $client->comercial_name = $inputs['comercial_name'];
@@ -260,7 +261,11 @@ class ClientController extends Controller
         $client->contract_value = $inputs['value'];
         $client->regoldiID = $inputs['regoldiID'];
         $client->transport_note = $inputs['transport_note'];
-
+        $options = [
+            'cost' => 10
+        ];
+        $user->password = password_hash($inputs['password'], PASSWORD_BCRYPT, $options);
+        $user->save();
         $client->save();
         return redirect('/clients/'.$inputs['id']);
     }
