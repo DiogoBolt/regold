@@ -126,6 +126,13 @@
 .btn-alert:hover {
   background-color: #fff;
   color: red;
+  float: right;
+}
+
+select {
+  padding: 5px;
+  border-color: var(--secondary-green);
+  float: right;
 }
 
 @media (max-width: 991px) {
@@ -175,5 +182,9 @@
     left: 50%;
     float: none;
     transform: translateX(-50%);
+  }
+
+  select {
+    font-size: 10px;
   }
 }

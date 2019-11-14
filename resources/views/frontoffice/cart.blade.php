@@ -46,7 +46,12 @@
                         </div>
 
                         <div class="cart-item_extra">
-                            <a href="/frontoffice/cart/delete/{{$item->id}}">remover x</a>
+                            <select class="remove-item" data-product="{{$item->id}}">
+                                <option value="" disabled selected>Remover</option>
+                                @for($i = 1; $i <= $item->amount; $i++)
+                                    <option value="{{$i}}">{{$i}}</option>
+                                @endfor
+                            </select>
                             <p>Quantidade:{{$item->amount}}</p>
                         </div>
                     </div>
@@ -62,7 +67,6 @@
 
             </div>
 
-
             <a href="/frontoffice/cart/process" class="btn btn-cart">validar carrinho</a>
         @else
 
@@ -73,30 +77,31 @@
     </div>
 
     <div class="modal fade" id="alertModal" role="dialog">
-            <div class="modal-dialog modal-sm">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Aviso <span style="float: right;">&#9888;</span></h4>
-                    </div>
-                    <div class="modal-body"></div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-alert" data-dismiss="modal">Fechar</button>
-                    </div>
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Aviso <span style="float: right;">&#9888;</span></h4>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-alert" data-dismiss="modal">Fechar</button>
                 </div>
             </div>
         </div>
+    </div>
 
 @endsection
 
 <script>
-    document.addEventListener('DOMContentLoaded', function(){ 
+    document.addEventListener('DOMContentLoaded', function () {
         const alertModal = $('#alertModal');
+        const removeSelect = $('.remove-item');
 
         /* Mete aqui as condições para o gajo coiso e tal, nem precisas desses if's todos, o text pode ser uma variavel que consoante
-        coiso e tal e cenas mudas e chapas no modal */ 
+        coiso e tal e cenas mudas e chapas no modal */
         let xpto = false;
 
-        if(xpto) {
+        if (xpto) {
 
             $(this).find('.modal-body').text('O manel é um pétáculo');
             alertModal.modal(); /* Abrir o modal */
@@ -107,7 +112,14 @@
         }
 
 
-    
+        /* SELECT */
+        removeSelect.on('change', function () {
+           const productId = $(this).data('product');
+           const removeQuantity = $(this).val();
+
+           /* Do stuff */
+
+        });
 
     }, false);
 </script>
