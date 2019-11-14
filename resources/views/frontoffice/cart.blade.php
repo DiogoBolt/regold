@@ -121,9 +121,9 @@
                 method: "POST",
                 url: "/frontoffice/cart/removeitem",
                 data: { id: productId, qt: removeQuantity }
-            }).done(function(){
-                window.location.reload();
-            })
+            }).then(
+                window.location.reload()
+            )
         });
 
     }, false);
