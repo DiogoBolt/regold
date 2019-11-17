@@ -622,13 +622,13 @@ class ProductController extends Controller
     {
         $order = Order::where('id', $id)
         ->select([
-            'client_id', 'cart_id', 'created_at'
+            'client_id', 'cart_id', 'created_at','total'
         ])
         ->first();
 
         $client = Customer::where('id',$order->client_id)
         ->first();
-        $totalclient = number_format(Order::where('processed',1)->where('status','waiting_payment')->sum('total'),2);
+        $totalclient = number_format(Order::where('processed',1)->where('client_id',$client->id)->where('status','waiting_payment')->sum('total'),2);
         $client->total = $totalclient;
 
         $cart = Cart::where('id', $order->cart_id)->first();

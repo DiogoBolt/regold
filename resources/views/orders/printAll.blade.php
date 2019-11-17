@@ -18,9 +18,13 @@
                                     <div class="form-group">
                                         <b>NOME : </b>{{ $item['client']['name'] }}
                                     </div>
+                                </div>
+                                <div class="col-sm">
                                     <div class="form-group">
                                         <b>MORADA : </b>{{ $item['client']['address'] }}
                                     </div>
+                                </div>
+                                <div class="col-sm">
                                     <div class="form-group">
                                         <b>METODO PAGAMENTO : </b>{{ $item['client']['payment_method'] }}
                                     </div>
@@ -32,19 +36,22 @@
                                     <div class="form-group">
                                         <b>CONTA CORRENTE : </b>{{ $item['client']['total'] }}
                                     </div>
-
+                                </div>
+                                <div class="col-sm">
                                     <div class="form-group">
                                         <b>REGOLD ID : </b>{{ $item['client']['regoldiID'] }}
                                     </div>
-
+                                </div>
+                                <div class="col-sm">
                                     <div class="form-group">
                                         <b>CRIADA A : </b>{{ $item['order']['created_at'] }}
                                     </div>
+                                </div>
                                     <div class="form-group">
                                         <b>TOTAL : </b>{{ $item['order']['total'] }}
                                     </div>
                                 </div>
-                            </div>
+                        
 
                             <div class="form-group print-checkbox">
                                 <b>PREPARADO : </b>
