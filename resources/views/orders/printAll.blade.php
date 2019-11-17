@@ -21,8 +21,8 @@
                                 </div>
                                 <div class="col-sm">
                                     <div class="form-group">
-                                        <b>MORADA : </b>{{ $item['client']['address'] }}
-                                    </div>
+                                        <b>MORADA : </b>{{ $item['client']['address'] == null ? $item['client']['address'] : $item['client']['invoice_address'] }}
+                                </div>
                                 </div>
                                 <div class="col-sm">
                                     <div class="form-group">
@@ -51,7 +51,7 @@
                                         <b>TOTAL : </b>{{ $item['order']['total'] }}
                                     </div>
                                 </div>
-                        
+
 
                             <div class="form-group print-checkbox">
                                 <b>PREPARADO : </b>
