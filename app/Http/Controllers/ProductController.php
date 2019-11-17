@@ -627,10 +627,9 @@ class ProductController extends Controller
         ->first();
 
         $client = Customer::where('id',$order->client_id)
-        ->select([
-            'name', 'address', 'regoldiID'
-        ])
         ->first();
+        $totalclient = number_format(Order::where('processed',1)->where('status','waiting_payment')->sum('total'),2);
+        $client->total = $totalclient;
 
         $cart = Cart::where('id', $order->cart_id)->first();
 

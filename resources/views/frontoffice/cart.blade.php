@@ -108,6 +108,7 @@
         } else if (xpto === 'xpto') {
 
             $(this).find('.modal-body').text('O manel é um pétáculo');
+
             alertModal.modal(); /* Abrir o modal */
         }
 

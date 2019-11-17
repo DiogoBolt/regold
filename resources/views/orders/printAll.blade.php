@@ -11,22 +11,39 @@
                         <div style="text-align: center; margin-bottom: 20px;">
                             <img src="/img/navbar/logoindexcolor.png"/>
                         </div>
-    
-                        @foreach ($printingData as $item)    
-                            <div class="form-group">
-                                <b>NOME : </b>{{ $item['client']['name'] }}
-                            </div>
-    
-                            <div class="form-group">
-                                <b>MORADA : </b>{{ $item['client']['address'] }}
+
+                        @foreach ($printingData as $item)
+                            <div class="row">
+                                <div class="col-sm">
+                                    <div class="form-group">
+                                        <b>NOME : </b>{{ $item['client']['name'] }}
+                                    </div>
+                                    <div class="form-group">
+                                        <b>MORADA : </b>{{ $item['client']['address'] }}
+                                    </div>
+                                    <div class="form-group">
+                                        <b>METODO PAGAMENTO : </b>{{ $item['client']['payment_method'] }}
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <b>REGOLD ID : </b>{{ $item['client']['regoldiID'] }}
-                            </div>
+                            <div class="row">
+                                <div class="col-sm">
+                                    <div class="form-group">
+                                        <b>CONTA CORRENTE : </b>{{ $item['client']['total'] }}
+                                    </div>
 
-                            <div class="form-group">
-                                <b>CRIADA A : </b>{{ $item['order']['created_at'] }}
+                                    <div class="form-group">
+                                        <b>REGOLD ID : </b>{{ $item['client']['regoldiID'] }}
+                                    </div>
+
+                                    <div class="form-group">
+                                        <b>CRIADA A : </b>{{ $item['order']['created_at'] }}
+                                    </div>
+                                    <div class="form-group">
+                                        <b>TOTAL : </b>{{ $item['order']['total'] }}
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="form-group print-checkbox">
