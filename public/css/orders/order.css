@@ -1,11 +1,11 @@
 .panel {
-  border: none;
-  box-shadow: 0 8px 5px rgba(0, 0, 0, 0.12);
-  background-color: #fff;
+    border: none;
+    box-shadow: 0 8px 5px rgba(0, 0, 0, 0.12);
+    background-color: #fff;
 }
 
 .table {
-  background-color: #fff;
+    background-color: #fff;
 }
 
 .table > tbody > tr > td,
@@ -14,89 +14,98 @@
 .table > tfoot > tr > th,
 .table > thead > tr > td,
 .table > thead > tr > th {
-  border-top: none;
-  vertical-align: middle;
+    border-top: none;
+    vertical-align: middle;
 }
 
 .table th {
-  background-color: var(--main-color);
-  color: #fff;
+    background-color: var(--main-color);
+    color: #fff;
 }
 
 .table tr:nth-child(odd) {
-  background-color: var(--light-green);
+    background-color: var(--light-green);
 }
 
 .table td img {
-  width: 100px;
-  margin: 0 auto;
-  display: block;
+    width: 100px;
+    margin: 0 auto;
+    display: block;
 }
 
 .order-info {
-  margin: 15px 0;
-  border-top: 3px solid var(--main-color);
-  border-bottom: 3px solid var(--main-color);
-  text-align: center;
+    margin: 15px 0;
+    border-top: 3px solid var(--main-color);
+    border-bottom: 3px solid var(--main-color);
+    text-align: center;
 }
 
 .btn-process {
-  border: 2px solid var(--main-color);
-  background-color: #fff;
-  color: var(--main-color);
+    border: 2px solid var(--main-color);
+    background-color: #fff;
+    color: var(--main-color);
 }
 
 .btn-process:hover {
-  background-color: var(--main-color);
-  color: #fff;
+    background-color: var(--main-color);
+    color: #fff;
 }
 
 .btn-process:last-child {
-  float: right;
+    float: right;
 }
 
 .print-checkbox {
-  position: relative;
-  cursor: pointer;
-  user-select: none;
-  color: var(--main-color);
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    color: var(--main-color);
 }
 
 .print-checkbox input {
-  position: absolute;
-  left: 90px;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
+    position: absolute;
+    left: 90px;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
 }
 
 .checkmark {
-  position: absolute;
-  top: 0;
-  left: 90px;
-  height: 20px;
-  width: 20px;
-  border: 1px solid var(--main-color);
-  border-radius: 15%;
+    position: absolute;
+    top: 0;
+    left: 90px;
+    height: 20px;
+    width: 20px;
+    border: 1px solid var(--main-color);
+    border-radius: 15%;
 }
 
 .checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
+    content: "";
+    position: absolute;
+    display: none;
 }
 
 .print-checkbox input:checked ~ .checkmark:after {
-  display: block;
+    display: block;
 }
 
 .print-checkbox .checkmark:after {
-  left: 7px;
-  top: 2px;
-  width: 5px;
-  height: 10px;
-  border: 1px solid var(--secondary-green);
-  border-width: 0 3px 3px 0;
-  transform: rotate(45deg);
+    left: 7px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: 1px solid var(--secondary-green);
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+}
+
+.printall, .printall table {
+    font-size: 12px;
+}
+
+.print_details {
+    width: 50%;
+    float: left;
 }
