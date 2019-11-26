@@ -85,32 +85,16 @@ class ClientController extends Controller
 
         $inputs = $request->all();
 
-        $search = $inputs['search'] ?? '';
-
         if($user->sales_id == null)
         {
             $clients = Customer::from(Customer::alias('c'))
                 ->leftJoin(User::alias('u'), 'u.client_id', '=', 'c.id')
-                ->where('c.name','LIKE','%'.$search.'%')
-                ->orWhere('c.id','LIKE','%'.$search.'%')
-                ->select([
-                    'c.id',
-                    'u.id as userid',
-                    'c.name',
-                    'c.regoldiID',
-                    'c.comercial_name',
-                ])->paginate(15);
-
-
-        } else {
-
-            $clients = Customer::from(Customer::alias('c'))
-                ->leftJoin(User::alias('u'), 'u.client_id', '=', 'c.id')
-                ->where('c.salesman',$user->sales_id)
-                ->where(function($query) use ($search)
-                {
-                    $query->where('c.name','LIKE','%'.$search.'%')
-                        ->orWhere('c.id','LIKE','%'.$search.'%');
+                ->when($request->filled('city'), function ($query) use ($inputs) {
+                    return $query->where('c.city', '=', $inputs['city']);
+                })
+                ->when($request->filled('search'), function ($query) use ($inputs) {
+                    return $query->where('c.name', 'LIKE', '%' . $inputs['search'] . '%')
+                        ->orWhere('c.id', 'LIKE', '%' . $inputs['search'] . '%');
                 })
                 ->select([
                     'c.id',
@@ -118,7 +102,28 @@ class ClientController extends Controller
                     'c.name',
                     'c.regoldiID',
                     'c.comercial_name',
-                ])->paginate(15);
+                    'c.city'
+                ])->get();
+
+        } else {
+
+            $clients = Customer::from(Customer::alias('c'))
+                ->leftJoin(User::alias('u'), 'u.client_id', '=', 'c.id')
+                ->where('c.salesman',$user->sales_id)
+                ->when($request->filled('city'), function ($query) use ($inputs) {
+                    return $query->where('c.city', '=', $inputs['city']);
+                })
+                ->when($request->filled('search'), function ($query) use ($inputs) {
+                    return $query->where('c.name', 'LIKE', '%' . $inputs['search'] . '%')
+                        ->orWhere('c.id', 'LIKE', '%' . $inputs['search'] . '%');
+                })
+                ->select([
+                    'c.id',
+                    'u.id as userid',
+                    'c.name',
+                    'c.regoldiID',
+                    'c.comercial_name',
+                ])->get();
 
         }
 
@@ -141,10 +146,9 @@ class ClientController extends Controller
             $client->current = $current;
         }
 
-        $links = $clients->links();
+        $cities = Customer::from(Customer::alias('c'))->distinct()->orderBy('city', 'ASC')->pluck('city');
 
-
-        return view('client.index',compact('clients','unpaid','total', 'links'));
+        return view('client.index',compact('clients','unpaid','total', 'cities'));
     }
 
     public function newCustomer()
@@ -658,6 +662,11 @@ class ClientController extends Controller
 
         return ['success' => 'Password alterada com sucesso.'];
 
+    }
+
+    public function filterByCities(Request $request)
+    {
+        dd($request->all());
     }
 
 }
