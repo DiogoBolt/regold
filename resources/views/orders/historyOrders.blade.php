@@ -27,6 +27,7 @@
                         <th>Detalhes</th>
                     </tr>
                     @foreach($orders as $order)
+                    
                             <tr>
                                 <td><a href="/clients/{{$order->client_id}}">{{$order->name}}</a></td>
                                 <td>{{$order->regoldiID}}</td>
