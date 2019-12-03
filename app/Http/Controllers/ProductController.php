@@ -518,7 +518,6 @@ class ProductController extends Controller
         $message->save();
 
         $salesPayment = new SalesPayment;
-      //------
         if($user->sales_id == null && $user->client_id == null){
             $salesPayment->admin_id = $user->id;
             $salesPayment->order_id = $order->id;
@@ -531,16 +530,7 @@ class ProductController extends Controller
             $salesPayment->value = $order->total;
             $salesPayment->delivered = 0;
             $salesPayment->save();
-    
         }
-        //------
-
-        /*$salesPayment->sales_id = $user->sales_id;
-        $salesPayment->order_id = $order->id;
-        $salesPayment->value = $order->total;
-        $salesPayment->delivered = 0;
-        $salesPayment->save();*/
-
 
         if ($user->sales_id == null) {
             $orders = Order::from(Order::alias('o'))

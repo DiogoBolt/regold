@@ -13,6 +13,7 @@ use App\Order;
 use App\Receipt;
 use App\Salesman;
 use App\User;
+use App\Districts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -154,8 +155,9 @@ class ClientController extends Controller
     public function newCustomer()
     {
         $salesman = Salesman::all();
+        $districts = Districts::all();
 
-        return view('client.new',compact('salesman'));
+        return view('client.new',compact('salesman','districts'));
     }
 
     public function addCustomer(Request $request)

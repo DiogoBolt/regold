@@ -53,6 +53,15 @@
                             </div>
 
                             <div class="form-group">
+                                Distrito: 
+                                <select class="form-control" name="districts" required>
+                                    <option disabled selected value="null">Selecione um distrito</option>
+                                    @foreach($districts as $district)
+                                        <option value="{{$district->id}}">{{$district->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 Cidade: <input class="form-control" name="city" required>
                             </div>
                             <div class="form-group">
