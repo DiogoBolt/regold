@@ -24,57 +24,129 @@
                         {{ csrf_field() }}
                         <div class="col-sm-6">
                             <div class="form-group">
-                                Nome Comercial:<input class="form-control"  name="name" required>
+                                Nome Comercial:<input class="form-control" placeholder="Nome Comercial"  name="name" required>
                             </div>
 
                             <div class="form-group">
+                                <div class="form-group">
+                                Nome de Faturação:<input class="form-control" placeholder="Nome de Faturação" name="name" required>
+                            </div>
+                            </div>
 
-                                <a class="btn-link" data-toggle="collapse" href="#nome" role="button" aria-expanded="false" aria-controls="nome">
-                                    Nome Faturação
-                                </a>
-
-                                <div class="collapse" id="nome">
-                                    <input class="form-control" name="comercial_name">
+                            <div class="form-group">
+                                Morada Entrega
+                                <br/>
+                                    Distrito: 
+                                    <select id="selectDistrict" class="form-control" name="districts" onchange="listCities(this)" required>
+                                        <option disabled selected value="">Selecione o distrito</option>
+                                        @foreach($districts as $district)
+                                            <option value="{{$district->id}}">{{$district->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    Cidade:
+                                        <select id="selectCity" class="form-control" name="cities" required>
+                                            <option disabled selected value="">Selecione a Cidade</option>  
+                                        </select>
+                                    Rua e número da porta<input class="form-control" placeholder="Morada de Entrega" name="invoice_address" required>
+                                    Código Postal: <input placeholder="7654-321" oninput="teste(this)" class="form-control" name="postal_code" required>
+                                        <label>Pretende usar a morada de entrega como morada de faturação?
+                                            <input type="radio" name="VerifyAdress" onclick="notshowAddressBilling()" checked="checked" value="sim">Sim
+                                            <input type="radio" name="VerifyAdress" onclick="showAddressBilling()" value="nao">Não
+                                        </label>   
                                 </div>
-                            </div>
-
-                            <div class="form-group">
-                                Morada Faturação:<input class="form-control" name="invoice_address" required>
-                            </div>
-                            <div class="form-group">
-
-                                <a class="btn-link" data-toggle="collapse" href="#delivery" role="button" aria-expanded="false" aria-controls="delivery">
-                                    Morada Entrega
-                                </a>
-                                
-                                <div class="collapse" id="delivery">
-                                    <input class="form-control" name="address">
+                           
+                            <div id="AddressBilling" class="form-group"  style="display:none">
+                                Morada de Faturação
+                                <br/>
+                                    Distrito: 
+                                    <select id="selectDistrict" class="form-control" name="districts" onchange="listCities(this)" required>
+                                        <option disabled selected value="">Selecione o distrito</option>
+                                        @foreach($districts as $district)
+                                            <option value="{{$district->id}}">{{$district->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    Cidade:
+                                        <select id="selectCity" class="form-control" name="cities" required>
+                                            <option disabled selected value="">Selecione a Cidade</option>  
+                                        </select>
+                                    Rua e número da porta<input class="form-control" placeholder="Morada de Entrega" name="invoice_address" required>
+                                    Codigo Postal: <input type="number" id="postalCode" class="form-control" name="postal_code" required>
                                 </div>
-                            </div>
 
-                            <div class="form-group">
-                                Distrito: 
-                                <select class="form-control" name="districts" required>
-                                    <option disabled selected value="null">Selecione um distrito</option>
-                                    @foreach($districts as $district)
-                                        <option value="{{$district->id}}">{{$district->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                Cidade: <input class="form-control" name="city" required>
-                            </div>
-                            <div class="form-group">
-                            Codigo Postal: <input class="form-control" name="postal_code" required>
-                            </div>
+                             <script>
+                                function showAddressBilling(){
+                                    document.getElementById("AddressBilling").style.display="block";
+                                }
+                                function notshowAddressBilling(){
+                                    document.getElementById("AddressBilling").style.display="none";
+                                }
+                                function showEmail(){
+                                    document.getElementById("EmailBilling").style.display="block";
+                                }
+                                function notshowEmail(){
+                                    document.getElementById("EmailBilling").style.display="none";
+                                }
+
+                                function teste(postalCode){
+                                   /* var count = (postalCode.value.match(/\d/g) || []).length
+                                    console.log("... "+ count);
+                                   console.log("pedro  "+ postalCode.value);
+                                   console.log("pedro  "+ postalCode.value.length);
+                                   if(count==4){
+                                       postalCode.value=postalCode.value+"-";
+                                   }*/
+                                }
+                            </script>
+
+                           
+                            <script>
+                                function listCities(idCity){
+                                    //aqui chamar pedro
+                                    var selectCity = document.getElementById("selectCity");
+                                    while (selectCity.firstChild) {
+                                        selectCity.removeChild(selectCity.firstChild);
+                                    } 
+                                    var optionCity =  document.createElement("option");
+                                    var id=idCity.value; 
+                                    optionCity.text="Selecione a Cidade";
+                                    optionCity.disable=true;
+                                    selectCity.appendChild(optionCity);
+                                        $.ajax({
+                                            type:'GET',
+                                            url:'/users/getCities/'+id,
+                                        }).done(function(data){
+                                            console.log(data);
+                                            console.log(data[1].id);
+                                            for(var i=0; i<data.length;i++){
+                                                var optionCity =  document.createElement("option");
+                                                optionCity.value=data[i].id; 
+                                                optionCity.text=data[i].name;
+                                                optionCity.disable=true;
+                                                selectCity.appendChild(optionCity);
+                                            }
+                                        });
+                                }
+                            </script>
                             <div class="form-group">
                                 NIF: <input id="nif" class="form-control" type="number" name="nif" required>
                             </div>
                             <div class="form-group">
-                                Email Contacto: <input class="form-control" type="email" name="email" required>
+                                E-mail Contacto: <input class="form-control" type="email" name="email" required>
+                                <div>
+                                    <label>Pretende usar o E-mail de Contacto como E-mail de Faturação?
+                                        <input type="radio" name="VerifyEmail" onclick="notshowEmail()"checked="checked" value="sim">Sim
+                                        <input type="radio" name="VerifyEmail" onclick="showEmail()" value="nao">Não
+                                    </label>
+                                </div>
+                            </div>
+
+                             <div id="EmailBilling" class="form-group" style="display:none" >
+                                Email Faturação: <input class="form-control" type="email" name="receipt_email" required>
                             </div>
                             <div class="form-group">
                                 Actividade:  Tipo Cliente: <select class="form-control" name="activity" required>
+                                    
+                                    <option disabled selected value="">Selecione a Atividade/Tipo de Cliente</option>
                                     <option value="Cafe / Snack Bar">Cafe / Snack Bar</option>
                                     <option value="Salão de Chá">Salão de Chá</option>
                                     <option value="Supermercado">Supermercado</option>
@@ -86,14 +158,14 @@
                                     <option value="Outro">Outro</option>
                                     <option value="Posto Combustivel">Posto Combustivel</option>
                                     <option value="Padaria / Pastelaria">Padaria / Pastelaria</option>
-
                                 </select>
                             </div>
                             <div class="form-group">
                                 Telefone: <input class="form-control" type="tel"  name="telephone" required>
                             </div>
                             <div class="form-group">
-                                Metodo Pagamento:  <select class="form-control" name="payment_method" required>
+                                Método Pagamento:  <select class="form-control" name="payment_method" required>
+                                        <option disabled selected value="">Selecione o Meétodo de Pagamento</option>
                                         <option value="Debito Direto">Débito Direto</option>
                                         <option value="Contra Entrega">Contra Entrega</option>
                                         <option value="Fatura Contra Fatura">Fatura Contra Fatura</option>
@@ -105,30 +177,35 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 Vendedor: <select class="form-control" name="salesman" required>
+                                <option disabled selected value="">Selecione o Vendedor</option>
                                     @foreach($salesman as $sales)
                                         <option value="{{$sales->id}}">{{$sales->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
-                                Tipo Cliente: <input class="form-control" name="client_type" required>
+                                Tipo Cliente:
+                                <br/>
+                                @foreach($serviceTypes as $serviceType)
+                                    <input type="checkbox" name="serviceType" value="{{$serviceType->id}}">{{$serviceType->name}}
+                                    <br/>
+                                 @endforeach
+                                <br/>
+                                
                             </div>
                             <div class="form-group">
-                                Email Faturação: <input class="form-control" type="email" name="receipt_email" required>
-                            </div>
-                            <div class="form-group">
-                                NIB: <input class="form-control" type="number" name="nib">
+                                NIB: <input type="number" class="form-control" type="number" name="nib">
                             </div>
                             <div class="form-group">
                                 Password: <input class="form-control" type="password" name="password" required>
                             </div>
 
                             <div class="form-group">
-                                Valor Contrato: <input class="form-control" name="value" required>
+                                Valor Contrato: <input type="number" class="form-control" name="value" required>
                             </div>
 
                             <div class="form-group">
-                                Id Regoldi <input class="form-control" name="regoldiID" >
+                                Id Regoldi <input type="number" class="form-control" name="regoldiID" >
                             </div>
 
                             <div class="form-group">

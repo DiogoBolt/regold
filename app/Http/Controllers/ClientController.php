@@ -14,6 +14,9 @@ use App\Receipt;
 use App\Salesman;
 use App\User;
 use App\Districts;
+use App\Cities;
+use App\ServiceType;
+use App\ServiceTypeClient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -156,9 +159,23 @@ class ClientController extends Controller
     {
         $salesman = Salesman::all();
         $districts = Districts::all();
+        $serviceTypes = ServiceType::all();
 
-        return view('client.new',compact('salesman','districts'));
+        return view('client.new',compact('salesman','districts','serviceTypes'));
     }
+
+    public function getCitiesByDistrict($id)
+    {
+        $cities = Cities::from(Cities::alias('c'))
+        ->where('c.id_district',$id)
+        ->select([
+            'c.id',
+            'c.name',
+        ])->get();
+
+        return $cities;
+    }
+
 
     public function addCustomer(Request $request)
     {
