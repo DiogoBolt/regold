@@ -30,18 +30,55 @@
                         <div class="collapse" id="collapseFilter">
                             <form action="/clients" method="GET" id="filter-form">
                                 <div class="card card-body">
-                                    <label for="city-filter">Cidade</label>
-                                    <select class="form-control" id="city-filter" name="city">
-                                        <option value="" selected disabled>Seleccione cidade</option>
-                                        @foreach($cities as $city)
-                                            <option value="{{$city}}">{{$city}}</option>
+                                    <label for="district-filter">Distrito</label>
+                                    <select class="form-control" id="city-filter"  name="district" onchange="listCities(this)">
+                                        <option value="" selected disabled>Seleccione o Distrito</option>
+                                        @foreach($districts as $district)
+                                            <option  class="form-control" value="{{$district->id}}">{{$district->name}}</option>
                                         @endforeach
                                     </select>
+                                    <label for="city-filter">Cidade</label>
+                                        <select id="selectCityInvoice" class="form-control" name="cityInvoice" >
+                                            <option disabled selected value="">Selecione a Cidade</option>  
+                                        </select>
                                 </div>
-
                                 <button class="btn" type="submit" form="filter-form">Filtrar</button>
                             </form>
                         </div>
+
+                        <script>
+                            function listCities(cityObj){
+                                if(cityObj.id == "selectDistrict"){
+                                        var selectCity = document.getElementById("selectCity");
+                                        while (selectCity.firstChild) {
+                                            selectCity.removeChild(selectCity.firstChild);
+                                        } 
+                                    }else{
+                                        var selectCity = document.getElementById("selectCityInvoice");
+                                        while (selectCity.firstChild) {
+                                            selectCity.removeChild(selectCity.firstChild);
+                                        } 
+                                    }
+                                    
+                                    var optionCity =  document.createElement("option");
+                                    var id=cityObj.value; 
+                                    optionCity.text="Selecione a Cidade";
+                                    optionCity.disable=true;
+                                    selectCity.appendChild(optionCity);
+                                        $.ajax({
+                                            type:'GET',
+                                            url:'/users/getCities/'+id,
+                                        }).done(function(data){
+                                            for(var i=0; i<data.length;i++){
+                                                var optionCity =  document.createElement("option");
+                                                optionCity.value=data[i].id; 
+                                                optionCity.text=data[i].name;
+                                                optionCity.disable=true;
+                                                selectCity.appendChild(optionCity);
+                                            }
+                                        });
+                                    }
+                            </script>
 
                         <h3>{{$unpaid}}/{{$total}} Encomendas</h3>
                         <table class="table">

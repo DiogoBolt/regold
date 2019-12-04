@@ -88,13 +88,14 @@ class ClientController extends Controller
         $user = Auth::user();
 
         $inputs = $request->all();
+        echo "<script>console.log('" . json_encode($inputs) . "');</script>";
 
         if($user->sales_id == null)
         {
             $clients = Customer::from(Customer::alias('c'))
                 ->leftJoin(User::alias('u'), 'u.client_id', '=', 'c.id')
-                ->when($request->filled('city'), function ($query) use ($inputs) {
-                    return $query->where('c.city', '=', $inputs['city']);
+                ->when($request->filled('cityInvoice'), function ($query) use ($inputs) {
+                    return $query->where('c.city', '=', $inputs['cityInvoice']);
                 })
                 ->when($request->filled('search'), function ($query) use ($inputs) {
                     return $query->where('c.name', 'LIKE', '%' . $inputs['search'] . '%')
@@ -114,8 +115,8 @@ class ClientController extends Controller
             $clients = Customer::from(Customer::alias('c'))
                 ->leftJoin(User::alias('u'), 'u.client_id', '=', 'c.id')
                 ->where('c.salesman',$user->sales_id)
-                ->when($request->filled('city'), function ($query) use ($inputs) {
-                    return $query->where('c.city', '=', $inputs['city']);
+                ->when($request->filled('cityInvoice'), function ($query) use ($inputs) {
+                    return $query->where('c.city', '=', $inputs['cityInvoice']);
                 })
                 ->when($request->filled('search'), function ($query) use ($inputs) {
                     return $query->where('c.name', 'LIKE', '%' . $inputs['search'] . '%')
@@ -150,9 +151,9 @@ class ClientController extends Controller
             $client->current = $current;
         }
 
-        $cities = Customer::from(Customer::alias('c'))->distinct()->orderBy('city', 'ASC')->pluck('city');
+        $districts = Districts::all();
 
-        return view('client.index',compact('clients','unpaid','total', 'cities'));
+        return view('client.index',compact('clients','unpaid','total', 'districts'));
     }
 
     public function newCustomer()
@@ -176,6 +177,49 @@ class ClientController extends Controller
         return $cities;
     }
 
+    //funcao para verificar se o email é unico
+    public function verifyEmailExist($email){
+
+        $count1 = User::from(User::alias('u'))
+        ->where('u.email',$email)
+        ->count();
+
+        $count2 = Costumer::from(Costumer::alias('c'))
+        ->where('c.receipt_email',$email)
+        ->count();
+
+        if($count == 0 && $count2 == 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    //funcao para verificar se o email é unico
+    public function verifyNifExist($nif){
+        $count = Costumer::from(Costumer::alias('c'))
+        ->where('c.nif',$nif)
+        ->count();
+
+        if($count == 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    //função para verificar se o idRegoldi é unico
+    public function verifyIdRegoldiExist($idRegoldi){
+        $count = Costumer::from(Costumer::alias('c'))
+        ->where('c.regoldiID',$idRegoldi)
+        ->count();
+
+        if($count == 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
     public function addCustomer(Request $request)
     {
@@ -183,30 +227,43 @@ class ClientController extends Controller
 
         $client = new Customer;
 
+        echo "<script>console.log('" . json_encode($inputs) . "');</script>";
+
         $client->name = $inputs['name'];
-        if($inputs['comercial_name'] == "")
-        {
-            $client->comercial_name = $client->name;
-        }else{
-            $client->comercial_name = $inputs['comercial_name'];
-        }
-        $client->address = $inputs['address'];
-        if($inputs['invoice_address'] == "")
-        {
-            $client->invoice_address = $client->address;
-        }else{
-            $client->invoice_address = $inputs['invoice_address'];
-        }
+        $client->comercial_name = $inputs['invoiceName'];
+        //address
+        $client->address = $inputs['deliveryAddress'];
         $client->city = $inputs['city'];
         $client->postal_code = $inputs['postal_code'];
-        $client->nif = $inputs['nif'];
+        //invoice address
+        if($inputs['VerifyAdress']=="nao"){
+            $client->invoice_address = $inputs['invoiceAddress'];
+            $client->invoice_city = $inputs['cityInvoice'];
+            $client->invoice_postal_code = $inputs['invoicePostalCode'];
+        }else{
+            $client->invoice_address = $client->address;
+            $client->invoice_city =  $client->city;
+            $client->invoice_postal_code = $client->postal_code;
+        }
+
+        //email
         $client->email = $inputs['email'];
+
+        //invoiceEmail VerifyEmail
+        if($inputs['VerifyEmail']=="nao"){
+            $client->receipt_email = $inputs['invoiceEmail'];
+        }else{
+            $client->receipt_email = $client->email;
+        }
+        
+
+        $client->nif = $inputs['nif'];
         $client->activity = $inputs['activity'];
         $client->salesman = $inputs['salesman'];
         $client->telephone = $inputs['telephone'];
         $client->payment_method = $inputs['payment_method'];
-        $client->client_type = $inputs['client_type'];
-        $client->receipt_email = $inputs['receipt_email'];
+        //$client->client_type = $inputs['client_type'];
+        //$client->receipt_email = $inputs['receipt_email'];
         $client->nib = $inputs['nib'];
         $client->contract_value = $inputs['value'];
         $client->regoldiID = $inputs['regoldiID'];
@@ -220,12 +277,48 @@ class ClientController extends Controller
             $user->client_id = $client->id;
             $user->password = bcrypt($inputs['password']);
 
+            if (array_key_exists('serviceType1', $inputs)) {
+                $serviceTypeClient = new ServiceTypeClient;
+                $serviceTypeClient->id_client= $client->id;
+                $serviceTypeClient->id_service_type=$inputs['serviceType1'];
+                $serviceTypeClient->save();
+            }
+
+            if (array_key_exists('serviceType2', $inputs)) {
+                $serviceTypeClient = new ServiceTypeClient;
+                $serviceTypeClient->id_client= $client->id;
+                $serviceTypeClient->id_service_type=$inputs['serviceType2'];
+                $serviceTypeClient->save();
+            }
+
+            if (array_key_exists('serviceType3', $inputs)) {
+                $serviceTypeClient = new ServiceTypeClient;
+                $serviceTypeClient->id_client= $client->id;
+                $serviceTypeClient->id_service_type=$inputs['serviceType3'];
+                $serviceTypeClient->save();
+            }
+
+            if (array_key_exists('serviceType4', $inputs)) {
+                $serviceTypeClient = new ServiceTypeClient;
+                $serviceTypeClient->id_client= $client->id;
+                $serviceTypeClient->id_service_type=$inputs['serviceType4'];
+                $serviceTypeClient->save();
+            }
+            
+
             if(!$user->save())
             {
                 $client->delete();
             }
         }
-        $clients = Customer::paginate(15);
+
+        $userL = Auth::user();
+
+        //$clients = Customer::paginate(15);
+        $clients = Customer::from(Customer::alias('c'))
+        ->where('c.salesman',$userL->sales_id)
+        ->paginate(15);
+
         $unpaid = 0;
 
         foreach($clients as $client)
@@ -246,9 +339,10 @@ class ClientController extends Controller
 
         $total = $clients->count();
         $links = $clients->links();
+        $districts = Districts::all();
 
 
-        return view('client.index',compact('clients','unpaid','total','links'));
+        return view('client.index',compact('clients','unpaid','total','links','districts'));
     }
 
     public function editCustomer($id)
@@ -474,7 +568,9 @@ class ClientController extends Controller
                 ])->get();
         }
 
-        return view('client.index',compact('clients'));
+        $districts = Districts::all();
+
+        return view('client.index',compact('clients','districts'));
     }
 
     public function processGroup($id)

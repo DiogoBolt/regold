@@ -66,6 +66,12 @@
                             @endif
 
                                 <li>
+                                    <a href="{{ url('/clients') }}">
+                                        Clientes 
+                                    </a>
+                                </li>
+
+                                <li>
                                     <a href="/orders">
                                         Encomendas 
                                     </a>
