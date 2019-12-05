@@ -285,7 +285,8 @@ class ClientController extends Controller
             $user->name = $inputs['name'];
             $user->email = $inputs['email'];
             $user->userType=$auxId;
-            $user->client_id = $client->id;
+            //$user->client_id = $client->id;
+            $user->userTypeID = $client->id;
             $user->password = bcrypt($inputs['password']);
 
             if (array_key_exists('serviceType1', $inputs)) {
@@ -402,10 +403,13 @@ class ClientController extends Controller
     public function deleteCustomer(Request $request) 
     {
         /* Delete user favourites */
+        echo "<script>console.log(' $request->id');</script>";
         $user_favorites = Favorite::where('user_id', '=', $request->id)->delete();
 
         $client = Customer::where('id', $request->id)->first()->delete();
-        $user_associated = User::where('client_id', '=', $request->id)->first()->delete();
+        $user_associated = User::where('userTypeID',$request->id)
+        ->where('userType',4)
+        ->first()->delete();
 
         return redirect()->to('/clients'); 
     }

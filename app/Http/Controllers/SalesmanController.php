@@ -44,7 +44,7 @@ class SalesmanController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function index()
+    public function index(Request $request)
     {
         
         /*$contributors = User::where('client_id','!=',null)
@@ -55,9 +55,13 @@ class SalesmanController extends Controller
         {
             $sales->total = SalesPayment::where('sales_id',$sales->sales_id)->where('delivered',0)->sum('value');
         }*/
-        
-
-        $contributors = User::where('userType','!=',4)
+        $inputs = $request->all();
+        echo "<script>console.log('" . json_encode($inputs) . "');</script>";
+        $contributors = User::when($request->filled('contributor'),
+        function ($query) use ($inputs) {
+            return $query->where('userType', $inputs['contributor']);
+        })->where('userType','!=',4)
+        ->where('userType','!=',5)
         ->get();
 
         $userstypes = UserType::all();
@@ -75,24 +79,31 @@ class SalesmanController extends Controller
 
     public function salesman($id){
 
-        if(Auth::user()->client_id == null and (Auth::user()->sales_id == null or Auth::user()->sales_id == $id))
+        echo "<script>console.log('$id');</script>";
+
+        $contributorShow = User::where('id',$id)->first();
+
+        echo "<script>console.log('$contributorShow->userType');</script>";
+        if(Auth::user()->userType == 5 || (Auth::user()->userType == $contributorShow->userType ))
         {
-            $user = User::where('sales_id', '!=', $id)->first();
-            $salesman = Salesman::where('id', $id)->first();
+            if($contributorShow->userType==1){
+                
+                $user = User::where('sales_id', '!=', $id)->first();
+                $salesman = Salesman::where('id', $contributorShow->userTypeID)->first();
+                $salesPayments = SalesPayment::where('sales_id', $id)->where('delivered', 0)->get();
 
-            $salesPayments = SalesPayment::where('sales_id', $id)->where('delivered', 0)->get();
+                foreach($salesPayments as $payment)
+                {
+                    $payment->invoice =  Order::where('id',$payment->order_id)->first()->invoice_id;
+                }
+    
+                $total = SalesPayment::where('sales_id', $id)->where('delivered', 0)->sum('value');
+    
+                return view('salesman.show', compact('salesman', 'salesPayments', 'user', 'total'));
 
-            foreach($salesPayments as $payment)
-            {
-                $payment->invoice =  Order::where('id',$payment->order_id)->first()->invoice_id;
             }
-
-            $total = SalesPayment::where('sales_id', $id)->where('delivered', 0)->sum('value');
-
-            return view('salesman.show', compact('salesman', 'salesPayments', 'user', 'total'));
-
         }else{
-            return back();
+           return back();
         }
 
     }
@@ -123,7 +134,8 @@ class SalesmanController extends Controller
 
             $sales->save();
 
-            $user->sales_id = $sales->id;
+            $user->userType = 1;
+            $user->userTypeID = $sales->id;
 
             
         }else if($inputs['UserType'] == 'Técnico HACCP'){
@@ -137,8 +149,8 @@ class SalesmanController extends Controller
             $technicalhaccp->postal_code = $inputs['postal_code']; 
 
             $technicalhaccp->save();
-
-            $user->technicalhaccp_id = $$technicalhaccp->id;
+            $user->userType = 2;
+            $user->userTypeID = $technicalhaccp->id;
         }
 
         $user->name = $inputs['name'];
@@ -149,12 +161,19 @@ class SalesmanController extends Controller
 
        return redirect()->to('/salesman'); 
     }
-
+    //alterar aqui 
     public function deleteSales(Request $request) 
     {
-        $user_associated = User::where('sales_id', '=', $request->id)->first()->delete();
-        $salesman = Salesman::where('id', '=', $request->id)->first()->delete();
-
+        echo "<script>console.log('$request->usertype');</script>";
+        if($request->usertype == 1){
+            $salesman = Salesman::where('id', $request->usertypeid)->first()->delete();
+        }else if($request->usertype == 2){
+            $technicalhaccp = TechnicalHACCP::where('id', $request->usertypeid)->first()->delete();
+        }
+        $user_associated = User::where('userTypeID',$request->usertypeid)
+        ->where('userType',$request->usertype)
+        ->first()->delete();
+            //meter aqui o resto das verificacoes
         return redirect()->to('/salesman'); 
     }
 

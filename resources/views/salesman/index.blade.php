@@ -17,18 +17,38 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel">
                 <div class="panel-body table-responsive">
+                <a data-toggle="collapse" href="#collapseFilter" role="button"
+                           aria-expanded="false" aria-controls="collapseFilter">
+                            <strong>Filtrar por Tipo de Colaborador</strong>
+                        </a>
+                        <div class="collapse" id="collapseFilter">
+                            <form action="/salesman" method="GET" id="filter-form">
+                                <div class="card card-body">
+                                    <label for="district-filter">Tipo de Colaborador</label>
+                                    <select class="form-control" id="contributor-filter"  name="contributor">
+                                    <option value="" selected disabled>Seleccione o Tipo de Colaborador</option>
+                                        @foreach($userstypes as $usertype)
+                                            <option name="userTypeFilter" value="{{$usertype->id}}">{{$usertype->name}}</option>
+                                        @endforeach
+                                  
+                                    </select>
+                                </div>
+                                <button class="btn" type="submit" form="filter-form">Filtrar</button>
+                            </form>
+                        </div>
+
                     <table class="table">
                         <tr>
-                            <th>Id</th>
+                           <!-- <th>Id</th>-->
                             <th>Nome</th>
                             <th>Tipo de Colaborador</th>
                             <th>Eliminar</th>
                         </tr>
                         @foreach($contributors as $contributor)
                                 <tr>
-                                    <td><a href="/salesman/20">{{$contributor->sales_id}}</a></td>
-                                    <td><a href="/salesman/20">{{$contributor->name}}</a></td>
-                                    <td><a href="/salesman/20">{{$contributor->userTypeName}}</a></td>
+                                   <!-- <td><a href="/salesman/20">{{$contributor->sales_id}}</a></td>-->
+                                    <td><a href="/salesman/{{$contributor->id}}">{{$contributor->name}}</a></td>
+                                    <td><a href="/salesman/{{$contributor->id}}">{{$contributor->userTypeName}}</a></td>
                                     <td><button class="btn-del"  data-toggle="modal" data-target="#deleteModal" data-item="{{ $contributor }}">Eliminar</button></td>
                                 </tr>
                         @endforeach
@@ -36,7 +56,7 @@
 
 
                     
-                    <a href="/newsalesman" class="btn btn-add"><strong>Novo Vendedor</strong></a>
+                    <a href="/newsalesman" class="btn btn-add"><strong>Novo Colaborador</strong></a>
                 </div>
             </div>
         </div>
@@ -67,7 +87,8 @@
     <form action="/salesman/delete" method="post" id="delete-form">
         {{ csrf_field() }}
         <input type="hidden" name="_method" value="delete" />
-        <input type="hidden" id="sales-id" value="" name="id">
+        <input type="hidden" id="usertypeid" value="" name="usertypeid">
+        <input type="hidden" id="usertype" value="" name="usertype">
     </form>
     
 @endsection
@@ -80,10 +101,11 @@
             let item = $(event.relatedTarget); 
             let data = item.data('item'); 
 
-            $(this).find('.modal-body').text(`Tem a certeza que quer apagar o seguinte vendedor, ${data.name} ? `);
+            $(this).find('.modal-body').text(`Tem a certeza que quer apagar o seguinte colaborador, ${data.name} ? `);
 
             $('#delete-user').on('click', function() { 
-                $('#sales-id').val(data.sales_id);
+                $('#usertypeid').val(data.userTypeID);
+                $('#usertype').val(data.userType);
                 $('#delete-form').submit();
             });
 
