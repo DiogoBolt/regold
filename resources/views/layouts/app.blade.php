@@ -54,7 +54,7 @@
                             @if(Auth::user()->sales_id == null)
                             <li>
                                 <a href="/salesman">
-                                    Vendedores
+                                    Colaboradores
                                 </a>
                             </li>
                                 @else

@@ -7,7 +7,7 @@
 
 @section('content')
 <div class="container-bar">
-    <p class="container-bar_txt">clientes</p>
+    <p class="container-bar_txt">Colaboradores</p>
     <div class="container-bar_img">
         <img src="{{ asset('img/clientes.jpg') }}" />
     </div>
@@ -21,15 +21,15 @@
                         <tr>
                             <th>Id</th>
                             <th>Nome</th>
-                            <th>Dinheiro em mao</th>
+                            <th>Tipo de Colaborador</th>
                             <th>Eliminar</th>
                         </tr>
-                        @foreach($salesman as $sales)
+                        @foreach($contributors as $contributor)
                                 <tr>
-                                    <td><a href="/salesman/{{$sales->sales_id}}">{{$sales->sales_id}}</a></td>
-                                    <td><a href="/salesman/{{$sales->sales_id}}">{{$sales->name}}</a></td>
-                                    <td><a href="/salesman/{{$sales->sales_id}}">{{$sales->total}}</a></td>
-                                    <td><button class="btn-del"  data-toggle="modal" data-target="#deleteModal" data-item="{{ $sales }}">Eliminar</button></td>
+                                    <td><a href="/salesman/20">{{$contributor->sales_id}}</a></td>
+                                    <td><a href="/salesman/20">{{$contributor->name}}</a></td>
+                                    <td><a href="/salesman/20">{{$contributor->userTypeName}}</a></td>
+                                    <td><button class="btn-del"  data-toggle="modal" data-target="#deleteModal" data-item="{{ $contributor }}">Eliminar</button></td>
                                 </tr>
                         @endforeach
                     </table>

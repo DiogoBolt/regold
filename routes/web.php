@@ -65,6 +65,9 @@ Route::group(['middleware' => ['backoffice']], function () {
     Route::get('/salesman/{id}', 'SalesmanController@salesman');
     Route::get('/newsalesman', 'SalesmanController@newSales');
     Route::get('/salesman/deliver/{id}', 'SalesmanController@deliverSalesman');
+    //Route::get('/salesman/new', 'ClientController@newSales');
+    Route::post('/salesman/add', 'SalesmanController@addSales');
+    Route::delete('/salesman/delete', 'SalesmanController@deleteSales');
 
 
     Route::get('/clients', 'ClientController@index');
@@ -81,9 +84,6 @@ Route::group(['middleware' => ['backoffice']], function () {
     //pedro                             
     Route::get('/users/getCities/{id}','ClientController@getCitiesByDistrict');
 
-    Route::get('/salesman/new', 'ClientController@newSales');
-    Route::post('/salesman/add', 'ClientController@addSales');
-    Route::delete('/salesman/delete', 'ClientController@deleteSales');
 
     Route::get('/groups', 'ClientController@groups');
     Route::get('/groups/new', 'ClientController@newGroup');

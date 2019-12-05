@@ -17,6 +17,7 @@ use App\Districts;
 use App\Cities;
 use App\ServiceType;
 use App\ServiceTypeClient;
+use App\UserType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -227,7 +228,16 @@ class ClientController extends Controller
 
         $client = new Customer;
 
+        $userTypeID = UserType::where('name','Cliente')
+        ->select([
+            'id'
+        ])->get();
+        
+
         echo "<script>console.log('" . json_encode($inputs) . "');</script>";
+        foreach($userTypeID as $typeid){
+            $auxId=$typeid->id;
+        }
 
         $client->name = $inputs['name'];
         $client->comercial_name = $inputs['invoiceName'];
@@ -274,6 +284,7 @@ class ClientController extends Controller
 
             $user->name = $inputs['name'];
             $user->email = $inputs['email'];
+            $user->userType=$auxId;
             $user->client_id = $client->id;
             $user->password = bcrypt($inputs['password']);
 
@@ -398,40 +409,6 @@ class ClientController extends Controller
 
         return redirect()->to('/clients'); 
     }
-
-    public function addSales(Request $request)
-    {
-        $inputs = $request->all();
-
-        $sales = new Salesman();
-
-        $sales->name = $inputs['name'];
-        $sales->address = $inputs['address'];
-        $sales->city = $inputs['city'];
-        $sales->nif = $inputs['nif'];
-
-        $sales->save();
-
-        $user = new User;
-
-        $user->name = $inputs['name'];
-        $user->email = $inputs['email'];
-        $user->sales_id = $sales->id;
-        $user->password = bcrypt($inputs['password']);
-
-        $user->save();
-
-        return redirect()->to('/salesman'); 
-    }
-
-    public function deleteSales(Request $request) 
-    {
-        $user_associated = User::where('sales_id', '=', $request->id)->first()->delete();
-        $salesman = Salesman::where('id', '=', $request->id)->first()->delete();
-
-        return redirect()->to('/salesman'); 
-    }
-
 
     public function showCustomer($id)
     {

@@ -15,6 +15,11 @@ use App\Receipt;
 use App\Salesman;
 use App\SalesPayment;
 use App\User;
+use App\Districts;
+use App\Cities;
+use App\UserType;
+use App\TechnicalHACCP;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -41,14 +46,31 @@ class SalesmanController extends Controller
 
     public function index()
     {
-        $salesman = User::where('sales_id','!=',null)->get();
+        
+        /*$contributors = User::where('client_id','!=',null)
+        ->orWhere('technicalhaccp_id','!=',null)
+        ->get();
 
-        foreach($salesman as $sales)
+        foreach($contributors as $sales)
         {
             $sales->total = SalesPayment::where('sales_id',$sales->sales_id)->where('delivered',0)->sum('value');
+        }*/
+        
+
+        $contributors = User::where('userType','!=',4)
+        ->get();
+
+        $userstypes = UserType::all();
+
+        foreach($contributors as $contributor){
+            foreach($userstypes as $userType){
+                if($contributor->userType == $userType->id){
+                    $contributor->userTypeName = $userType->name;
+                }
+            }
         }
 
-        return view('salesman.index', compact('salesman'));
+        return view('salesman.index', compact('contributors','userstypes'));
     }
 
     public function salesman($id){
@@ -77,7 +99,63 @@ class SalesmanController extends Controller
 
     public function newSales()
     {
-        return view('salesman.new');
+        $districts = Districts::all();
+        $UserTypes = UserType::all();
+        return view('salesman.new',compact('districts','UserTypes'));
+    }
+
+    public function addSales(Request $request)
+    {
+        $inputs = $request->all();
+
+        echo "<script>console.log('" . json_encode($inputs) . "');</script>";
+        $user = new User;
+
+        if($inputs['UserType'] == 'Vendedor'){
+            
+            $sales = new Salesman();
+
+            $sales->name = $inputs['name'];
+            $sales->address = $inputs['address'];
+            $sales->city = $inputs['city'];
+            $sales->nif = $inputs['nif'];
+            $sales->postal_code = $inputs['postal_code']; 
+
+            $sales->save();
+
+            $user->sales_id = $sales->id;
+
+            
+        }else if($inputs['UserType'] == 'Técnico HACCP'){
+            echo "<script>console.log('entrei aqui mas não fiz nada');</script>";
+            $technicalhaccp = new TechnicalHACCP();
+
+            $technicalhaccp->name = $inputs['name'];
+            $technicalhaccp->address = $inputs['address'];
+            $technicalhaccp->city = $inputs['city'];
+            $technicalhaccp->nif = $inputs['nif'];
+            $technicalhaccp->postal_code = $inputs['postal_code']; 
+
+            $technicalhaccp->save();
+
+            $user->technicalhaccp_id = $$technicalhaccp->id;
+        }
+
+        $user->name = $inputs['name'];
+        $user->email = $inputs['email'];
+        $user->password = bcrypt($inputs['password']);
+
+        $user->save();
+
+       return redirect()->to('/salesman'); 
+    }
+
+    public function deleteSales(Request $request) 
+    {
+        $user_associated = User::where('sales_id', '=', $request->id)->first()->delete();
+        $salesman = Salesman::where('id', '=', $request->id)->first()->delete();
+
+        return redirect()->to('/salesman'); 
     }
 
 
