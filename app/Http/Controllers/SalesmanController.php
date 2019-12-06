@@ -81,7 +81,9 @@ class SalesmanController extends Controller
 
         echo "<script>console.log('$id');</script>";
 
-        $contributorShow = User::where('id',$id)->first();
+        $contributorShow = User::where('userTypeID',$id)
+        ->where('userType',1)
+        ->first();
 
         echo "<script>console.log('$contributorShow->userType');</script>";
         if(Auth::user()->userType == 5 || (Auth::user()->userType == $contributorShow->userType ))

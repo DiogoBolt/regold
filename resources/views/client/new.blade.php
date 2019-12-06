@@ -6,9 +6,9 @@
 @endsection
 
 @section('content')
-<script src="\..\..\public\js\validations.js"></script> 
+<script src="{{public_path('js/validations.js')}}"></script> 
 <div class="container-bar">
-    <p class="container-bar_txt">novo cliente</p>
+    <p class="container-bar_txt">Novo Cliente</p>
     <div class="container-bar_img">
         <img src="{{ asset('img/add-user.png') }}" />
     </div>
@@ -20,9 +20,30 @@
                 <div class="panel-body">
                     <div>
                         <img class="img-responsive add-img" src="/img/navbar/logoindexcolor.png"/>
+                        <label class="add-label">Dados do Proprietário</label>
                     </div>
                     <form action="/clients/add"  method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
+                        
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                    <input type="radio" value="M">Sr
+                                    <input type="radio" value="F">Sra
+                            </div>
+                            <div class="form-group">
+                                Nome:<input class="form-control" placeholder="Nome..."  name="ownerName" required>
+                            </div>
+                            <div id="EmailInvoice" class="form-group">
+                                E-Mail: <input class="form-control" placeholder="Insira o E-mail" type="email" name="loginMail" >
+                            </div>
+                            <div class="form-group">
+                                Password: <input class="form-control" type="password" placeholde="*********" name="password" required>
+                            </div>
+                        </div>   
+                        <div>
+                            
+                            <label class="add-label">Dados do Establecimento</label>
+                        </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 Nome Comercial:<input class="form-control" placeholder="Nome Comercial"  name="name" required>
@@ -93,55 +114,7 @@
                                
                             </div>
 
-                             <script>
-                                function showAddressInvoice(){
-                                    document.getElementById("AddressInvoice").style.display="block";
-                                }
-                                function notshowAddressInvoice(){
-                                    document.getElementById("AddressInvoice").style.display="none";
-                                }
-                                function showEmail(){
-                                    document.getElementById("EmailInvoice").style.display="block";
-                                }
-                                function notshowEmail(){
-                                    document.getElementById("EmailInvoice").style.display="none";
-                                }
-                            </script>
-
-                            <script>
-                                function listCities(cityObj){
-                                        //aqui chamar pedro
-                                    if(cityObj.id == "selectDistrict"){
-                                        var selectCity = document.getElementById("selectCity");
-                                        while (selectCity.firstChild) {
-                                            selectCity.removeChild(selectCity.firstChild);
-                                        } 
-                                    }else{
-                                        var selectCity = document.getElementById("selectCityInvoice");
-                                        while (selectCity.firstChild) {
-                                            selectCity.removeChild(selectCity.firstChild);
-                                        } 
-                                    }
-                                    
-                                    var optionCity =  document.createElement("option");
-                                    var id=cityObj.value; 
-                                    optionCity.text="Selecione a Cidade";
-                                    optionCity.disable=true;
-                                    selectCity.appendChild(optionCity);
-                                        $.ajax({
-                                            type:'GET',
-                                            url:'/users/getCities/'+id,
-                                        }).done(function(data){
-                                            for(var i=0; i<data.length;i++){
-                                                var optionCity =  document.createElement("option");
-                                                optionCity.value=data[i].id; 
-                                                optionCity.text=data[i].name;
-                                                optionCity.disable=true;
-                                                selectCity.appendChild(optionCity);
-                                            }
-                                        });
-                                    }
-                            </script>
+                            
                             <div class="form-group">
                                 NIF: <input id="nif" class="form-control" type="number" name="nif" required>
                             </div>
@@ -212,9 +185,6 @@
                             <div class="form-group">
                                 NIB: <input type="number" class="form-control" type="number" name="nib">
                             </div>
-                            <div class="form-group">
-                                Password: <input class="form-control" type="password" name="password" required>
-                            </div>
 
                             <div class="form-group">
                                 Valor Contrato: <input type="number" placeholder="Valor de Contrato" min=0 class="form-control" name="value" required>
@@ -237,5 +207,53 @@
         </div>
     </div>
 </div>
+
+ <script>
+    function showAddressInvoice(){ 
+        document.getElementById("AddressInvoice").style.display="block";
+    }
+    function notshowAddressInvoice(){
+        document.getElementById("AddressInvoice").style.display="none";
+    }
+    function showEmail(){
+        document.getElementById("EmailInvoice").style.display="block";
+    }
+    function notshowEmail(){
+        document.getElementById("EmailInvoice").style.display="none";
+    }
+                            
+    function listCities(cityObj){
+        //aqui chamar pedro
+        if(cityObj.id == "selectDistrict"){
+            var selectCity = document.getElementById("selectCity");
+            while (selectCity.firstChild) {
+                selectCity.removeChild(selectCity.firstChild);
+            } 
+        }else{
+            var selectCity = document.getElementById("selectCityInvoice");
+            while (selectCity.firstChild) {
+                selectCity.removeChild(selectCity.firstChild);
+            } 
+        }
+                                    
+        var optionCity =  document.createElement("option");
+        var id=cityObj.value; 
+        optionCity.text="Selecione a Cidade";
+        optionCity.disable=true;
+        selectCity.appendChild(optionCity);
+        $.ajax({
+            type:'GET',
+            url:'/users/getCities/'+id,
+        }).done(function(data){
+            for(var i=0; i<data.length;i++){
+                var optionCity =  document.createElement("option");
+                optionCity.value=data[i].id; 
+                optionCity.text=data[i].name;
+                optionCity.disable=true;
+                selectCity.appendChild(optionCity);
+            }
+        });
+        }
+    </script>
 
 @endsection

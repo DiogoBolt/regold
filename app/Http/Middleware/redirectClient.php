@@ -19,7 +19,7 @@ class redirectClient
     {
         $user = Auth::user();
 
-        if ($user->client_id != null and $request->getRequestUri() != '/impersonate/leaveuser') {
+        if ($user->userType == 4 and $request->getRequestUri() != '/impersonate/leaveuser') {
             return redirect('/home');
         }
 

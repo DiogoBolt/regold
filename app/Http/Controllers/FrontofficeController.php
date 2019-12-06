@@ -38,10 +38,10 @@ class FrontofficeController extends Controller
     public function showCustomer()
     {
         $user = Auth::user();
-        $client = Customer::where('id',$user->client_id)->first();
+        $client = Customer::where('id',$user->userTypeID)
+        ->first();
 
-        $group = Group::where('id',$client->group_id)->first();
-        return view('frontoffice.show',compact('client','group'));
+        return view('frontoffice.show',compact('client'));
     }
 
     public function editClient()

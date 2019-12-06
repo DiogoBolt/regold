@@ -18,6 +18,7 @@ use App\Cities;
 use App\ServiceType;
 use App\ServiceTypeClient;
 use App\UserType;
+use App\Establishment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -226,110 +227,106 @@ class ClientController extends Controller
     {
         $inputs = $request->all();
 
-        $client = new Customer;
-
-        $userTypeID = UserType::where('name','Cliente')
-        ->select([
-            'id'
-        ])->get();
-        
-
+        $establisment = new Establishment;
         echo "<script>console.log('" . json_encode($inputs) . "');</script>";
-        foreach($userTypeID as $typeid){
-            $auxId=$typeid->id;
-        }
+        
+        //Registar o user
+        $user = new User;
+        $user->name = $inputs['ownerName'];
+        $user->email = $inputs['loginMail'];
+        $user->userType=4;
+        //$user->client_id = $client->id;
+        //$user->userTypeID = $client->id;
+        $user->password = bcrypt($inputs['password']);
 
-        $client->name = $inputs['name'];
-        $client->comercial_name = $inputs['invoiceName'];
+        $user->save();
+
+        //Registar o establecimento
+        $establisment = new Establishment;
+        $establisment->ownerID=$user->id;
+        $establisment->name = $inputs['name'];
+        $establisment->comercial_name = $inputs['invoiceName'];
         //address
-        $client->address = $inputs['deliveryAddress'];
-        $client->city = $inputs['city'];
-        $client->postal_code = $inputs['postal_code'];
+        $establisment->address = $inputs['deliveryAddress'];
+        $establisment->city = $inputs['city'];
+        $establisment->postal_code = $inputs['postal_code'];
         //invoice address
         if($inputs['VerifyAdress']=="nao"){
-            $client->invoice_address = $inputs['invoiceAddress'];
-            $client->invoice_city = $inputs['cityInvoice'];
-            $client->invoice_postal_code = $inputs['invoicePostalCode'];
+            $establisment->invoice_address = $inputs['invoiceAddress'];
+            $establisment->invoice_city = $inputs['cityInvoice'];
+            $establisment->invoice_postal_code = $inputs['invoicePostalCode'];
         }else{
-            $client->invoice_address = $client->address;
-            $client->invoice_city =  $client->city;
-            $client->invoice_postal_code = $client->postal_code;
+            $establisment->invoice_address = $establisment->address;
+            $establisment->invoice_city =  $establisment->city;
+            $establisment->invoice_postal_code = $establisment->postal_code;
         }
 
         //email
-        $client->email = $inputs['email'];
+        $establisment->receipt_email = $inputs['invoiceEmail'];
+        /*$establisment->email = $inputs['email'];
 
         //invoiceEmail VerifyEmail
         if($inputs['VerifyEmail']=="nao"){
-            $client->receipt_email = $inputs['invoiceEmail'];
+            $establisment->receipt_email = $inputs['invoiceEmail'];
         }else{
-            $client->receipt_email = $client->email;
-        }
+            $cliestablismentent->receipt_email = $establisment->email;
+        }*/
         
 
-        $client->nif = $inputs['nif'];
-        $client->activity = $inputs['activity'];
-        $client->salesman = $inputs['salesman'];
-        $client->telephone = $inputs['telephone'];
-        $client->payment_method = $inputs['payment_method'];
-        //$client->client_type = $inputs['client_type'];
-        //$client->receipt_email = $inputs['receipt_email'];
-        $client->nib = $inputs['nib'];
-        $client->contract_value = $inputs['value'];
-        $client->regoldiID = $inputs['regoldiID'];
-        $client->transport_note = $inputs['transport_note'];
+        $establisment->nif = $inputs['nif'];
+        $establisment->activity = $inputs['activity'];
+        $establisment->salesman = $inputs['salesman'];
+        $establisment->telephone = $inputs['telephone'];
+        $establisment->payment_method = $inputs['payment_method'];
+        $establisment->nib = $inputs['nib'];
+        $establisment->contract_value = $inputs['value'];
+        $establisment->regoldiID = $inputs['regoldiID'];
+        $establisment->transport_note = $inputs['transport_note'];
 
-        if($client->save())
-        {        $user = new User;
+        $establisment->save();
 
-            $user->name = $inputs['name'];
-            $user->email = $inputs['email'];
-            $user->userType=$auxId;
-            //$user->client_id = $client->id;
-            $user->userTypeID = $client->id;
-            $user->password = bcrypt($inputs['password']);
 
-            if (array_key_exists('serviceType1', $inputs)) {
-                $serviceTypeClient = new ServiceTypeClient;
-                $serviceTypeClient->id_client= $client->id;
-                $serviceTypeClient->id_service_type=$inputs['serviceType1'];
-                $serviceTypeClient->save();
-            }
 
-            if (array_key_exists('serviceType2', $inputs)) {
-                $serviceTypeClient = new ServiceTypeClient;
-                $serviceTypeClient->id_client= $client->id;
-                $serviceTypeClient->id_service_type=$inputs['serviceType2'];
-                $serviceTypeClient->save();
-            }
+        //melhorar isto
 
-            if (array_key_exists('serviceType3', $inputs)) {
-                $serviceTypeClient = new ServiceTypeClient;
-                $serviceTypeClient->id_client= $client->id;
-                $serviceTypeClient->id_service_type=$inputs['serviceType3'];
-                $serviceTypeClient->save();
-            }
-
-            if (array_key_exists('serviceType4', $inputs)) {
-                $serviceTypeClient = new ServiceTypeClient;
-                $serviceTypeClient->id_client= $client->id;
-                $serviceTypeClient->id_service_type=$inputs['serviceType4'];
-                $serviceTypeClient->save();
-            }
-            
-
-            if(!$user->save())
-            {
-                $client->delete();
-            }
+        if (array_key_exists('serviceType1', $inputs)) {
+            $serviceTypeClient = new ServiceTypeClient;
+            $serviceTypeClient->id_client= $establisment->id;
+            $serviceTypeClient->id_service_type=$inputs['serviceType1'];
+            $serviceTypeClient->save();
         }
 
+        if (array_key_exists('serviceType2', $inputs)) {
+            $serviceTypeClient = new ServiceTypeClient;
+            $serviceTypeClient->id_client= $establisment->id;
+            $serviceTypeClient->id_service_type=$inputs['serviceType2'];
+            $serviceTypeClient->save();
+        }
+
+        if (array_key_exists('serviceType3', $inputs)) {
+            $serviceTypeClient = new ServiceTypeClient;
+            $serviceTypeClient->id_client= $client->id;
+            $serviceTypeClient->id_service_type=$inputs['serviceType3'];
+            $serviceTypeClient->save();
+        }
+
+        if (array_key_exists('serviceType4', $inputs)) {
+            $serviceTypeClient = new ServiceTypeClient;
+            $serviceTypeClient->id_client= $establisment->id;
+            $serviceTypeClient->id_service_type=$inputs['serviceType4'];
+            $serviceTypeClient->save();
+        }
+       
         $userL = Auth::user();
 
-        //$clients = Customer::paginate(15);
-        $clients = Customer::from(Customer::alias('c'))
-        ->where('c.salesman',$userL->sales_id)
-        ->paginate(15);
+        echo "<script>console.log('$userL');</script>";
+        if($userL->userType==5){
+            $clients=Establishment::all();
+        }else if($userL->userType==1){
+            $clients = Establishment::from(Establishment::alias('e'))
+            ->where('e.salesman',$userL->userTypeID)
+            ->get();
+        }
 
         $unpaid = 0;
 
@@ -350,12 +347,11 @@ class ClientController extends Controller
         }
 
         $total = $clients->count();
-        $links = $clients->links();
         $districts = Districts::all();
 
-
-        return view('client.index',compact('clients','unpaid','total','links','districts'));
+        return view('client.index',compact('clients','unpaid','total','districts'));
     }
+
 
     public function editCustomer($id)
     {
@@ -416,11 +412,11 @@ class ClientController extends Controller
 
     public function showCustomer($id)
     {
-
+        echo "<script>console.log('$id');</script>";   
         $client = Customer::where('id',$id)->first();
         $types = DocumentType::all();
 
-        $user = User::where('client_id',$client->id)->first();
+        $user = User::where('userTypeID',$client->id)->first();
 
         $receipts = Receipt::where('client_id',$client->id)->get();
 
@@ -703,17 +699,24 @@ class ClientController extends Controller
 
     public function impersonateClient($id)
     {
+        $idUser=User::where('userTypeID',$id)
+        ->where('userType',4)
+        ->select([
+            'id',
+        ])
+        ->first();
+        echo "<script>console.log('$idUser->id');</script>";
         $user = Auth::user();
         Session::put('impersonated',$user->id);
         Auth::logout();
-        Auth::loginUsingId($id);
-        return redirect()->back();
+        Auth::loginUsingId($idUser->id);
+        //return redirect()->back();
+        return redirect('/home');
     }
 
     public function leaveUser()
     {
         $userId = Session::get('impersonated');
-
         Session::forget('impersonated');
         Auth::logout();
         Auth::loginUsingId($userId);
@@ -723,7 +726,7 @@ class ClientController extends Controller
     public function checkFirstLogin() 
     {
         $user = Auth::user();
-        $customer = Customer::where('id',$user->client_id)->first();
+        $customer = Customer::where('id',$user->userTypeID)->first();
         $first_time_login = 0;
 
         if (!$customer->first_login) {
