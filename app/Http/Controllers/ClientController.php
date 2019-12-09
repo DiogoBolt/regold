@@ -18,7 +18,6 @@ use App\Cities;
 use App\ServiceType;
 use App\ServiceTypeClient;
 use App\UserType;
-use App\Establishment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -180,7 +179,7 @@ class ClientController extends Controller
     }
 
     //funcao para verificar se o email é unico
-    public function verifyEmailExist($email){
+    /*public function verifyEmailExist($email){
 
         $count1 = User::from(User::alias('u'))
         ->where('u.email',$email)
@@ -195,6 +194,21 @@ class ClientController extends Controller
         }else{
             return false;
         }
+    }*/
+
+    //verificar se já existe um user com o email
+    
+    public function verifyEmailExist($email){
+        $count = User::from(User::alias('u'))
+        ->where('u.email',$email)
+        ->where('u.userType',4)
+        ->count();
+        if($count == 0){
+            return 1;
+        }else{
+            return 0;
+        }
+       
     }
 
     //funcao para verificar se o email é unico
@@ -227,23 +241,29 @@ class ClientController extends Controller
     {
         $inputs = $request->all();
 
-        $establisment = new Establishment;
         echo "<script>console.log('" . json_encode($inputs) . "');</script>";
         
         //Registar o user
         $user = new User;
-        $user->name = $inputs['ownerName'];
-        $user->email = $inputs['loginMail'];
-        $user->userType=4;
-        //$user->client_id = $client->id;
-        //$user->userTypeID = $client->id;
-        $user->password = bcrypt($inputs['password']);
-
-        $user->save();
-
+        $establisment = new Customer;
+        if( $inputs['verifyHaveRegister']=='nao'){
+            $user->name = $inputs['ownerName'];
+            $user->sex = $inputs['sex'];
+            $user->email = $inputs['loginMail'];
+            $user->userType=4;
+            $user->password = bcrypt($inputs['password']);
+            $user->save();
+            $establisment->ownerID=$user->id;
+        }else{
+            $idEmail = User::where('email',$inputs['registedMail'])
+            ->select([
+                'id',
+            ])->first();
+            echo "<script>console.log('-aqui1---+$idEmail->id');</script>";
+            $establisment->ownerID=$idEmail->id;
+        }
         //Registar o establecimento
-        $establisment = new Establishment;
-        $establisment->ownerID=$user->id;
+        
         $establisment->name = $inputs['name'];
         $establisment->comercial_name = $inputs['invoiceName'];
         //address
@@ -262,15 +282,13 @@ class ClientController extends Controller
         }
 
         //email
-        $establisment->receipt_email = $inputs['invoiceEmail'];
-        /*$establisment->email = $inputs['email'];
-
+        $establisment->email = $inputs['email'];
         //invoiceEmail VerifyEmail
         if($inputs['VerifyEmail']=="nao"){
             $establisment->receipt_email = $inputs['invoiceEmail'];
         }else{
-            $cliestablismentent->receipt_email = $establisment->email;
-        }*/
+            $establisment->receipt_email = $establisment->email;
+        }
         
 
         $establisment->nif = $inputs['nif'];
@@ -285,10 +303,7 @@ class ClientController extends Controller
 
         $establisment->save();
 
-
-
         //melhorar isto
-
         if (array_key_exists('serviceType1', $inputs)) {
             $serviceTypeClient = new ServiceTypeClient;
             $serviceTypeClient->id_client= $establisment->id;
@@ -305,7 +320,7 @@ class ClientController extends Controller
 
         if (array_key_exists('serviceType3', $inputs)) {
             $serviceTypeClient = new ServiceTypeClient;
-            $serviceTypeClient->id_client= $client->id;
+            $serviceTypeClient->id_client= $establisment->id;
             $serviceTypeClient->id_service_type=$inputs['serviceType3'];
             $serviceTypeClient->save();
         }
@@ -319,12 +334,11 @@ class ClientController extends Controller
        
         $userL = Auth::user();
 
-        echo "<script>console.log('$userL');</script>";
         if($userL->userType==5){
-            $clients=Establishment::all();
+            $clients = Customer::all();
         }else if($userL->userType==1){
-            $clients = Establishment::from(Establishment::alias('e'))
-            ->where('e.salesman',$userL->userTypeID)
+            $clients = Customer::from(Customer::alias('c'))
+            ->where('c.salesman',$userL->userTypeID)
             ->get();
         }
 
@@ -401,12 +415,15 @@ class ClientController extends Controller
         /* Delete user favourites */
         echo "<script>console.log(' $request->id');</script>";
         $user_favorites = Favorite::where('user_id', '=', $request->id)->delete();
-
+        $auxIDOwner = Customer::where('id',$request->id)
+        ->select([
+            'ownerID',
+        ])->first();
         $client = Customer::where('id', $request->id)->first()->delete();
-        $user_associated = User::where('userTypeID',$request->id)
-        ->where('userType',4)
-        ->first()->delete();
-
+        $aux= Customer::where('ownerID', $auxIDOwner->ownerID)->count();
+        if($aux==1){
+            $user_associated = User::where('id',$auxIDOwner->ownerID)->first()->delete();
+        }
         return redirect()->to('/clients'); 
     }
 
@@ -416,7 +433,7 @@ class ClientController extends Controller
         $client = Customer::where('id',$id)->first();
         $types = DocumentType::all();
 
-        $user = User::where('userTypeID',$client->id)->first();
+        $user = User::where('id',$client->ownerID)->first();
 
         $receipts = Receipt::where('client_id',$client->id)->get();
 
@@ -699,19 +716,17 @@ class ClientController extends Controller
 
     public function impersonateClient($id)
     {
-        $idUser=User::where('userTypeID',$id)
-        ->where('userType',4)
+        $idUser=Customer::where('id',$id)
         ->select([
-            'id',
+            'ownerID',
         ])
         ->first();
-        echo "<script>console.log('$idUser->id');</script>";
         $user = Auth::user();
         Session::put('impersonated',$user->id);
         Auth::logout();
-        Auth::loginUsingId($idUser->id);
-        //return redirect()->back();
-        return redirect('/home');
+        Auth::loginUsingId($idUser->ownerID);
+        return redirect()->back();
+        //return redirect('/home');
     }
 
     public function leaveUser()
