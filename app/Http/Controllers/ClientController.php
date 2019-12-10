@@ -18,6 +18,7 @@ use App\Cities;
 use App\ServiceType;
 use App\ServiceTypeClient;
 use App\UserType;
+use App\PostalCodes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -254,12 +255,12 @@ class ClientController extends Controller
             $user->password = bcrypt($inputs['password']);
             $user->save();
             $establisment->ownerID=$user->id;
+            //$establisment->email = $user->email;
         }else{
             $idEmail = User::where('email',$inputs['registedMail'])
             ->select([
                 'id',
             ])->first();
-            echo "<script>console.log('-aqui1---+$idEmail->id');</script>";
             $establisment->ownerID=$idEmail->id;
         }
         //Registar o establecimento
@@ -282,13 +283,7 @@ class ClientController extends Controller
         }
 
         //email
-        $establisment->email = $inputs['email'];
-        //invoiceEmail VerifyEmail
-        if($inputs['VerifyEmail']=="nao"){
-            $establisment->receipt_email = $inputs['invoiceEmail'];
-        }else{
-            $establisment->receipt_email = $establisment->email;
-        }
+        $establisment->receipt_email = $inputs['invoiceEmail'];
         
 
         $establisment->nif = $inputs['nif'];
@@ -776,6 +771,15 @@ class ClientController extends Controller
 
         return ['success' => 'Password alterada com sucesso.'];
 
+    }
+
+    public function getParishbyPostalCode($postalCode){
+        $parish = PostalCodes::where('postal_code',$postalCode)
+        ->select([
+            'name',
+        ])->first();
+
+        return $parish;
     }
 
     public function filterByCities(Request $request)

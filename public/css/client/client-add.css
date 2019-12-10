@@ -24,4 +24,20 @@
   font-size: 150%;
   color:green;
 }
-
+.labelParish{
+  width: 60%;
+  height: 35px;
+  float: right;
+  vertical-align: middle;
+  margin-right: 0%;
+  margin-top: -11%;
+  padding:7px;
+  text-align: center;
+  border-style: ridge;
+}
+#invoicePostalCode{
+  width: 40%;
+}
+#postal_code{
+  width: 40%;
+}

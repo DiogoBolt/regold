@@ -84,6 +84,7 @@ Route::group(['middleware' => ['backoffice']], function () {
     //pedro                             
     Route::get('/users/getCities/{id}','ClientController@getCitiesByDistrict');
     Route::get('/users/verifyEmailExist/{email}','ClientController@verifyEmailExist');
+    Route::get('/users/getParish/{postalCode}','ClientController@getParishbyPostalCode');
 
 
     Route::get('/groups', 'ClientController@groups');

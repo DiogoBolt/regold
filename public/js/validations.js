@@ -23,69 +23,139 @@ function validateNIF(value) {
 }
 
 function validateForm(){
-    alert("entrei aqui");
+
+  
    var radios = document.getElementsByName('verifyHaveRegister');
+   
    if(radios[0].checked){
         console.log(radios[0].value);
-    }else{
-        //verificar email
-        if(document.getElementById('ownerName').value == ""){
-            console.log("nome vazio");
-            document.getElementById('ownerName').style.border="1px solid #ff0000";
-            return false;
-        }else if(document.getElementById('password').value==""){
-            console.log("pass vazio");
-            document.getElementById('password').style.border="1px solid #ff0000";
-            return false;
-        }else if(verifyEmailExist(document.getElementById('loginMail').value) || document.getElementById('loginMail').value==""){
-            document.getElementById('loginMail').style.border="1px solid #ff0000";
-            console.log("email existe o vazio");
+        if(document.getElementById('registedMail').value==""){
+            document.getElementById('registedMail').style.border="1px solid #ff0000";
             return false;
         }
-
+    }else{
+        //verificar email
+        if(!verifyEmailExist(document.getElementById('loginMail').value)){
+            document.getElementById('loginMail').style.border="1px solid #ff0000";
+            console.log("email existe ou vazio");
+            return false;
+        }
+    }
+    if(document.getElementById('serviceType1').checked == true){
+        return true;
+    }else if(document.getElementById('serviceType3').checked == true){
+        return true;
+    }else if(document.getElementById('serviceType4').checked == true){
+        return true;
+    }else{
+        document.getElementById('serviceTypesDiv').style.border="1px solid #ff0000"
+        return false;
     }
 }
 //listarcidades en função do distrito
-function listCities(cityObj){
-    if(cityObj.id == "selectDistrict"){
-        var selectCity = document.getElementById("selectCity");
-        while (selectCity.firstChild) {
-            selectCity.removeChild(selectCity.firstChild);
-        } 
+
+    function listCities(cityObj){
+        //aqui chamar pedro
+        if(cityObj.id == "selectDistrict"){
+            var selectCity = document.getElementById("selectCity");
+            while (selectCity.firstChild) {
+                selectCity.removeChild(selectCity.firstChild);
+            } 
+        }else{
+            var selectCity = document.getElementById("selectCityInvoice");
+            while (selectCity.firstChild) {
+                selectCity.removeChild(selectCity.firstChild);
+            } 
+        }
+                                    
+        
+        var id=cityObj.value; 
+        
+        $.ajax({
+            type:'GET',
+            url:'/users/getCities/'+id,
+        }).done(function(data){
+            var optionCityd =  document.createElement("option");
+            optionCityd.text="Selecione a Cidade";
+            optionCityd.value="";
+            optionCityd.selected=true;
+            optionCityd.disabled=true;
+            selectCity.appendChild(optionCityd);
+            for(var i=0; i<data.length;i++){
+                var optionCity =  document.createElement("option");
+                optionCity.value=data[i].id; 
+                optionCity.text=data[i].name;
+                optionCity.disable=true;
+                selectCity.appendChild(optionCity);
+            }
+        });
+    }
+
+
+function getParishName(postalCode,id){
+    if(postalCode.length==8){
+        $.ajax({
+            type:'GET',
+            url:'/users/getParish/'+postalCode,
+        }).done(function(data) {
+            console.log("---"+data.name+"---");
+            if(data.name!=undefined){
+                if(id=="postal_code"){
+                //console.log(postalCode.id);
+                console.log("--- "+data.name);
+                document.getElementsByClassName("labelParish")[0].innerHTML=data.name;
+                document.getElementsByClassName("labelParish")[0].style.display="block";
+                 }else{
+                     alert("aqui");
+                    document.getElementsByClassName("labelParish")[1].innerHTML=data.name;
+                    document.getElementsByClassName("labelParish")[1].style.display="block";
+                }
+
+            }else{
+                console.log("sem resultado");
+            }
+        });
     }else{
-        var selectCity = document.getElementById("selectCityInvoice");
-        while (selectCity.firstChild) {
-            selectCity.removeChild(selectCity.firstChild);
-        } 
+        if(id=="postal_code"){
+            document.getElementsByClassName("labelParish")[0].innerHTML="";
+        }else{         
+            document.getElementsByClassName("labelParish")[1].innerHTML="";
+        }
     }
     
-    var optionCity =  document.createElement("option");
-    var id=cityObj.value; 
-    optionCity.text="Selecione a Cidade";
-    optionCity.disable=true;
-    selectCity.appendChild(optionCity);
-    $.ajax({
-        type:'GET',
-        url:'/users/verifyEmailExist/'+id,
-    }).done(function(data){
-        for(var i=0; i<data.length;i++){
-            var optionCity =  document.createElement("option");
-            optionCity.value=data[i].id; 
-            optionCity.text=data[i].name;
-            optionCity.disable=true;
-            selectCity.appendChild(optionCity);
-        }
-    });
-}
 
+}
+//aparecer e desaparecer a inserção da morada
+function showAddressInvoice(){ 
+    document.getElementById("AddressInvoice").style.display="block";
+    document.getElementById('selectDistrictInvoice').required=true;
+    document.getElementById('selectCityInvoice').required=true;
+    document.getElementById('invoicePostalCode').required=true;
+    document.getElementById('invoiceAddress').required=true;
+}
+function notshowAddressInvoice(){
+    document.getElementById("AddressInvoice").style.display="none";
+    document.getElementById('selectDistrictInvoice').required=false;
+    document.getElementById('selectCityInvoice').required=false;
+    document.getElementById('invoicePostalCode').required=false
+    document.getElementById('invoiceAddress').required=false;
+}          
 
 function ownerRegister(myRadio){
     if(myRadio.value=='sim'){
         document.getElementById("ownerRegister").style.display="none";
         document.getElementById("registeredOwner").style.display="block";
+        document.getElementById('ownerName').required=false;
+        document.getElementById('loginMail').required=false;
+        document.getElementById('password').required=false;
+        document.getElementById('registedMail').required=true;
     }else{
         document.getElementById("ownerRegister").style.display="block";
         document.getElementById("registeredOwner").style.display="none";
+        document.getElementById('ownerName').required=true;
+        document.getElementById('loginMail').required=true;
+        document.getElementById('password').required=true;
+        document.getElementById('registedMail').required=false;
     }
 
 }
@@ -105,17 +175,28 @@ function verifyEmailExist(email){
             }
         }
     });
+    console.log("Email: "+aux);
     return aux;
 
 
 }
 
+function IsEmail(email){
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+    
+}
 
 function validateEmailExist(email){
-    var email=email.value;
-    if(!verifyEmailExist(email)){
-        document.getElementById("registedMail").style.border="2px solid #00ff00";
-        return true;
+    var eMail=email.value;
+    if(IsEmail(eMail)){
+        if(!verifyEmailExist(eMail)){
+            document.getElementById("registedMail").style.border="2px solid #00ff00";
+            return true;
+        }else{
+            document.getElementById("registedMail").style.border="1px solid #ff0000";
+            return false;
+        }
     }else{
         document.getElementById("registedMail").style.border="1px solid #ff0000";
         return false;
