@@ -306,13 +306,6 @@ class ClientController extends Controller
             $serviceTypeClient->save();
         }
 
-        if (array_key_exists('serviceType2', $inputs)) {
-            $serviceTypeClient = new ServiceTypeClient;
-            $serviceTypeClient->id_client= $establisment->id;
-            $serviceTypeClient->id_service_type=$inputs['serviceType2'];
-            $serviceTypeClient->save();
-        }
-
         if (array_key_exists('serviceType3', $inputs)) {
             $serviceTypeClient = new ServiceTypeClient;
             $serviceTypeClient->id_client= $establisment->id;
@@ -366,8 +359,24 @@ class ClientController extends Controller
     {
         $client = Customer::where('id',$id)->first();
         $salesman = Salesman::all();
+        $districts = Districts::all();
+        $serviceTypes = ServiceType::all();
 
-        return view('client.edit',compact('client','salesman'));
+        $auxDistrict=$this->getCitiesById($client->city)->id_district;
+        $auxDristrictInvoice= $this->getCitiesById($client->invoice_city)->id_district;
+        
+        $client->district = $auxDistrict;
+        $client->invoice_district = $auxDristrictInvoice;
+        
+        $client->client_type = $this->getServiceTypeByUserID($id);
+        $client->parish =$this->getParishNameByPostalCode($client->postal_code);
+        $client->parishInvoice =$this->getParishNameByPostalCode($client->invoice_postal_code);
+        $client->allCities=$this->getAllCitiesByDistrict($auxDistrict);
+        $client->allCitiesInvoice=$this->getAllCitiesByDistrict($auxDristrictInvoice);
+
+        echo "<script>console.log(' $client');</script>";
+
+        return view('client.edit',compact('client','salesman','districts','serviceTypes'));
     }
 
     public function editCustomerPost(Request $request)
@@ -378,28 +387,57 @@ class ClientController extends Controller
         $user = User::where('client_id',$client->id)->first();
 
         $client->name = $inputs['name'];
-        $client->comercial_name = $inputs['comercial_name'];
-        $client->address = $inputs['address'];
-        $client->invoice_address = $inputs['invoice_address'];
+        $client->comercial_name = $inputs['invoiceName'];
+
+        //morada de entrega
+        $client->address = $inputs['deliveryAddress'];
         $client->city = $inputs['city'];
         $client->postal_code = $inputs['postal_code'];
+
+        //morada de faturacao
+        $client->invoice_address = $inputs['deliveryAddress'];
+        $client->invoice_city = $inputs['cityInvoice'];
+        $client->invoice_postal_code = $inputs['invoicePostalCode'];
+
         $client->nif = $inputs['nif'];
-        $client->email = $inputs['email'];
+        //$client->email = $inputs['email'];
         $client->activity = $inputs['activity'];
         $client->salesman = $inputs['salesman'];
         $client->telephone = $inputs['telephone'];
         $client->payment_method = $inputs['payment_method'];
-        $client->client_type = $inputs['client_type'];
-        $client->receipt_email = $inputs['receipt_email'];
+        //$client->client_type = $inputs['client_type'];
+        $client->receipt_email = $inputs['invoiceEmail'];
         $client->nib = $inputs['nib'];
         $client->contract_value = $inputs['value'];
         $client->regoldiID = $inputs['regoldiID'];
         $client->transport_note = $inputs['transport_note'];
+        $type = ServiceTypeClient::where('id_client', $id)->delete();
+           //melhorar isto
+           if (array_key_exists('serviceType1', $inputs)) {
+            $serviceTypeClient = new ServiceTypeClient;
+            $serviceTypeClient->id_client= $establisment->id;
+            $serviceTypeClient->id_service_type=$inputs['serviceType1'];
+            $serviceTypeClient->save();
+        }
+
+        if (array_key_exists('serviceType3', $inputs)) {
+            $serviceTypeClient = new ServiceTypeClient;
+            $serviceTypeClient->id_client= $establisment->id;
+            $serviceTypeClient->id_service_type=$inputs['serviceType3'];
+            $serviceTypeClient->save();
+        }
+
+        if (array_key_exists('serviceType4', $inputs)) {
+            $serviceTypeClient = new ServiceTypeClient;
+            $serviceTypeClient->id_client= $establisment->id;
+            $serviceTypeClient->id_service_type=$inputs['serviceType4'];
+            $serviceTypeClient->save();
+        }
         $options = [
             'cost' => 10
         ];
-        $user->password = password_hash($inputs['password'], PASSWORD_BCRYPT, $options);
-        $user->save();
+        //$user->password = password_hash($inputs['password'], PASSWORD_BCRYPT, $options);
+        //$user->save();
         $client->save();
         return redirect('/clients/'.$inputs['id']);
     }
@@ -415,7 +453,7 @@ class ClientController extends Controller
             'ownerID',
         ])->first();
         $client = Customer::where('id', $request->id)->first()->delete();
-        $aux= Customer::where('ownerID', $auxIDOwner->ownerID)->count();
+        $aux= Customer::where('ownerID', $request->ownerID)->count();
         if($aux==1){
             $user_associated = User::where('id',$auxIDOwner->ownerID)->first()->delete();
         }
@@ -423,17 +461,101 @@ class ClientController extends Controller
     }
 
     public function showCustomer($id)
-    {
-        echo "<script>console.log('$id');</script>";   
+    { 
         $client = Customer::where('id',$id)->first();
-        $types = DocumentType::all();
+        //morada 
+        $auxCity = $this->getCitiesById($client->city);
+        $client->city = $auxCity->name;
+        $client->district = $this->getDistrictsById($auxCity->id_district);
 
+        $auxCityInvoice = $this->getCitiesById($client->invoice_city);
+        $client->invoice_city = $auxCity->name;
+        $client->invoice_district = $this->getDistrictsById($auxCity->id_district);
+
+        $client->salesman=$this->getSalesmanNameById($client->salesman);
+        $client->client_type=$this->getServiceTypeNameByID($this->getServiceTypeByUserID($id));
+
+        echo "<script>console.log('$client');</script>";
+
+        $types = DocumentType::all();
+        echo "<script>console.log('$client->ownerID');</script>";
         $user = User::where('id',$client->ownerID)->first();
 
         $receipts = Receipt::where('client_id',$client->id)->get();
 
         return view('client.show',compact('client','receipts','types','user'));
     }
+
+    //retornar o nome da cidade pelo id
+    private function getCitiesById($id){
+        $citiesName= Cities::where('id',$id)
+        ->first();
+        return $citiesName;
+    }
+
+    //retorna o nome do distrito pelo id
+    private function getDistrictsById($id){
+        $districtsName=Districts::where('id',$id)
+        ->select([
+            'name',
+        ])->first();
+        return $districtsName->name;
+    }
+
+    //retornar o nome do vendedor pelo id
+    private function getSalesmanNameById($id){
+        $salesmanName = Salesman::where('id',$id)
+        ->select([
+            'name'
+        ])->first();
+        return $salesmanName->name;
+    }
+
+    //retorna o email do user pelo id
+    private function getEmailUserById($id){
+    }
+
+    //retornar o tipo de serviço por client
+    private function getServiceTypeByUserID($id){
+        $auxServiceClientType = ServiceTypeClient::where('id_client',$id)
+        ->select([
+            'id_service_type'
+        ])
+        ->get();
+        return $auxServiceClientType;
+    }
+    //retorna o nome do tipo de serviço
+    private function getServiceTypeNameByID($ids){
+        $ServiceTypeNames = array();
+        for($i=0; $i<count($ids); $i++){
+            $auxId=$ids[$i]->id_service_type;
+            $aux = ServiceType::where('id',$auxId)
+            ->select([
+                'name'
+            ])
+            ->first();
+            $aux123=$aux->name;
+            echo "<script>console.log('$aux123');</script>";
+
+            $name=$aux->name;
+            array_push($ServiceTypeNames,$name);
+        }
+        return $ServiceTypeNames;
+    }
+
+    //retorna o nome da freguesia pelo codigo postal
+    private function getParishNameByPostalCode($postalCode){
+        $parishName=PostalCodes::where('postal_code',$postalCode)->first();
+        return $parishName->name;
+    }
+
+    //retornar todas as cidades de um distrito
+    private function getAllCitiesByDistrict($id){
+        $cities=Cities::where('id_district',$id)->get();
+        return $cities;
+    }
+
+
 
     public function addReceipt(Request $request)
     {

@@ -23,8 +23,6 @@ function validateNIF(value) {
 }
 
 function validateForm(){
-
-  
    var radios = document.getElementsByName('verifyHaveRegister');
    
    if(radios[0].checked){
@@ -32,6 +30,8 @@ function validateForm(){
         if(document.getElementById('registedMail').value==""){
             document.getElementById('registedMail').style.border="1px solid #ff0000";
             return false;
+        }else{
+            document.getElementById('registedMail').style.border="none";
         }
     }else{
         //verificar email
@@ -39,13 +39,28 @@ function validateForm(){
             document.getElementById('loginMail').style.border="1px solid #ff0000";
             console.log("email existe ou vazio");
             return false;
+        }else{
+            document.getElementById('loginMail').style.border="none";
         }
     }
+
+    if(!validateNIF(document.getElementById('nif').value)){
+        document.getElementById('nif').style.border="1px solid #ff0000";
+        return false;
+    }else{
+        document.getElementById('nif').style.border="none";
+    }
+
+
     if(document.getElementById('serviceType1').checked == true){
+        document.getElementById('serviceTypesDiv').style.border="none";
         return true;
+
     }else if(document.getElementById('serviceType3').checked == true){
+        document.getElementById('serviceTypesDiv').style.border="none";
         return true;
     }else if(document.getElementById('serviceType4').checked == true){
+        document.getElementById('serviceTypesDiv').style.border="none";
         return true;
     }else{
         document.getElementById('serviceTypesDiv').style.border="1px solid #ff0000"

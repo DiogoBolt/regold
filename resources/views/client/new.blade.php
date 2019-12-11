@@ -22,9 +22,9 @@
                         <img class="img-responsive add-img" src="/img/navbar/logoindexcolor.png"/>
                     </div>
                     <form action="/clients/add" method="post" onsubmit="return validateForm()" enctype="multipart/form-data">
-                    {{ csrf_field() }}
-                    <div id="ownerRegister" style="display:block">
-                        <label class="add-label">Dados do Proprietário</label>
+                        {{ csrf_field() }}
+                        <div id="ownerRegister" style="display:block">
+                            <label class="add-label">Dados do Proprietário</label>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     Nome:<input class="form-control" placeholder="Nome" id='ownerName'  name="ownerName" required>
@@ -42,14 +42,16 @@
                                     Password: <input class="form-control" type="password" placeholder="*********" id="password" name="password" required>
                                 </div>
                             </div>  
-                    </div>
-                    <div  style="display:none" id="registeredOwner">
-                    <label class="add-label">Dados do Proprietário</label>
-                        <div class="form-group">
-                           Insira o E-Mail da conta Registada: 
-                           <input class="form-control" type="email" placeholder="Insira o E-mail" id="registedMail" name="registedMail" oninput="validateEmailExist(this)" >
                         </div>
-                    </div>    
+
+                        <div  style="display:none" id="registeredOwner">
+                            <label class="add-label">Dados do Proprietário</label>
+                            <div class="form-group">
+                            Insira o E-Mail da conta Registada: 
+                            <input class="form-control" type="email" placeholder="Insira o E-mail" id="registedMail" name="registedMail" oninput="validateEmailExist(this)" >
+                            </div>
+                        </div>  
+                          
                         <div class="form-group">
                             <label>Proprietário já com registo!
                                 <input type="radio" onclick="ownerRegister(this)" name="verifyHaveRegister" value="sim">Sim
@@ -57,15 +59,14 @@
                             </label> 
                         </div> 
                         <div>
-                        <label class="add-label">Dados do Establecimento {{Auth::user()->userTypeID}}</label>
+                        <label class="add-label">Dados do Establecimento</label>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 Vendedor: <select class="form-control" name="salesman" required>
                                 <option disabled selected value="">Selecione o Vendedor</option>
                                     @foreach($salesman as $sales)
-                                        <!--por aqui ...-->
-                                        @if( 20 == 20)
+                                        @if( $sales->id == Auth::user()->userTypeID )
                                           <option selected value="{{$sales->id}}">{{$sales->name}}</option>
                                         @else
                                             <option value="{{$sales->id}}">{{$sales->name}}</option>
@@ -73,6 +74,7 @@
                                     @endforeach
                                 </select>
                             </div>
+
                             <div class="form-group">
                                 Nome Comercial:<input class="form-control" placeholder="Nome Comercial" name="name" required>
                             </div>
@@ -82,9 +84,11 @@
                                     Nome de Faturação:<input class="form-control" placeholder="Nome de Faturação" name="invoiceName" required>
                                 </div>
                             </div>
+
                             <div class="form-group">
-                                NIF: <input id="nif" class="form-control" type="number" placeholder="Insira o NIF" name="nif" required>
+                                NIF: <input id="nif" class="form-control" type="number" pattern="[0-9]{9}" placeholder="Insira o NIF" p name="nif" required>
                             </div>
+
                             <div class="form-group">
                                 Morada Entrega
                                 <br/>
@@ -116,6 +120,7 @@
                                         </label> 
                                 </div>
                             </div>
+
                             <div id="AddressInvoice" class="form-group"  style="display:none">
                                 Morada de Faturação
                                 <br/>
@@ -142,30 +147,36 @@
                                     Rua e número da porta<input class="form-control" placeholder="Morada de Entrega" name="invoiceAddress" id="invoiceAddress">
                                 </div>
                             </div>
-                             <div id="EmailInvoice" class="form-group">
+
+                            <div id="EmailInvoice" class="form-group">
                                 Email Faturação: <input class="form-control"  placeholder="Insira o E-mail de Faturação" type="email" name="invoiceEmail" required >
                             </div>
+
                             <div class="form-group">
                                 Telefone: <input class="form-control" placeholder="9********/2********" type="tel" name="telephone" required>
                             </div>
+
                         </div>
+
                         <div class="col-sm-6">
-                        <div class="form-group">
-                            Actividade do Cliente: <select class="form-control" name="activity" required>        
-                                <option disabled selected value="">Selecione a Atividade/Tipo de Cliente</option>
-                                <option value="Cafe / Snack Bar">Cafe / Snack Bar</option>
-                                <option value="Salão de Chá">Salão de Chá</option>
-                                <option value="Supermercado">Supermercado</option>
-                                <option value="Peixaria">Peixaria</option>
-                                <option value="Talho">Talho</option>
-                                <option value="Restaurante">Restaurante</option>
-                                <option value="Industria">Industria</option>
-                                <option value="Hotel">Hotel</option>
-                                <option value="Outro">Outro</option>
-                                <option value="Posto Combustivel">Posto Combustivel</option>
-                                <option value="Padaria / Pastelaria">Padaria / Pastelaria</option>
-                            </select>
-                        </div>
+
+                            <div class="form-group">
+                                Actividade do Cliente: <select class="form-control" name="activity" required>        
+                                    <option disabled selected value="">Selecione a Atividade/Tipo de Cliente</option>
+                                    <option value="Cafe / Snack Bar">Cafe / Snack Bar</option>
+                                    <option value="Salão de Chá">Salão de Chá</option>
+                                    <option value="Supermercado">Supermercado</option>
+                                    <option value="Peixaria">Peixaria</option>
+                                    <option value="Talho">Talho</option>
+                                    <option value="Restaurante">Restaurante</option>
+                                    <option value="Industria">Industria</option>
+                                    <option value="Hotel">Hotel</option>
+                                    <option value="Outro">Outro</option>
+                                    <option value="Posto Combustivel">Posto Combustivel</option>
+                                    <option value="Padaria / Pastelaria">Padaria / Pastelaria</option>
+                                </select>
+                            </div>
+                            
                             <div class="form-group" id="clientType">
                                 Tipo Cliente:
                                 <br/>
@@ -174,8 +185,8 @@
                                         <input type="checkbox" id="serviceType{{$serviceType->id}}" name="serviceType{{$serviceType->id}}" value="{{$serviceType->id}}">{{$serviceType->name}}
                                         <br/> 
                                     @endforeach
-</div>
                             </div>
+
                             <div class="form-group">
                                 NIB: <input type="number" placeholder="Insira o nib" class="form-control" type="number" name="nib">
                             </div>
@@ -183,16 +194,19 @@
                             <div class="form-group">
                                 Valor Contrato: <input type="number" step="0.01" placeholder="Valor de Contrato" min=0 class="form-control" name="value">
                             </div>
+
                             <div class="form-group">
                                 Método Pagamento:  <select class="form-control" name="payment_method" required>
                                         <option disabled selected value="">Selecione o Método de Pagamento</option>
                                         <option value="Debito Direto">Débito Direto</option>
                                         <option value="Contra Entrega">Contra Entrega</option>
+                                        <option value="Tranferência">Tranferência</option>
                                         <option value="Fatura Contra Fatura">Fatura Contra Fatura</option>
                                         <option value="30 dias">30 dias</option>
 
                                 </select>
                             </div>
+
                             <div class="form-group">
                                 Id Regoldi <input type="number" class="form-control" name="regoldiID" >
                             </div>
@@ -201,10 +215,10 @@
                                 Informações/notas sobre o cliente <textarea class="form-control" placeholder="Informações/notas sobre o cliente" name="transport_note"></textarea>
                             </div>
                         </div>
-                        <div>
-                            <button class="btn btn-add" >Criar</button>
-                        </div>
-                    </form>
+                    <div>
+                        <button class="btn btn-add" >Criar</button>
+                    </div>
+                </form>
                 </div>
             </div>
         </div>

@@ -24,25 +24,30 @@
                             <a href="/clients/edit/{{$client->id}}" style="color: #fff;">Editar</a>
                         </button>                    
                     </div>
+                    <br/>
                     <div class="col-sm-6">
-
                         <div class="form-group">
-                            <b>Morada:</b> {{$client->address}}
+                            <b>Designação Comercial:</b> {{$client->comercial_name}}
                         </div>
                         <div class="form-group">
-                            <b>Morada Faturação:</b> {{$client->invoice_address}}
+                            <b>Morada de Entrega</b>
+                            <br/>
+                            {{$client->district}}, {{$client->city}}, {{$client->address}}
+                            <br/>
+                            Codigo Postal: {{$client->postal_code}}
                         </div>
                         <div class="form-group">
-                            <b>Codigo Postal:</b> {{$client->postal_code}}
-                        </div>
-                        <div class="form-group">
-                            <b> Cidade:</b> {{$client->city}}
+                            <b>Morada Faturação</b>
+                            <br/>
+                            {{$client->invoice_district}}, {{$client->invoice_city}}, {{$client->address}}
+                            <br/>
+                            Codigo Postal: {{$client->invoice_postal_code}}
                         </div>
                         <div class="form-group">
                             <b> NIF:</b> {{$client->nif}}
                         </div>
                         <div class="form-group">
-                            <b> Email Contacto:</b> {{$client->email}}
+                            <b> Email Contacto:</b> {{$user->email}}
                         </div>
                         <div class="form-group">
                             <b>Actividade:</b> {{$client->activity}}
@@ -51,18 +56,19 @@
                             <b> Telefone:</b> {{$client->telephone}}
                         </div>
                         <div class="form-group">
-                            <b> Metodo Pagamento:</b> {{$client->payment_method}}
+                            <b> Método de Pagamento:</b> {{$client->payment_method}}
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <b>Designação Comercial:</b> {{$client->comercial_name}}
-                        </div>
-                        <div class="form-group">
                             <b> Vendedor:</b> {{$client->salesman}}
                         </div>
                         <div class="form-group">
-                            <b>Tipo Cliente:</b> {{$client->client_type}}
+                            <b>Tipo Cliente:</b> 
+                            @foreach($client->client_type as $type)
+                                {{$type}} 
+                            @endforeach
+                            
                         </div>
                         <div class="form-group">
                             <b> Email Faturação:</b> {{$client->receipt_email}}
