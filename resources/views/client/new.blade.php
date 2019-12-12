@@ -46,14 +46,14 @@
 
                         <div  style="display:none" id="registeredOwner">
                             <label class="add-label">Dados do Proprietário</label>
-                            <div class="form-group">
-                            Insira o E-Mail da conta Registada: 
-                            <input class="form-control" type="email" placeholder="Insira o E-mail" id="registedMail" name="registedMail" oninput="validateEmailExist(this)" >
+                                <div class="form-group">
+                                Insira o E-Mail da conta Registada: 
+                                <input class="form-control" type="email" placeholder="Insira o E-mail" id="registedMail" name="registedMail" oninput="validateEmailExist(this)" >
                             </div>
                         </div>  
                           
                         <div class="form-group">
-                            <label>Proprietário já com registo!
+                            <label class='add-label'>Proprietário já com registo!
                                 <input type="radio" onclick="ownerRegister(this)" name="verifyHaveRegister" value="sim">Sim
                                 <input type="radio" onclick="ownerRegister(this)" name="verifyHaveRegister" checked="checked" value="nao">Não
                             </label> 
@@ -171,9 +171,9 @@
                                     <option value="Restaurante">Restaurante</option>
                                     <option value="Industria">Industria</option>
                                     <option value="Hotel">Hotel</option>
-                                    <option value="Outro">Outro</option>
                                     <option value="Posto Combustivel">Posto Combustivel</option>
                                     <option value="Padaria / Pastelaria">Padaria / Pastelaria</option>
+                                    <option value="Outro">Outro</option>
                                 </select>
                             </div>
                             

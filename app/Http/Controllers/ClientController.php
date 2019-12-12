@@ -46,44 +46,141 @@ class ClientController extends Controller
     public function home()
     {
         $user = Auth::user();
-        $client = Customer::where('id',$user->client_id)->first();
+        
+        //dd(Session::get('establismentID'));
+       if(Session::has('establismentID')){
+            $auxClientId = Session::get('establismentID');
 
-        $receiptsHACCP = Receipt::from(Receipt::alias('r'))
-            ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
-            ->leftJoin(DocumentSuperType::alias('dst'), 'dt.superType', '=', 'dst.id')
-            ->where('dst.name','HACCP')
-            ->where('r.client_id',$user->client_id)
-            ->where('viewed',0)
-            ->count();
-        $receiptsCP = Receipt::from(Receipt::alias('r'))
-            ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
-            ->leftJoin(DocumentSuperType::alias('dst'), 'dt.superType', '=', 'dst.id')
-            ->where('dst.name','Controlopragas')
-            ->where('r.client_id',$user->client_id)
-            ->where('viewed',0)
-            ->count();
-        $receiptsCont = Receipt::from(Receipt::alias('r'))
-            ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
-            ->leftJoin(DocumentSuperType::alias('dst'), 'dt.superType', '=', 'dst.id')
-            ->where('dst.name','Contabilistico')
-            ->where('r.client_id',$user->client_id)
-            ->where('viewed',0)
-            ->count();
+            $clients = Customer::where('ownerID',$user->id)
+                ->select([
+                    'id',
+                    'name'
+                ])
+            ->get();
+            $receiptsHACCP = Receipt::from(Receipt::alias('r'))
+                ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
+                ->leftJoin(DocumentSuperType::alias('dst'), 'dt.superType', '=', 'dst.id')
+                ->where('dst.name','HACCP')
+                ->where('r.client_id',$auxClientId)
+                ->where('viewed',0)
+                ->count();
+            $receiptsCP = Receipt::from(Receipt::alias('r'))
+                ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
+                ->leftJoin(DocumentSuperType::alias('dst'), 'dt.superType', '=', 'dst.id')
+                ->where('dst.name','Controlopragas')
+                ->where('r.client_id',$auxClientId)
+                ->where('viewed',0)
+                ->count();
+            $receiptsCont = Receipt::from(Receipt::alias('r'))
+                ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
+                ->leftJoin(DocumentSuperType::alias('dst'), 'dt.superType', '=', 'dst.id')
+                ->where('dst.name','Contabilistico')
+                ->where('r.client_id',$auxClientId)
+                ->where('viewed',0)
+                ->count();
+                
+                $services = ServiceTypeClient::where('id_client',$auxClientId)
+                ->select([
+                    'id_service_type',
+                ])
+                ->get();
 
-        return view('client.home',compact('receiptsCont','receiptsCP','receiptsHACCP'));
+               // Session::put('establismentID',$clients[0]->id);
+                
+                return view('client.home',compact('clients','services','receiptsCont','receiptsCP','receiptsHACCP'));
+        
+        }else if(Session::has('clientImpersonatedId')){
+            $auxClientId = Session::get('clientImpersonatedId');
+
+            $receiptsHACCP = Receipt::from(Receipt::alias('r'))
+                ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
+                ->leftJoin(DocumentSuperType::alias('dst'), 'dt.superType', '=', 'dst.id')
+                ->where('dst.name','HACCP')
+                ->where('r.client_id',$auxClientId)
+                ->where('viewed',0)
+                ->count();
+            $receiptsCP = Receipt::from(Receipt::alias('r'))
+                ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
+                ->leftJoin(DocumentSuperType::alias('dst'), 'dt.superType', '=', 'dst.id')
+                ->where('dst.name','Controlopragas')
+                ->where('r.client_id',$auxClientId)
+                ->where('viewed',0)
+                ->count();
+            $receiptsCont = Receipt::from(Receipt::alias('r'))
+                ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
+                ->leftJoin(DocumentSuperType::alias('dst'), 'dt.superType', '=', 'dst.id')
+                ->where('dst.name','Contabilistico')
+                ->where('r.client_id',$auxClientId)
+                ->where('viewed',0)
+                ->count();
+
+                $services = ServiceTypeClient::where('id_client',$auxClientId)
+                ->select([
+                    'id_service_type',
+                ])
+                ->get();
+
+                Session::put('establismentID',$auxClientId);
+
+            return view('client.home',compact('services','receiptsCont','receiptsCP','receiptsHACCP'));
+
+        }else {
+            $clients = Customer::where('ownerID',$user->id)
+            ->select([
+                'id',
+                'name'
+            ])
+            ->get();
+
+            $receiptsHACCP = Receipt::from(Receipt::alias('r'))
+                ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
+                ->leftJoin(DocumentSuperType::alias('dst'), 'dt.superType', '=', 'dst.id')
+                ->where('dst.name','HACCP')
+                ->where('r.client_id',$clients[0]->id)
+                ->where('viewed',0)
+                ->count();
+            $receiptsCP = Receipt::from(Receipt::alias('r'))
+                ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
+                ->leftJoin(DocumentSuperType::alias('dst'), 'dt.superType', '=', 'dst.id')
+                ->where('dst.name','Controlopragas')
+                ->where('r.client_id',$clients[0]->id)
+                ->where('viewed',0)
+                ->count();
+            $receiptsCont = Receipt::from(Receipt::alias('r'))
+                ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
+                ->leftJoin(DocumentSuperType::alias('dst'), 'dt.superType', '=', 'dst.id')
+                ->where('dst.name','Contabilistico')
+                ->where('r.client_id',$clients[0]->id)
+                ->where('viewed',0)
+                ->count();
+                
+                $services = ServiceTypeClient::where('id_client',$clients[0]->id)
+                ->select([
+                    'id_service_type',
+                ])
+                ->get();
+
+                Session::put('establismentID',$clients[0]->id);
+
+            return view('client.home',compact('clients','services','receiptsCont','receiptsCP','receiptsHACCP'));
+        }
     }
 
     public function unreadMessages()
     {
         $user = Auth::user();
+        $auxClientId = Session::get('establismentID');
 
-        $client = Customer::where('id',$user->client_id)->first();
+        $client = Customer::where('id',$auxClientId)->first();
 
         $messages = Message::where('receiver_id',$user->id)->where('viewed',0)->count();
 
 
         return $messages;
     }
+
+
+    //obter elementos pelo id
 
     public function index(Request $request)
     {
@@ -384,7 +481,7 @@ class ClientController extends Controller
         $inputs = $request->all();
 
         $client = Customer::where('id',$inputs['id'])->first();
-        $user = User::where('client_id',$client->id)->first();
+        $user = User::where('id',$client->ownerID)->first();
 
         $client->name = $inputs['name'];
         $client->comercial_name = $inputs['invoiceName'];
@@ -411,33 +508,35 @@ class ClientController extends Controller
         $client->contract_value = $inputs['value'];
         $client->regoldiID = $inputs['regoldiID'];
         $client->transport_note = $inputs['transport_note'];
-        $type = ServiceTypeClient::where('id_client', $id)->delete();
+        $type = ServiceTypeClient::where('id_client', $inputs['id'])->delete();
            //melhorar isto
            if (array_key_exists('serviceType1', $inputs)) {
             $serviceTypeClient = new ServiceTypeClient;
-            $serviceTypeClient->id_client= $establisment->id;
+            $serviceTypeClient->id_client= $client->id;
             $serviceTypeClient->id_service_type=$inputs['serviceType1'];
             $serviceTypeClient->save();
         }
 
         if (array_key_exists('serviceType3', $inputs)) {
             $serviceTypeClient = new ServiceTypeClient;
-            $serviceTypeClient->id_client= $establisment->id;
+            $serviceTypeClient->id_client= $client->id;
             $serviceTypeClient->id_service_type=$inputs['serviceType3'];
             $serviceTypeClient->save();
         }
 
         if (array_key_exists('serviceType4', $inputs)) {
             $serviceTypeClient = new ServiceTypeClient;
-            $serviceTypeClient->id_client= $establisment->id;
+            $serviceTypeClient->id_client= $client->id;
             $serviceTypeClient->id_service_type=$inputs['serviceType4'];
             $serviceTypeClient->save();
         }
         $options = [
             'cost' => 10
         ];
-        //$user->password = password_hash($inputs['password'], PASSWORD_BCRYPT, $options);
-        //$user->save();
+        if($inputs['password']!=""){
+            $user->password = password_hash($inputs['password'], PASSWORD_BCRYPT, $options);
+            $user->save();
+        }
         $client->save();
         return redirect('/clients/'.$inputs['id']);
     }
@@ -524,6 +623,7 @@ class ClientController extends Controller
         ->get();
         return $auxServiceClientType;
     }
+
     //retorna o nome do tipo de serviço
     private function getServiceTypeNameByID($ids){
         $ServiceTypeNames = array();
@@ -554,8 +654,6 @@ class ClientController extends Controller
         $cities=Cities::where('id_district',$id)->get();
         return $cities;
     }
-
-
 
     public function addReceipt(Request $request)
     {
@@ -840,16 +938,18 @@ class ClientController extends Controller
         ->first();
         $user = Auth::user();
         Session::put('impersonated',$user->id);
+        Session::put('clientImpersonatedId',$id);
         Auth::logout();
         Auth::loginUsingId($idUser->ownerID);
-        return redirect()->back();
-        //return redirect('/home');
+        //return redirect()->back();
+        return redirect('/home');
     }
 
     public function leaveUser()
     {
         $userId = Session::get('impersonated');
         Session::forget('impersonated');
+        Session::forget('clientImpersonatedId');
         Auth::logout();
         Auth::loginUsingId($userId);
         return redirect('/');
@@ -908,5 +1008,17 @@ class ClientController extends Controller
     {
         dd($request->all());
     }
+
+    //funcão para guardar o id da loja numa var de sessão
+    public function addSessionVar($id){
+        Session::put('establismentID',$id);
+        
+    }
+
+    //função para apagar uma variavel de sessão
+    public function deleteSessionVar($id){
+        Session::forget('establismentID');
+    }
+
 
 }

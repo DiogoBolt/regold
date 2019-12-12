@@ -60,7 +60,7 @@
                                         <td><a href="/clients/{{$client->id}}">{{$client->regoldiID}}</a></td>
                                         <td><a href="/clients/{{$client->id}}">{{$client->comercial_name}}</a></td>
                                         <td><a href="/unpaidOrders/{{$client->id}}">{{$client->current}}</a></td>
-                                        <td><a href="/clients/impersonate/{{$client->userid}}">Entrar</a></td>
+                                        <td><a href="/clients/impersonate/{{$client->id}}">Entrar</a></td>
                                         <td>
                                             <button class="btn-del" data-toggle="modal" data-target="#deleteModal"
                                                     data-item="{{ $client }}">Eliminar

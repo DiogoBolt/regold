@@ -6,38 +6,107 @@
 @endsection
 
 @section('content')
-<div class="container index-box">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <div class="box">
-        <a title="Produtos" href="/frontoffice/categories"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon6.png"></a>
-        <div class="desc">PRODUTOS</div>
-    </div>
+<script src="{{ URL::asset('/js/validations.js') }}"></script>
+    @if(!Session::has('impersonated'))
+        @if(count($clients)>1)
+            <div id=divSelectLoja>
+                <div class="selectBox">
+                    <select id="selectEstablishment" onchange="myFunction()">
+                        @foreach($clients as $client)
+                            @if(Session::get('establismentID')==$client->id)
+                                <option selected value="{{$client->id}}">{{$client->name}}</option>
+                            @else
+                                <option value="{{$client->id}}">{{$client->name}}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        @endif
+    @endif
+    <section >
+        <h1>Regoldi</h1>
+        <div class="container index-box">
+            <div class="box">
+                <a title="Produtos" href="/frontoffice/categories"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon6.png"></a>
+                <div class="desc">PRODUTOS</div>
+            </div>
+            <div class="box">
+                <a title="Documentos HACCP" href="/frontoffice/documents/HACCP"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon2.png"></a>
+                <div class="desc">DOCUMENTOS HACCP</div>
+                @if($receiptsHACCP) <span class="notification">{{$receiptsHACCP}}</span> @endif
+            </div>
 
-    <div class="box">
-        <a title="Documentos HACCP" href="/frontoffice/documents/HACCP"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon2.png"></a>
-        <div class="desc">DOCUMENTOS HACCP</div>
-        @if($receiptsHACCP) <span class="notification">{{$receiptsHACCP}}</span> @endif
-    </div>
+            <div class="box">
+                <a title="Controlo de Pragas" href="/frontoffice/documents/Controlopragas"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon3.png"></a>
+                <div class="desc">CONTROLO DE PRAGAS</div>
+                @if($receiptsCP) <span class="notification">{{$receiptsCP}}</span> @endif
+            </div>
 
-    <div class="box">
-        <a title="Controlo de Pragas" href="/frontoffice/documents/Controlopragas"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon3.png"></a>
-        <div class="desc">CONTROLO DE PRAGAS</div>
-        @if($receiptsCP) <span class="notification">{{$receiptsCP}}</span> @endif
-    </div>
+            <div class="box">
+                <a title="Documentos Contabilisticos" href="/frontoffice/documents/Contabilistico"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon7.png"></a>
+                <div class="desc">DOCUMENTOS CONTABILISTICOS</div>
+                @if($receiptsCont) <span class="notification">{{$receiptsCont}}</span> @endif
+            </div>
 
-    <div class="box">
-        <a title="Documentos Contabilisticos" href="/frontoffice/documents/Contabilistico"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon7.png"></a>
-        <div class="desc">DOCUMENTOS CONTABILISTICOS</div>
-        @if($receiptsCont) <span class="notification">{{$receiptsCont}}</span> @endif
-    </div>
+            <div class="box">
+                <a title="Encomendas" href="/frontoffice/orders">
+                    <img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon1.png">
+                </a>
+                <div class="desc">ENCOMENDAS</div>
+            </div>
+        </div>
+    </section>
 
-    <div class="box">
-        <a title="Encomendas" href="/frontoffice/orders">
-            <img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon1.png">
-        </a>
-        <div class="desc">ENCOMENDAS</div>
-    </div>
-</div>
+    @foreach($services as $service)
+
+        @if($service->id_service_type == 1)
+        <section class="sectionServices" >
+            <h1>RegoldFood</h1>
+            <div class="container index-box">
+                <div class="box">
+                    <a title="Documentos HACCP" href="/frontoffice/documents/HACCP"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon2.png"></a>
+                    <div class="desc">DOCUMENTOS HACCP</div>
+                    @if($receiptsHACCP) <span class="notification">{{$receiptsHACCP}}</span> @endif
+                </div>
+            </div>
+        </section>
+
+        @elseif($service->id_service_type == 3)
+            <section class="sectionServices" >
+                <h1>RegoldPest</h1>
+                <div class="container index-box">
+                    <div class="box">
+                        <a title="Controlo de Pragas" href="/frontoffice/documents/Controlopragas"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon3.png"></a>
+                        <div class="desc">CONTROLO DE PRAGAS</div>
+                        @if($receiptsCP) <span class="notification">{{$receiptsCP}}</span> @endif
+                    </div>
+
+                    <div class="box">
+                        <a title="Documentos Contabilisticos" href="/frontoffice/documents/Contabilistico"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon7.png"></a>
+                        <div class="desc">DOCUMENTOS CONTABILISTICOS</div>
+                        @if($receiptsCont) <span class="notification">{{$receiptsCont}}</span> @endif
+                    </div>
+                </div>
+            </section>
+        @elseif($service->id_service_type == 4)
+
+            <section class="sectionServices">
+                <h1>RegoldLogistics</h1>
+                <div class="container index-box">
+                    <div class="box">
+                        <a title="Encomendas" href="/frontoffice/orders">
+                            <img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon1.png">
+                        </a>
+                        <div class="desc">ENCOMENDAS</div>
+                    </div>
+                </div>
+            </section>
+        @endif
+    @endforeach
+
 
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-md">
@@ -112,7 +181,6 @@
                 url:'/frontoffice/changePassword',
                 data:{password, confirm},
                 success:function(response){
-
                     if(response.error) {
                         successMsg.style.display = 'none';
                         errorMsg.innerText = response.error;
@@ -121,10 +189,8 @@
                         errorMsg.style.display = 'none';
                         successMsg.innerText = response.success;
                         successMsg.style.display = 'block';
-
                         setTimeout(function(){ $('#myModal').modal('hide'); }, 2000);
                     }
-
                 }
             });
         });

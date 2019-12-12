@@ -50,3 +50,45 @@
     font-size: 12px;
   }
 }
+
+/*#divSelectLoja{
+  width: 100%;
+  background-color: aqua;
+}*/
+
+/*css do select*/
+.selectBox {
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-bottom: 1%;
+}
+
+#selectLoja {
+  width: auto;
+  margin: 0 auto;
+  display: block;
+  float: none;
+  height: 40px;
+}
+  /*color: white;
+  padding: 0.75%;
+  background-color: rgb(34, 172, 34);
+  border: none;
+  font-size: 10sp;
+  box-shadow: 0 5px 15px rgba(179, 80, 80, 0.2);
+  -webkit-appearance: button;
+  appearance: button;
+  outline: none;
+}
+.selectBox select option {
+  padding: 5%;
+  color:black;
+  background-color: rgb(137, 240, 163);
+}*/
+
+h1 {
+  text-align: center;
+  text-transform: uppercase;
+  color: #4CAF50;
+}

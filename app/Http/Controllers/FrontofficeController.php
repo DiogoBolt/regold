@@ -21,6 +21,8 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 
 class FrontofficeController extends Controller
@@ -293,7 +295,9 @@ class FrontofficeController extends Controller
     public function orders()
     {
         $user = Auth::user();
-        $orders = Order::where('client_id',$user->client_id)->orderBy('id','DESC')->get();
+        $auxClientId = Session::get('establismentID');
+
+        $orders = Order::where('client_id',$auxClientId)->orderBy('id','DESC')->get();
 
         return view('frontoffice.orders',compact('orders'));
     }
@@ -406,10 +410,13 @@ class FrontofficeController extends Controller
     public function processCart()
     {
         $user = Auth::user();
-        $client = Customer::where('id',$user->client_id)->first();
+
+        $auxClientId = Session::get('establismentID');
+
+        $client = Customer::where('id',$auxClientId)->first();
 
         $cart = Cart::where('user_id',$user->id)->where('processed',0)->first();
-        $orders = Order::where('client_id',$user->client_id)->where('processed',1)->where('created_at','>=',Carbon::now()->startOfMonth())->count();
+        $orders = Order::where('client_id',$auxClientId)->where('processed',1)->where('created_at','>=',Carbon::now()->startOfMonth())->count();
 
         if(!isset($cart))
         {
@@ -422,13 +429,13 @@ class FrontofficeController extends Controller
 
         $totaliva = $total*1.23;
 
-        $order = Order::where('client_id',$user->client_id)->where('status','waiting_payment')->where('invoice_id',null)->first();
+        $order = Order::where('client_id',$auxClientId)->where('status','waiting_payment')->where('invoice_id',null)->first();
 
         if(!isset($order))
         {
             $order = new Order;
         }
-        $order->client_id = $user->client_id;
+        $order->client_id = $auxClientId;
         $order->cart_id = $cart->id;
         $order->total = $total;
         $order->totaliva = $totaliva;
@@ -490,19 +497,23 @@ class FrontofficeController extends Controller
 
     public function showCart()
     {
+
         $user = Auth::user();
-        $client = Customer::where('id',$user->client_id)->first();
 
-        $orders = Order::where('client_id',$user->client_id)->where('processed',1)->where('created_at','>=',Carbon::now()->startOfMonth())->count();
+        $auxClientId = Session::get('establismentID');
 
-        $cart = Cart::where('user_id',$user->id)->where('processed',0)->first();
+        $client = Customer::where('id',$auxClientId)->first();
+
+        $orders = Order::where('client_id',$auxClientId)->where('processed',1)->where('created_at','>=',Carbon::now()->startOfMonth())->count();
+
+        $cart = Cart::where('client_id',$auxClientId)->where('processed',0)->first();
 
         $items =[];
 
         if(!isset($cart))
         {
             $cart = new Cart;
-            $cart->user_id = $user->id;
+            $cart->client_id = $$auxClientId;
             $cart->save();
         }
 

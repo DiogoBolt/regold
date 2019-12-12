@@ -217,5 +217,15 @@ function validateEmailExist(email){
         return false;
     }
 }
-
 //fazer ajax para validar email e nif já existem ou não metodos já estao criados!!!
+
+function myFunction() {
+    var x = document.getElementById("selectEstablishment").value;
+    console.log("---- "+ x);
+    $.ajax({
+        type: 'POST',
+        url: '/client/addSessionVar/'+x,
+        data: {token: "{{ csrf_token() }}"},
+        success: success
+      }) .done(window.location.reload());
+  }

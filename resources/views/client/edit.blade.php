@@ -154,18 +154,15 @@
                                 <br/>
                                 <div id="serviceTypesDiv"> 
                                     @foreach($serviceTypes as $serviceType)
-                                    <label>for 1</label>
                                         @foreach($client->client_type as $cliType) 
-                                        <label>for 2</label>
                                             @if($serviceType->id == $cliType->id_service_type)
-                                                <input checked  type="checkbox" id="serviceType{{$serviceType->id}}" name="serviceType{{$serviceType->id}}" value="{{$serviceType->id}}">{{$serviceType->name}}
+                                                <input checked type="checkbox" id="serviceType{{$serviceType->id}}" name="serviceType{{$serviceType->id}}" value="{{$serviceType->id}}">{{$serviceType->name}}
                                                 <br/>
-                                            @else
-                                            @continue(1)
+                                                @continue(2)
                                             @endif 
-                                        @endforeach 
-                                        <input  type="checkbox" id="serviceType{{$serviceType->id}}" name="serviceType{{$serviceType->id}}" value="{{$serviceType->id}}">{{$serviceType->name}}
-                                        <br/>
+                                        @endforeach
+                                        <input type="checkbox" id="serviceType{{$serviceType->id}}" name="serviceType{{$serviceType->id}}" value="{{$serviceType->id}}">{{$serviceType->name}}
+                                        <br/> 
                                     @endforeach
                                 </div>
                             </div>
@@ -195,6 +192,10 @@
                             <div class="form-group">
                                 Informações/notas sobre o cliente 
                                 <textarea class="form-control" placeholder="Informações/notas sobre o cliente" name="transport_note">{{$client->transport_note}}</textarea>
+                            </div>
+                            <label>Nova Password</label>
+                            <div class="form-group">
+                                Password: <input class="form-control" value="{{$client->password}}" type="password" name="password">
                             </div>
                         </div>
                         <div>
