@@ -78,15 +78,14 @@ class SalesmanController extends Controller
     }
 
     public function salesman($id){
-
+        
         echo "<script>console.log('$id');</script>";
 
-        $contributorShow = User::where('userTypeID',$id)
-        ->where('userType',1)
+        $contributorShow = User::where('id',$id)
         ->first();
 
-        echo "<script>console.log('$contributorShow->userType');</script>";
-        if(Auth::user()->userType == 5 || (Auth::user()->userType == $contributorShow->userType ))
+        //dd($contributorShow);
+        if(Auth::user()->userType == 5)
         {
             if($contributorShow->userType==1){
                 
@@ -123,6 +122,7 @@ class SalesmanController extends Controller
 
         echo "<script>console.log('" . json_encode($inputs) . "');</script>";
         $user = new User;
+        //dd($inputs);
 
         if($inputs['UserType'] == 'Vendedor'){
             

@@ -77,14 +77,27 @@ class FrontofficeController extends Controller
     public function documents()
     {
         $user = Auth::user();
-        $client = Customer::where('id',$user->client_id)->first();
-
-        $group = Group::where('id',$client->group_id)->first();
         $types = DocumentType::all();
 
-        $receipts = Receipt::where('client_id',$client->id)->get();
+        $clients = Customer::where('ownerID',$user->id)
+        ->select([
+            'id'
+            ,])
+        ->get();
 
-        return view('frontoffice.documents',compact('client','receipts','group','types'));
+        $ids = [];
+        
+        foreach($clients as $client){
+            array_push($ids,$client->id);
+        }
+
+        $receipts=Receipt::whereIN('client_id',$ids)->get();
+
+        //dd($receipts);
+        //dd(count($receipts));
+        //dd($receipts[0]);
+
+        return view('frontoffice.documents',compact('client','receipts','types'));
     }
 
     public function invoices()
@@ -132,14 +145,29 @@ class FrontofficeController extends Controller
     public function documentsByType($super, $type)
     {
         $user = Auth::user();
-        $client = Customer::where('id',$user->client_id)->first();
+
+        $auxClientId = Session::get('establismentID');
+
+        $clients = Customer::where('ownerID',$user->id)
+        ->select([
+            'id'
+            ,])
+        ->get();
+
+        $ids = [];
+        
+        foreach($clients as $client){
+            array_push($ids,$client->id);
+        }
+
+        //$receipts=Receipt::whereIN('client_id',$ids)->get();
 
         $receipts = Receipt::from(Receipt::alias('r'))
             ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
             ->leftJoin(DocumentSuperType::alias('dst'), 'dt.superType', '=', 'dst.id')
             ->groupBy('r.id')
             ->where('dst.name', $super)
-            ->where('r.client_id',$user->client_id)
+            ->whereIN('r.client_id',$ids)
             ->where('dt.id', $type )
             ->get(['r.id']);
         $ids = [];
@@ -191,15 +219,19 @@ class FrontofficeController extends Controller
 
     public function addCart(Request $request)
     {
+        //dd(Session::get('establismentID'));
         $inputs = $request->all();
 
         $user = Auth::user();
-        $cart = Cart::where('user_id',$user->id)->where('processed',0)->first();
+
+        $auxClientId = Session::get('establismentID');
+        
+        $cart = Cart::where('client_id',$auxClientId)->where('processed',0)->first();
 
         if(!isset($cart))
         {
             $cart = new Cart;
-            $cart->user_id = $user->id;
+            $cart->client_id = $auxClientId;
             $cart->save();
         }
 
@@ -267,13 +299,13 @@ class FrontofficeController extends Controller
     public function cartValue()
     {
         $user = Auth::user();
-
-        $cart = Cart::where('user_id',$user->id)->where('processed',0)->first();
+        $auxClientId = Session::get('establismentID');
+        $cart = Cart::where('client_id',$auxClientId)->where('processed',0)->first();
 
         if(!isset($cart))
         {
             $cart = new Cart;
-            $cart->user_id = $user->id;
+            $cart->client_id = $auxClientId;
             $cart->save();
         }
 
@@ -415,7 +447,7 @@ class FrontofficeController extends Controller
 
         $client = Customer::where('id',$auxClientId)->first();
 
-        $cart = Cart::where('user_id',$user->id)->where('processed',0)->first();
+        $cart = Cart::where('client_id',$auxClientId)->where('processed',0)->first();
         $orders = Order::where('client_id',$auxClientId)->where('processed',1)->where('created_at','>=',Carbon::now()->startOfMonth())->count();
 
         if(!isset($cart))
@@ -497,7 +529,6 @@ class FrontofficeController extends Controller
 
     public function showCart()
     {
-
         $user = Auth::user();
 
         $auxClientId = Session::get('establismentID');
@@ -513,7 +544,7 @@ class FrontofficeController extends Controller
         if(!isset($cart))
         {
             $cart = new Cart;
-            $cart->client_id = $$auxClientId;
+            $cart->client_id = $auxClientId;
             $cart->save();
         }
 

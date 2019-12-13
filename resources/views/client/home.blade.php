@@ -60,54 +60,6 @@
         </div>
     </section>
 
-    @foreach($services as $service)
-
-        @if($service->id_service_type == 1)
-        <section class="sectionServices" >
-            <h1>RegoldFood</h1>
-            <div class="container index-box">
-                <div class="box">
-                    <a title="Documentos HACCP" href="/frontoffice/documents/HACCP"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon2.png"></a>
-                    <div class="desc">DOCUMENTOS HACCP</div>
-                    @if($receiptsHACCP) <span class="notification">{{$receiptsHACCP}}</span> @endif
-                </div>
-            </div>
-        </section>
-
-        @elseif($service->id_service_type == 3)
-            <section class="sectionServices" >
-                <h1>RegoldPest</h1>
-                <div class="container index-box">
-                    <div class="box">
-                        <a title="Controlo de Pragas" href="/frontoffice/documents/Controlopragas"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon3.png"></a>
-                        <div class="desc">CONTROLO DE PRAGAS</div>
-                        @if($receiptsCP) <span class="notification">{{$receiptsCP}}</span> @endif
-                    </div>
-
-                    <div class="box">
-                        <a title="Documentos Contabilisticos" href="/frontoffice/documents/Contabilistico"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon7.png"></a>
-                        <div class="desc">DOCUMENTOS CONTABILISTICOS</div>
-                        @if($receiptsCont) <span class="notification">{{$receiptsCont}}</span> @endif
-                    </div>
-                </div>
-            </section>
-        @elseif($service->id_service_type == 4)
-
-            <section class="sectionServices">
-                <h1>RegoldLogistics</h1>
-                <div class="container index-box">
-                    <div class="box">
-                        <a title="Encomendas" href="/frontoffice/orders">
-                            <img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon1.png">
-                        </a>
-                        <div class="desc">ENCOMENDAS</div>
-                    </div>
-                </div>
-            </section>
-        @endif
-    @endforeach
-
-
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-md">
         <div class="modal-content">

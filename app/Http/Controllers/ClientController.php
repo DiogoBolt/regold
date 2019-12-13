@@ -189,7 +189,7 @@ class ClientController extends Controller
         $inputs = $request->all();
         echo "<script>console.log('" . json_encode($inputs) . "');</script>";
 
-        if($user->sales_id == null)
+        if($user->userType == 5)
         {
             $clients = Customer::from(Customer::alias('c'))
                 ->leftJoin(User::alias('u'), 'u.client_id', '=', 'c.id')
@@ -213,7 +213,7 @@ class ClientController extends Controller
 
             $clients = Customer::from(Customer::alias('c'))
                 ->leftJoin(User::alias('u'), 'u.client_id', '=', 'c.id')
-                ->where('c.salesman',$user->sales_id)
+                ->where('c.salesman',$user->userTypeID)
                 ->when($request->filled('cityInvoice'), function ($query) use ($inputs) {
                     return $query->where('c.city', '=', $inputs['cityInvoice']);
                 })
@@ -561,6 +561,7 @@ class ClientController extends Controller
 
     public function showCustomer($id)
     { 
+        Session::put('clientImpersonatedId',$id);
         $client = Customer::where('id',$id)->first();
         //morada 
         $auxCity = $this->getCitiesById($client->city);
@@ -658,7 +659,6 @@ class ClientController extends Controller
     public function addReceipt(Request $request)
     {
         $inputs = $request->all();
-
         if($request->hasfile('receipt') and Customer::where('id',$inputs['client'])->first() != null)
         {
             $receipt = new Receipt;
@@ -675,16 +675,22 @@ class ClientController extends Controller
 
 
             //TODO Envio de email
-
+            //dd($inputs['client']);
             $receipt->file = $filename;
             $receipt->save();
 
-            $clientUser = User::where('client_id',$inputs['client'])->first();
+            $clientUser = Customer::where('id',$inputs['client'])
+            ->select([
+                'ownerID'
+            ])->first();
+
             $message = new Message();
-            $message->receiver_id = $clientUser->id;
+
+            $message->receiver_id = $clientUser->ownerID;
             $message->sender_id = Auth::user()->id;
             $message->text = "Foi adicionado um documento à sua conta";
             $message->viewed = 0;
+            
             $message->save();
         }
 
@@ -938,7 +944,6 @@ class ClientController extends Controller
         ->first();
         $user = Auth::user();
         Session::put('impersonated',$user->id);
-        Session::put('clientImpersonatedId',$id);
         Auth::logout();
         Auth::loginUsingId($idUser->ownerID);
         //return redirect()->back();
@@ -958,7 +963,7 @@ class ClientController extends Controller
     public function checkFirstLogin() 
     {
         $user = Auth::user();
-        $customer = Customer::where('id',$user->userTypeID)->first();
+        $customer = User::where('id',$user->id)->first();
         $first_time_login = 0;
 
         if (!$customer->first_login) {

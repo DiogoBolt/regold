@@ -10,19 +10,16 @@
                 <div class="panel-body">
 
                     <div class="col-sm-6">
-
-                        @foreach($types as $type)
-
-                            @foreach($receipts as $receipt)
-                                @if($receipt->document_type_id == $type->id)
+                    @foreach($types as $type)
+                        @foreach($receipts as $receipt)
+                               @if($receipt->document_type_id == $type->id)
                                     <h4>{{$type->name}}</h4>
                             <div class="form-group">
                                 <a href="/uploads/{{$client->id}}/{{$receipt->file}}">{{$receipt->file}}</a>
                             </div>
                                 @endif
-                                @endforeach
                         @endforeach
-
+                    @endforeach 
                     </div>
 
                 </div>
