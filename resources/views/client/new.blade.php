@@ -103,7 +103,7 @@
                                 </div>
                                 <div class="form-group"> 
                                     Cidade:
-                                        <select id="selectCity" class="form-control" name="city" required>
+                                        <select name="city" id="selectCity" class="form-control" required>
                                             <option disabled selected value="">Selecione a Cidade</option>  
                                         </select>
                                 </div>
@@ -188,23 +188,21 @@
                             </div>
 
                             <div class="form-group">
-                                NIB: <input type="number" placeholder="Insira o nib" class="form-control" type="number" name="nib">
-                            </div>
-
-                            <div class="form-group">
                                 Valor Contrato: <input type="number" step="0.01" placeholder="Valor de Contrato" min=0 class="form-control" name="value">
                             </div>
 
                             <div class="form-group">
-                                Método Pagamento:  <select class="form-control" name="payment_method" required>
+                                Método Pagamento:  <select class="form-control" name="payment_method" onchange="payType(this)" required>
                                         <option disabled selected value="">Selecione o Método de Pagamento</option>
                                         <option value="Debito Direto">Débito Direto</option>
                                         <option value="Contra Entrega">Contra Entrega</option>
-                                        <option value="Tranferência">Tranferência</option>
+                                        <option value="Tranferência/30dias">Tranferência/30 dias</option>
                                         <option value="Fatura Contra Fatura">Fatura Contra Fatura</option>
-                                        <option value="30 dias">30 dias</option>
-
                                 </select>
+                            </div>
+
+                            <div id="divNib" class="form-group" style="display:none" >
+                                NIB: <input id="nib" type="number" placeholder="Insira o nib" class="form-control" type="number" name="nib">
                             </div>
 
                             <div class="form-group">

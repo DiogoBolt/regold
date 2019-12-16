@@ -64,12 +64,16 @@
   margin-bottom: 1%;
 }
 
-#selectLoja {
+#selectEstablishment {
   width: auto;
   margin: 0 auto;
   display: block;
   float: none;
   height: 40px;
+  border: 2px solid rgb(98, 219, 102);
+  background-color: rgb(178, 236, 180);
+  color: black;
+  font-size: 20px;
 }
   /*color: white;
   padding: 0.75%;

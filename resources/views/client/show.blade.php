@@ -39,7 +39,7 @@
                         <div class="form-group">
                             <b>Morada Faturação</b>
                             <br/>
-                            {{$client->invoice_district}}, {{$client->invoice_city}}, {{$client->address}}
+                            {{$client->invoice_district}}, {{$client->invoice_city}}, {{$client->invoice_address}}
                             <br/>
                             Codigo Postal: {{$client->invoice_postal_code}}
                         </div>

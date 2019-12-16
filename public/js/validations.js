@@ -226,6 +226,21 @@ function myFunction() {
         type: 'POST',
         url: '/client/addSessionVar/'+x,
         data: {token: "{{ csrf_token() }}"},
+        async: false,
         success: success
       }) .done(window.location.reload());
   }
+
+
+  //função para saber o typo de pagemento
+
+  function payType(payType){
+      if(payType.value == 'Tranferência/30dias'){
+          document.getElementById("divNib").style.display="block";
+          document.getElementById("nib").required=true;
+      }else{
+        document.getElementById("divNib").style.display="none";
+        document.getElementById("nib").required=false;
+      }
+  }
+

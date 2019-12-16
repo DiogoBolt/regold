@@ -33,7 +33,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                Nome:<input class="form-control"  name="name">
+                                Nome:<input class="form-control" placeholder="name"  name="name">
                             </div>
                             <div class="form-group">
                                 Morada
@@ -59,23 +59,23 @@
                                         <label class="labelParish" id="labelParish" style="display:none"></label>
                                     </div>  
                                 <div class="form-group">
-                                    Rua e número da porta<input class="form-control" placeholder="Morada de Entrega" name="address" required>
+                                    Rua e número da porta<input class="form-control" placeholder="Rua e número da porta" name="address" required>
                                 </div>
                             </div>
                            
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                NIF: <input id="nif" class="form-control" type="number" name="nif">
+                                NIF: <input id="nif" placeholder="Insira o nif" class="form-control" type="number" name="nif">
                             </div>
                             <div class="form-group">
                                 Dados de login
                                 <br/>
-                                Email: <input class="form-control" type="email" name="email">
+                                E-mail: <input placeholder="Insira o E-mail" class="form-control" type="email" name="email">
                             </div>
 
                             <div class="form-group">
-                                Password: <input class="form-control" type="password" name="password">
+                                Password: <input class="form-control" placeholder="********" type="password" name="password">
                             </div>
                         </div>
                         <div>

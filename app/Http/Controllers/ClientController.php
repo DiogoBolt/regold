@@ -564,6 +564,7 @@ class ClientController extends Controller
         Session::put('clientImpersonatedId',$id);
         $client = Customer::where('id',$id)->first();
         //morada 
+        //dd($client);
         $auxCity = $this->getCitiesById($client->city);
         $client->city = $auxCity->name;
         $client->district = $this->getDistrictsById($auxCity->id_district);
@@ -647,6 +648,7 @@ class ClientController extends Controller
     //retorna o nome da freguesia pelo codigo postal
     private function getParishNameByPostalCode($postalCode){
         $parishName=PostalCodes::where('postal_code',$postalCode)->first();
+        //dd($parishName->name);
         return $parishName->name;
     }
 
