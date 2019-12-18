@@ -187,9 +187,8 @@ class ClientController extends Controller
         $user = Auth::user();
 
         $inputs = $request->all();
-        echo "<script>console.log('" . json_encode($inputs) . "');</script>";
 
-        if($user->userType == 5)
+        if($user->userType == 5 || $user->userType == 2)
         {
             $clients = Customer::from(Customer::alias('c'))
                 ->leftJoin(User::alias('u'), 'u.client_id', '=', 'c.id')
@@ -563,14 +562,13 @@ class ClientController extends Controller
     { 
         Session::put('clientImpersonatedId',$id);
         $client = Customer::where('id',$id)->first();
-        //morada 
-        //dd($client);
+        //morada
         $auxCity = $this->getCitiesById($client->city);
         $client->city = $auxCity->name;
         $client->district = $this->getDistrictsById($auxCity->id_district);
 
         $auxCityInvoice = $this->getCitiesById($client->invoice_city);
-        $client->invoice_city = $auxCity->name;
+        $client->invoice_city = $auxCityInvoice->name;
         $client->invoice_district = $this->getDistrictsById($auxCity->id_district);
 
         $client->salesman=$this->getSalesmanNameById($client->salesman);

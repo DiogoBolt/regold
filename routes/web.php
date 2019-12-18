@@ -61,6 +61,8 @@ Route::get('/home', 'ClientController@home');
 Route::post('/client/addSessionVar/{id}','ClientController@addSessionVar');
 Route::post('/client/deleteSessionVar','ClientController@deleteSessionVar');
 
+Route::get('/frontoffice/personlizeSection','FrontofficeController@personlizeSection');
+
 
 Route::group(['middleware' => ['backoffice']], function () {
 

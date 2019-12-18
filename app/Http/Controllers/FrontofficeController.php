@@ -187,8 +187,9 @@ class FrontofficeController extends Controller
 
     public function documentsBySuper($super)
     {
+       
         $superId = DocumentSuperType::where('name', $super)->pluck('id');
-
+        
         $types = DocumentType::where('superType', $superId)->get();
 
         return view('frontoffice.documentsTypes',compact('types','super'));
@@ -800,4 +801,11 @@ class FrontofficeController extends Controller
 
         return json_decode($response);
     }
+
+/*********************************** personalizar as secções *********************************************/
+
+    public function personlizeSection(){
+        return view('frontoffice.personalizeSections');
+    }
+
 }

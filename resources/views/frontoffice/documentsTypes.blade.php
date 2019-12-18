@@ -44,6 +44,21 @@
                     </div>
                 </a>
             @endforeach
+                <a class="category {{ $super }}" href="/frontoffice/personlizeSection">
+                    <div class="category-body">
+                        @if($super === 'Controlopragas')
+                            <img src="/img/logo1white.png" class="img-responsive"/>
+                        @elseif($super === 'HACCP')
+                            <img src="/img/logo2white.png" class="img-responsive"/>
+                        @else 
+                            <img src="/img/logoregoldi.png" class="img-responsive" />
+                        @endif
+                    </div>
+                    <div class="category-footer">
+                        PERSONALIZAR SECÇÕES
+                    </div>
+                </a>
+
         </div>
     </div>
 @endsection

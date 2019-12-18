@@ -37,24 +37,27 @@
                             <b>NIF:</b> {{$salesman->nif}}
                         </div>
                     </div>
-                    <div class="col-sm-6">
-                        <b>Conta Corrente</b>
-                        @foreach($salesPayments as $payment)
+                        <div class="col-sm-6">
+                      @if($user->userType==1)
+                        <br/>
+                            <b>Conta Corrente</b>
+                            @foreach($salesPayments as $payment)
+                                <div class="form-group">
+                                <a href="/orders/{{$payment->order_id}}"> Venda:  {{$payment->order_id}}</a> / Fatura: {{$payment->invoice}}  / <b> Valor : {{$payment->value}}</b>
+                                </div>
+                            @endforeach
+
                             <div class="form-group">
-                            <a href="/orders/{{$payment->order_id}}"> Venda:  {{$payment->order_id}}</a> / Fatura: {{$payment->invoice}}  / <b> Valor : {{$payment->value}}</b>
+                                <b>Total : {{$total}}</b>
                             </div>
-                        @endforeach
-
-                        <div class="form-group">
-                            <b>Total : {{$total}}</b>
                         </div>
-                    </div>
 
-                    <div class="col-sm-12">
-                        @if(Auth::user()->sales_id == null and Auth::user()->client_id == null)
-                            <a class="btn btn-add" href="/salesman/deliver/{{$salesman->id}}" onclick="confirm('Tem a certeza?')">Confirmar Recebimento</a>
-                        @endif
-                    </div>
+                        <div class="col-sm-12">
+                            @if(Auth::user()->userType == 5)
+                                <a class="btn btn-add" href="/salesman/deliver/{{$salesman->id}}" onclick="confirm('Tem a certeza?')">Confirmar Recebimento</a>
+                            @endif
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

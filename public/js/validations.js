@@ -235,7 +235,7 @@ function myFunction() {
   //função para saber o typo de pagemento
 
   function payType(payType){
-      if(payType.value == 'Tranferência/30dias'){
+      if(payType.value == 'Debito Direto'){
           document.getElementById("divNib").style.display="block";
           document.getElementById("nib").required=true;
       }else{

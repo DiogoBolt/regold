@@ -51,13 +51,13 @@
                                         <img style="margin-top:-15px;width:50px" src="{{ URL::to('/') }}/img/message.png">
                                     </a>
                                 </li>
-                            @if(Auth::user()->sales_id == null)
+                            @if(Auth::user()->userType == 5)
                             <li>
                                 <a href="/salesman">
                                     Colaboradores
                                 </a>
                             </li>
-                                @else
+                                @elseif(Auth::user()->userType == 5)
                                 <li>
                                     <a href="/salesman/{{Auth::user()->sales_id}}">
                                         Conta Corrente
