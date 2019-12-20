@@ -26,7 +26,6 @@ function validateForm(){
    var radios = document.getElementsByName('verifyHaveRegister');
    
    if(radios[0].checked){
-        console.log(radios[0].value);
         if(document.getElementById('registedMail').value==""){
             document.getElementById('registedMail').style.border="1px solid #ff0000";
             return false;
@@ -37,7 +36,6 @@ function validateForm(){
         //verificar email
         if(!verifyEmailExist(document.getElementById('loginMail').value)){
             document.getElementById('loginMail').style.border="1px solid #ff0000";
-            console.log("email existe ou vazio");
             return false;
         }else{
             document.getElementById('loginMail').style.border="none";
@@ -113,11 +111,8 @@ function getParishName(postalCode,id){
             type:'GET',
             url:'/users/getParish/'+postalCode,
         }).done(function(data) {
-            console.log("---"+data.name+"---");
             if(data.name!=undefined){
                 if(id=="postal_code"){
-                //console.log(postalCode.id);
-                console.log("--- "+data.name);
                 document.getElementsByClassName("labelParish")[0].innerHTML=data.name;
                 document.getElementsByClassName("labelParish")[0].style.display="block";
                  }else{
@@ -190,7 +185,6 @@ function verifyEmailExist(email){
             }
         }
     });
-    console.log("Email: "+aux);
     return aux;
 
 
@@ -221,7 +215,6 @@ function validateEmailExist(email){
 
 function myFunction() {
     var x = document.getElementById("selectEstablishment").value;
-    console.log("---- "+ x);
     $.ajax({
         type: 'POST',
         url: '/client/addSessionVar/'+x,
@@ -243,4 +236,27 @@ function myFunction() {
         document.getElementById("nib").required=false;
       }
   }
+
+
+  //teste remover
+
+  function teste(select, itemid){
+
+    var id=itemid;
+    qt=select.value;
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+        $.ajax({
+            type: 'POST',
+            url: "/frontoffice/cart/removeitem",
+            data:{id: id, qt: qt}
+        }).then(
+            window.location.reload()
+        );
+      
+  }
+  
 

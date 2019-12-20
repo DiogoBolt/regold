@@ -123,12 +123,11 @@
 
 /***************select*****************/
 .divSection {
-  width: 65%;
-  /*font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;*/
+  width: 55%;
   font-size: 15px;
   text-align: center;
-  margin-top: 10%;
-  margin-left: 17.5%;
+  margin-top: 2%;
+  margin-left: 22.5%;
 }
 
 ul.ks-cboxtags {
@@ -145,7 +144,7 @@ ul.ks-cboxtags li label{
   background-color: #e6ffe6;
   border: 2px solid green;
   color: black;
-  border-radius: 25px;
+  border-radius: 15px;
   white-space: nowrap;
   margin: 3px 0px;
   -webkit-touch-callout: none;
@@ -190,8 +189,10 @@ ul.ks-cboxtags li input[type="checkbox"]:checked + label {
 }
 
 ul.ks-cboxtags li input[type="checkbox"] {
-display: absolute;
+  background-color: rebeccapurple;
+  display: absolute;
 }
+
 ul.ks-cboxtags li input[type="checkbox"] {
 position: absolute;
 opacity: 0;
@@ -199,3 +200,49 @@ opacity: 0;
 ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 border: 2px solid green;
 }
+
+
+/*h1*/
+h1.title { 
+  font-family: 'Raleway',sans-serif;
+  font-size: 25sp; 
+  font-weight: 400; 
+  line-height: 32px;
+  margin: 3% 0 0 0; 
+  text-align: center; 
+  text-transform: uppercase;
+  color: black;
+ }
+
+ /*linha separadora*/
+ #line{
+  border: 2px solid black;
+  border-radius: 5px;
+}
+
+ /*MODAL*/
+ .modal-content{
+   margin-top: 25%;
+   margin-left: 25%;
+   width: 50%;
+   border-radius: 15px;
+   text-align: center;
+ }
+
+ #selectSection{
+   width: 55%;
+   float: left;
+ }
+
+ #newSection{
+   background-color: aqua;
+   height: 45px;
+   margin: 1%;
+ }
+
+ #newSections{
+   color: black;
+   font-style: bold;
+   margin-top: 15%;
+   margin-left: 50%;
+ }

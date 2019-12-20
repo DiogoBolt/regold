@@ -295,8 +295,6 @@ class FrontofficeController extends Controller
 
     }
 
-
-
     public function cartValue()
     {
         $user = Auth::user();
@@ -318,8 +316,6 @@ class FrontofficeController extends Controller
         }
 
         $total = OrderLine::where('cart_id',$cart->id)->sum('total');
-
-
 
         return $total;
 
@@ -400,28 +396,34 @@ class FrontofficeController extends Controller
     }
 
     public function removeItem(Request $request)
-    {
+    { 
         $user = Auth::user();
         $inputs = $request->all();
 
-
+        
+        $auxClientId = Session::get('establismentID');
+        
         $order_line = OrderLine::where('id',$inputs['id'])->first();
 
         $cart = Cart::where('id',$order_line->cart_id)->first();
 
-        if($cart->user_id != $user->id || $cart->processed == 1)
+        if($cart->client_id != $auxClientId || $cart->processed == 1){
             return back();
+        }
 
         if($inputs['qt'] == $order_line->amount)
         {
             $order_line->delete();
 
         }else{
-            $order_line->amount -= $inputs['amount'];
+            //dd($inputs['qt']);
+            //15
+            $aux=$order_line->amount-$inputs['qt'];
+            $order_line->amount =$aux;
+            $order_line->save();
         }
 
         return back();
-
     }
 
     function messages()
@@ -447,9 +449,12 @@ class FrontofficeController extends Controller
         $auxClientId = Session::get('establismentID');
 
         $client = Customer::where('id',$auxClientId)->first();
-
         $cart = Cart::where('client_id',$auxClientId)->where('processed',0)->first();
-        $orders = Order::where('client_id',$auxClientId)->where('processed',1)->where('created_at','>=',Carbon::now()->startOfMonth())->count();
+
+        $orders = Order::where('client_id',$auxClientId)
+        //->where('processed',1)
+        ->where('created_at','>=',Carbon::now()->startOfMonth())->count();
+        //dd($orders);
 
         if(!isset($cart))
         {
@@ -462,12 +467,16 @@ class FrontofficeController extends Controller
 
         $totaliva = $total*1.23;
 
-        $order = Order::where('client_id',$auxClientId)->where('status','waiting_payment')->where('invoice_id',null)->first();
-
+        /*$order = Order::where('client_id',$auxClientId)->where('status','waiting_payment')
+        ->where('invoice_id',null)->first();
+        
+        dd($order);
+        
         if(!isset($order))
         {
             $order = new Order;
-        }
+        }*/
+        $order = new Order;
         $order->client_id = $auxClientId;
         $order->cart_id = $cart->id;
         $order->total = $total;
@@ -525,6 +534,10 @@ class FrontofficeController extends Controller
                     $response = $this->processPayment($cart, $order);
                     return redirect($response->url_redirect);
                     break;
+                case "Tranferência/30 dias":
+                    $response = $this->processPayment($cart, $order);
+                    return redirect($response->url_redirect);
+                    break;
             }
     }
 
@@ -536,7 +549,9 @@ class FrontofficeController extends Controller
 
         $client = Customer::where('id',$auxClientId)->first();
 
-        $orders = Order::where('client_id',$auxClientId)->where('processed',1)->where('created_at','>=',Carbon::now()->startOfMonth())->count();
+        $orders = Order::where('client_id',$auxClientId)
+        //->where('processed',1)
+        ->where('created_at','>=',Carbon::now()->startOfMonth())->count();
 
         $cart = Cart::where('client_id',$auxClientId)->where('processed',0)->first();
 
@@ -602,7 +617,10 @@ class FrontofficeController extends Controller
 
         $user = Auth::user();
 
-        $orders = Order::where('client_id',$user->client_id)->where('id','!=',$order->id)->where('processed',1)->where('created_at','>=',Carbon::now()->startOfMonth())->count();
+        $auxClientId = Session::get('establismentID');
+
+        $orders = Order::where('client_id',$auxClientId)->where('id','!=',$order->id)->where('processed',1)
+        ->where('created_at','>=',Carbon::now()->startOfMonth())->count();
 
         if($orders > 0)
         {
@@ -615,10 +633,14 @@ class FrontofficeController extends Controller
 
     private function processSideOrder($cart,$order)
     {
+    
         $user = Auth::user();
+
+        $auxClientId = Session::get('establismentID');
+
         $orderlines = OrderLine::where('cart_id',$cart->id)->get();
-        $client = Customer::where('id',$user->client_id)->first();
-        $customer = Customer::where('id',$user->client_id)->first();
+        $client = Customer::where('id',$auxClientId)->first();
+        $customer = Customer::where('id',$auxClientId)->first();
 
         $items =[];
         foreach($orderlines as $orderline)
@@ -693,9 +715,11 @@ class FrontofficeController extends Controller
     private function processMainOrder($cart,$order)
     {
         $user = Auth::user();
+        $auxClientId = Session::get('establismentID');
+
         $orderlines = OrderLine::where('cart_id',$cart->id)->get();
-        $client = Customer::where('id',$user->client_id)->first();
-        $customer = Customer::where('id',$user->client_id)->first();
+        $client = Customer::where('id',$auxClientId)->first();
+        $customer = Customer::where('id',$auxClientId)->first();
 
         $items =[];
         foreach($orderlines as $orderline)
@@ -802,10 +826,7 @@ class FrontofficeController extends Controller
         return json_decode($response);
     }
 
-/*********************************** personalizar as secções *********************************************/
 
-    public function personlizeSection(){
-        return view('frontoffice.personalizeSections');
-    }
+  
 
 }

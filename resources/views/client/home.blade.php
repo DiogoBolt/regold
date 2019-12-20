@@ -6,8 +6,6 @@
 @endsection
 
 @section('content')
-<meta name="csrf-token" content="{{ csrf_token() }}">
-
 <script src="{{ URL::asset('/js/validations.js') }}"></script>
     @if(!Session::has('impersonated'))
         @if(count($clients)>1)

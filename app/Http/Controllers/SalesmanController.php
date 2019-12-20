@@ -49,7 +49,6 @@ class SalesmanController extends Controller
             $sales->total = SalesPayment::where('sales_id',$sales->sales_id)->where('delivered',0)->sum('value');
         }*/
         $inputs = $request->all();
-        echo "<script>console.log('" . json_encode($inputs) . "');</script>";
         $contributors = User::when($request->filled('contributor'),
         function ($query) use ($inputs) {
             return $query->where('userType', $inputs['contributor']);
@@ -105,7 +104,7 @@ class SalesmanController extends Controller
     public function addSales(Request $request)
     {
         $inputs = $request->all();
-        echo "<script>console.log('" . json_encode($inputs) . "');</script>";
+
         $user = new User;
         if($inputs['UserType'] == 'Vendedor'){
             
@@ -120,7 +119,6 @@ class SalesmanController extends Controller
             $user->userTypeID = $sales->id;
             
         }else if($inputs['UserType'] == 'Técnico HACCP'){
-            echo "<script>console.log('entrei aqui mas não fiz nada');</script>";
             $technicalhaccp = new TechnicalHACCP();
             $technicalhaccp->name = $inputs['name'];
             $technicalhaccp->address = $inputs['address'];
@@ -140,7 +138,6 @@ class SalesmanController extends Controller
     //alterar aqui 
     public function deleteSales(Request $request) 
     {
-        echo "<script>console.log('$request->usertype');</script>";
         if($request->usertype == 1){
             $salesman = Salesman::where('id', $request->usertypeid)->first()->delete();
         }else if($request->usertype == 2){

@@ -61,7 +61,7 @@ Route::get('/home', 'ClientController@home');
 Route::post('/client/addSessionVar/{id}','ClientController@addSessionVar');
 Route::post('/client/deleteSessionVar','ClientController@deleteSessionVar');
 
-Route::get('/frontoffice/personlizeSection','FrontofficeController@personlizeSection');
+Route::get('/frontoffice/personlizeSection','PersonalizeSectionController@personalizeSection');
 
 
 Route::group(['middleware' => ['backoffice']], function () {
@@ -142,8 +142,6 @@ Route::group(['middleware' => ['backoffice']], function () {
     Route::get('/messages/{id}', 'ProductController@messages');
     Route::post('/messages/new', 'ProductController@newMessage');
     Route::post('/messages/newmassmessage', 'ProductController@newMassMessage');
-
-
 
 });
 

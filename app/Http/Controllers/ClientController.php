@@ -47,8 +47,8 @@ class ClientController extends Controller
     {
         $user = Auth::user();
         
-        //dd(Session::get('establismentID'));
        if(Session::has('establismentID')){
+        
             $auxClientId = Session::get('establismentID');
 
             $clients = Customer::where('ownerID',$user->id)
@@ -90,7 +90,10 @@ class ClientController extends Controller
                 return view('client.home',compact('clients','services','receiptsCont','receiptsCP','receiptsHACCP'));
         
         }else if(Session::has('clientImpersonatedId')){
+            
             $auxClientId = Session::get('clientImpersonatedId');
+            
+            Session::forget('establismentID');
 
             $receiptsHACCP = Receipt::from(Receipt::alias('r'))
                 ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
@@ -125,6 +128,7 @@ class ClientController extends Controller
             return view('client.home',compact('services','receiptsCont','receiptsCP','receiptsHACCP'));
 
         }else {
+            Session::forget('establismentID');
             $clients = Customer::where('ownerID',$user->id)
             ->select([
                 'id',
@@ -337,8 +341,6 @@ class ClientController extends Controller
     public function addCustomer(Request $request)
     {
         $inputs = $request->all();
-
-        echo "<script>console.log('" . json_encode($inputs) . "');</script>";
         
         //Registar o user
         $user = new User;
@@ -470,8 +472,6 @@ class ClientController extends Controller
         $client->allCities=$this->getAllCitiesByDistrict($auxDistrict);
         $client->allCitiesInvoice=$this->getAllCitiesByDistrict($auxDristrictInvoice);
 
-        echo "<script>console.log(' $client');</script>";
-
         return view('client.edit',compact('client','salesman','districts','serviceTypes'));
     }
 
@@ -544,7 +544,6 @@ class ClientController extends Controller
     public function deleteCustomer(Request $request) 
     {
         /* Delete user favourites */
-        echo "<script>console.log(' $request->id');</script>";
         $user_favorites = Favorite::where('user_id', '=', $request->id)->delete();
         $auxIDOwner = Customer::where('id',$request->id)
         ->select([
@@ -574,10 +573,8 @@ class ClientController extends Controller
         $client->salesman=$this->getSalesmanNameById($client->salesman);
         $client->client_type=$this->getServiceTypeNameByID($this->getServiceTypeByUserID($id));
 
-        echo "<script>console.log('$client');</script>";
-
         $types = DocumentType::all();
-        echo "<script>console.log('$client->ownerID');</script>";
+       
         $user = User::where('id',$client->ownerID)->first();
 
         $receipts = Receipt::where('client_id',$client->id)->get();
@@ -635,8 +632,6 @@ class ClientController extends Controller
             ])
             ->first();
             $aux123=$aux->name;
-            echo "<script>console.log('$aux123');</script>";
-
             $name=$aux->name;
             array_push($ServiceTypeNames,$name);
         }
@@ -944,9 +939,10 @@ class ClientController extends Controller
         ->first();
         $user = Auth::user();
         Session::put('impersonated',$user->id);
+        //Session::put('establismentID',$id);
+        Session::put('clientImpersonatedId',$id);
         Auth::logout();
         Auth::loginUsingId($idUser->ownerID);
-        //return redirect()->back();
         return redirect('/home');
     }
 
@@ -954,6 +950,7 @@ class ClientController extends Controller
     {
         $userId = Session::get('impersonated');
         Session::forget('impersonated');
+        Session::forget('establismentID');
         Session::forget('clientImpersonatedId');
         Auth::logout();
         Auth::loginUsingId($userId);

@@ -6,6 +6,9 @@
 @endsection
 
 @section('content')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <script src="{{ URL::asset('/js/validations.js') }}"></script>
     <div class="container-bar">
         <p class="container-bar_txt">carrinho</p>
         <div class="container-bar_img">
@@ -46,7 +49,7 @@
                         </div>
 
                         <div class="cart-item_extra">
-                            <select class="remove-item" data-product="{{$item->id}}">
+                            <select class="remove-item" onchange="teste(this,{{$item->id}})" data-product="{{$item->id}}">
                                 <option value="" disabled selected>Remover</option>
                                 @for($i = 1; $i <= $item->amount; $i++)
                                     <option value="{{$i}}">{{$i}}</option>
@@ -92,15 +95,14 @@
 
 @endsection
 
+<!--
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const alertModal = $('#alertModal');
         const removeSelect = $('.remove-item');
-
         /* Mete aqui as condições para o gajo coiso e tal, nem precisas desses if's todos, o text pode ser uma variavel que consoante
         coiso e tal e cenas mudas e chapas no modal */
         let xpto = false;
-
         if (xpto) {
 
             $(this).find('.modal-body').text('O manel é um pétáculo');
@@ -112,11 +114,15 @@
             alertModal.modal(); /* Abrir o modal */
         }
 
-
-        /* SELECT */
-        removeSelect.on('change', function () {
+   /* SELECT */
+   removeSelect.on('change', function () {
            const productId = $(this).data('product');
            const removeQuantity = $(this).val();
+           $.ajaxSetup({
+                headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
 
             $.ajax({
                 method: "POST",
@@ -126,6 +132,5 @@
                 window.location.reload()
             )
         });
-
     }, false);
-</script>
+</script>-->
