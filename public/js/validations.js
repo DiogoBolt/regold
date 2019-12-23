@@ -240,7 +240,7 @@ function myFunction() {
 
   //teste remover
 
-  function teste(select, itemid){
+  function removeItem(select, itemid){
 
     var id=itemid;
     qt=select.value;

@@ -34,19 +34,20 @@
      <h1 class="title">Selecione as secções do cliente</h1>
      <div class="divSection">
         <ul id='ulSections' class="ks-cboxtags">
-            @foreach($sections as $section)
-                <li><input type="checkbox" id="{{$section->name}}1" name="sections[]" value="{{$section->id}}" checked>
-                <label for="{{$section->name}}1">{{$section->name}}</label></li>
-            @endforeach
-        
+            @if($control->personalizeSections==0)
+                @foreach($sections as $section)
+                    <li><input type="checkbox" id="{{$section->name}}1" name="sections[]" value="{{$section->id}}" checked>
+                    <label for="{{$section->name}}1">{{$section->name}}</label></li>
+                @endforeach
+            @else
+                
+            @endif
         <hr id="line">
-            <li><input type="checkbox" id="teste" name="sections[]" value="teste" checked>
-                <label for="teste">teste</label></li>
         </ul>
     </div>
    
-
-    <button id="newSections" class="btn-del" data-toggle="modal" data-target="#addSection">Nova Secção</button>
+    <button id="newSections" class="btn-del" onclick="showModal('addSection')">Nova Secção</button>
+    <button id="saveSections" class="btn-del" onclick="saveSections()">Guardar</button>
 
      <!-- Modal -->
      <div class="modal fade" id="addSection" role="dialog">
@@ -65,23 +66,14 @@
                                         <option  class="form-control" value="{{$section->id}}">{{$section->name}}</option>
                                     @endforeach
                             </select>
-                            <input type="text" id="fname" name="firstname" placeholder="Your name..">  
+                           <input type="text" id="idDesignation" name="designation" placeholder="Designação">
+                            <i class="fa fa-trash fa-lg" style="display:none" onclick="deleteNewSection(parentNode)"></i>
                         </div>
-                        <div class="newSections" id="newSection">
-                            <select class="form-control" id="selectSection">
-                                <option value="" selected disabled>Secção</option>
-                                    @foreach($sections as $section)
-                                        <option  class="form-control" value="{{$section->id}}">{{$section->name}}</option>
-                                    @endforeach
-                            </select>
-                            <input type="text" id="fname" name="firstname" placeholder="Your name..">  
-                        </div>
-                        
                     </div>
-                    <button id="btnAddNewSection"><i class="fa fa-plus"></i></button>   
+                    <button id="btnAddNewSection" onclick="addnewSection()"><i class="fa fa-plus"></i></button>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn modal-del" id="addSections" onclick="myFunction()">
+                    <button class="btn modal-del" id="btnAddSections" onclick="addSections()">
                         <strong>Adicionar</strong>
                     </button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">
@@ -93,4 +85,6 @@
     </div>
 
 @endsection
+
+
     

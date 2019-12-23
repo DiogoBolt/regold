@@ -49,7 +49,7 @@
                         </div>
 
                         <div class="cart-item_extra">
-                            <select class="remove-item" onchange="teste(this,{{$item->id}})" data-product="{{$item->id}}">
+                            <select class="remove-item" onchange="removeItem(this,{{$item->id}})" data-product="{{$item->id}}">
                                 <option value="" disabled selected>Remover</option>
                                 @for($i = 1; $i <= $item->amount; $i++)
                                     <option value="{{$i}}">{{$i}}</option>

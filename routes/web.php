@@ -60,8 +60,9 @@ Route::get('/home', 'ClientController@home');
 //route to change session var
 Route::post('/client/addSessionVar/{id}','ClientController@addSessionVar');
 Route::post('/client/deleteSessionVar','ClientController@deleteSessionVar');
-
-Route::get('/frontoffice/personlizeSection','PersonalizeSectionController@personalizeSection');
+//routes personalize Sections
+Route::get('/frontoffice/personlizeSection','PersonalizeSectionController@getSection');
+Route::post('/frontoffice/personalizeSection/save','PersonalizeSectionController@saveClientSection');
 
 
 Route::group(['middleware' => ['backoffice']], function () {

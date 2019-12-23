@@ -17,6 +17,8 @@ use App\Product;
 use App\Receipt;
 use App\User;
 use App\Section;
+use App\ClientSection;
+use App\ControlCustomizationClients;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -40,12 +42,59 @@ class PersonalizeSectionController extends Controller
 
 
 
-    public function personalizeSection(){
-        
+    public function getSection(){
+        $auxClientId = Session::get('clientImpersonatedId');
         $sections=Section::select(['id','name',
         ])->get();
-        
-        return view('frontoffice.personalizeSections',compact('sections'));
+
+        $clientSections=ClientSection::where('id_client',$auxClientId)
+        ->select([
+            'id',
+            'id_section',
+            'designation',
+        ])->get();
+
+        $control= ControlCustomizationClients::where('idClient',$auxClientId)->first();
+        $index=[];
+        if($control->personalizeSections==1){
+            foreach($sections as $section){
+                for($i=0; $i<count($clientSections); $i++){
+                    $auxName=$section->name."1";
+                    if($auxName==$clientSections[$i]->designation){
+                        $section->checked=1;
+                        array_push($index,$i);
+                        break;
+                    }else{
+                        $section->checked=0;
+                    }
+                }
+            }
+
+            for($i=0;$i<count($index);$i++){
+                unset($clientSections[$index[$i]]);
+            }
+        }
+
+        return view('frontoffice.personalizeSections',compact('sections','clientSections','control'));
+    }
+
+    public function saveClientSection(Request $request){
+        $inputs = $request->all();
+        $sections = json_decode($inputs['sections']);
+        $auxClientId = Session::get('clientImpersonatedId');
+
+        foreach($sections as $section){
+            $sectionClient = new ClientSection;
+            $sectionClient->id_client=$auxClientId;
+            $sectionClient->id_section=$section->sectionId;
+            $sectionClient->designation=$section->designation;
+            $sectionClient->save();
+        }
+
+        $control= ControlCustomizationClients::where('idClient',$auxClientId)->first();
+        $control->personalizeSections=1;
+        $control->save();
+
     }
 
 }

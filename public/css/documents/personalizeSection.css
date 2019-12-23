@@ -223,26 +223,54 @@ h1.title {
  /*MODAL*/
  .modal-content{
    margin-top: 25%;
-   margin-left: 25%;
-   width: 50%;
+   margin-left: 22.5%;
+   width: 55%;
    border-radius: 15px;
    text-align: center;
  }
 
+.modal-body{
+  margin-bottom: 25px;
+}
+ .newSections{
+   width: 90%;
+   text-align: center;
+   margin-left: 5%;
+   margin-bottom: 5px;
+ }
+ 
  #selectSection{
-   width: 55%;
-   float: left;
+  display: inline-block;
+  width: auto;
+}
+
+#idDesignation{
+  display: inline-block;
+  height: 32px;
+}
+
+ .fa-trash{
+   float: right;
+   margin-top: 13px;
+   margin-right: 20px;
+   color: rgba(255, 0, 0, 0.76);
  }
 
- #newSection{
-   background-color: aqua;
-   height: 45px;
-   margin: 1%;
+ #btnAddNewSection{
+   float: right;
+   color: black;
+   margin-right: 8%;
+   margin-top: 5px;
+   margin-bottom: 5px;
  }
 
- #newSections{
+ #btnAddSections{
    color: black;
    font-style: bold;
-   margin-top: 15%;
-   margin-left: 50%;
+   float: right;
+   margin-left: 10px;
+   margin-right: 45px;
  }
+
+
+ 
