@@ -3,24 +3,27 @@ var idSectionAux=0;
 
 //function show modal
 function showModal(idModal){
-    var qtdDiv=$('#allNewSections')[0].children.length;
-    
+
+    var qtdDiv=$('#allNews')[0].children.length;
+        
     while(qtdDiv > 1){
-        $('#allNewSections')[0].children[0].remove();
+        $('#allNews')[0].children[0].remove();
         --qtdDiv;
     }
-   
-    $('.newSections')[0].children[0].selectedIndex=0
-    $('.newSections')[0].children[1].value="";
-
-    
+    if(idModal=='addSection'){      
+        $('.news')[0].children[0].selectedIndex=0
+        $('.news')[0].children[1].value="";
+    }
+        
     idSectionAux=0;
+
     $('#'+idModal).modal('show');
+   
 }
  
  //function para adiconar os dados introduzidos no modal para pagina
  function addSections() {
-    var div= document.getElementsByClassName('newSections');
+    var div= document.getElementsByClassName('news');
 
     for( var i=0; i< div.length; i++){
         var sectionValue=div[i].children[0].selectedIndex;
@@ -79,17 +82,48 @@ function saveSections(){
 //function para add nova seccao individual
 function addnewSection(){
     document.getElementsByClassName('fa fa-trash')[0].style.display="block";
-    var divNewSection = document.getElementsByClassName('newSections')[0];
+    var divNewSection = document.getElementsByClassName('news')[0];
     var clone=divNewSection.cloneNode(true);
     clone.children[1].value="";
-    clone.id="newSection" + ++idSectionAux;
+    clone.id="oneNew" + ++idSectionAux;
     divNewSection.parentNode.appendChild(clone);
 }
 
 function deleteNewSection(parent){
     $('#'+parent.id).remove();
-    if($('#allNewSections')[0].children.length<2){
+    if($('#allNews')[0].children.length<2){
         document.getElementsByClassName('fa fa-trash')[0].style.display="none";
     }
 
+}
+
+//funcção para adicionar uma nova(s) á tabela
+
+function addAreasTable(){
+    var div= document.getElementsByClassName('news');
+
+    for( var i=0; i< div.length; i++){
+        var name=div[i].children[0].value;
+        var productAux=div[i].children[1].selectedIndex;
+       // var productId=div[i].children[1].options[productAux].value;
+        var cleaningFrequencyAux=div[i].children[2].selectedIndex;
+        //var cleaningFrequencyID=div[i].children[2].options[cleaningFrequencyAux].value;
+
+        var row = document.getElementsByClassName("tableRow")[0];
+        var aux=  document.getElementById("areasTable").getElementsByTagName('tbody').length;
+        var table = document.getElementById("areasTable").getElementsByTagName('tbody')[1];  
+ 
+        var clone = row.cloneNode(true); 
+        console.log()
+        
+        console.log(clone.children[3].childNodes[0]);
+        clone.children[0].innerHTML=name;
+        clone.children[1].childNodes[1].selectedIndex=aux;
+        clone.children[2].childNodes[1].selectedIndex=cleaningFrequencyAux;
+        clone.children[3].childNodes[0].checked=true;
+
+        table.appendChild(clone); // add new row to end of table
+
+    }
+    $('#addArea').modal('hide');
 }

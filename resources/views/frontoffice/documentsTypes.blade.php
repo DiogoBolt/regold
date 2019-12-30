@@ -43,22 +43,25 @@
                         {{ $type->name }}
                     </div>
                 </a>
-            @endforeach
+                @endforeach
+                @if($super === 'HACCP')
                 <a class="category {{ $super }}" href="/frontoffice/personlizeSection">
                     <div class="category-body">
-                        @if($super === 'Controlopragas')
-                            <img src="/img/logo1white.png" class="img-responsive"/>
-                        @elseif($super === 'HACCP')
-                            <img src="/img/logo2white.png" class="img-responsive"/>
-                        @else 
-                            <img src="/img/logoregoldi.png" class="img-responsive" />
-                        @endif
+                        <img src="/img/logo2white.png" class="img-responsive"/>
                     </div>
                     <div class="category-footer">
                         PERSONALIZAR SECÇÕES
                     </div>
                 </a>
-
+                <a class="category {{ $super }}" href="/frontoffice/personalizeAreasEquipments">
+                    <div class="category-body">
+                        <img src="/img/logo2white.png" class="img-responsive"/>
+                    </div>
+                    <div class="category-footer">
+                        ÁREAS E EQUIPAMENTOS
+                    </div>
+                </a>
+                @endif
         </div>
     </div>
 @endsection

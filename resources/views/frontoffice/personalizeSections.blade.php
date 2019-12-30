@@ -40,9 +40,23 @@
                     <label for="{{$section->name}}1">{{$section->name}}</label></li>
                 @endforeach
             @else
-                
+                @foreach($sections as $section)
+                    @if($section->checked)
+                        <li><input type="checkbox" id="{{$section->name}}1" name="sections[]" value="{{$section->id}}" checked>
+                        <label for="{{$section->name}}1">{{$section->name}}</label></li>
+                    @else
+                        <li><input type="checkbox" id="{{$section->name}}1" name="sections[]" value="{{$section->id}}">
+                        <label for="{{$section->name}}1">{{$section->name}}</label></li>
+                    @endif
+                @endforeach 
             @endif
-        <hr id="line">
+            @if(count($clientSections)>0)
+                @foreach($clientSections as $clientSection)
+                    <li><input type="checkbox" id="{{$clientSection->designation}}" name="sections[]" value="{{$clientSection->id}}" checked>
+                    <label for="{{$clientSection->designation}}">{{$clientSection->designation}}</label></li>
+                @endforeach
+            @endif
+
         </ul>
     </div>
    
@@ -58,15 +72,15 @@
                     <h4 class="modal-title">Adicionar Nova Secção</h4>
                 </div>
                 <div class="modal-body">
-                    <div id="allNewSections">
-                        <div class="newSections" id="newSection">
-                            <select class="form-control" id="selectSection">
+                    <div id="allNews">
+                        <div class="news" id="oneNew">
+                            <select class="form-control" id="selectSection" >
                                 <option value="" selected disabled>Secção</option>
                                     @foreach($sections as $section)
                                         <option  class="form-control" value="{{$section->id}}">{{$section->name}}</option>
                                     @endforeach
                             </select>
-                           <input type="text" id="idDesignation" name="designation" placeholder="Designação">
+                            <input type="text" id="idDesignation" name="designation" placeholder="Designação">
                             <i class="fa fa-trash fa-lg" style="display:none" onclick="deleteNewSection(parentNode)"></i>
                         </div>
                     </div>

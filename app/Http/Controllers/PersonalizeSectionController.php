@@ -19,6 +19,9 @@ use App\User;
 use App\Section;
 use App\ClientSection;
 use App\ControlCustomizationClients;
+use App\Area;
+use App\Equipment;
+use App\CleanFrequency;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -39,8 +42,6 @@ class PersonalizeSectionController extends Controller
     {
         $this->middleware('auth');
     }
-
-
 
     public function getSection(){
         $auxClientId = Session::get('clientImpersonatedId');
@@ -83,6 +84,8 @@ class PersonalizeSectionController extends Controller
         $sections = json_decode($inputs['sections']);
         $auxClientId = Session::get('clientImpersonatedId');
 
+        $sectionClient = ClientSection::where('id_client', $auxClientId)->delete();
+
         foreach($sections as $section){
             $sectionClient = new ClientSection;
             $sectionClient->id_client=$auxClientId;
@@ -95,6 +98,68 @@ class PersonalizeSectionController extends Controller
         $control->personalizeSections=1;
         $control->save();
 
+    }
+
+    public function getAreasEquipments(){
+    
+        $auxClientId = Session::get('clientImpersonatedId');
+
+        $clientSections=ClientSection::where('id_client',$auxClientId)
+        ->select([
+            'id',
+            'id_section',
+            'designation',
+        ])->get();
+
+        return view('frontoffice.personalizeAreasEquipments',compact('clientSections'));
+    }
+
+    
+    public function personalizeEachSection($id){
+        $clientSection = ClientSection::where('id',$id)
+        ->select([
+            'id',
+            'id_section',
+            'designation',
+        ])->first();
+        
+        $areas = Area::where('idSection',$clientSection->id_section)
+        ->orWhere('idSection',0)
+        ->get();
+             
+        $equipments = Equipment::where('idSection',$clientSection->id_section)
+        ->orWhere('idSection',0)
+        ->get();
+
+        $products = Product::select([
+            'id',
+            'name',
+        ])->get();
+
+        $cleaningFrequencys = CleanFrequency::select([
+            'id',
+            'designation',
+        ])->get();
+
+        return view('frontoffice.personalizeEachSection',compact('clientSection','areas','equipments','products','cleaningFrequencys'));
+    }
+
+    public function getAllProduct(){
+        $products = Product::select([
+            'id',
+            'name',
+        ])->get();
+        
+        return $products;
+    }
+
+    public function getAllCleanFrequency(){
+        $cleaningFrequencys = CleanFrequency::select([
+            'id',
+            'designation',
+        ])->get();
+
+        return $cleaningFrequencys;
     }
 
 }

@@ -57,12 +57,16 @@ Route::get('/frontoffice/invoices', 'FrontofficeController@invoices')->name('inv
 Route::get('/frontoffice/firstlogin', 'ClientController@checkFirstLogin');
 Route::post('/frontoffice/changePassword', 'ClientController@changePassword');
 Route::get('/home', 'ClientController@home');
+
 //route to change session var
 Route::post('/client/addSessionVar/{id}','ClientController@addSessionVar');
 Route::post('/client/deleteSessionVar','ClientController@deleteSessionVar');
+
 //routes personalize Sections
 Route::get('/frontoffice/personlizeSection','PersonalizeSectionController@getSection');
 Route::post('/frontoffice/personalizeSection/save','PersonalizeSectionController@saveClientSection');
+Route::get('/frontoffice/personalizeAreasEquipments','PersonalizeSectionController@getAreasEquipments');
+Route::get('/frontoffice/personalizeAreasEquipments/personalizeEachSection/{id}','PersonalizeSectionController@personalizeEachSection');
 
 
 Route::group(['middleware' => ['backoffice']], function () {
