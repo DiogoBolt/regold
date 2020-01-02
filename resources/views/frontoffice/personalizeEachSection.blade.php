@@ -30,8 +30,9 @@
             <span class="back-btn__back"><strong>Documentos </strong></span>
         </a>
      -->
-     <h1 class="title">{{$clientSection->designation}}</h1>
-     <h1 class="title">ÁREAS</h1>
+     <h1 id="sectionTitle" class="title">{{$clientSection->designation}}</h1>
+     <input type="hidden" id="idSection" name="custId"value="{{$clientSection->id}}">
+     <h2 class="title">ÁREAS</h2>
      <table class="table" id="areasTable">
         <tr>
             <th>Área</th>
@@ -45,6 +46,7 @@
                 <td><label>{{$area->designation}}</label></td>
                 <td>
                     <select id="product">
+                    <option value="" disabled>Produto</option>
                         @foreach($products as $product)
                             @if($area->idProduct == $product->id)
                                 <option value="{{$product->id}}" selected>{{$product->name}}</option>
@@ -56,6 +58,7 @@
                 </td>
                 <td>
                     <select id="cleaning">
+                    <option value="" disabled>Limpeza</option>
                         @foreach($cleaningFrequencys as $cleaningFrequency)
                             @if($area->idFrequencyCleaning == $cleaningFrequency->id)
                                 <option value="{{$cleaningFrequency->id}}" selected>{{$cleaningFrequency->designation}}</option>
@@ -65,13 +68,14 @@
                         @endforeach
                     </select>
                 </td>
-                <td><input type="radio"></td>
+                <td><input id="checkedArea" type="Checkbox" name="checkedArea[]" checked></td>
             </tr>
         @endforeach
         </tbody>
     </table>
 
     <button id="newSections" class="btn-del" onclick="showModal('addArea')">Nova área</button>
+    <button id="savePersolize" class="btn-del" onclick="saveEachPersonalize()">Guardar</button>
 
      <!-- Modal add novas areas -->
      <div class="modal fade" id="addArea" role="dialog">

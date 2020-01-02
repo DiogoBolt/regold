@@ -13,6 +13,10 @@ function showModal(idModal){
     if(idModal=='addSection'){      
         $('.news')[0].children[0].selectedIndex=0
         $('.news')[0].children[1].value="";
+    }else if(idModal=='addArea'){
+        $('.news')[0].children[0].value="";
+        $('.news')[0].children[1].selectedIndex=0
+        $('.news')[0].children[2].selectedIndex=0
     }
         
     idSectionAux=0;
@@ -84,6 +88,7 @@ function addnewSection(){
     document.getElementsByClassName('fa fa-trash')[0].style.display="block";
     var divNewSection = document.getElementsByClassName('news')[0];
     var clone=divNewSection.cloneNode(true);
+    clone.children[0].value="";
     clone.children[1].value="";
     clone.id="oneNew" + ++idSectionAux;
     divNewSection.parentNode.appendChild(clone);
@@ -110,15 +115,12 @@ function addAreasTable(){
         //var cleaningFrequencyID=div[i].children[2].options[cleaningFrequencyAux].value;
 
         var row = document.getElementsByClassName("tableRow")[0];
-        var aux=  document.getElementById("areasTable").getElementsByTagName('tbody').length;
+        //var aux=  document.getElementById("areasTable").getElementsByTagName('tbody').length;
         var table = document.getElementById("areasTable").getElementsByTagName('tbody')[1];  
  
         var clone = row.cloneNode(true); 
-        console.log()
-        
-        console.log(clone.children[3].childNodes[0]);
-        clone.children[0].innerHTML=name;
-        clone.children[1].childNodes[1].selectedIndex=aux;
+        clone.children[0].childNodes[0].innerHTML=name;
+        clone.children[1].childNodes[1].selectedIndex=productAux;
         clone.children[2].childNodes[1].selectedIndex=cleaningFrequencyAux;
         clone.children[3].childNodes[0].checked=true;
 
@@ -126,4 +128,47 @@ function addAreasTable(){
 
     }
     $('#addArea').modal('hide');
+}
+
+function saveEachPersonalize(){
+    var tableArea = document.getElementById("areasTable");
+    var rows= tableArea.getElementsByClassName("tableRow");
+
+    var areasSelected=[];
+    
+    var idSection=document.getElementById("idSection").value; 
+   //console.log(document.getElementById("idSection").value);
+    for(var i=0; i<rows.length; i++){
+       console.log("designation-> "+ rows[i].cells[0].children[0].textContent);
+       console.log("idProduto-> "+ rows[i].cells[1].children[0].value);
+       console.log("idFrequencia-> "+ rows[i].cells[2].children[0].value);
+
+        if(rows[i].cells[3].children[0].checked){
+            console.log("checked");
+            var area = {};
+            area.designation= rows[i].cells[0].children[0].textContent;
+            area.idProduto=rows[i].cells[1].children[0].value;
+            area.idCleaningFrequency=rows[i].cells[2].children[0].value;
+            area.idSection=idSection;
+            areasSelected.push(area);
+        }else{
+            console.log("not checked");
+        }
+    }
+    var areas = JSON.stringify(areasSelected);
+    console.log(areasSelected);
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        type: 'POST',
+        url: "/frontoffice/personalizeAreasEquipments/personalizeEachSection/save",
+        data:{areas: areas, idSection:idSection}
+    }).then(
+        //window.location.replace('/frontoffice/documents/HACCP')
+    );
+
 }

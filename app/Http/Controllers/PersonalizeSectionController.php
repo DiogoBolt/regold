@@ -22,6 +22,7 @@ use App\ControlCustomizationClients;
 use App\Area;
 use App\Equipment;
 use App\CleanFrequency;
+use App\AreaSectionClient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -70,12 +71,10 @@ class PersonalizeSectionController extends Controller
                     }
                 }
             }
-
             for($i=0;$i<count($index);$i++){
                 unset($clientSections[$index[$i]]);
             }
         }
-
         return view('frontoffice.personalizeSections',compact('sections','clientSections','control'));
     }
 
@@ -97,7 +96,6 @@ class PersonalizeSectionController extends Controller
         $control= ControlCustomizationClients::where('idClient',$auxClientId)->first();
         $control->personalizeSections=1;
         $control->save();
-
     }
 
     public function getAreasEquipments(){
@@ -121,12 +119,35 @@ class PersonalizeSectionController extends Controller
             'id',
             'id_section',
             'designation',
+            'wasPersonalized',
         ])->first();
         
         $areas = Area::where('idSection',$clientSection->id_section)
         ->orWhere('idSection',0)
         ->get();
-             
+        
+        $areasSectionClients= AreaSectionClient::where('idSection', $clientSection->id)->get();
+        
+        $index=[];
+        if($clientSection->wasPersonalized == 1){
+            foreach($areas as $area){
+                for($i=0; $i<count($areasSectionClients); $i++){
+                    $auxName=$area->designation;
+                    if($auxName==$areasSectionClients[$i]->designation){
+                        $area->checked=1;
+                        array_push($index,$i);
+                        break;
+                    }else{
+                        $area->checked=0;
+                    }
+                }
+            }
+            for($i=0;$i<count($index);$i++){
+                unset($areasSectionClients[$index[$i]]);
+            }
+        }
+        //dd($areas);
+     
         $equipments = Equipment::where('idSection',$clientSection->id_section)
         ->orWhere('idSection',0)
         ->get();
@@ -142,6 +163,31 @@ class PersonalizeSectionController extends Controller
         ])->get();
 
         return view('frontoffice.personalizeEachSection',compact('clientSection','areas','equipments','products','cleaningFrequencys'));
+    }
+
+    public function saveEachSection(Request $request){
+        $inputs = $request->all();
+        
+        $areas = json_decode($inputs['areas']);
+        $idSection = json_decode($inputs['idSection']);
+
+        $auxClientId = Session::get('clientImpersonatedId');
+
+        $AreasSectionClient = AreaSectionClient::where('idClient', $auxClientId)->delete();
+        
+        foreach($areas as $area){
+            $AreaSectionClient = new AreaSectionClient;
+            $AreaSectionClient->idClient=$auxClientId;
+            $AreaSectionClient->idSection=$idSection;
+            $AreaSectionClient->designation=$area->designation;
+            $AreaSectionClient->idCleaningFrequency=$area->idCleaningFrequency;
+            $AreaSectionClient->idProduto=$area->idProduto;
+            $AreaSectionClient->save();
+        }
+
+        $clientSection = ClientSection::where('id',$idSection)->first();
+        $clientSection->wasPersonalized=1;
+        $clientSection->save();
     }
 
     public function getAllProduct(){
@@ -161,5 +207,8 @@ class PersonalizeSectionController extends Controller
 
         return $cleaningFrequencys;
     }
+
+
+
 
 }

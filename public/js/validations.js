@@ -249,13 +249,16 @@ function myFunction() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-        $.ajax({
-            type: 'POST',
-            url: "/frontoffice/cart/removeitem",
-            data:{id: id, qt: qt}
-        }).then(
-            window.location.reload()
-        );
+    
+    $.ajax({
+        type: 'POST',
+        url: "/frontoffice/cart/removeitem",
+        data:{id: id, qt: qt}
+    }).done(
+        setTimeout(function(){
+            window.location.reload();
+        },500)
+    );
       
   }
   

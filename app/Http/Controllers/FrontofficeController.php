@@ -93,10 +93,6 @@ class FrontofficeController extends Controller
 
         $receipts=Receipt::whereIN('client_id',$ids)->get();
 
-        //dd($receipts);
-        //dd(count($receipts));
-        //dd($receipts[0]);
-
         return view('frontoffice.documents',compact('client','receipts','types'));
     }
 
@@ -220,7 +216,6 @@ class FrontofficeController extends Controller
 
     public function addCart(Request $request)
     {
-        //dd(Session::get('establismentID'));
         $inputs = $request->all();
 
         $user = Auth::user();
@@ -399,7 +394,6 @@ class FrontofficeController extends Controller
     { 
         $user = Auth::user();
         $inputs = $request->all();
-
         
         $auxClientId = Session::get('establismentID');
         
@@ -416,14 +410,18 @@ class FrontofficeController extends Controller
             $order_line->delete();
 
         }else{
-            //dd($inputs['qt']);
-            //15
             $aux=$order_line->amount-$inputs['qt'];
+
+            $auxTotal= $aux*$order_line->total;
+            $auxTotalFinal=$auxTotal/$order_line->amount;
+            
             $order_line->amount =$aux;
+            $order_line->total = $auxTotalFinal;
+            
             $order_line->save();
         }
 
-        return back();
+        //return back();
     }
 
     function messages()
@@ -454,7 +452,6 @@ class FrontofficeController extends Controller
         $orders = Order::where('client_id',$auxClientId)
         //->where('processed',1)
         ->where('created_at','>=',Carbon::now()->startOfMonth())->count();
-        //dd($orders);
 
         if(!isset($cart))
         {
@@ -469,8 +466,6 @@ class FrontofficeController extends Controller
 
         /*$order = Order::where('client_id',$auxClientId)->where('status','waiting_payment')
         ->where('invoice_id',null)->first();
-        
-        dd($order);
         
         if(!isset($order))
         {
@@ -570,6 +565,7 @@ class FrontofficeController extends Controller
         {
             $item->product = Product::where('id',$item->product_id)->first();
         }
+
 
         $total = OrderLine::where('cart_id',$cart->id)->sum('total');
         $totalprod = OrderLine::where('cart_id',$cart->id)->sum('total');

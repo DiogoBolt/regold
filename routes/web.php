@@ -67,7 +67,7 @@ Route::get('/frontoffice/personlizeSection','PersonalizeSectionController@getSec
 Route::post('/frontoffice/personalizeSection/save','PersonalizeSectionController@saveClientSection');
 Route::get('/frontoffice/personalizeAreasEquipments','PersonalizeSectionController@getAreasEquipments');
 Route::get('/frontoffice/personalizeAreasEquipments/personalizeEachSection/{id}','PersonalizeSectionController@personalizeEachSection');
-
+Route::post('/frontoffice/personalizeAreasEquipments/personalizeEachSection/save','PersonalizeSectionController@saveEachSection');
 
 Route::group(['middleware' => ['backoffice']], function () {
 
