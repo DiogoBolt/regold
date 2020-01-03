@@ -42,18 +42,25 @@
             @else
                 @foreach($sections as $section)
                     @if($section->checked)
-                        <li><input type="checkbox" id="{{$section->name}}1" name="sections[]" value="{{$section->id}}" checked>
-                        <label for="{{$section->name}}1">{{$section->name}}</label></li>
+                        <li>
+                            <input type="checkbox" id="{{$section->name}}1" name="sections[]" value='{"idSection":{{$section->id}},"idClientSection":{{$section->idClientSection}}}' checked>
+                            <label for="{{$section->name}}1">{{$section->name}}</label>
+                        </li>
                     @else
-                        <li><input type="checkbox" id="{{$section->name}}1" name="sections[]" value="{{$section->id}}">
-                        <label for="{{$section->name}}1">{{$section->name}}</label></li>
+                        <li>
+                            <input type="checkbox" id="{{$section->name}}1" name="sections[]" value='{"idSection":{{$section->id}},"idClientSection":{{$section->idClientSection}}}'>
+                            <label for="{{$section->name}}1">{{$section->name}}</label>
+                        </li>
                     @endif
                 @endforeach 
             @endif
             @if(count($clientSections)>0)
                 @foreach($clientSections as $clientSection)
-                    <li><input type="checkbox" id="{{$clientSection->designation}}" name="sections[]" value="{{$clientSection->id}}" checked>
-                    <label for="{{$clientSection->designation}}">{{$clientSection->designation}}</label></li>
+
+                    <li>
+                        <input type="checkbox" id="{{$clientSection->designation}}" name="sections[]" value='{"idSection":{{$clientSection->id}},"idClientSection":{{$clientSection->id}}}' checked>
+                        <label for="{{$clientSection->designation}}">{{$clientSection->designation}}</label>
+                    </li>
                 @endforeach
             @endif
 
@@ -72,7 +79,7 @@
                     <h4 class="modal-title">Adicionar Nova Secção</h4>
                 </div>
                 <div class="modal-body">
-                    <div id="allNews">
+                    <div id="allNewsSections">
                         <div class="news" id="oneNew">
                             <select class="form-control" id="selectSection" >
                                 <option value="" selected disabled>Secção</option>
@@ -84,7 +91,7 @@
                             <i class="fa fa-trash fa-lg" style="display:none" onclick="deleteNewSection(parentNode)"></i>
                         </div>
                     </div>
-                    <button id="btnAddNewSection" onclick="addnewSection()"><i class="fa fa-plus"></i></button>
+                    <button id="btnAddNewSection" onclick="clone('addSection')"><i class="fa fa-plus"></i></button>
                 </div>
                 <div class="modal-footer">
                     <button class="btn modal-del" id="btnAddSections" onclick="addSections()">
