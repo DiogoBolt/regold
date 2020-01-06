@@ -183,7 +183,7 @@ ul.ks-cboxtags li input[type="checkbox"]:checked + label::before {
 
 ul.ks-cboxtags li input[type="checkbox"]:checked + label {
   border: 2px solid green;
-  background-color: #9ac266;;
+  background-color: #9ac266;
   color: black;
   transition: all .2s;
 }
@@ -194,11 +194,11 @@ ul.ks-cboxtags li input[type="checkbox"] {
 }
 
 ul.ks-cboxtags li input[type="checkbox"] {
-position: absolute;
-opacity: 0;
+  position: absolute;
+  opacity: 0;
 }
 ul.ks-cboxtags li input[type="checkbox"]:focus + label {
-border: 2px solid green;
+  border: 2px solid green;
 }
 
 
@@ -222,21 +222,21 @@ h1.title {
 
  /*MODAL*/
  .modal-content{
-   margin-top: 25%;
-   margin-left: 22.5%;
-   width: 55%;
-   border-radius: 15px;
-   text-align: center;
+  margin-top: 25%;
+  margin-left: 22.5%;
+  width: 55%;
+  border-radius: 15px;
+  text-align: center;
  }
 
 .modal-body{
   margin-bottom: 25px;
 }
  .newSections{
-   width: 90%;
-   text-align: center;
-   margin-left: 5%;
-   margin-bottom: 5px;
+  width: 90%;
+  text-align: center;
+  margin-left: 5%;
+  margin-bottom: 5px;
  }
  
  #selectSection{
@@ -249,28 +249,72 @@ h1.title {
   height: 32px;
 }
 
- .fa-trash{
-   float: right;
-   margin-top: 13px;
-   margin-right: 20px;
-   color: rgba(255, 0, 0, 0.76);
+.fa-trash{
+  float: right;
+  margin-top: 13px;
+  margin-right: 20px;
+  color: rgba(255, 0, 0, 0.76);
  }
 
- #btnAddNewSection{
-   float: right;
-   color: black;
-   margin-right: 8%;
-   margin-top: 5px;
-   margin-bottom: 5px;
+#btnAddNewSection{
+  float: right;
+  color: black;
+  margin-right: 8%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+#btnAddSections{
+  color: black;
+  font-style: bold;
+  float: right;
+  margin-left: 10px;
+  margin-right: 45px;
+}
+
+ /*a tag*/
+ .ulSectionClient{
+   width: 100%;
  }
 
- #btnAddSections{
-   color: black;
-   font-style: bold;
-   float: right;
-   margin-left: 10px;
-   margin-right: 45px;
+ .ulSectionClient li{
+    display: inline-block;
+    margin-left: 5px;
+    margin-bottom: 20px;
  }
+
+.aWasPersonalized{
+  background-color: #9ac266;
+  border: 2px solid green;
+  color: black;
+  padding: 8px 12px;
+  font-weight: bold;
+  border-radius: 15px;
+}
+
+.aNotPersonalized{
+  background-color: #e6ffe6;
+  border: 2px solid green;
+  color: black;
+  padding: 8px 12px;
+  font-weight: bold;
+  border-radius: 15px;
+}
+
+a.aNotPersonalized, a.aNotPersonalized:hover{
+  text-decoration:none;
+  color:black;
+}
+
+a.aWasPersonalized, a.aWasPersonalized:hover{
+  text-decoration:none;
+  color:black;
+}
+
+.teste {
+}
+
+
 
 
  

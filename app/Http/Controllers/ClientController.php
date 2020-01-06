@@ -465,6 +465,8 @@ class ClientController extends Controller
         
         $client->district = $auxDistrict;
         $client->invoice_district = $auxDristrictInvoice;
+
+        //dd($this->getParishNameByPostalCode('4809-011'));
         
         $client->client_type = $this->getServiceTypeByUserID($id);
         $client->parish =$this->getParishNameByPostalCode($client->postal_code);
@@ -640,8 +642,9 @@ class ClientController extends Controller
 
     //retorna o nome da freguesia pelo codigo postal
     private function getParishNameByPostalCode($postalCode){
+
         $parishName=PostalCodes::where('postal_code',$postalCode)->first();
-        //dd($parishName->name);
+    
         return $parishName->name;
     }
 

@@ -51,11 +51,16 @@ function showModal(idModal){
         var nameSection=div[i].children[1].value;
         var li = document.createElement('li');
         var input= document.createElement('input');
+
+        var value = {
+            "idSection" : sectionValue,
+            "idClientSection" : 0,
+            };
     
         input.type="checkbox";
         input.id=sectionText+nameSection;
         input.name="sections[]";
-        input.value=sectionValue;
+        input.value=JSON.stringify(value);
         input.checked=true;
 
         var label = document.createElement('label');
@@ -67,6 +72,7 @@ function showModal(idModal){
 
         document.getElementById('ulSections').appendChild(li);
     }
+
     $('#addSection').modal('hide');
 } 
 //function para guardar as secçoes na bd
@@ -74,6 +80,7 @@ function saveSections(){
     var allSections=[];
     var sections=document.getElementsByName('sections[]');
     var sectionSize=sections.length;
+
 
     for(var i=0; i<sectionSize;i++){
         if(sections[i].checked){
@@ -86,6 +93,7 @@ function saveSections(){
         }
     }
     var sectionsJson = JSON.stringify(allSections);
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -95,8 +103,10 @@ function saveSections(){
         type: 'POST',
         url: "/frontoffice/personalizeSection/save",
         data:{sections: sectionsJson}
-    }).then(
-        window.location.replace('/frontoffice/documents/HACCP')
+    }).done(
+        setTimeout(function(){
+            window.location.replace('/frontoffice/documents/HACCP');
+        },1000)
     );
 }
 

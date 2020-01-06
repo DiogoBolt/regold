@@ -7,6 +7,7 @@
 @endsection
 
 @section('content')
+
     <script src="{{ URL::asset('/js/personalizeSection.js') }}"></script>
 
     <div class="container-bar">
@@ -33,9 +34,17 @@
      -->
      <h1 class="title">Secções</h1>
      <div class="divSection">
-        <ul id='ulSections' class="ks-cboxtags">
+        <ul class="ulSectionClient">
             @foreach($clientSections as $clientSection)
-                <a href="{{url('/frontoffice/personalizeAreasEquipments/personalizeEachSection',$clientSection->id)}}" id="{{$clientSection->id}}">{{$clientSection->designation}}</a>
+                @if($clientSection->wasPersonalized==1)
+                    <li class="teste">
+                        <a class="aWasPersonalized" href="{{url('/frontoffice/personalizeAreasEquipments/personalizeEachSection',$clientSection->id)}}" id="{{$clientSection->id}}">{{$clientSection->designation}}</a>
+                    </li>
+                @else
+                    <li class="teste">
+                        <a class="aNotPersonalized" href="{{url('/frontoffice/personalizeAreasEquipments/personalizeEachSection',$clientSection->id)}}" id="{{$clientSection->id}}">{{$clientSection->designation}}</a>
+                    </li>
+                @endif
             @endforeach     
         </ul>
     </div>

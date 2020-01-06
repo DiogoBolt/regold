@@ -1,0 +1,30 @@
+
+https://www.youtube.com/watch?v=wWRwttcd58I
+
+script para adicionar o idcliente ao carrinho.
+UPDATE `cart` SET cart.client_id=(SELECT clients.id from clients where cart.user_id=clients.ownerID LIMIT 1)
+
+script para o first login
+criar tabela fist login nos users
+UPDATE `users` SET users.first_login =(SELECT clients.first_login from clients where clients.ownerID=users.id LIMIT 1)
+
+SELECT count(*) from clients where clients.city='Famalicão'
+44
+
+UPDATE clients set clients.auxCity = 167 where clients.city="Alcabideche"
+
+
+SELECT clients.activity,  COUNT(*) FROM `clients` GROUP by clients.activity
+
+SELECT count(*) FROM `clients` WHERE clients.client_type = "Regolfood"
+
+INSERT INTO `service_type_client`(`id_client`) SELECT (clients.id) FROM clients WHERE clients.client_type="Regoldfood"
+UPDATE `service_type_client` SET `id_service_type`=1,`created_at`=now(),`updated_at`=now() WHERE 1
+
+
+
+
+
+//por os clientes todos na tabela controlCustumizeSections
+INSERT INTO `control_customization_clients`( `idClient`) SELECT clients.id from clients where 1
+UPDATE `control_customization_clients` SET `personalizeSections`=0,`personalizeAreasEquipments`=0,`created_at`=now(),`updated_at`=now() WHERE 1

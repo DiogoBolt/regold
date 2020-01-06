@@ -36,7 +36,7 @@
         <ul id='ulSections' class="ks-cboxtags">
             @if($control->personalizeSections==0)
                 @foreach($sections as $section)
-                    <li><input type="checkbox" id="{{$section->name}}1" name="sections[]" value="{{$section->id}}" checked>
+                    <li><input type="checkbox" id="{{$section->name}}1" name="sections[]" value='{"idSection":{{$section->id}},"idClientSection":{{$section->idClientSection}}}' checked>
                     <label for="{{$section->name}}1">{{$section->name}}</label></li>
                 @endforeach
             @else
@@ -56,14 +56,12 @@
             @endif
             @if(count($clientSections)>0)
                 @foreach($clientSections as $clientSection)
-
                     <li>
                         <input type="checkbox" id="{{$clientSection->designation}}" name="sections[]" value='{"idSection":{{$clientSection->id}},"idClientSection":{{$clientSection->id}}}' checked>
                         <label for="{{$clientSection->designation}}">{{$clientSection->designation}}</label>
                     </li>
                 @endforeach
             @endif
-
         </ul>
     </div>
    

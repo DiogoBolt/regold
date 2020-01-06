@@ -59,7 +59,9 @@ class PersonalizeSectionController extends Controller
         ])->get();
 
         $control= ControlCustomizationClients::where('idClient',$auxClientId)->first();
+
         $index=[];
+
         if($control->personalizeSections==1){
             foreach($sections as $section){
                 for($i=0; $i<count($clientSections); $i++){
@@ -78,16 +80,25 @@ class PersonalizeSectionController extends Controller
             for($i=0;$i<count($index);$i++){
                 unset($clientSections[$index[$i]]);
             }
+        }else{
+            foreach($sections as $section){
+                $section->checked=0;
+                $section->idClientSection=0;
+            }
         }
+
         return view('frontoffice.personalizeSections',compact('sections','clientSections','control'));
     }
 
     public function saveClientSection(Request $request){
         $inputs = $request->all();
         $sections = json_decode($inputs['sections']);
+
+
         $auxClientId = Session::get('clientImpersonatedId');
 
         $sectionsClient = ClientSection::where('id_client',$auxClientId)
+        ->where('active',1)
         ->select(['id',])
         ->get();
 
@@ -106,11 +117,12 @@ class PersonalizeSectionController extends Controller
             }
         }
 
-        foreach($indexs as $index){
-            $clientSectionChange= ClientSection::where('id',$index)->first();
-            $clientSectionChange->active=0;
-            $clientSectionChange->save();
-            
+        if(count($indexs)>0){
+            foreach($indexs as $index){
+                $clientSectionChange= ClientSection::where('id',$index)->first();
+                $clientSectionChange->active=0;
+                $clientSectionChange->save();
+            }
         }
 
         foreach($sections as $section){
@@ -127,6 +139,7 @@ class PersonalizeSectionController extends Controller
         $control->personalizeSections=1;
         $control->save();
     }
+    
 
     public function getAreasEquipments(){
     
@@ -138,6 +151,7 @@ class PersonalizeSectionController extends Controller
             'id',
             'id_section',
             'designation',
+            'wasPersonalized',
         ])->get();
 
         return view('frontoffice.personalizeAreasEquipments',compact('clientSections'));
