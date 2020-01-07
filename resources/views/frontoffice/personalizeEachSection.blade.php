@@ -30,10 +30,17 @@
             <span class="back-btn__back"><strong>Documentos </strong></span>
         </a>
      -->
+    
+     {{-- Go Back Button --}}
+    <a class="back-btn" href="/frontoffice/personalizeAreasEquipments">
+        <span class="back-btn__front"><strong>Voltar</strong></span>
+        <span class="back-btn__back"><strong>Home</strong></span>
+    </a>
+
      <h1 id="sectionTitle" class="title">{{$clientSection->designation}}</h1>
      <input type="hidden" id="idSection" name="custId"value="{{$clientSection->id}}">
-     <!--
-     Area Section-->
+
+     <!--Area Section-->
      <h2 class="title">ÁREAS</h2>
      <table class="table" id="areasTable">
         <tr>

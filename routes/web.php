@@ -69,6 +69,11 @@ Route::get('/frontoffice/personalizeAreasEquipments','PersonalizeSectionControll
 Route::get('/frontoffice/personalizeAreasEquipments/personalizeEachSection/{id}','PersonalizeSectionController@personalizeEachSection');
 Route::post('/frontoffice/personalizeAreasEquipments/personalizeEachSection/save','PersonalizeSectionController@saveEachSection');
 
+//routes novo relatorio
+Route::get('/frontoffice/newReport','ReportController@getReportCover');
+Route::get('/frontoffice/newReportGeralRules','ReportController@getGeralRules');
+                            
+
 Route::group(['middleware' => ['backoffice']], function () {
 
     Route::get('/salesman', 'SalesmanController@index');

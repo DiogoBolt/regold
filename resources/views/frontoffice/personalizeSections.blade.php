@@ -31,7 +31,14 @@
             <span class="back-btn__back"><strong>Documentos </strong></span>
         </a>
      -->
-     <h1 class="title">Selecione as secções do cliente</h1>
+       {{-- Go Back Button --}}
+    <a class="back-btn" href="/frontoffice/documents/HACCP">
+        <span class="back-btn__front"><strong>Voltar</strong></span>
+        <span class="back-btn__back"><strong>Home</strong></span>
+    </a>
+    
+    <h1 class="title">Selecione as secções do cliente</h1>
+
      <div class="divSection">
         <ul id='ulSections' class="ks-cboxtags">
             @if($control->personalizeSections==0)

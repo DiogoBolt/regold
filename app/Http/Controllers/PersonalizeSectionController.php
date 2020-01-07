@@ -165,7 +165,7 @@ class PersonalizeSectionController extends Controller
             'designation',
             'wasPersonalized',
         ])->first();
-        
+
         $areas = Area::where('idSection',$clientSection->id_section)
         ->orWhere('idSection',0)
         ->get();
@@ -179,7 +179,6 @@ class PersonalizeSectionController extends Controller
         ->get();
 
         $equipmentsSectionClient=EquipmentSectionClient::where('idSection', $clientSection->id)->get();
-        //dd($equipmentsSectionClient);
         
         $indexAreas=[];
         $indexEquipments=[];
@@ -260,9 +259,9 @@ class PersonalizeSectionController extends Controller
         $auxClientId = Session::get('clientImpersonatedId');
 
         $areasSectionClient = AreaSectionClient::where('idClient', $auxClientId)
+        ->where('idSection',$idSection)
         ->select(['id',])
         ->get();
-
 
         $indexsAreas=[];
         
@@ -278,14 +277,13 @@ class PersonalizeSectionController extends Controller
                 array_push($indexsAreas,$areaSectionClient->id);
             }
         }
-        
+
         foreach($indexsAreas as $indexAreas){
             $areasSectionClientActive= AreaSectionClient::where('id',$indexAreas)->first();
             $areasSectionClientActive->active=0;
             $areasSectionClientActive->save();
-
         }
-        
+
         foreach($areas as $area){
             if($area->idAreaSectionClient==0){
                 $AreaSectionClient = new AreaSectionClient;
@@ -300,7 +298,6 @@ class PersonalizeSectionController extends Controller
                 $AreaSectionClient =AreaSectionClient::where('id',$area->idAreaSectionClient)->first();
                 $AreaSectionClient->idFrequencyCleaning=$area->idCleaningFrequency;
                 $AreaSectionClient->idProduct=$area->idProduct;
-                $AreaSectionClient->active=1;
                 $AreaSectionClient->save();
             }
         }
@@ -321,7 +318,7 @@ class PersonalizeSectionController extends Controller
                 }
             }
             if(!$exist){
-                array_push($indexsAreas,$equipmentSectionClient->id);
+                array_push($indexsEquipment,$equipmentSectionClient->id);
             }
         }
         

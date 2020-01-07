@@ -45,6 +45,14 @@
                 </a>
                 @endforeach
                 @if($super === 'HACCP')
+                <a class="category {{ $super }}" href="/frontoffice/newReport">
+                    <div class="category-body">
+                        <img src="/img/logo2white.png" class="img-responsive"/>
+                    </div>
+                    <div class="category-footer">
+                        NOVO RELATÓRIO
+                    </div>
+                </a>
                 <a class="category {{ $super }}" href="/frontoffice/personlizeSection">
                     <div class="category-body">
                         <img src="/img/logo2white.png" class="img-responsive"/>

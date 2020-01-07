@@ -17,6 +17,11 @@
         </div>
     </div>
 
+     {{-- Go Back Button --}}
+    <a class="back-btn" href="/frontoffice/documents/HACCP">
+        <span class="back-btn__front"><strong>Voltar</strong></span>
+        <span class="back-btn__back"><strong>Home</strong></span>
+    </a>
     <!--
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
