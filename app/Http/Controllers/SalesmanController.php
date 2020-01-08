@@ -74,7 +74,7 @@ class SalesmanController extends Controller
         {
             //dd($user);
             if($user->userType==1){
-                $salesman = Salesman::where('id', $contributorShow->userTypeID)->first();
+                $salesman = Salesman::where('id', $user->userTypeID)->first();
                 $salesPayments = SalesPayment::where('sales_id', $id)->where('delivered', 0)->get();
                 foreach($salesPayments as $payment)
                 {
