@@ -25,7 +25,7 @@ class ThermoController extends Controller
 
         $thermo->client_id = "Teste";
         $thermo->thermo_type ="Teste";
-        $thermo->temperature = $inputs;
+        $thermo->temperature = json_encode($inputs);
         $thermo->last_read = Carbon::now();
 
         $thermo->save();
