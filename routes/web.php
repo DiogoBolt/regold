@@ -23,6 +23,7 @@ View::composer(/**
 });
 
 Route::post('/api/confirm/', 'ApiController@confirmPayment');
+Route::post('/api/thermo/', 'ThermoController@receiveThermo');
 
 
 Route::get('/', 'HomeController@index')->name('home');
