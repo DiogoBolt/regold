@@ -80,6 +80,15 @@ class ReportController extends Controller
         
         $rules = RulesList::where('idSection',0)->get();
 
+        $count=0;
+        
+        foreach($rules as $rule){
+            ++$count;
+            $rule->index=$count;
+        }
+
+        //dd($rules);
+
         return view('frontoffice.newReportGeralRules',compact('rules'));
 
     }

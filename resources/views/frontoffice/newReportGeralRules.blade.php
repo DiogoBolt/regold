@@ -38,35 +38,75 @@
     </a>
     
     <h1 class="title">Geral</h1>
-
-    <table class="table" id="areasTable">
-        <tr>
-            <th>Regra</th>
-            <th>Conforme</th>
-            <th>Não Conforme</th>
-            <th>Não Aplicável</th>
-        </tr>
-        <tbody>
-            @foreach($rules as $rule)
-            <tr class="tableRow">
-                <td><label>{{$rule->rule}}</label></td>
-                <td name="radio">
-                    <input type=radio  name="radio{{$rule->id}}" value="c" id="c{{$rule->id}}" />
-                    <label class="conforme" for="c{{$rule->id}}"></label>
-                </td>
-                <td name="radio">
-                    <input type=radio name="radio{{$rule->id}}" value="nc" id="nc{{$rule->id}}" />
-                    <label class="naoConforme" for="nc{{$rule->id}}"></label>
-                </td>
-                <td name="radio">
-                    <input type=radio name="radio{{$rule->id}}" value="na" id="na{{$rule->id}}" />
-                    <label class="naoAplicavel" for="na{{$rule->id}}"></label>
-                </td>
+    <div class="tableContainer">
+        <table class="table" id="reportRules">
+            <tr id="reportRulesTop">
+                <th>#</th>
+                <th>Regra</th>
+                <th>Conforme</th>
+                <th>Não Conforme</th>
+                <th>Não Aplicável</th>
             </tr>
+            <tbody>
+                @foreach($rules as $rule)
+                <tr class="tableRow">
+                    <th class="index">{{$rule->index}}</th>
+                    <td class="tdBackground" onclick="focusObs({{$rule->index}})"><label class="rule">{{$rule->rule}}</label></td>
+                    <td class="tdBackground" name="radio">
+                        <input type=radio onclick="dontShowCorrective({{$rule->index}})"  name="radio{{$rule->id}}" value="c" id="c{{$rule->id}}" />
+                        <label class="conforme" for="c{{$rule->id}}"></label>
+                    </td>
+                    <td class="tdBackground" name="radio">
+                        <input type=radio  onclick="showCorrective({{$rule->index}})" name="radio{{$rule->id}}" value="nc" id="nc{{$rule->id}}" />
+                        <label class="naoConforme" for="nc{{$rule->id}}"></label>
+                    </td>
+                    <td class="tdBackground" name="radio">
+                        <input type=radio  onclick="dontShowCorrective({{$rule->index}})" name="radio{{$rule->id}}" value="na" id="na{{$rule->id}}" />
+                        <label class="naoAplicavel" for="na{{$rule->id}}"></label>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+
+    <h3>Medidas Corretivas</h3>
+        
+    <div class="tableContainer" id="divCorrectiveRules">
+        <table class="table" id="correctiveRules" style="visibility:hidden">
+            <tr id="reportRulesTop">
+                <th id="correctiveRulesIndex">#</th>
+                <th>Regra</th>
+                <th>Corretiva</th>
+            </tr>
+            <tbody>
+                @foreach($rules as $rule)
+                    <tr class="tableRow" style="display:none">
+                        <th id="correctiveRulesIndex" class="index">{{$rule->index}}</th>
+                        <td><label class="rule">{{$rule->rule}}</label></td>
+                        <td id="correctiveTd"><label class="rule">{{$rule->corrective}}</label></td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+
+    <h3>Observações</h3>
+    <ul id="obsList">
+    </ul>
+
+    <div id="addObs">
+        <select id="indexObs"> 
+            <option value="" disabled selected>Regra</option>
+            @foreach($rules as $rule)
+                <option value="{{$rule->id}}">{{$rule->index}}</option>
             @endforeach
-        </tbody>
-    </table>
-    <button onclick="teste()">Teste</button>
+            </select>
+        <input id="iptObs" type="text" placeholder="Insira a observação">
+        <button onclick="addObsList()">Save</button>
+    </div>
+
+    <button onclick="verifyAnswer()">Teste</button>
 @endsection
 
 
