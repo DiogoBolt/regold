@@ -18,6 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::middleware('auth:api', 'throttle:60,1')->group(function () {
-    Route::post('/frontoffice/confirm/', 'ApiController@confirmPayment');
-});
+Route::post('/frontoffice/confirm/', 'ApiController@confirmPayment');
+Route::post('/api/thermo/', 'ApiController@receiveThermo');
+
