@@ -84,7 +84,7 @@ input[type=radio]:checked + label.naoAplicavel{
   text-align: center;
 }
 
-#reportRules{
+.table{
   border: 2px solid #595959;
 }
 
@@ -93,6 +93,7 @@ input[type=radio]:checked + label.naoAplicavel{
 }
 
 .index{
+  width: 15px;
   color: black;
   font-weight: bold;
   font-size: 18px;
@@ -102,10 +103,79 @@ input[type=radio]:checked + label.naoAplicavel{
 
 .rule{
   color: black;
-  text-align: center;
+  text-align: left;
   font-size: 15px;
 }
 
-#correctiveTd{
-  background: aqua;
+.tableRow{
+  background: white;
+}
+
+.corrective{
+  width: 100%;
+  border:none;
+  height: auto;
+  line-height: 15px;
+  margin: 0;
+  padding: 5px;
+  color: black;
+  text-align: left;
+  font-size: 15px;
+  border: 0 none white;
+  overflow: hidden;
+  padding: 0;
+  outline: none;
+  background: #ffffff;
+}
+
+.tdRuleBackground{
+  max-width: 200px;
+}
+
+.correctiveRulesIndex{
+  max-width: 15px;
+}
+
+.wrapper {
+  width: 80%;
+  margin-left: 10%;
+  display: grid;
+  grid-template-columns: 24% 24% 24% 24% ;
+  grid-gap: 1%;
+  background-color: aqua;
+  color: #444;
+}
+
+.box {
+  background-color: white;
+  color: #000;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 20px;
+  font-size: 150%;
+}
+
+.trashTd{
+  color:red;
+  font-size: 20px;
+  width: 30px;
+}
+
+#addObs{
+  width: 80%;
+  margin-left: 10%;
+  margin-top: 0%;
+  background: white;
+}
+
+#iptObs{
+  width: 73%;
+  color: black;
+  font-size: 15px;
+  border: 0;
+  border-bottom: 1px solid black;
+}
+
+#iptObs:focus { 
+  outline:none;
 }

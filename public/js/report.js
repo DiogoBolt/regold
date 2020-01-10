@@ -1,15 +1,17 @@
 function verifyAnswer(){
+
     var tableRules = document.getElementById("reportRules");
     var rowsRules= tableRules.getElementsByClassName("tableRow");
 
     var answersRow=[];
     var answersAll=[];
 
-    for(var i=0;i<rowsRules.length;i++ ){
+    for(var i=0;i<rowsRules.length;i++ ){ 
         answersRow.push(rowsRules[i].children[2].children[0].checked);
         answersRow.push(rowsRules[i].children[3].children[0].checked);
         answersRow.push(rowsRules[i].children[4].children[0].checked);
         answersAll.push(answersRow);
+        
         answersRow=[];
     }
 
@@ -23,49 +25,56 @@ function verifyAnswer(){
     }
 
     for(var i=0; i<noAnswer.length; i++){
-        tableRules.getElementsByClassName("tableRow")[noAnswer[i]].style.background="#ffe6e6";
+        for(var j=0; j<4;j++){
+            tableRules.getElementsByClassName("tableRow")[i].getElementsByTagName('td')[j].style.background="#ffe6e6";
+        }
     }
 }
 
 function dontShowCorrective(id){
-   // document.getElementById(id).style.display="none";
     var tableRules = document.getElementById("reportRules");
 
-    console.log( tableRules.getElementsByClassName("tableRow")[id-1].style.background);
-    tableRules.getElementsByClassName("tableRow")[id-1].style.background="white";
+    for(var j=0; j<4;j++){
+        tableRules.getElementsByClassName("tableRow")[id-1].getElementsByTagName('td')[j].style.background="#ffffff";
+    }
 
     var tableCorrective =  document.getElementById("correctiveRules");
 
     var tableCorrectiveRows=tableCorrective.getElementsByClassName('tableRow');
 
-    var qtdRowBlock=0;
-
     if(tableCorrective.getElementsByClassName('tableRow')[id-1].style.display="table-row"){
         tableCorrective.getElementsByClassName('tableRow')[id-1].style.display="none";
     }
 
-    for(var i=1;i<tableCorrectiveRows.length;i++){
+    var qtdRowBlock=0;
+    for(var i=0;i<tableCorrectiveRows.length;i++){
         if(tableCorrectiveRows[i].style.display=="table-row"){
             qtdRowBlock++;
         }
     }
-    console.log(qtdRowBlock);
+
     if(qtdRowBlock==0){
-        document.getElementById("correctiveRules").style.visibility="hidden";
+        document.getElementById("divCorrectiveRules").style.visibility="hidden";
+        document.getElementById("titleCorrective").style.display="none";
+      
     }
-
-   
-
 }
 
 function showCorrective(id){
-    document.getElementById("correctiveRules").style.visibility="visible";
+
+    document.getElementById("divCorrectiveRules").style.visibility="visible";
+    document.getElementById("titleCorrective").style.display="block";
+
     var tableRules = document.getElementById("reportRules");
-    tableRules.getElementsByClassName("tableRow")[id-1].style.background="white";
+
+    for(var j=0; j<4;j++){
+        tableRules.getElementsByClassName("tableRow")[id-1].getElementsByTagName('td')[j].style.background="#ffffff";
+    }
 
     var tableCorrective =  document.getElementById("correctiveRules");
 
     tableCorrective.getElementsByClassName('tableRow')[id-1].style.display="table-row";
+
 }
 
 function focusObs(id){
@@ -79,24 +88,64 @@ function addObsList(){
     var idRule= document.getElementById('indexObs').options[index].value;
     var iptObs = document.getElementById('iptObs').value;
 
-    var li = document.createElement('li');
+    var tr= document.createElement('tr');
+    tr.className="tableRow";
 
-    var lblIndex=document.createElement('label');
+    var tdIndex= document.createElement('td');
+    tdIndex.id="correctiveRulesIndex";
+    tdIndex.value=idRule;
+    tdIndex.className="index";
+    tdIndex.innerHTML=index;
 
-    lblIndex.value=idRule;
-    lblIndex.innerHTML=index+"-> ";
+    var tdObs=document.createElement('td');
+    tdObs.class="tdRuleBackground";
+    txtAreaObs=document.createElement('textarea');
+    txtAreaObs.className="corrective";
+    txtAreaObs.value=iptObs;
+    txtAreaObs.innerHTML=iptObs;
+    tdObs.appendChild(txtAreaObs);
 
-    var lblObs=document.createElement('label');
-    lblObs.innerHTML=iptObs;
+    var tdTrash=document.createElement('td');
+    tdTrash.className="trashTd";
 
-    li.appendChild(lblIndex);
-    li.appendChild(lblObs);
+    var iTrash=document.createElement('i');
+    iTrash.className="fas fa-trash";
+    iTrash.onclick=function(){teste123(this)};
 
-    document.getElementById('obsList').appendChild(li);
+    tdTrash.appendChild(iTrash);
+
+    tr.appendChild(tdIndex);
+    tr.appendChild(tdObs);
+    tr.appendChild(tdTrash);
+
+    document.getElementById('observations').getElementsByTagName('tbody')[1].appendChild(tr);
+    document.getElementById("divObservationsRules").style.visibility="visible";
+    document.getElementById("titleObservations").style.display="block";
 
     document.getElementById('indexObs').selectedIndex=0;
-    document.getElementById('iptObs').value="";
+    iptObs = document.getElementById('iptObs').value="";
 
+}
 
+function teste123(element){
+    
+    trIndex=element.parentNode.parentNode.rowIndex;
+    document.getElementById("observations").deleteRow(trIndex);
 
+    var countRow=document.getElementById('observations').getElementsByTagName('tbody')[1].getElementsByTagName('tr').length;
+
+    if(countRow==0){
+        document.getElementById("divObservationsRules").style.visibility="hidden";
+        document.getElementById("titleObservations").style.display="none";
+    }
+    
+}
+
+function allNotAplly(){
+    var tableRows=document.getElementById('reportRules').getElementsByTagName('tbody')[1].getElementsByTagName('tr');
+    for(i=0; i< tableRows.length; i++){
+        tableRows[i].children[4].children[0].checked=true;
+    }
+
+    
 }
