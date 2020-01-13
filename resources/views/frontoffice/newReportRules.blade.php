@@ -37,7 +37,10 @@
         <span class="back-btn__back"><strong>Home</strong></span>
     </a>
     
-    <h1 class="title">Geral</h1>
+    <h1 id="sectionTitle" class="title">{{$section->designation}}</h1>
+    <input type="hidden" id="idSection" value="{{$section->id}}">
+
+    
     <div class="tableContainer">
         <table class="table" id="reportRules">
             <tr id="reportRulesTop">
@@ -50,7 +53,7 @@
             <tbody>
                 @foreach($rules as $rule)
                 <tr class="tableRow">
-                    <th class="index">{{$rule->index}}</th>
+                    <th class="index" value="{{$rule->id}}">{{$rule->index}}</th>
                     <td class="tdBackground tdRule" onclick="focusObs({{$rule->index}})"><label class="rule">{{$rule->rule}}</label></td>
                     <td class="tdBackground" name="radio">
                         <input type=radio onclick="dontShowCorrective({{$rule->index}})"  name="radio{{$rule->id}}" value="c" id="c{{$rule->id}}" />
@@ -82,7 +85,7 @@
             <tbody>
                 @foreach($rules as $rule)
                     <tr class="tableRow" style="display:none">
-                        <th id="correctiveRulesIndex" class="index">{{$rule->index}}</th>
+                        <th id="correctiveRulesIndex" class="index" value="{{$rule->id}}">{{$rule->index}}</th>
                         <td class="tdRuleBackground"><label class="rule">{{$rule->rule}}</label></td>
                         
                         <td id="correctiveTd"><textarea class="corrective" value="{{$rule->corrective}}">{{$rule->corrective}}</textarea></td>
@@ -118,7 +121,9 @@
         <input id="iptObs" type="text" placeholder="Insira a observação">
         <button onclick="addObsList()">Save</button>
     </div>
-
+    <button onclick="testarLink({{$section->id}})" id="continue">ContinueLink</button>
+    <a href="/frontoffice/forgetSession">Continuar</a>
+    <button onclick="addAnswerArray()">ContinuarAddArray</button>
     <button onclick="verifyAnswer()">Teste</button>
 @endsection
 

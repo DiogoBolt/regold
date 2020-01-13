@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-    <script src="{{ URL::asset('/js/personalizeSection.js') }}"></script>
+    <script src="{{ URL::asset('/js/report.js') }}"></script>
 
     <div class="container-bar">
         <p class="container-bar_txt">Novo Relatório</p>
@@ -42,12 +42,12 @@
     <div class="divReportInfo">
         <div>
             <label class="lblBold">Establecimento: </label>
-            <label> {{$establishName->name}} </label>
+            <label value="{{$establishName->id}}"> {{$establishName->name}} </label>
         </div>
 
         <div >
             <label class="lblBold">Técnico(a) de HACCP: </label>
-            <label> {{$technicalInfo->name}} </label>
+            <label  value="{{$technicalInfo->id}}"> {{$technicalInfo->name}} </label>
         </div>
 
         <div>
@@ -57,10 +57,12 @@
 
         <div>
             <label class="lblBold"> Número de Visita: </label>
-            <label> {{$visitNumber}} </label>
+            <label id="visitNumber"> {{$visitNumber}} </label>
         </div>
 
-         <a href="/frontoffice/newReportGeralRules" id="btnNext">Próximo</a>
+        <button onclick="testeFunc()">Próximo</button>
+
+         <a href="/frontoffice/newReportRules/0" id="btnNext">Próximo</a>
     </div>
     
 @endsection

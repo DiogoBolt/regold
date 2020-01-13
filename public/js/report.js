@@ -6,6 +6,8 @@ function verifyAnswer(){
     var answersRow=[];
     var answersAll=[];
 
+    var allCorrect=false;
+
     for(var i=0;i<rowsRules.length;i++ ){ 
         answersRow.push(rowsRules[i].children[2].children[0].checked);
         answersRow.push(rowsRules[i].children[3].children[0].checked);
@@ -29,6 +31,14 @@ function verifyAnswer(){
             tableRules.getElementsByClassName("tableRow")[i].getElementsByTagName('td')[j].style.background="#ffe6e6";
         }
     }
+
+    if(noAnswer.length>0){
+        allCorrect=false;
+    }else{
+        allCorrect=true;
+    }
+
+    return allCorrect;
 }
 
 function dontShowCorrective(id){
@@ -91,11 +101,11 @@ function addObsList(){
     var tr= document.createElement('tr');
     tr.className="tableRow";
 
-    var tdIndex= document.createElement('td');
-    tdIndex.id="correctiveRulesIndex";
-    tdIndex.value=idRule;
-    tdIndex.className="index";
-    tdIndex.innerHTML=index;
+    var thIndex= document.createElement('th');
+    thIndex.id="correctiveRulesIndex";
+    thIndex.value=idRule;
+    thIndex.className="index";
+    thIndex.innerHTML=index;
 
     var tdObs=document.createElement('td');
     tdObs.class="tdRuleBackground";
@@ -110,11 +120,11 @@ function addObsList(){
 
     var iTrash=document.createElement('i');
     iTrash.className="fas fa-trash";
-    iTrash.onclick=function(){teste123(this)};
+    iTrash.onclick=function(){deleteObs(this)};
 
     tdTrash.appendChild(iTrash);
 
-    tr.appendChild(tdIndex);
+    tr.appendChild(thIndex);
     tr.appendChild(tdObs);
     tr.appendChild(tdTrash);
 
@@ -127,7 +137,7 @@ function addObsList(){
 
 }
 
-function teste123(element){
+function deleteObs(element){
     
     trIndex=element.parentNode.parentNode.rowIndex;
     document.getElementById("observations").deleteRow(trIndex);
@@ -138,14 +148,117 @@ function teste123(element){
         document.getElementById("divObservationsRules").style.visibility="hidden";
         document.getElementById("titleObservations").style.display="none";
     }
-    
 }
 
 function allNotAplly(){
+
     var tableRows=document.getElementById('reportRules').getElementsByTagName('tbody')[1].getElementsByTagName('tr');
     for(i=0; i< tableRows.length; i++){
         tableRows[i].children[4].children[0].checked=true;
     }
 
+}
+
+var answers=[];
+var observations=[];
+
+function addAnswerArray(){
     
+    var tableRules = document.getElementById("reportRules");
+    var rowsRules= tableRules.getElementsByClassName("tableRow");
+
+    var tableCorrectives = document.getElementById("correctiveRules");
+    var rowsCorrectiveRules= tableCorrectives.getElementsByClassName("tableRow");
+
+    var answer={};
+
+    for(var i=0; i< rowsRules.length; i++){
+
+        if(rowsRules[i].children[2].children[0].checked){
+            answer.resp='c';
+        }else if(rowsRules[i].children[3].children[0].checked){
+            answer.resp='nc';
+        }else if(rowsRules[i].children[4].children[0].checked){
+            answer.resp='np';
+        }
+        
+        answer.idRule=rowsRules[i].children[0].getAttribute('value');
+        answer.corrective=rowsCorrectiveRules[i].children[2].children[0].value;
+        answers.push(answer);
+        answer={};
+
+    }
+    
+    var tableObs=document.getElementById("observations"); 
+    var rowsObs=tableObs.getElementsByClassName("tableRow");
+
+    var obs={};
+
+    if(rowsObs.length>0){
+        for(var j=0; j<rowsObs.length; j++){
+            obs.idClientSection=document.getElementById('idSection').value;
+            obs.observations=rowsObs[j].children[1].children[0].value;
+            obs.rule=rowsObs[j].children[0].value;
+            observations.push(obs);
+            obs={};
+        }
+    }
+}
+
+function testarLink($id){
+
+    if(verifyAnswer()){
+        addAnswerArray();
+
+        var answersJson = JSON.stringify(answers);
+        var obs = JSON.stringify(observations);
+        var idSection = document.getElementById("idSection").value;
+
+        //console.log("->"+idSection);
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            url: "/frontoffice/saveAnswers",
+            data:{answers:answersJson, obs:obs, idSection:idSection}
+        }).then(
+            window.location.replace('/frontoffice/newReportSections')
+        );
+    
+
+        /*$.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            url: "/frontoffice/addSection/"+$id,
+        }).then(
+            window.location.replace('/frontoffice/newReportSections')
+        );*/
+    }
+    //console.log(answers);
+}
+
+function testeFunc(){
+    
+    var visitNumber=document.getElementById("visitNumber").innerHTML;
+    console.log(visitNumber);
+
+   $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        type: 'POST',
+        url: "/frontoffice/saveReport/"+visitNumber,
+    }).then(
+        window.location.replace('/frontoffice/newReportRules/0')
+    );
 }

@@ -72,8 +72,14 @@ Route::post('/frontoffice/personalizeAreasEquipments/personalizeEachSection/save
 
 //routes novo relatorio
 Route::get('/frontoffice/newReport','ReportController@getReportCover');
-Route::get('/frontoffice/newReportGeralRules','ReportController@getGeralRules');
-                            
+Route::get('/frontoffice/newReportRules/{id}','ReportController@getRules');
+Route::get('/frontoffice/newReportSections','ReportController@getClientSection');
+Route::get('/frontoffice/forgetSession','ReportController@forgetSessionVar');
+Route::post('/frontoffice/addSection/{id}','ReportController@addSectionReport');
+Route::post('/frontoffice/saveAnswers','ReportController@saveAnswers');
+Route::post('/frontoffice/saveReport/{visitNumber}','ReportController@saveReport');
+
+
 
 Route::group(['middleware' => ['backoffice']], function () {
 
