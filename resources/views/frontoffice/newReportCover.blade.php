@@ -62,7 +62,7 @@
 
         <button onclick="testeFunc()">Próximo</button>
 
-         <a href="/frontoffice/newReportRules/0" id="btnNext">Próximo</a>
+         <a href="/frontoffice/newReportSections" id="btnNext">Próximo</a>
     </div>
     
 @endsection

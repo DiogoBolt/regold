@@ -28,7 +28,7 @@ function verifyAnswer(){
 
     for(var i=0; i<noAnswer.length; i++){
         for(var j=0; j<4;j++){
-            tableRules.getElementsByClassName("tableRow")[i].getElementsByTagName('td')[j].style.background="#ffe6e6";
+            tableRules.getElementsByClassName("tableRow")[noAnswer[i]].getElementsByTagName('td')[j].style.background="#ffe6e6";
         }
     }
 
@@ -163,7 +163,9 @@ var answers=[];
 var observations=[];
 
 function addAnswerArray(){
-    
+    answers=[];
+    observations=[];
+
     var tableRules = document.getElementById("reportRules");
     var rowsRules= tableRules.getElementsByClassName("tableRow");
 
@@ -179,14 +181,18 @@ function addAnswerArray(){
         }else if(rowsRules[i].children[3].children[0].checked){
             answer.resp='nc';
         }else if(rowsRules[i].children[4].children[0].checked){
-            answer.resp='np';
+            answer.resp='na';
         }
         
         answer.idRule=rowsRules[i].children[0].getAttribute('value');
-        answer.corrective=rowsCorrectiveRules[i].children[2].children[0].value;
+        
+        if(rowsCorrectiveRules[i].style.display!= 'none'){
+            answer.corrective=rowsCorrectiveRules[i].children[2].children[0].value;
+        }else{
+            answer.corrective= null;
+        }
         answers.push(answer);
         answer={};
-
     }
     
     var tableObs=document.getElementById("observations"); 
@@ -259,6 +265,6 @@ function testeFunc(){
         type: 'POST',
         url: "/frontoffice/saveReport/"+visitNumber,
     }).then(
-        window.location.replace('/frontoffice/newReportRules/0')
+        window.location.replace('/frontoffice/newReportSections')
     );
 }

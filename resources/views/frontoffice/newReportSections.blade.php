@@ -18,7 +18,7 @@
     </div>
 
      {{-- Go Back Button --}}
-    <a class="back-btn" href="/frontoffice/documents/HACCP">
+    <a class="back-btn" href="/frontoffice/newReportRules/0">
         <span class="back-btn__front"><strong>Voltar</strong></span>
         <span class="back-btn__back"><strong>Home</strong></span>
     </a>
@@ -55,14 +55,13 @@
             @endforeach     
         </ul>
     </div>
-    <label>{{count(Session::get('sectionsRepost'))}}</label>
-    <br/>
-    <label>{{count($clientSections)}}<label>
     @if(Session::has('sectionsReport'))
+        <label>{{count(Session::get('sectionsReport'))}}</label>
+        <br/>
+        <label>{{count($clientSections)}}</label>
         @if(count(Session::get('sectionsReport')) > count($clientSections))
             <button>LaLALA</button>
         @endif
     @endif
-    
-    
+
 @endsection
