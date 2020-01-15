@@ -103,7 +103,8 @@ function addObsList(){
 
     var thIndex= document.createElement('th');
     thIndex.id="correctiveRulesIndex";
-    thIndex.value=idRule;
+    thIndex.setAttribute('value',idRule);
+    //thIndex.value=idRule;
     thIndex.className="index";
     thIndex.innerHTML=index;
 
@@ -113,7 +114,13 @@ function addObsList(){
     txtAreaObs.className="corrective";
     txtAreaObs.value=iptObs;
     txtAreaObs.innerHTML=iptObs;
+
+    var idObs=document.createElement('input');
+    idObs.type='hidden';
+    idObs.setAttribute('value',0);
+
     tdObs.appendChild(txtAreaObs);
+    tdObs.appendChild(idObs);
 
     var tdTrash=document.createElement('td');
     tdTrash.className="trashTd";
@@ -151,12 +158,10 @@ function deleteObs(element){
 }
 
 function allNotAplly(){
-
     var tableRows=document.getElementById('reportRules').getElementsByTagName('tbody')[1].getElementsByTagName('tr');
     for(i=0; i< tableRows.length; i++){
         tableRows[i].children[4].children[0].checked=true;
     }
-
 }
 
 var answers=[];
@@ -203,8 +208,9 @@ function addAnswerArray(){
     if(rowsObs.length>0){
         for(var j=0; j<rowsObs.length; j++){
             obs.idClientSection=document.getElementById('idSection').value;
+            obs.rule=rowsObs[j].children[0].getAttribute('value');
             obs.observations=rowsObs[j].children[1].children[0].value;
-            obs.rule=rowsObs[j].children[0].value;
+            obs.idObs=rowsObs[j].children[1].children[1].value;
             observations.push(obs);
             obs={};
         }
@@ -220,41 +226,28 @@ function testarLink($id){
         var obs = JSON.stringify(observations);
         var idSection = document.getElementById("idSection").value;
 
-        //console.log("->"+idSection);
-
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
         $.ajax({
             type: 'POST',
             url: "/frontoffice/saveAnswers",
             data:{answers:answersJson, obs:obs, idSection:idSection}
         }).then(
-            window.location.replace('/frontoffice/newReportSections')
+            /*setTimeout(function(){  
+                window.location.replace('/frontoffice/newReportSections')
+            }, 500)*/
         );
-    
-
-        /*$.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            type: 'POST',
-            url: "/frontoffice/addSection/"+$id,
-        }).then(
-            window.location.replace('/frontoffice/newReportSections')
-        );*/
     }
-    //console.log(answers);
 }
 
 function testeFunc(){
     
     var visitNumber=document.getElementById("visitNumber").innerHTML;
-    console.log(visitNumber);
+    //console.log(visitNumber);
 
    $.ajaxSetup({
         headers: {
@@ -267,4 +260,19 @@ function testeFunc(){
     }).then(
         window.location.replace('/frontoffice/newReportSections')
     );
+}
+
+function concludeReport(){
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        type: 'POST',
+        url: "/frontoffice/saveReport/"+visitNumber,
+    }).then(
+        window.location.replace('/frontoffice/newReportSections')
+    );
+
 }

@@ -129,14 +129,34 @@
 
     <h3 id="titleObservations" style="display:none">Observações</h3>
 
+    <label>{{count($reportSectionObs)}}</label>
+
+    @if(count($reportSectionObs)>0)
+    <div class="tableContainer" id="divObservationsRules">
+    @else
     <div class="tableContainer" id="divObservationsRules" style="visibility:hidden">
+    @endif
         <table class="table" id="observations" >
             <tr id="reportRulesTop">
                 <th id="correctiveRulesIndex">#</th>
-                <th>Observação</th>
-                <th  class="trashTd">...</th>
+                <th class="tdRuleBackground">Observação</th>
+                <th class="trashTd">...</th>
             </tr>
             <tbody>
+                @if(count($reportSectionObs)>0)
+                    @foreach($reportSectionObs as $reportSectionOb)
+                        <tr class="tableRow">
+                            <th id="correctiveRulesIndex" class="index" value="{{$reportSectionOb->idRule}}">{{$reportSectionOb->index}}</th>
+                            <td class="tdRuleBackground">
+                                <textarea class="corrective" value="{{$reportSectionOb->observation}}">{{$reportSectionOb->observation}}</textarea>
+                                <input type="hidden" id="idObs" value="{{$reportSectionOb->id}}" />
+                            </td>
+                            <td class="trashTd">
+                                <i class="fas fa-trash" onclick="deleteObs(this)"></i>
+                            </td>
+                        </tr>
+                    @endforeach
+                @endif
             </tbody>
         </table>
     </div>

@@ -78,6 +78,7 @@ Route::get('/frontoffice/forgetSession','ReportController@forgetSessionVar');
 Route::post('/frontoffice/addSection/{id}','ReportController@addSectionReport');
 Route::post('/frontoffice/saveAnswers','ReportController@saveAnswers');
 Route::post('/frontoffice/saveReport/{visitNumber}','ReportController@saveReport');
+Route::get('/concluedReport','ReportController@concludeReport');
 
 
 

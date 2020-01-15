@@ -18,7 +18,7 @@
     </div>
 
      {{-- Go Back Button --}}
-    <a class="back-btn" href="/frontoffice/newReportRules/0">
+    <a class="back-btn" href="/frontoffice/newReport">
         <span class="back-btn__front"><strong>Voltar</strong></span>
         <span class="back-btn__back"><strong>Home</strong></span>
     </a>
@@ -59,8 +59,8 @@
         <label>{{count(Session::get('sectionsReport'))}}</label>
         <br/>
         <label>{{count($clientSections)}}</label>
-        @if(count(Session::get('sectionsReport')) > count($clientSections))
-            <button>LaLALA</button>
+        @if(count(Session::get('sectionsReport')) == count($clientSections))
+            <a  href="/concluedReport" class="btn btn-success">Concluir Relatório</a>
         @endif
     @endif
 
