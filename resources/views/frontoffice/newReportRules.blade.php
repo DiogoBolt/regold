@@ -38,6 +38,7 @@
     </a>
     
     <h1 id="sectionTitle" class="title">{{$section->designation}}</h1>
+
     <input type="hidden" id="idSection" value="{{$section->id}}">
 
     
@@ -87,11 +88,11 @@
             </tbody>
         </table>
     </div>
-
+    
     @if($showTableCorrective==1)
-        <h3 id="titleCorrective">Medidas Corretivas</h3>
+        <h2 id="titleCorrective" class="subTitle">Medidas Corretivas</h2>
     @else
-        <h3 id="titleCorrective" style="display:none">Medidas Corretivas</h3>
+        <h2 id="titleCorrective" style="display:none" class="subTitle">Medidas Corretivas</h2>
     @endif
 
     <!--<label>{{$showTableCorrective}}</label>-->
@@ -127,9 +128,7 @@
         </table>
     </div>
 
-    <h3 id="titleObservations" style="display:none">Observações</h3>
-
-    <label>{{count($reportSectionObs)}}</label>
+    <h2 id="titleObservations" class="subTitle" style="display:none">Observações</h2>
 
     @if(count($reportSectionObs)>0)
     <div class="tableContainer" id="divObservationsRules">
@@ -162,20 +161,21 @@
     </div>
 
     <div id="addObs">
-        <label>Nova Observação:</label>
-        <select id="indexObs"> 
+        <label>Nova Observação</label>
+        <br/>
+        <select id="indexObs" onchange="verifySelected(this)" > 
             <option value="" disabled selected>Regra</option>
             @foreach($rules as $rule)
                 <option value="{{$rule->id}}">{{$rule->index}}</option>
             @endforeach
-            </select>
-        <input id="iptObs" type="text" placeholder="Insira a observação">
+        </select>
+        <input id="iptObs" oninput="verifyTextInput(this)" type="text" placeholder="Insira a observação">
         <button onclick="addObsList()">Save</button>
     </div>
-    <button onclick="testarLink({{$section->id}})" id="continue">ContinueLink</button>
-    <a href="/frontoffice/forgetSession">Continuar</a>
-    <button onclick="addAnswerArray()">ContinuarAddArray</button>
-    <button onclick="verifyAnswer()">Teste</button>
+
+    <div id="divBtns">
+        <button onclick="testarLink({{$section->id}})" id="continue">ContinueLink</button>
+    </div>
 @endsection
 
 

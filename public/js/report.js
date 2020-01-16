@@ -98,50 +98,60 @@ function addObsList(){
     var idRule= document.getElementById('indexObs').options[index].value;
     var iptObs = document.getElementById('iptObs').value;
 
-    var tr= document.createElement('tr');
-    tr.className="tableRow";
+    console.log(index + " - " + iptObs);
+    if(index==0 && iptObs==""){
+        document.getElementById('indexObs').style.border="1px solid red";
+        document.getElementById('iptObs').style.borderBottom="1px solid red";
+    }else{
+        if(index==0){
+            document.getElementById('indexObs').style.borderBottom="1px solid red";
+        }else if(iptObs==""){
+            document.getElementById('iptObs').style.borderBottom="1px solid red";
+        }else{
+            var tr= document.createElement('tr');
+            tr.className="tableRow";
 
-    var thIndex= document.createElement('th');
-    thIndex.id="correctiveRulesIndex";
-    thIndex.setAttribute('value',idRule);
-    //thIndex.value=idRule;
-    thIndex.className="index";
-    thIndex.innerHTML=index;
+            var thIndex= document.createElement('th');
+            thIndex.id="correctiveRulesIndex";
+            thIndex.setAttribute('value',idRule);
+            thIndex.className="index";
+            thIndex.innerHTML=index;
 
-    var tdObs=document.createElement('td');
-    tdObs.class="tdRuleBackground";
-    txtAreaObs=document.createElement('textarea');
-    txtAreaObs.className="corrective";
-    txtAreaObs.value=iptObs;
-    txtAreaObs.innerHTML=iptObs;
+            var tdObs=document.createElement('td');
+            tdObs.class="tdRuleBackground";
+            txtAreaObs=document.createElement('textarea');
+            txtAreaObs.className="corrective";
+            txtAreaObs.value=iptObs;
+            txtAreaObs.innerHTML=iptObs;
 
-    var idObs=document.createElement('input');
-    idObs.type='hidden';
-    idObs.setAttribute('value',0);
+            var idObs=document.createElement('input');
+            idObs.type='hidden';
+            idObs.setAttribute('value',0);
 
-    tdObs.appendChild(txtAreaObs);
-    tdObs.appendChild(idObs);
+            tdObs.appendChild(txtAreaObs);
+            tdObs.appendChild(idObs);
 
-    var tdTrash=document.createElement('td');
-    tdTrash.className="trashTd";
+            var tdTrash=document.createElement('td');
+            tdTrash.className="trashTd";
 
-    var iTrash=document.createElement('i');
-    iTrash.className="fas fa-trash";
-    iTrash.onclick=function(){deleteObs(this)};
+            var iTrash=document.createElement('i');
+            iTrash.className="fas fa-trash";
+            iTrash.onclick=function(){deleteObs(this)};
 
-    tdTrash.appendChild(iTrash);
+            tdTrash.appendChild(iTrash);
 
-    tr.appendChild(thIndex);
-    tr.appendChild(tdObs);
-    tr.appendChild(tdTrash);
+            tr.appendChild(thIndex);
+            tr.appendChild(tdObs);
+            tr.appendChild(tdTrash);
 
-    document.getElementById('observations').getElementsByTagName('tbody')[1].appendChild(tr);
-    document.getElementById("divObservationsRules").style.visibility="visible";
-    document.getElementById("titleObservations").style.display="block";
+            document.getElementById('observations').getElementsByTagName('tbody')[1].appendChild(tr);
+            document.getElementById("divObservationsRules").style.visibility="visible";
+            document.getElementById("titleObservations").style.display="block";
 
-    document.getElementById('indexObs').selectedIndex=0;
-    iptObs = document.getElementById('iptObs').value="";
-
+            document.getElementById('indexObs').selectedIndex=0;
+            iptObs = document.getElementById('iptObs').value="";
+        }
+    }
 }
 
 function deleteObs(element){
@@ -237,9 +247,9 @@ function testarLink($id){
             url: "/frontoffice/saveAnswers",
             data:{answers:answersJson, obs:obs, idSection:idSection}
         }).then(
-            /*setTimeout(function(){  
+            setTimeout(function(){  
                 window.location.replace('/frontoffice/newReportSections')
-            }, 500)*/
+            }, 500)
         );
     }
 }
@@ -275,4 +285,20 @@ function concludeReport(){
         window.location.replace('/frontoffice/newReportSections')
     );
 
+}
+
+
+function verifySelected(element){
+    if(element.selectedIndex !=0){
+        document.getElementById('indexObs').style.border="none";
+        document.getElementById('indexObs').style.borderBottom="1px solid #000";
+    }
+}
+
+function verifyTextInput(element){
+    if(element.value != ""){
+        document.getElementById('iptObs').style.borderBottom="1px solid #000";
+    }else{
+        document.getElementById('iptObs').style.borderBottom="1px solid #f00"; 
+    }
 }

@@ -69,6 +69,8 @@ Route::post('/frontoffice/personalizeSection/save','PersonalizeSectionController
 Route::get('/frontoffice/personalizeAreasEquipments','PersonalizeSectionController@getAreasEquipments');
 Route::get('/frontoffice/personalizeAreasEquipments/personalizeEachSection/{id}','PersonalizeSectionController@personalizeEachSection');
 Route::post('/frontoffice/personalizeAreasEquipments/personalizeEachSection/save','PersonalizeSectionController@saveEachSection');
+Route::get('/frontoffice/reports','ReportController@reportList');
+
 
 //routes novo relatorio
 Route::get('/frontoffice/newReport','ReportController@getReportCover');

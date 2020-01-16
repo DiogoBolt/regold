@@ -453,8 +453,6 @@ class ProductController extends Controller
         return view('orders.historyOrders', compact('orders'));
     }
 
-
-
     public function viewOrder($id)
     {
 

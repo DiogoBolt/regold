@@ -1,7 +1,7 @@
 /*** report ***/
 
 * {-webkit-font-smoothing: antialiased;}
-
+/*
 h1.title { 
   font-family: 'Raleway',sans-serif;
   font-size: 25sp; 
@@ -11,7 +11,24 @@ h1.title {
   text-align: center; 
   text-transform: uppercase;
   color: black;
+ }*/
+
+
+ h1.title { 
+  color: #000;
+  font-family: 'Rouge Script', cursive;
+  font-size: 70px; font-weight: normal; 
+  line-height: 48px;
+  margin: 0 0 50px;
+  text-align: center;
+  text-shadow: 1px 1px 2px #082b34;
  }
+
+ 
+ h1.title { color: #000; font-family: 'Lobster', cursive; font-size: 40px; font-weight: normal; line-height: 48px; margin: 0 0 18px; text-shadow: 1px 0 0 #fff; }
+ h2.subTitle { color: #000; font-family: 'Lobster', cursive; font-size: 30px; font-weight: normal; line-height: 48px; margin: 0 0 18px; text-shadow: 1px 0 0 #fff; text-align: center;}
+
+
 
 label{
   color: black;
@@ -169,13 +186,30 @@ input[type=radio]:checked + label.naoAplicavel{
 }
 
 #iptObs{
-  width: 73%;
+  height: 27px;
+  min-width: 78%;
   color: black;
-  font-size: 15px;
-  border: 0;
-  border-bottom: 1px solid black;
+  font-size: 20px;
+  border: none;
+  border-bottom: 1px solid #000;
+  margin-left: 10px;
 }
 
 #iptObs:focus { 
   outline:none;
+}
+
+#indexObs{
+  height: 27px;
+  border: none;
+  border-bottom: 1px solid #000;
+  font-size: 20px;
+  color: black;
+  text-align-last: center;
+}
+
+#divBtns{
+  text-align: center;
+  background: aqua;
+  margin: 50px;
 }

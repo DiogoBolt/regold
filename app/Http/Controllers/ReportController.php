@@ -371,7 +371,6 @@ class ReportController extends Controller
                     $reportSectionObs->save();
                 }
             }
-
         }
 
         $this->addSectionReport($idSection);
@@ -407,10 +406,15 @@ class ReportController extends Controller
 
         Session::forget('sectionsReport');
         Session::forget('reportId');
-
         
         return redirect('/frontoffice/documents/HACCP');
     }
 
+    public function reportList(){
+        $auxClientId = Session::get('clientImpersonatedId');
+        $report = Report::where('idClient',$auxClientId)->get();
+        dd($report);
+        return view('frontoffice.reportsList');
+    }
         
 }

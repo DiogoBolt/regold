@@ -43,8 +43,16 @@
                         {{ $type->name }}
                     </div>
                 </a>
-                @endforeach
+            @endforeach
                 @if($super === 'HACCP')
+                <a class="category {{ $super }}" href="/frontoffice/reports">
+                    <div class="category-body">
+                        <img src="/img/logo2white.png" class="img-responsive"/>
+                    </div>
+                    <div class="category-footer">
+                        RELATÓRIOS
+                    </div>
+                </a>
                 <a class="category {{ $super }}" href="/frontoffice/newReport">
                     <div class="category-body">
                         <img src="/img/logo2white.png" class="img-responsive"/>
