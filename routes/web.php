@@ -69,7 +69,6 @@ Route::post('/frontoffice/personalizeSection/save','PersonalizeSectionController
 Route::get('/frontoffice/personalizeAreasEquipments','PersonalizeSectionController@getAreasEquipments');
 Route::get('/frontoffice/personalizeAreasEquipments/personalizeEachSection/{id}','PersonalizeSectionController@personalizeEachSection');
 Route::post('/frontoffice/personalizeAreasEquipments/personalizeEachSection/save','PersonalizeSectionController@saveEachSection');
-Route::get('/frontoffice/reports','ReportController@reportList');
 
 
 //routes novo relatorio
@@ -81,6 +80,8 @@ Route::post('/frontoffice/addSection/{id}','ReportController@addSectionReport');
 Route::post('/frontoffice/saveAnswers','ReportController@saveAnswers');
 Route::post('/frontoffice/saveReport/{visitNumber}','ReportController@saveReport');
 Route::get('/concluedReport','ReportController@concludeReport');
+Route::get('/frontoffice/reports','ReportController@reportList');
+Route::get('/frontoffice/reportShow/{idReport}','ReportController@reportShow');
 
 
 

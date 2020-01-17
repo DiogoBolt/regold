@@ -30,24 +30,22 @@
 
     <div class="container">
         <div class="container-docs">
-        <!-- 
-            @if(count($receipts) > 0)
-                @foreach($receipts as $receipt)
+            @if(count($reports) > 0)
+                @foreach($reports as $report)
                     <div class="file">
                         <div class="file-head">
-                            {{$receipt->file}}
+                           {{$report->updated_at}}
                         </div>
-                        <div class="file-body">
-                            <a href="/uploads/{{$client->id}}/{{$receipt->file}}">
-                                <img class="file-body__img" src="/uploads/{{$client->id}}/{{$receipt->file}}" />
+                        <div class="file-body" href="/frontoffice/reportShow/{{$report->id}}">
+                            <a href="/frontoffice/reportShow/{{$report->id}}">
+                                <img class="file-body__img" src="C:\xampp\htdocs\regold\public\uploads\reports\Report.png">
                             </a>
                         </div>
                     </div>
                 @endforeach      
             @else 
-                <h2>Sem documentos associados.</h2>
+                <h2>Sem Relatórios Realizados.</h2>
             @endif
-            -->
         </div>
     </div>
 
