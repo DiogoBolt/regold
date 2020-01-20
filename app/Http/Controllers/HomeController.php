@@ -48,7 +48,8 @@ class HomeController extends Controller
 
         $thermo->client_id = 0;
         $thermo->thermo_type ="Teste";
-        $thermo->temperature = json_encode($inputs);
+        $thermo->temperature = $inputs['temperature'];
+        $thermo->imei = $inputs['imei'];
         $thermo->last_read = Carbon::now();
 
         $thermo->save();
