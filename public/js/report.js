@@ -98,43 +98,60 @@ function addObsList(){
     var idRule= document.getElementById('indexObs').options[index].value;
     var iptObs = document.getElementById('iptObs').value;
 
-    var tr= document.createElement('tr');
-    tr.className="tableRow";
+    console.log(index + " - " + iptObs);
+    if(index==0 && iptObs==""){
+        document.getElementById('indexObs').style.border="1px solid red";
+        document.getElementById('iptObs').style.borderBottom="1px solid red";
+    }else{
+        if(index==0){
+            document.getElementById('indexObs').style.borderBottom="1px solid red";
+        }else if(iptObs==""){
+            document.getElementById('iptObs').style.borderBottom="1px solid red";
+        }else{
+            var tr= document.createElement('tr');
+            tr.className="tableRow";
 
-    var thIndex= document.createElement('th');
-    thIndex.id="correctiveRulesIndex";
-    thIndex.value=idRule;
-    thIndex.className="index";
-    thIndex.innerHTML=index;
+            var thIndex= document.createElement('th');
+            thIndex.id="correctiveRulesIndex";
+            thIndex.setAttribute('value',idRule);
+            thIndex.className="index";
+            thIndex.innerHTML=index;
 
-    var tdObs=document.createElement('td');
-    tdObs.class="tdRuleBackground";
-    txtAreaObs=document.createElement('textarea');
-    txtAreaObs.className="corrective";
-    txtAreaObs.value=iptObs;
-    txtAreaObs.innerHTML=iptObs;
-    tdObs.appendChild(txtAreaObs);
+            var tdObs=document.createElement('td');
+            tdObs.class="tdRuleBackground";
+            txtAreaObs=document.createElement('textarea');
+            txtAreaObs.className="corrective";
+            txtAreaObs.value=iptObs;
+            txtAreaObs.innerHTML=iptObs;
 
-    var tdTrash=document.createElement('td');
-    tdTrash.className="trashTd";
+            var idObs=document.createElement('input');
+            idObs.type='hidden';
+            idObs.setAttribute('value',0);
 
-    var iTrash=document.createElement('i');
-    iTrash.className="fas fa-trash";
-    iTrash.onclick=function(){deleteObs(this)};
+            tdObs.appendChild(txtAreaObs);
+            tdObs.appendChild(idObs);
 
-    tdTrash.appendChild(iTrash);
+            var tdTrash=document.createElement('td');
+            tdTrash.className="trashTd";
 
-    tr.appendChild(thIndex);
-    tr.appendChild(tdObs);
-    tr.appendChild(tdTrash);
+            var iTrash=document.createElement('i');
+            iTrash.className="fas fa-trash";
+            iTrash.onclick=function(){deleteObs(this)};
 
-    document.getElementById('observations').getElementsByTagName('tbody')[1].appendChild(tr);
-    document.getElementById("divObservationsRules").style.visibility="visible";
-    document.getElementById("titleObservations").style.display="block";
+            tdTrash.appendChild(iTrash);
 
-    document.getElementById('indexObs').selectedIndex=0;
-    iptObs = document.getElementById('iptObs').value="";
+            tr.appendChild(thIndex);
+            tr.appendChild(tdObs);
+            tr.appendChild(tdTrash);
 
+            document.getElementById('observations').getElementsByTagName('tbody')[1].appendChild(tr);
+            document.getElementById("divObservationsRules").style.visibility="visible";
+            document.getElementById("titleObservations").style.display="block";
+
+            document.getElementById('indexObs').selectedIndex=0;
+            iptObs = document.getElementById('iptObs').value="";
+        }
+    }
 }
 
 function deleteObs(element){
@@ -151,12 +168,10 @@ function deleteObs(element){
 }
 
 function allNotAplly(){
-
     var tableRows=document.getElementById('reportRules').getElementsByTagName('tbody')[1].getElementsByTagName('tr');
     for(i=0; i< tableRows.length; i++){
         tableRows[i].children[4].children[0].checked=true;
     }
-
 }
 
 var answers=[];
@@ -203,8 +218,9 @@ function addAnswerArray(){
     if(rowsObs.length>0){
         for(var j=0; j<rowsObs.length; j++){
             obs.idClientSection=document.getElementById('idSection').value;
+            obs.rule=rowsObs[j].children[0].getAttribute('value');
             obs.observations=rowsObs[j].children[1].children[0].value;
-            obs.rule=rowsObs[j].children[0].value;
+            obs.idObs=rowsObs[j].children[1].children[1].value;
             observations.push(obs);
             obs={};
         }
@@ -220,41 +236,28 @@ function testarLink($id){
         var obs = JSON.stringify(observations);
         var idSection = document.getElementById("idSection").value;
 
-        //console.log("->"+idSection);
-
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
         $.ajax({
             type: 'POST',
             url: "/frontoffice/saveAnswers",
             data:{answers:answersJson, obs:obs, idSection:idSection}
         }).then(
-            window.location.replace('/frontoffice/newReportSections')
+            setTimeout(function(){  
+                window.location.replace('/frontoffice/newReportSections')
+            }, 500)
         );
-    
-
-        /*$.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            type: 'POST',
-            url: "/frontoffice/addSection/"+$id,
-        }).then(
-            window.location.replace('/frontoffice/newReportSections')
-        );*/
     }
-    //console.log(answers);
 }
 
 function testeFunc(){
     
     var visitNumber=document.getElementById("visitNumber").innerHTML;
-    console.log(visitNumber);
+    //console.log(visitNumber);
 
    $.ajaxSetup({
         headers: {
@@ -267,4 +270,35 @@ function testeFunc(){
     }).then(
         window.location.replace('/frontoffice/newReportSections')
     );
+}
+
+function concludeReport(){
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        type: 'POST',
+        url: "/frontoffice/saveReport/"+visitNumber,
+    }).then(
+        window.location.replace('/frontoffice/newReportSections')
+    );
+
+}
+
+
+function verifySelected(element){
+    if(element.selectedIndex !=0){
+        document.getElementById('indexObs').style.border="none";
+        document.getElementById('indexObs').style.borderBottom="1px solid #000";
+    }
+}
+
+function verifyTextInput(element){
+    if(element.value != ""){
+        document.getElementById('iptObs').style.borderBottom="1px solid #000";
+    }else{
+        document.getElementById('iptObs').style.borderBottom="1px solid #f00"; 
+    }
 }
