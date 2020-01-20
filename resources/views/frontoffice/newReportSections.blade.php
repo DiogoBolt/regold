@@ -56,9 +56,6 @@
         </ul>
     </div>
     @if(Session::has('sectionsReport'))
-        <label>{{count(Session::get('sectionsReport'))}}</label>
-        <br/>
-        <label>{{count($clientSections)}}</label>
         @if(count(Session::get('sectionsReport')) == count($clientSections))
             <a  href="/concluedReport" class="btn btn-success">Concluir Relatório</a>
         @endif

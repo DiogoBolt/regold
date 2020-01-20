@@ -24,12 +24,6 @@
                 <li class="breadcrumb-item active" aria-current="page">Documento</li>
             </ol>
         </nav>
-
-        {{-- Go Back Button --}}
-        <a class="back-btn" href="/frontoffice/documents/">
-            <span class="back-btn__front"><strong>Voltar</strong></span>
-            <span class="back-btn__back"><strong>Documentos </strong></span>
-        </a>
      -->
        {{-- Go Back Button --}}
     <a class="back-btn" href="/frontoffice/documents/HACCP">
@@ -47,9 +41,9 @@
             <tr id="reportRulesTop">
                 <th>#</th>
                 <th>Regra</th>
-                <th>Conforme</th>
-                <th>Não Conforme</th>
-                <th onclick="allNotAplly()">Não Aplicável</th>
+                <th onclick="setOptionAll('c')"  ondblclick="forceAll('c')">Conforme</th>
+                <th onclick="setOptionAll('nc')" ondblclick="forceAll('nc')">Não Conforme</th>
+                <th onclick="setOptionAll('na')" ondblclick="forceAll('na')">Não Aplicável</th>
             </tr>
             <tbody>
                 @foreach($rules as $rule)
@@ -173,8 +167,17 @@
         <button onclick="addObsList()">Save</button>
     </div>
 
+    <script>
+        var wage = document.getElementById("iptObs");
+        wage.addEventListener("keydown", function (e) {
+        if (e.keyCode === 13) {
+            addObsList();
+        }
+        });
+    </script>
+
     <div id="divBtns">
-        <button onclick="testarLink({{$section->id}})" id="continue">ContinueLink</button>
+        <button onclick="continueAnswerReport()" id="continue">Continuar</button>
     </div>
 @endsection
 

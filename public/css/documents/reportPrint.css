@@ -1,0 +1,280 @@
+/*** report ***/
+
+* {-webkit-font-smoothing: antialiased;
+    -webkit-print-color-adjust: exact;}
+*{
+    background: #fff;
+}
+  
+  .panel {
+    border: none;
+    box-shadow: 0 8px 5px rgba(0, 0, 0, 0.3);
+    width: 130%;
+    margin-left: -12.5%;
+    background-color: #fff;
+  }
+
+  .row{
+    width: 100%;
+  }
+
+  .printall, .printall table {
+    font-size: 12px;
+    }
+
+   h1.title { 
+    color: #000;
+    font-family: 'Rouge Script', cursive;
+    font-size: 70px; font-weight: normal; 
+    line-height: 48px;
+    margin: 0 0 50px;
+    text-align: center;
+    text-shadow: 1px 1px 2px #082b34;
+   }
+  
+   
+   h1.title { color: #000; font-family: 'Lobster', cursive; font-size: 40px; font-weight: normal; line-height: 48px; margin: 0 0 18px; text-shadow: 1px 0 0 #fff; }
+   h2.subTitle { color: #000; font-family: 'Lobster', cursive; font-size: 30px; font-weight: normal; line-height: 48px; margin: 0 0 18px; text-shadow: 1px 0 0 #fff; text-align: center;}
+  
+  label{
+    color: black;
+    font-size: 20px;
+  }
+  
+  .lblBold{ 
+    font-family: "Roboto", sans-serif;
+    font-weight: bold;
+  }
+  
+  .divReportInfo{
+    margin-top: 5%;
+    text-align: center;
+  }
+  
+  #btnNext{
+    color: black;
+    margin-top: 10px;
+  }
+  
+  input[type=radio]{
+    display:none;
+  }
+  input[type=radio] + label{
+    display: block;
+    border: 1px solid black;
+    background-color: red;
+    border-radius: 0%;
+    width: 100px;
+    height: 20px;
+    margin: auto;
+  }
+  
+  input[type=radio] + label.conforme{
+    background: rgb(0, 255, 0,0.5) !important;
+    
+  }
+  input[type=radio]:checked + label.conforme{
+    background: rgb(0, 255, 0) !important;
+  }
+  
+  input[type=radio] + label.naoConforme{
+    background: rgb(255,0, 0,0.5) !important;
+  }
+  input[type=radio]:checked + label.naoConforme{
+    background: rgb(255, 0, 0) !important;
+  }
+  
+  input[type=radio] + label.naoAplicavel{
+    background: rgb(255, 255, 0,0.5) !important;
+  }
+  input[type=radio]:checked + label.naoAplicavel{
+    background: rgb(255, 255, 0) !important;
+  }
+  
+  .tableContainer{
+    width: 80%;
+    margin-left: 10%;
+  }
+  
+  #reportRulesTop{
+    background: #f2f2f2 !important;
+  }
+  
+  #reportRulesTop th{
+    color: black;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+  }
+  
+  .table{
+    width:100% !important;
+    border: 2px solid #595959;
+  }
+  
+  .tdBackground{
+    background: #ffffff;
+  }
+  
+  .index{
+    width: 15px;
+    color: black;
+    font-weight: bold;
+    font-size: 18px;
+    background: #f2f2f2;
+    text-align: center;
+  }
+  
+  .rule{
+    color: black;
+    text-align: left;
+    font-size: 15px;
+  }
+  
+  .tableRow{
+    background: white;
+  }
+  
+  .corrective{
+    width: 100%;
+    border:none;
+    height: auto;
+    line-height: 15px;
+    margin: 0;
+    padding: 5px;
+    color: black;
+    text-align: left;
+    font-size: 15px;
+    border: 0 none white;
+    overflow: hidden;
+    padding: 0;
+    outline: none;
+    background: #ffffff;
+  }
+  
+  .tdRuleBackground{
+    max-width: 200px;
+  }
+  
+  .correctiveRulesIndex{
+    max-width: 15px;
+  }
+  
+  .wrapper {
+    width: 80%;
+    margin-left: 10%;
+    display: grid;
+    grid-template-columns: 24% 24% 24% 24% ;
+    grid-gap: 1%;
+    background-color: aqua;
+    color: #444;
+  }
+  
+  .box {
+    background-color: white;
+    color: #000;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 20px;
+    font-size: 150%;
+  }
+  
+  .trashTd{
+    color:red;
+    font-size: 20px;
+    width: 30px;
+  }
+  
+  #addObs{
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 0%;
+    background: white;
+  }
+  
+  #iptObs{
+    height: 27px;
+    min-width: 78%;
+    color: black;
+    font-size: 20px;
+    border: none;
+    border-bottom: 1px solid #000;
+    margin-left: 10px;
+  }
+  
+  #iptObs:focus { 
+    outline:none;
+  }
+  
+  #indexObs{
+    height: 27px;
+    border: none;
+    border-bottom: 1px solid #000;
+    font-size: 20px;
+    color: black;
+    text-align-last: center;
+  }
+  
+  hr.line{
+    border: 3px solid green;
+    border-radius: 5px;
+    margin-left: 20%;
+    width: 60%;
+    margin-bottom: 30px; 
+  }
+
+  #reportInfo{
+    width: 80%;
+    margin-left: 10%;
+    text-align: center;
+    margin-bottom: 200px;
+  }
+  
+  #divFloatLeft{
+    text-align: left;
+    float: left;
+  }
+  
+  #divFloatRigth{
+    text-align: left;
+    float: right;
+  }
+  
+  /*div das barras*/
+  #chartBar{
+    margin: 25%;
+    width: 50%;
+    margin-top: 30px;
+    margin-bottom: 10px;
+  }
+  
+  .conformeBar{
+    font-size: 15px !important;
+    color: black !important;
+    background-color: green !important; 
+  }
+  .nConformeBar{
+    font-size: 15px !important;
+    color: black !important ;
+    background-color: red !important; 
+  }
+  
+  .nAplicavelBar{
+    font-size: 15px !important;
+    color: black !important ;
+    background-color: yellow !important; 
+  }
+  
+  .page-break {
+    page-break-after: always !important;
+  }
+
+  #btnBack{
+      width: 75px;
+  }
+
+ #divBtns{
+     display: inline-block;
+     margin-left: 10%;
+ }
+  

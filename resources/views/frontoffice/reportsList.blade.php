@@ -38,7 +38,7 @@
                         </div>
                         <div class="file-body" href="/frontoffice/reportShow/{{$report->id}}">
                             <a href="/frontoffice/reportShow/{{$report->id}}">
-                                <img class="file-body__img" src="C:\xampp\htdocs\regold\public\uploads\reports\Report.png">
+                                <img class="file-body__img" src="{{asset('uploads\reports\Report.png')}}">
                             </a>
                         </div>
                     </div>

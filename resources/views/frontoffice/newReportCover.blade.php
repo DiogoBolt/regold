@@ -60,9 +60,8 @@
             <label id="visitNumber"> {{$visitNumber}} </label>
         </div>
 
-        <button onclick="testeFunc()">Próximo</button>
+        <button onclick="continueReport()">Próximo</button>
 
-         <a href="/frontoffice/newReportSections" id="btnNext">Próximo</a>
     </div>
     
 @endsection

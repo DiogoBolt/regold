@@ -525,14 +525,16 @@ class ReportController extends Controller
             }
         }
 
+
         foreach($reportSectionObs as $reportSectionOb){
             $countaux=0;
             $countaux++;
             $reportSectionOb->index=$countaux;
         }
 
-
+        //foreach estatiststicas 
         foreach($arraySections as $section){
+            //estatisticas Secão 
             $totalRules=0;
             $totalConforme=0;
             $totalnConforme=0;
@@ -560,11 +562,35 @@ class ReportController extends Controller
             $section->conforme=$auxPerConf;
             $section->nConforme=$auxPerNCont;
             $section->nApply=$auxPerNApply;
-
         }
 
-        return view('frontoffice.reportShow',compact('report','arraySections','reportsAnswers','reportSectionObs'));
-        //dd($arraySections,$reportsAnswers,$reportSectionObs);
+
+        //geral
+        $totalRulesGeral=0;
+        $totalConformeGeral=0;
+        $totalnConformeGeral=0;
+        $totalnAplicavelGeral=0;
+        foreach($reportsAnswers as $reportsAnswer){
+            $totalRulesGeral++;
+            if($reportsAnswer->answer=='c'){
+                $totalConformeGeral++;
+            }else if($reportsAnswer->answer=='nc'){
+                $totalnConformeGeral++;
+            }else if($reportsAnswer->answer=='na'){
+                $totalnAplicavelGeral++;
+            }
+        }
+
+        $auxPerConfGeral=intval(round(($totalConformeGeral*100)/$totalRulesGeral));  
+        $auxPerNConfGeral=intval(round(($totalnConformeGeral*100)/$totalRulesGeral));
+        $auxPerNApplyGeral=intval(round(($totalnAplicavelGeral*100)/$totalRulesGeral));
+
+        $statiscsGeral = (object)[];
+        $statiscsGeral->confGeral=$auxPerConfGeral;
+        $statiscsGeral->nConfGeral=$auxPerNConfGeral;
+        $statiscsGeral->nAplly=$auxPerNApplyGeral;
+
+        return view('frontoffice.reportShow',compact('report','arraySections','reportsAnswers','reportSectionObs','statiscsGeral'));
     
     }
         

@@ -1,18 +1,6 @@
 /*** report ***/
 
 * {-webkit-font-smoothing: antialiased;}
-/*
-h1.title { 
-  font-family: 'Raleway',sans-serif;
-  font-size: 25sp; 
-  font-weight: 400; 
-  line-height: 32px;
-  margin: 3% 0 0 0; 
-  text-align: center; 
-  text-transform: uppercase;
-  color: black;
- }*/
-
 
  h1.title { 
   color: #000;
@@ -27,8 +15,6 @@ h1.title {
  
  h1.title { color: #000; font-family: 'Lobster', cursive; font-size: 40px; font-weight: normal; line-height: 48px; margin: 0 0 18px; text-shadow: 1px 0 0 #fff; }
  h2.subTitle { color: #000; font-family: 'Lobster', cursive; font-size: 30px; font-weight: normal; line-height: 48px; margin: 0 0 18px; text-shadow: 1px 0 0 #fff; text-align: center;}
-
-
 
 label{
   color: black;
@@ -82,7 +68,7 @@ input[type=radio] + label.naoAplicavel{
   background: rgb(255, 255, 0,0.5);
 }
 input[type=radio]:checked + label.naoAplicavel{
-  background: rgb(255, 255, 0);
+  background: rgb(153, 122, 0);
 }
 
 .tableContainer{
@@ -159,7 +145,6 @@ input[type=radio]:checked + label.naoAplicavel{
   display: grid;
   grid-template-columns: 24% 24% 24% 24% ;
   grid-gap: 1%;
-  background-color: aqua;
   color: #444;
 }
 
@@ -210,7 +195,6 @@ input[type=radio]:checked + label.naoAplicavel{
 
 #divBtns{
   text-align: center;
-  background: aqua;
   margin: 50px;
 }
 
@@ -218,7 +202,8 @@ hr.line{
   border: 3px solid green;
   border-radius: 5px;
   margin-left: 20%;
-  width: 60%; 
+  width: 60%;
+  margin-bottom: 30px; 
 }
 
 #divFloatLeft{
@@ -243,6 +228,8 @@ hr.line{
 #chartBar{
   margin: 25%;
   width: 50%;
+  margin-top: 30px;
+  margin-bottom: 10px;
 }
 
 .conformeBar{
