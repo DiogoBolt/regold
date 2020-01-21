@@ -47,8 +47,14 @@ class PersonalizeSectionController extends Controller
 
     public function getSection(){
         $auxClientId = Session::get('clientImpersonatedId');
-        $sections=Section::select(['id','name',
-        ])->get();
+
+        $activityTypeId=Customer::where('id',$auxClientId)
+        ->select(['activity'])
+        ->pluck('activity')->first();
+
+        $sections=Section::where('activityClientId',$activityTypeId)
+        ->select(['id','name',])
+        ->get();
 
         $clientSections=ClientSection::where('id_client',$auxClientId)
         ->where('active',1)
@@ -58,7 +64,7 @@ class PersonalizeSectionController extends Controller
             'designation',
         ])->get();
 
-        $control= ControlCustomizationClients::where('idClient',$auxClientId)->first();
+        $control = ControlCustomizationClients::where('idClient',$auxClientId)->first();
 
         $index=[];
 
@@ -93,7 +99,6 @@ class PersonalizeSectionController extends Controller
     public function saveClientSection(Request $request){
         $inputs = $request->all();
         $sections = json_decode($inputs['sections']);
-
 
         $auxClientId = Session::get('clientImpersonatedId');
 
@@ -301,7 +306,6 @@ class PersonalizeSectionController extends Controller
                 $AreaSectionClient->save();
             }
         }
-
 
         $equipmentsSectionClient = EquipmentSectionClient::where('idClient', $auxClientId)
         ->select(['id',])

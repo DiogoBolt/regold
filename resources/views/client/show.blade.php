@@ -50,7 +50,7 @@
                             <b> Email Contacto:</b> {{$user->email}}
                         </div>
                         <div class="form-group">
-                            <b>Actividade:</b> {{$client->activity}}
+                            <b>Actividade:</b> {{$client->activityType}}
                         </div>
                         <div class="form-group">
                             <b> Telefone:</b> {{$client->telephone}}

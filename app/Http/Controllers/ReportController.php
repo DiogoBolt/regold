@@ -288,7 +288,6 @@ class ReportController extends Controller
                     }
                 }
 
-
             //obs
             $idObsList=ReportSectionObs::where('idReport',$idReport)
             ->where('idClientSection',$idSection)

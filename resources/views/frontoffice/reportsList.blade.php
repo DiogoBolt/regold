@@ -34,7 +34,7 @@
                 @foreach($reports as $report)
                     <div class="file">
                         <div class="file-head">
-                           {{$report->updated_at}}
+                           Relatório {{$report->updated_at->toDateString()}}
                         </div>
                         <div class="file-body" href="/frontoffice/reportShow/{{$report->id}}">
                             <a href="/frontoffice/reportShow/{{$report->id}}">

@@ -19,6 +19,10 @@ use App\ServiceType;
 use App\ServiceTypeClient;
 use App\UserType;
 use App\PostalCodes;
+use App\ActivityClient;
+use App\ControlCustomizationClients;
+use App\ClientSection;
+use App\Section;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -263,8 +267,9 @@ class ClientController extends Controller
         $salesman = Salesman::all();
         $districts = Districts::all();
         $serviceTypes = ServiceType::all();
+        $activityTypes = ActivityClient::all();
 
-        return view('client.new',compact('salesman','districts','serviceTypes'));
+        return view('client.new',compact('salesman','districts','serviceTypes','activityTypes'));
     }
 
     public function getCitiesByDistrict($id)
@@ -341,10 +346,11 @@ class ClientController extends Controller
     public function addCustomer(Request $request)
     {
         $inputs = $request->all();
-        
+
         //Registar o user
         $user = new User;
         $establisment = new Customer;
+
         if( $inputs['verifyHaveRegister']=='nao'){
             $user->name = $inputs['ownerName'];
             $user->sex = $inputs['sex'];
@@ -353,7 +359,6 @@ class ClientController extends Controller
             $user->password = bcrypt($inputs['password']);
             $user->save();
             $establisment->ownerID=$user->id;
-            //$establisment->email = $user->email;
         }else{
             $idEmail = User::where('email',$inputs['registedMail'])
             ->select([
@@ -361,14 +366,16 @@ class ClientController extends Controller
             ])->first();
             $establisment->ownerID=$idEmail->id;
         }
+
         //Registar o establecimento
-        
         $establisment->name = $inputs['name'];
         $establisment->comercial_name = $inputs['invoiceName'];
+
         //address
         $establisment->address = $inputs['deliveryAddress'];
         $establisment->city = $inputs['city'];
         $establisment->postal_code = $inputs['postal_code'];
+
         //invoice address
         if($inputs['VerifyAdress']=="nao"){
             $establisment->invoice_address = $inputs['invoiceAddress'];
@@ -382,8 +389,6 @@ class ClientController extends Controller
 
         //email
         $establisment->receipt_email = $inputs['invoiceEmail'];
-        
-
         $establisment->nif = $inputs['nif'];
         $establisment->activity = $inputs['activity'];
         $establisment->salesman = $inputs['salesman'];
@@ -395,6 +400,23 @@ class ClientController extends Controller
         $establisment->transport_note = $inputs['transport_note'];
 
         $establisment->save();
+        
+        $ControlCustomizationClient = new ControlCustomizationClients;
+        $ControlCustomizationClient->idClient=$establisment->id;
+        $ControlCustomizationClient->save();
+
+        $qtd = Section::where('activityClientId',$establisment->activity)->count();
+
+        if($qtd == 1){
+            $clientSection=new ClientSection;
+            $clientSection->id_client=$establisment->id;
+
+            $section=Section::where('activityClientId',$establisment->activity)->first();
+            $clientSection->id_section=$section->id;
+            $clientSection->designation=$section->name;
+
+            $clientSection->save();
+        }
 
         //melhorar isto
         if (array_key_exists('serviceType1', $inputs)) {
@@ -420,7 +442,7 @@ class ClientController extends Controller
        
         $userL = Auth::user();
 
-        if($userL->userType==5){
+        if($userL->userType==5 || $userL->userType==2 ){
             $clients = Customer::all();
         }else if($userL->userType==1){
             $clients = Customer::from(Customer::alias('c'))
@@ -452,13 +474,13 @@ class ClientController extends Controller
         return view('client.index',compact('clients','unpaid','total','districts'));
     }
 
-
     public function editCustomer($id)
     {
         $client = Customer::where('id',$id)->first();
         $salesman = Salesman::all();
         $districts = Districts::all();
         $serviceTypes = ServiceType::all();
+        $activityTypes = ActivityClient::all();
 
         $auxDistrict=$this->getCitiesById($client->city)->id_district;
         $auxDristrictInvoice= $this->getCitiesById($client->invoice_city)->id_district;
@@ -474,7 +496,7 @@ class ClientController extends Controller
         $client->allCities=$this->getAllCitiesByDistrict($auxDistrict);
         $client->allCitiesInvoice=$this->getAllCitiesByDistrict($auxDristrictInvoice);
 
-        return view('client.edit',compact('client','salesman','districts','serviceTypes'));
+        return view('client.edit',compact('client','salesman','districts','serviceTypes','activityTypes'));
     }
 
     public function editCustomerPost(Request $request)
@@ -574,6 +596,11 @@ class ClientController extends Controller
 
         $client->salesman=$this->getSalesmanNameById($client->salesman);
         $client->client_type=$this->getServiceTypeNameByID($this->getServiceTypeByUserID($id));
+        
+        $client->activityType=ActivityClient::where('id',$client->activity)
+        ->select(['designation',])
+        ->pluck('designation')
+        ->first();
 
         $types = DocumentType::all();
        
@@ -670,7 +697,6 @@ class ClientController extends Controller
             $extension = $file->getClientOriginalExtension(); // getting image extension
             $filename = $file->getClientOriginalName().'.'.$extension;
             $file->move('uploads/'.$inputs['client'].'/', $filename);
-
 
             //TODO Envio de email
             //dd($inputs['client']);

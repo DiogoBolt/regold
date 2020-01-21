@@ -61,7 +61,11 @@
                         NOVO RELATÓRIO
                     </div>
                 </a>
-                <a class="category {{ $super }}" href="/frontoffice/personlizeSection">
+                @if($showSections==1)
+                    <a class="category {{ $super }}" href="/frontoffice/personlizeSection">
+                @else
+                    <a class="category {{ $super }}" href="/frontoffice/personlizeSection" style="visibility:hidden">
+                @endif
                     <div class="category-body">
                         <img src="/img/logo2white.png" class="img-responsive"/>
                     </div>
@@ -69,6 +73,7 @@
                         PERSONALIZAR SECÇÕES
                     </div>
                 </a>
+               
                 <a class="category {{ $super }}" href="/frontoffice/personalizeAreasEquipments">
                     <div class="category-body">
                         <img src="/img/logo2white.png" class="img-responsive"/>

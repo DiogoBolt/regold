@@ -16,6 +16,7 @@ use App\OrderLine;
 use App\Product;
 use App\Receipt;
 use App\User;
+use App\Section;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -140,6 +141,7 @@ class FrontofficeController extends Controller
 
     public function documentsByType($super, $type)
     {
+        dd("aqui lalal");
         $user = Auth::user();
 
         $auxClientId = Session::get('establismentID');
@@ -183,12 +185,26 @@ class FrontofficeController extends Controller
 
     public function documentsBySuper($super)
     {
-       
+        $auxClientId = Session::get('establismentID');
+
+        $clientActivity = Customer::where('id',$auxClientId)
+        ->select(['activity',])
+        ->pluck('activity')
+        ->first();
+
+        $qtd = Section::where('activityClientId',$clientActivity)->count();
+
+        if($qtd > 1){
+            $showSections=1;
+        }else{
+            $showSections=0;
+        }
+
         $superId = DocumentSuperType::where('name', $super)->pluck('id');
         
         $types = DocumentType::where('superType', $superId)->get();
 
-        return view('frontoffice.documentsTypes',compact('types','super'));
+        return view('frontoffice.documentsTypes',compact('types','super','showSections'));
     }
 
     public function products()

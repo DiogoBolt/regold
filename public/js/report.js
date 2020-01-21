@@ -365,10 +365,20 @@ function verifyTextInput(element){
 function printReport(){
     
         setTimeout(function () {
-            //console.log(document.getElementById("date").innerHTML);
+            console.log(document.querySelectorAll('.line'));
             document.getElementById("divBtns").style.display="none";
+            lines=document.querySelectorAll('.line');
+
+            for (i = 0; i < lines.length; i++) {
+                lines[i].style.display = "none";
+            }
+
             document.title="report"+document.getElementById("date").innerHTML.trim();
             window.print();
             document.getElementById("divBtns").style.display="block";
+            
+            for (i = 0; i < lines.length; i++) {
+                lines[i].style.display = "block";
+            }
         }, 500);
 }

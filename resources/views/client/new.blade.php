@@ -163,17 +163,10 @@
                             <div class="form-group">
                                 Actividade do Cliente: <select class="form-control" name="activity" required>        
                                     <option disabled selected value="">Selecione a Atividade/Tipo de Cliente</option>
-                                    <option value="Cafe / Snack Bar">Cafe / Snack Bar</option>
-                                    <option value="Salão de Chá">Salão de Chá</option>
-                                    <option value="Supermercado">Supermercado</option>
-                                    <option value="Peixaria">Peixaria</option>
-                                    <option value="Talho">Talho</option>
-                                    <option value="Restaurante">Restaurante</option>
-                                    <option value="Industria">Industria</option>
-                                    <option value="Hotel">Hotel</option>
-                                    <option value="Posto Combustivel">Posto Combustivel</option>
-                                    <option value="Padaria / Pastelaria">Padaria / Pastelaria</option>
-                                    <option value="Outro">Outro</option>
+                                    
+                                    @foreach($activityTypes as $activityType)
+                                        <option value="{{$activityType->id}}">{{$activityType->designation}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             

@@ -64,11 +64,11 @@
                             <div class="tableContainer">
                                 <table class="table" id="reportRules">
                                     <tr id="reportRulesTop">
-                                        <th>#</th>
-                                        <th>Regra</th>
-                                        <th>Conforme</th>
-                                        <th>Não Conforme</th>
-                                        <th>Não Aplicável</th>
+                                        <th id="correctiveRulesIndex">#</th>
+                                        <th class="thBackground">Regra</th>
+                                        <th class="thBackground">Conforme</th>
+                                        <th class="thBackground">Não Conforme</th>
+                                        <th class="thBackground">Não Aplicável</th>
                                     </tr>
                                     <tbody>
                                         @foreach($reportsAnswers as $rule)
@@ -124,17 +124,17 @@
                                 <table class="table" id="correctiveRules">
                                     <tr id="reportRulesTop">
                                         <th id="correctiveRulesIndex">#</th>
-                                        <th>Regra</th>
-                                        <th>Corretiva</th>
+                                        <th id="correctiveRule">Regra</th>
+                                        <th id="correctiveRuleCorrective">Corretiva</th>
                                     </tr>
                                     <tbody>
                                         @if($section->showCorrective == 1)
                                             @foreach($reportsAnswers as $rule)
                                                 @if($rule->corrective!=null && $section->id==$rule->idClientSection)
                                                     <tr class="tableRow" style="display:table-row">
-                                                        <th id="correctiveRulesIndex" class="index" value="{{$rule->id}}">{{$rule->index}}</th>
+                                                        <th class="index" >{{$rule->index}}</th>
                                                         <td class="tdRuleBackground"><label class="rule">{{$rule->rule}}</label></td>
-                                                        <td id="correctiveTd"><label class="corrective" value="{{$rule->corrective}}">{{$rule->corrective}}</label></td>
+                                                        <td id="correctiveTd"><label class="corrective">{{$rule->corrective}}</label></td>
                                                     </tr>
                                                 @endif
                                             @endforeach
@@ -164,9 +164,9 @@
                                             @foreach($reportSectionObs as $reportSectionOb)
                                                 @if($section->id==$reportSectionOb->idClientSection)
                                                     <tr class="tableRow">
-                                                        <th id="correctiveRulesIndex" class="index" value="{{$reportSectionOb->idRule}}">{{$reportSectionOb->index}}</th>
+                                                        <th class="index">{{$reportSectionOb->index}}</th>
                                                         <td class="tdRuleBackground">
-                                                            <label class="corrective" value="{{$reportSectionOb->observation}}">{{$reportSectionOb->observation}}</label>
+                                                            <label class="corrective">{{$reportSectionOb->observation}}</label>
                                                             <input type="hidden" id="idObs" value="{{$reportSectionOb->id}}" />
                                                         </td>
                                                     </tr>
