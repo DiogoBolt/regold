@@ -400,12 +400,11 @@ class ClientController extends Controller
         $establisment->transport_note = $inputs['transport_note'];
 
         $establisment->save();
-        
-        $ControlCustomizationClient = new ControlCustomizationClients;
-        $ControlCustomizationClient->idClient=$establisment->id;
-        $ControlCustomizationClient->save();
 
         $qtd = Section::where('activityClientId',$establisment->activity)->count();
+
+        $ControlCustomizationClient = new ControlCustomizationClients;
+        $ControlCustomizationClient->idClient=$establisment->id;
 
         if($qtd == 1){
             $clientSection=new ClientSection;
@@ -416,6 +415,11 @@ class ClientController extends Controller
             $clientSection->designation=$section->name;
 
             $clientSection->save();
+     
+            $ControlCustomizationClient->personalizeSections=1;
+            $ControlCustomizationClient->save();
+        }else{
+            $ControlCustomizationClient->save();
         }
 
         //melhorar isto

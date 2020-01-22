@@ -53,7 +53,11 @@
                         RELATÓRIOS
                     </div>
                 </a>
+                @if($controlCustomizationClient==1)
                 <a class="category {{ $super }}" href="/frontoffice/newReport">
+                @else
+                <a class="category {{ $super }}" href="/frontoffice/newReport" style="display:none">
+                @endif
                     <div class="category-body">
                         <img src="/img/logo2white.png" class="img-responsive"/>
                     </div>
@@ -64,7 +68,7 @@
                 @if($showSections==1)
                     <a class="category {{ $super }}" href="/frontoffice/personlizeSection">
                 @else
-                    <a class="category {{ $super }}" href="/frontoffice/personlizeSection" style="visibility:hidden">
+                    <a class="category {{ $super }}" href="/frontoffice/personlizeSection" style="display:none">
                 @endif
                     <div class="category-body">
                         <img src="/img/logo2white.png" class="img-responsive"/>

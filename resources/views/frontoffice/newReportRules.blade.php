@@ -44,6 +44,7 @@
                 <th onclick="setOptionAll('c')"  ondblclick="forceAll('c')">Conforme</th>
                 <th onclick="setOptionAll('nc')" ondblclick="forceAll('nc')">Não Conforme</th>
                 <th onclick="setOptionAll('na')" ondblclick="forceAll('na')">Não Aplicável</th>
+                <th class="severity">Severidade</th>
             </tr>
             <tbody>
                 @foreach($rules as $rule)
@@ -76,6 +77,15 @@
                             <input type=radio  onclick="dontShowCorrective({{$rule->index}})" name="radio{{$rule->id}}" value="na" id="na{{$rule->id}}" />
                             <label class="naoAplicavel" for="na{{$rule->id}}"></label>
                         @endif
+                    </td>
+                    <td> 
+                        <div class="divSeverity">
+                            <div class="range-slider">
+                                <input class="range-slider__range" onchange="rangeValue(this)" type="range" value="{{$rule->severityValue}}" min="1" max="5">
+                            </div>
+                            <input class="inputRangeValue" oninput="rangeInputValue(this)" type="number" min="1" max="5" value="{{$rule->severityValue}}"/>
+                        </div>
+                        <label class="lblSeverityStatus">{{$rule->severityText}}</label>
                     </td>
                 </tr>
                 @endforeach

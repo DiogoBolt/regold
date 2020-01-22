@@ -17,6 +17,7 @@ use App\Product;
 use App\Receipt;
 use App\User;
 use App\Section;
+use App\ControlCustomizationClients;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -192,6 +193,10 @@ class FrontofficeController extends Controller
         ->pluck('activity')
         ->first();
 
+       $controlCustomizationClient=ControlCustomizationClients::where('idClient',$auxClientId)
+       ->select(['personalizeSections'])
+       ->pluck('personalizeSections')->first();
+
         $qtd = Section::where('activityClientId',$clientActivity)->count();
 
         if($qtd > 1){
@@ -204,7 +209,7 @@ class FrontofficeController extends Controller
         
         $types = DocumentType::where('superType', $superId)->get();
 
-        return view('frontoffice.documentsTypes',compact('types','super','showSections'));
+        return view('frontoffice.documentsTypes',compact('types','super','showSections','controlCustomizationClient'));
     }
 
     public function products()

@@ -266,6 +266,9 @@ function addAnswerArray(){
         }else{
             answer.corrective= null;
         }
+
+        answer.severityValue=rowsRules[i].children[5].children[0].children[1].value;
+
         answers.push(answer);
         answer={};
     }
@@ -381,4 +384,45 @@ function printReport(){
                 lines[i].style.display = "block";
             }
         }, 500);
+}
+
+//1-2 Não Critico
+//3-4 Moderado
+//5   Critico
+
+function rangeValue(element){
+
+    rangeVal=element.value;
+    element.parentNode.parentNode.children[1].value=rangeVal;
+    lbl=element.parentNode.parentNode.parentNode.children[1];
+    if(rangeVal==1 || rangeVal==2){
+        lbl.innerHTML="Não Crítico";
+    }else if(rangeVal==3 || rangeVal==4){
+        lbl.innerHTML="Moderado";
+    }else if(rangeVal==5){
+        lbl.innerHTML="Crítico";
+    }
+    //element.value=2;
+}
+
+function rangeInputValue(element){
+
+    rangeVal=element.value;
+    lbl=element.parentNode.parentNode.children[1];
+
+    if(rangeVal>5){
+        element.value=5;
+        element.parentNode.children[0].children[0].value=5;
+    }else{
+        element.parentNode.children[0].children[0].value=element.value;
+    }
+
+    if(rangeVal==1 || rangeVal==2){
+        lbl.innerHTML="Não Crítico";
+    }else if(rangeVal==3 || rangeVal==4){
+        lbl.innerHTML="Moderado";
+    }else if(rangeVal>=5){
+        lbl.innerHTML="Crítico";
+    }
+
 }
