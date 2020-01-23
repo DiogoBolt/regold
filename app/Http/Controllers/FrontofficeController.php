@@ -142,7 +142,6 @@ class FrontofficeController extends Controller
 
     public function documentsByType($super, $type)
     {
-        dd("aqui lalal");
         $user = Auth::user();
 
         $auxClientId = Session::get('establismentID');
@@ -276,7 +275,6 @@ class FrontofficeController extends Controller
 
             $order_line->total = $product->price1 * $order_line->amount;
         }
-
 
         $order_line->save();
 

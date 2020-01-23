@@ -86,6 +86,15 @@
                         ÁREAS E EQUIPAMENTOS
                     </div>
                 </a>
+
+                <a class="category {{ $super }}" href="/frontoffice/statistics">
+                    <div class="category-body">
+                        <img src="/img/logo2white.png" class="img-responsive"/>
+                    </div>
+                    <div class="category-footer">
+                       ESTATÍSTICAS
+                    </div>
+                </a>
                 @endif
         </div>
     </div>

@@ -1,7 +1,5 @@
 /*** report ***/
 
-* {-webkit-font-smoothing: antialiased;}
-
  h1.title { 
   color: #000;
   font-family: 'Rouge Script', cursive;
@@ -39,6 +37,7 @@ label{
 input[type=radio]{
   display:none;
 }
+
 input[type=radio] + label{
   display: block;
   border: 1px solid black;
@@ -251,23 +250,18 @@ hr.line{
 
 .severity{
   width: 200px;
-  background: #f0f;
+  background: #f2f2f2;
 }
 
+.recidivist{
+  width: 100px;
+}
+
+#recidivistCount{
+  text-align: center;
+}
 
 /*range slider*/
-*, *:before, *:after {
-  box-sizing: border-box;
-}
-body {
-  font-family: sans-serif;
-  padding: 60px 20px;
-}
-@media (min-width: 600px) {
-  body {
-    padding: 60px;
- }
-}
 
 .divSeverity{
   width: 100%;

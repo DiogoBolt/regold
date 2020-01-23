@@ -58,22 +58,22 @@ class ReportController extends Controller
         Session::forget('reportId');
         Session::forget('lastReportId');
 
+        $lastReport=Report::where('idClient',$auxClientId)
+        ->where('concluded',1)
+        ->select(['id'])
+        ->orderBy('id','desc')
+        ->pluck('id')
+        ->first();
+
+        Session::put('lastReportId',$lastReport);
+
         $report = Report::where('idClient',$auxClientId)
         ->where('concluded',0)
         ->orderBy('id','desc')
         ->first();
 
-        if(isset($report)){
 
-            $lastReport=Report::where('idClient',$auxClientId)
-            ->where('concluded',1)
-            ->select(['id'])
-            ->orderBy('id','desc')
-            ->pluck('id')
-            ->first();
-            //dd($lastReport);
-            
-            Session::put('lastReportId',$lastReport);
+        if(isset($report)){
 
             $establishName=Customer::where('id',$report->idClient)
             ->select(['name',])
@@ -99,9 +99,6 @@ class ReportController extends Controller
                 Session::put('sectionsReport',$arraySec);
             }
         }else{
-
-            Session::put('lastReportId',$null);
-
             $establishName=Customer::where('id',$auxClientId)
             ->select(['name',])
             ->first();
@@ -131,6 +128,14 @@ class ReportController extends Controller
     }
 
     public function getRules($id){
+        $auxClientId = Session::get('clientImpersonatedId');
+
+        //verificar se é o primeiro relatorio caso seja não há reincidencias
+        if(Session::get('lastReportId')==null){
+            $showColumnRecidivist=0;
+        }else{
+            $showColumnRecidivist=1;
+        }
 
         if($id==0){
             $section = new ClientSection;
@@ -203,9 +208,17 @@ class ReportController extends Controller
             }
             
         }else{
-
+            
             if(Session::get('lastReportId')!=null){
+                //aqui já sei se existem ou não relatorios....
 
+                //array com os id's dos relatorios anteriores completos
+                $lastReportsListIds=Report::where('idClient',$auxClientId)
+                    ->where('concluded',1)
+                    ->select(['id'])
+                    ->pluck('id')
+                    ->all();
+                
                 $rulesLastReportAnswers=RulesAnswerReport::where('idReport',Session::get('lastReportId'))
                 ->where('idClientSection',$id)
                 ->get();
@@ -216,6 +229,22 @@ class ReportController extends Controller
                 ->get();
 
                 for($i=0; $i<count($rules); $i++){
+
+                    $recidivistCount=0;
+
+                    //for para contar o numero de reincidencias
+                    for($k=0; $k<count($lastReportsListIds); $k++){
+                        $auxTest=RulesAnswerReport::where('idReport',$lastReportsListIds[$k])
+                        ->where('idRule',$rules[$i]->id)
+                        ->select(['answer'])
+                        ->pluck('answer')
+                        ->first();
+                        if($auxTest=='nc'){
+                            $recidivistCount++;
+                        }
+                    }
+
+                    $rules[$i]->recidivistCount=$recidivistCount;
 
                     $existLastReport=false;
                     $indexExistLastReport=-1;
@@ -239,19 +268,18 @@ class ReportController extends Controller
                         }
                     }
                     if($existLastReport){
-
+                        
                         if($rulesLastReportAnswers[$indexExistLastReport]->answer=="nc"){
                             $rules[$i]->showCorrective=1;
                             $rules[$i]->corrective=$rulesLastReportAnswers[$indexExistLastReport]->corrective;
                             $rules[$i]->answer=$rulesLastReportAnswers[$indexExistLastReport]->answer;
+                            $showTableCorrective=1;
                         }else{
                             $rules[$i]->showCorrective=0;
                             $rules[$i]->answer=$rulesLastReportAnswers[$indexExistLastReport]->answer;
                         }
                          
                         $rules[$i]->severityValue=$rulesLastReportAnswers[$indexExistLastReport]->severityValue;
-                            
-                        $showTableCorrective=1;
 
                         if($rules[$i]->severityValue==1 || $rules[$i]->severityValue==2 ){
                             $rules[$i]->severityText="Não Crítico";
@@ -260,17 +288,27 @@ class ReportController extends Controller
                         }else if($rules[$i]->severityValue==5){
                             $rules[$i]->severityText="Crítico";
                         }
-
                     }else{
                         $rules[$i]->showCorrective=0;
                         $rules[$i]->idAnswerReport=0;
                         $rules[$i]->index=$i+1;
                         $rules[$i]->answer='nd';
-                        $showTableCorrective=0;
+                        if($rules[$i]->severityValue==1 || $rules[$i]->severityValue==2 ){
+                            $rules[$i]->severityText="Não Crítico";
+                        }else if($rules[$i]->severityValue==3 || $rules[$i]->severityValue==4 ){
+                            $rules[$i]->severityText="Moderado";
+                        }else if($rules[$i]->severityValue==5){
+                            $rules[$i]->severityText="Crítico";
+                        }
                     }
                 }
-
             }else{
+
+                $reportSectionObs=ReportSectionObs::where('idReport',$idReport)
+                ->where('idClientSection',$id)
+                ->select(['id','observation','idRule'])
+                ->get();
+    
                 for($i=0; $i<count($rules); $i++){
                     $rules[$i]->showCorrective=0;
                     $rules[$i]->idAnswerReport=0;
@@ -280,7 +318,8 @@ class ReportController extends Controller
                 }
             }
         }
-        return view('frontoffice.newReportRules',compact('rules','section','showTableCorrective','reportSectionObs'));
+        //dd($showColumnRecidivist);
+        return view('frontoffice.newReportRules',compact('rules','section','showTableCorrective','reportSectionObs','showColumnRecidivist'));
     }
 
     public function getClientSection(){
@@ -596,6 +635,7 @@ class ReportController extends Controller
                     $existObs=true;
                 }
             }
+
             if($existCorrective){
                 $section->showCorrective=1;
             }else{
@@ -608,7 +648,7 @@ class ReportController extends Controller
                 $section->showObs=0;
             }
         }
-        
+      
         //for para meter o valor do index para cada "regra"
         foreach($arraySections as $section){
             $count=0;
@@ -617,14 +657,13 @@ class ReportController extends Controller
                     $count++;
                     $reportsAnswer->index=$count;
                 }
+                foreach($reportSectionObs as $reportSectionOb){
+                    if($reportSectionOb->idClientSection==$reportsAnswer->idClientSection && 
+                        $reportSectionOb->idRule == $reportsAnswer->idRule){
+                            $reportSectionOb->index=$reportsAnswer->index;
+                        }
+                }
             }
-        }
-
-
-        foreach($reportSectionObs as $reportSectionOb){
-            $countaux=0;
-            $countaux++;
-            $reportSectionOb->index=$countaux;
         }
 
         //foreach estatiststicas 
@@ -660,12 +699,21 @@ class ReportController extends Controller
         }
 
 
-        //geral
+        //estatisticas geral e por a mensagem de severidade 
         $totalRulesGeral=0;
         $totalConformeGeral=0;
         $totalnConformeGeral=0;
         $totalnAplicavelGeral=0;
         foreach($reportsAnswers as $reportsAnswer){
+
+            if($reportsAnswer->severityValue==1 || $reportsAnswer->severityValue==2 ){
+                $reportsAnswer->severityText="Não Crítico";
+            }else if($reportsAnswer->severityValue==3 || $reportsAnswer->severityValue==4 ){
+                $reportsAnswer->severityText="Moderado";
+            }else if($reportsAnswer->severityValue==5){
+                $reportsAnswer->severityText="Crítico";
+            }
+
             $totalRulesGeral++;
             if($reportsAnswer->answer=='c'){
                 $totalConformeGeral++;
@@ -686,7 +734,10 @@ class ReportController extends Controller
         $statiscsGeral->nAplly=$auxPerNApplyGeral;
 
         return view('frontoffice.reportShow',compact('report','arraySections','reportsAnswers','reportSectionObs','statiscsGeral'));
-    
     }
+
+    public function reportStatistics(){
+        return view('frontoffice.reportStatistics');
+    } 
         
 }

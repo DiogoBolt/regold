@@ -261,10 +261,14 @@ function addAnswerArray(){
         
         answer.idRule=rowsRules[i].children[0].getAttribute('value');
         
+        //console.log(rowsCorrectiveRules[i].children[3].getAttribute('value'));
+
         if(rowsCorrectiveRules[i].style.display!= 'none'){
             answer.corrective=rowsCorrectiveRules[i].children[2].children[0].value;
+            answer.recidivistCount=rowsCorrectiveRules[i].children[3].getAttribute('value');
         }else{
             answer.corrective= null;
+            answer.recidivistCount=rowsCorrectiveRules[i].children[3].getAttribute('value');
         }
 
         answer.severityValue=rowsRules[i].children[5].children[0].children[1].value;
@@ -273,6 +277,7 @@ function addAnswerArray(){
         answer={};
     }
     
+    //console.log(answers);
     var tableObs=document.getElementById("observations"); 
     var rowsObs=tableObs.getElementsByClassName("tableRow");
 
@@ -349,7 +354,6 @@ function concludeReport(){
 
 }
 
-
 function verifySelected(element){
     if(element.selectedIndex !=0){
         document.getElementById('indexObs').style.border="none";
@@ -425,4 +429,61 @@ function rangeInputValue(element){
         lbl.innerHTML="Crítico";
     }
 
+}
+
+function changeChart(t){
+    if(t==1){
+        array1= [50, 55, 41, 67];
+        array2= [90, 55, 41, 67];
+    }else{
+        array1= [50, 55, 41, 67];
+        array2= [20, 55, 41, 67];
+    }
+    //alert("lalapapa");
+    array1= [50, 55, 41, 67];
+    var options = {
+        series: [{
+        name: 'Conforme',
+        data: array1,
+      }, {
+        name: 'Não Conforme',
+        data: array2,
+      }, {
+        name: 'Não Aplicavel',
+        data: array1,
+      }],
+        chart: {
+        type: 'bar',
+        height: 350,
+        stacked: true,
+        stackType: '100%'
+      },
+      responsive: [{
+        breakpoint: 480,
+        options: {
+          legend: {
+            position: 'bottom',
+            offsetX: -10,
+            offsetY: 0
+          }
+        }
+      }],
+      xaxis: {
+        categories: ['Report 2001/01/01', 'Report 2001/01/01',
+         'Report 2001/01/01', 'Report 2001/01/01'
+        ],
+      },
+      fill: {
+        opacity: 1
+      },
+      colors:['#00FF00', '#ff0000', '#ffff00'],
+      legend: {
+        position: 'right',
+        offsetX: 0,
+        offsetY: 50
+      },
+      };
+
+      var chart = new ApexCharts(document.getElementById("chart"), options);
+      chart.render();
 }

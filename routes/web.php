@@ -83,6 +83,9 @@ Route::get('/concluedReport','ReportController@concludeReport');
 Route::get('/frontoffice/reports','ReportController@reportList');
 Route::get('/frontoffice/reportShow/{idReport}','ReportController@reportShow');
 
+//estatisticas route
+Route::get('/frontoffice/statistics','ReportController@reportStatistics');
+
 
 
 Route::group(['middleware' => ['backoffice']], function () {

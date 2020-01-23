@@ -60,15 +60,18 @@
                         @foreach($arraySections as $section)
 
                             <h1 id="sectionTitle" class="title">{{$section->designation}}</h1>
-                            
+
+                            <p class="tableLegend">Legenda: <b>C-</b> Conforme <b>C- </b>Não Conforme <b>NA-</b> Não Aplicavél</p>
+                        
                             <div class="tableContainer">
                                 <table class="table" id="reportRules">
                                     <tr id="reportRulesTop">
                                         <th id="correctiveRulesIndex">#</th>
                                         <th class="thBackground">Regra</th>
-                                        <th class="thBackground">Conforme</th>
-                                        <th class="thBackground">Não Conforme</th>
-                                        <th class="thBackground">Não Aplicável</th>
+                                        <th class="thBackground">C</th>
+                                        <th class="thBackground">NC</th>
+                                        <th class="thBackground">NA</th>
+                                        <th class="severity">Severidade</th>
                                     </tr>
                                     <tbody>
                                         @foreach($reportsAnswers as $rule)
@@ -81,8 +84,8 @@
                                                             <input type=radio  checked/>
                                                             <label class="conforme" ></label>
                                                         @else
-                                                        <input type=radio />
-                                                        <label class="conforme"></label>
+                                                            <input type=radio />
+                                                            <label class="conforme"></label>
                                                         @endif
                                                     </td>
                                                     <td class="tdBackground" name="radio">
@@ -102,6 +105,15 @@
                                                             <input type=radio />
                                                             <label class="naoAplicavel"></label>
                                                         @endif
+                                                    </td>
+                                                    <td> 
+                                                        <div class="divSeverity">
+                                                            <div class="range-slider">
+                                                                <input class="range-slider__range" type="range" value="{{$rule->severityValue}}" min="1" max="5" disabled>
+                                                            </div>
+                                                            <label class="lblRangeValue">{{$rule->severityValue}}</label>
+                                                        </div>
+                                                        <label class="lblSeverityStatus">{{$rule->severityText}}</label>
                                                     </td>
                                                 </tr>
                                             @endif

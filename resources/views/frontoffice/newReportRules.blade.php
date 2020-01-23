@@ -111,6 +111,11 @@
                 <th id="correctiveRulesIndex">#</th>
                 <th>Regra</th>
                 <th>Corretiva</th>
+                @if($showColumnRecidivist==0)
+                    <th style="display:none" class="recidivist">Reincidente</th>
+                @else
+                    <th class="recidivist">Reincidente</th>
+                @endif
             </tr>
             <tbody>
                 @foreach($rules as $rule)
@@ -119,12 +124,22 @@
                             <th id="correctiveRulesIndex" class="index" value="{{$rule->id}}">{{$rule->index}}</th>
                             <td class="tdRuleBackground"><label class="rule">{{$rule->rule}}</label></td>
                             <td id="correctiveTd"><textarea class="corrective" value="{{$rule->corrective}}">{{$rule->corrective}}</textarea></td>
+                            @if($showColumnRecidivist==0)
+                                <td style="display:none" id="recidivistCount" value="{{$rule->recidivistCount}}" ><label>R{{$rule->recidivistCount}}</label></td>
+                            @else
+                                <td id="recidivistCount" value="{{$rule->recidivistCount}}" ><label>R{{$rule->recidivistCount}}</label></td>
+                            @endif
                         </tr>
                     @else
                         <tr class="tableRow" style="display:none">
                             <th id="correctiveRulesIndex" class="index" value="{{$rule->id}}">{{$rule->index}}</th>
                             <td class="tdRuleBackground"><label class="rule">{{$rule->rule}}</label></td>
                             <td id="correctiveTd"><textarea class="corrective" value="{{$rule->corrective}}">{{$rule->corrective}}</textarea></td>
+                            @if($showColumnRecidivist==0)
+                                <td style="display:none" id="recidivistCount" value="{{$rule->recidivistCount}}" ><label>R{{$rule->recidivistCount}}</label></td>
+                            @else
+                                <td id="recidivistCount" value="{{$rule->recidivistCount}}" ><label>R{{$rule->recidivistCount}}</label></td>
+                            @endif
                         </tr>
                     @endif
                 @endforeach

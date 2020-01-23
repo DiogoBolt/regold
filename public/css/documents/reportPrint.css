@@ -70,24 +70,30 @@
   }
   
   input[type=radio] + label.conforme{
+    width: 30px;
     background: rgb(0, 255, 0,0.5) !important;
     
   }
   input[type=radio]:checked + label.conforme{
+    width: 30px;
     background: rgb(0, 255, 0) !important;
   }
   
   input[type=radio] + label.naoConforme{
+    width: 30px;
     background: rgb(255,0, 0,0.5) !important;
   }
   input[type=radio]:checked + label.naoConforme{
+    width: 30px;
     background: rgb(255, 0, 0) !important;
   }
   
   input[type=radio] + label.naoAplicavel{
+    width: 30px;
     background: rgb(255, 255, 0,0.5) !important;
   }
   input[type=radio]:checked + label.naoAplicavel{
+    width: 30px;
     background: rgb(255, 255, 0) !important;
   }
   
@@ -290,6 +296,103 @@
  
 .thBackground{
   background-color: #f2f2f2;
+}
+
+.severity{
+  width: 170px;
+  background: #f2f2f2;
+}
+
+/*range slider*/
+.divSeverity{
+  width: 100%;
+}
+
+.range-slider {
+  margin: 5px 0 0 0%;
+}
+
+.range-slider {
+  width: 75%;
+  float: left;
+  margin-left: 2%;
+}
+
+.lblRangeValue{
+  float: right;
+  width: 15%; 
+  margin-left: 3%;
+  font-size: 15px;
+}
+
+.range-slider__range {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+  background: #d7dcdf;
+  background: linear-gradient(to right, green 0%, yellow 50%, red 100%) !important;
+  outline: none;
+  padding: 0;
+  margin: 0;
+}
+.range-slider__range::-webkit-slider-thumb {
+  appearance: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #2c3e50;
+  cursor: pointer;
+  transition: 0.15s ease-in-out;
+}
+.range-slider__range::-webkit-slider-thumb:hover {
+  background: #f0f;
+}
+.range-slider__range:active::-webkit-slider-thumb {
+  background: #f0f;
+}
+.range-slider__range::-moz-range-thumb {
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 50%;
+  background: #2c3e50;
+  cursor: pointer;
+  transition: 0.15s ease-in-out;
+}
+.range-slider__range::-moz-range-thumb:hover {
+  background: #f0f;
+}
+.range-slider__range:active::-moz-range-thumb {
+  background: #f0f;
+}
+
+::-moz-range-track {
+  background: #d7dcdf;
+  background: linear-gradient(to right, green 0%, yellow 50%, red 100%);
+  border: 0;
+}
+input::-moz-focus-inner, input::-moz-focus-outer {
+  border: 0;
+}
+main {
+  max-width: 80em;
+  margin: 2rem auto;
+  padding: 2rem;
+}
+
+.lblSeverityStatus{
+  width: 60%;
+  text-align: center;
+  font-size: 15px;
+  margin-top: 5px;
+  margin-left: 10%;
+}
+
+.tableLegend{
+  margin-left: 10%;
+  font-size: 15px;
+  color: black;
 }
 
   
