@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\ClientThermo;
 use App\Thermo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -17,21 +18,29 @@ class ThermoController extends Controller
      */
 
 
-    public function receiveThermo(Request $request)
+    public function index()
     {
-        $inputs = $request->all();
+        $user = Auth::user();
 
-        $thermo = new Thermo;
+        $thermos = Thermo::from(Thermo::alias('t'))
+            ->leftJoin(ClientThermo::alias('ct'), 't.id', '=', 'ct.thermo_id')
+            ->where('ct.user_id',$user->id)
+            ->last();
 
-        $thermo->client_id = 0;
-        $thermo->thermo_type ="Teste";
-        $thermo->temperature = json_encode($inputs);
-        $thermo->last_read = Carbon::now();
+        return view('frontoffice.thermo',compact('thermos'));
 
-        $thermo->save();
-
-
-        return 200;
     }
 
+    public function attachThermo(Request $request)
+    {
+        $user = Auth::user();
+        $inputs = $request->all();
+
+        $newthermo = new ClientTHermo;
+        $newthermo->user_id = $user->id;
+        $newthermo->thermo_id = $inputs['imei'];
+        $newthermo->save();
+
+        return back();
+    }
 }

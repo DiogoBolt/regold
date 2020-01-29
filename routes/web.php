@@ -23,7 +23,6 @@ View::composer(/**
 });
 
 Route::post('/api/confirm/', 'ApiController@confirmPayment');
-Route::post('/thermo', 'HomeController@receiveThermo');
 
 
 Route::get('/', 'HomeController@index')->name('home');
@@ -58,6 +57,10 @@ Route::get('/frontoffice/invoices', 'FrontofficeController@invoices')->name('inv
 Route::get('/frontoffice/firstlogin', 'ClientController@checkFirstLogin');
 Route::post('/frontoffice/changePassword', 'ClientController@changePassword');
 Route::get('/home', 'ClientController@home');
+
+//Thermos
+Route::get('/frontoffice/thermo', 'ThermoController@index');
+Route::post('/thermo/attachthermo', 'ThermoController@attachThermo');
 
 //route to change session var
 Route::post('/client/addSessionVar/{id}','ClientController@addSessionVar');
