@@ -9,12 +9,14 @@
         <div class="container-bar_img">
         </div>
     </div>
-@if(isset($thermo))
-    <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
-        <div class="card-header">Termometro {{$thermo->imei}}</div>
+@if(isset($thermos))
+    <div class="container" align="center">
+    <div align="center" class="card text-white bg-success mb-3 " style="max-width: 18rem;">
+        <div class="card-header">Termometro {{$thermos->imei}}</div>
         <div class="card-body">
-            <h5 class="card-title">{{$thermo->temperature}}</h5>
+            <h5 class="card-title">{{$thermos->temperature}}ºc</h5>
         </div>
+    </div>
     </div>
     @endif
 

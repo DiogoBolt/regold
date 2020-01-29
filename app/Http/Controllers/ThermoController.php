@@ -7,6 +7,7 @@ use App\ClientThermo;
 use App\Thermo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 
 class ThermoController extends Controller
@@ -23,9 +24,9 @@ class ThermoController extends Controller
         $user = Auth::user();
 
         $thermos = Thermo::from(Thermo::alias('t'))
-            ->leftJoin(ClientThermo::alias('ct'), 't.id', '=', 'ct.thermo_id')
+            ->leftJoin(ClientThermo::alias('ct'), 'ct.thermo_id', '=', 't.imei')
             ->where('ct.user_id',$user->id)
-            ->last();
+            ->get()->last();
 
         return view('frontoffice.thermo',compact('thermos'));
 
