@@ -23,10 +23,20 @@ class ThermoController extends Controller
     {
         $user = Auth::user();
 
-        $thermos = Thermo::from(Thermo::alias('t'))
-            ->leftJoin(ClientThermo::alias('ct'), 'ct.thermo_id', '=', 't.imei')
-            ->where('ct.user_id',$user->id)
-            ->get()->last();
+        $clientThermos = ClientThermo::where('user_id',$user->id)->get();
+
+        $thermos = [];
+
+        foreach($clientThermos as $clientthermo)
+        {
+            $thermos[$clientthermo->imei] = 0;
+        }
+
+        foreach ($thermos as $key => $value)
+        {
+            $temperature = Thermo::where('imei',$key)->get()->last()->temperature;
+            $thermos[$key] = $temperature;
+        }
 
         return view('frontoffice.thermo',compact('thermos'));
 
@@ -43,5 +53,12 @@ class ThermoController extends Controller
         $newthermo->save();
 
         return back();
+    }
+
+    public function getTemperature($imei)
+    {
+        $temperature = Thermo::where('imei',$imei)->get()->last()->temperature;
+
+        return $temperature;
     }
 }

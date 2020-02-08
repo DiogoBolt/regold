@@ -61,6 +61,7 @@ Route::get('/home', 'ClientController@home');
 //Thermos
 Route::get('/frontoffice/thermo', 'ThermoController@index');
 Route::post('/thermo/attachthermo', 'ThermoController@attachThermo');
+Route::get('/thermo/getTemperature/{imei}', 'ThermoController@getTemperature');
 
 //route to change session var
 Route::post('/client/addSessionVar/{id}','ClientController@addSessionVar');

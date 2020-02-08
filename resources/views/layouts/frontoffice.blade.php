@@ -93,6 +93,9 @@
                                                 Logout
                                             </a>
                                         @endif
+                                            <a href="/frontoffice/thermo">
+                                                Gestão Termos(BETA)
+                                            </a>
 
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             {{ csrf_field() }}
