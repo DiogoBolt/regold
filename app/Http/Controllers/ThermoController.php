@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 
 use App\ClientThermo;
+use App\Fridge;
+use App\FridgeType;
 use App\Thermo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -61,4 +63,57 @@ class ThermoController extends Controller
 
         return $temperature;
     }
+
+
+    public function fridgeTypes()
+    {
+        $types = FridgeType::all();
+
+        return view('frontoffice.fridge_types',compact('types'));
+    }
+
+    public function newFridgeType()
+    {
+        return view('fridges.new_fridge_type');
+    }
+
+    public function editFridgeType($id)
+    {
+        $fridge = FridgeType::where('id',$id)->first();
+
+        return view('frontoffice.edit_fridge_type',compact('fridge'));
+    }
+
+    public function updateFridgeType(Request $request)
+    {
+
+    }
+
+    public function fridge()
+    {
+        $fridges = Fridge::all();
+
+        return view('frontoffice.fridges',compact('fridges'));
+
+        
+    }
+
+    public function newFridge()
+    {
+        return view('frontoffice.new_fridge');
+    }
+
+    public function editFridge($id)
+    {
+        $fridge = Fridge::where('id',$id)->first();
+
+        return view('frontoffice.edit_fridge',compact('fridge'));
+    }
+
+    public function updateFridge(Request $request)
+    {
+
+    }
+
+
 }
