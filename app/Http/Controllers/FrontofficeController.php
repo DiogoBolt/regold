@@ -48,10 +48,9 @@ class FrontofficeController extends Controller
         return view('frontoffice.show',compact('client'));
     }
 
-    public function editClient()
+    public function editClient($id)
     {
-        $user = Auth::user();
-        $client = Customer::where('id',$user->client_id)->first();
+        $client = Customer::where('id',$id)->first();
         return view('frontoffice.edit',compact('client'));
     }
 
