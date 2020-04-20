@@ -32,7 +32,7 @@
                                 <div class="form-group">
                                         <input type="radio" name="sex" value="M" checked >Sr
                                         <input type="radio" name="sex" value="F">Sra
-                                </div> 
+                         d       </div>
                             </div>   
                             <div class="col-sm-6">
                                 <div class="form-group">
@@ -66,7 +66,7 @@
                                 Vendedor: <select class="form-control" name="salesman" required>
                                 <option disabled selected value="">Selecione o Vendedor</option>
                                     @foreach($salesman as $sales)
-                                        @if( $sales->id == Auth::user()->userTypeID )
+                                       @if( $sales->id == Auth::user()->userTypeID )
                                           <option selected value="{{$sales->id}}">{{$sales->name}}</option>
                                         @else
                                             <option value="{{$sales->id}}">{{$sales->name}}</option>
@@ -86,7 +86,7 @@
                             </div>
 
                             <div class="form-group">
-                                NIF: <input id="nif" class="form-control" type="number" pattern="[0-9]{9}" placeholder="Insira o NIF" p name="nif" required>
+                                NIF: <input id="nif" class="form-control" type="number" pattern="[0-9]{9}" placeholder="Insira o NIF"  name="nif" required>
                             </div>
 
                             <div class="form-group">
@@ -149,8 +149,13 @@
                             </div>
 
                             <div id="EmailInvoice" class="form-group">
-                                Email Faturação: <input class="form-control"  placeholder="Insira o E-mail de Faturação" type="email" name="invoiceEmail" required >
+                                Email Faturação: <input class="form-control" id="ReceiptEmail"  placeholder="Insira o E-mail de Faturação" type="email" name="invoiceEmail" >
                             </div>
+                            <label>Pretende usar o email de registo?
+                                <input type="radio" name="VerifyEmail" onclick="showRegistedMail()"  value="true">Sim
+                                <input type="radio" name="VerifyEmail" onclick="notshowRegistedMail()" checked="checked" value="false">Não
+                            </label>
+
 
                             <div class="form-group">
                                 Telefone: <input class="form-control" placeholder="9********/2********" type="tel" name="telephone" required>
@@ -209,6 +214,7 @@
                     <div>
                         <button class="btn btn-add" >Criar</button>
                     </div>
+                        </div>
                 </form>
                 </div>
             </div>

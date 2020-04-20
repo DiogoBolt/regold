@@ -83,6 +83,14 @@
                                 </a>
                             </li>
 
+                            @if(Auth::user()->userType == 5||1)
+                                <li>
+                                    <a href="/billing">
+                                        Faturação
+                                    </a>
+                                </li>
+                            @endif
+
                             <li>
                                 <a href="/historyOrders">
                                     Historico Encomendas

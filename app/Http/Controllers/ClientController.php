@@ -194,11 +194,13 @@ class ClientController extends Controller
     {
         $user = Auth::user();
 
+
         $inputs = $request->all();
 
         if($user->userType == 5 || $user->userType == 2)
         {
             $clients = Customer::from(Customer::alias('c'))
+
                 ->leftJoin(User::alias('u'), 'u.client_id', '=', 'c.id')
                 ->when($request->filled('cityInvoice'), function ($query) use ($inputs) {
                     return $query->where('c.city', '=', $inputs['cityInvoice']);
@@ -207,6 +209,7 @@ class ClientController extends Controller
                     return $query->where('c.name', 'LIKE', '%' . $inputs['search'] . '%')
                         ->orWhere('c.id', 'LIKE', '%' . $inputs['search'] . '%');
                 })
+
                 ->select([
                     'c.id',
                     'u.id as userid',
@@ -214,7 +217,9 @@ class ClientController extends Controller
                     'c.regoldiID',
                     'c.comercial_name',
                     'c.city'
-                ])->get();
+                ])
+
+                ->get();
 
         } else {
 
@@ -228,6 +233,7 @@ class ClientController extends Controller
                     return $query->where('c.name', 'LIKE', '%' . $inputs['search'] . '%')
                         ->orWhere('c.id', 'LIKE', '%' . $inputs['search'] . '%');
                 })
+
                 ->select([
                     'c.id',
                     'u.id as userid',
@@ -244,7 +250,6 @@ class ClientController extends Controller
         foreach($clients as $client)
         {
             $orders = Order::where('client_id',$client->id)->where('processed',1)->where('created_at','>=',Carbon::now()->startOfMonth())->count();
-
             $current = Order::where('client_id',$client->id)->where('status','waiting_payment')->where('invoice_id','!=',null)->sum('total');
 
             if($orders > 0)
@@ -258,6 +263,10 @@ class ClientController extends Controller
         }
 
         $districts = Districts::all();
+
+        $clients =$clients->sortBy('order');
+        $clients->values()->all();
+
 
         return view('client.index',compact('clients','unpaid','total', 'districts'));
     }
@@ -387,8 +396,17 @@ class ClientController extends Controller
             $establisment->invoice_postal_code = $establisment->postal_code;
         }
 
+
+        $establisment->email = $user->email;
+
+        if($inputs['VerifyEmail']==true){
+            $establisment->receipt_email = $user->email;
+        }else{
+            $establisment->receipt_email = $inputs['invoiceEmail'];
+        }
+
         //email
-        $establisment->receipt_email = $inputs['invoiceEmail'];
+
         $establisment->nif = $inputs['nif'];
         $establisment->activity = $inputs['activity'];
         $establisment->salesman = $inputs['salesman'];
@@ -398,10 +416,9 @@ class ClientController extends Controller
         $establisment->contract_value = $inputs['value'];
         $establisment->regoldiID = $inputs['regoldiID'];
         $establisment->transport_note = $inputs['transport_note'];
-
         $establisment->save();
 
-        $qtd = Section::where('activityClientId',$establisment->activity)->count();
+        /*$qtd = Section::where('activityClientId',$establisment->activity)->count();
 
         $ControlCustomizationClient = new ControlCustomizationClients;
         $ControlCustomizationClient->idClient=$establisment->id;
@@ -420,7 +437,7 @@ class ClientController extends Controller
             $ControlCustomizationClient->save();
         }else{
             $ControlCustomizationClient->save();
-        }
+        }*/
 
         //melhorar isto
         if (array_key_exists('serviceType1', $inputs)) {
@@ -455,22 +472,6 @@ class ClientController extends Controller
         }
 
         $unpaid = 0;
-
-        foreach($clients as $client)
-        {
-            $orders = Order::where('client_id',$client->id)->where('processed',1)->where('created_at','>=',Carbon::now()->startOfMonth())->count();
-
-            $current = Order::where('client_id',$client->id)->where('status','waiting_payment')->where('invoice_id','!=',null)->sum('total');
-
-            if($orders > 0)
-            {
-                $client->order = 1;
-            }else{
-                $client->order = 0;
-                $unpaid += 1;
-            }
-            $client->current = $current;
-        }
 
         $total = $clients->count();
         $districts = Districts::all();
@@ -833,7 +834,6 @@ class ClientController extends Controller
         }
         $group->save();
 
-
     }
 
     public function documentTypes()
@@ -864,7 +864,6 @@ class ClientController extends Controller
 
         $documentTypes = DocumentType::all();
 
-
         return view('documents.index',compact('documentTypes'));
 
     }
@@ -893,7 +892,6 @@ class ClientController extends Controller
     {
         $documentTypes = Category::all();
 
-
         return view('categories.index',compact('documentTypes'));
     }
 
@@ -914,9 +912,7 @@ class ClientController extends Controller
 
         $documentTypes = Category::all();
 
-
         return view('categories.index',compact('documentTypes'));
-
     }
 
     public function showCategory($id)
@@ -1001,7 +997,6 @@ class ClientController extends Controller
             $customer->first_login = 1; 
             $customer->save(); 
         }
-
         return $first_time_login;
     }
 
@@ -1017,7 +1012,6 @@ class ClientController extends Controller
             'confirm.same' => 'As duas passwords não coincidem.'
         ]);
 
-
         if ($validator->fails()) {
             return ['error' => $validator->errors()->first()];
         }
@@ -1027,7 +1021,6 @@ class ClientController extends Controller
         $user->save();
 
         return ['success' => 'Password alterada com sucesso.'];
-
     }
 
     public function getParishbyPostalCode($postalCode){
@@ -1047,7 +1040,6 @@ class ClientController extends Controller
     //funcão para guardar o id da loja numa var de sessão
     public function addSessionVar($id){
         Session::put('establismentID',$id);
-        
     }
 
     //função para apagar uma variavel de sessão

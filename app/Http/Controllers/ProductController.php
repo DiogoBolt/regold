@@ -14,6 +14,7 @@ use App\Product;
 use App\Receipt;
 use App\SalesPayment;
 use App\User;
+use http\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -47,9 +48,9 @@ class ProductController extends Controller
 
     public function productsByCategory($id)
     {
-        $products = Product::where('category',$id)->get();
+        $products = Product::where('category', $id)->get();
 
-        return view('product.products',compact('products', 'id'));
+        return view('product.products', compact('products', 'id'));
     }
 
     public function newProduct()
@@ -77,7 +78,7 @@ class ProductController extends Controller
             $product->category = $inputs['category'];
 
 
-            if($request->hasFile('foto')) {
+            if ($request->hasFile('foto')) {
                 $file = $request->file('foto');
                 $extension = $file->getClientOriginalExtension(); // getting image extension
                 $filename = $inputs['name'] . date('Y-m-d') . '.' . $extension;
@@ -86,7 +87,7 @@ class ProductController extends Controller
                 $product->file = $filename;
             }
 
-            if($request->hasFile('manual')) {
+            if ($request->hasFile('manual')) {
                 $file = $request->file('manual');
                 $extension = $file->getClientOriginalExtension(); // getting image extension
                 $filename = $inputs['name'] . 'tecnica' . date('Y-m-d') . '.' . $extension;
@@ -95,7 +96,7 @@ class ProductController extends Controller
                 $product->manual = $filename;
             }
 
-            if($request->hasFile('seguranca')) {
+            if ($request->hasFile('seguranca')) {
                 $file = $request->file('seguranca');
                 $extension = $file->getClientOriginalExtension(); // getting image extension
                 $filename = $inputs['name'] . 'seguranca' . date('Y-m-d') . '.' . $extension;
@@ -117,9 +118,9 @@ class ProductController extends Controller
         $product = Product::where('id', $id)->first();
         $categories = Category::all();
 
-        $selected = Category::where('id',$product->category)->first();
+        $selected = Category::where('id', $product->category)->first();
 
-        return view('product.edit', compact('product', 'categories','selected'));
+        return view('product.edit', compact('product', 'categories', 'selected'));
     }
 
     public function deleteProduct(Request $request)
@@ -127,7 +128,7 @@ class ProductController extends Controller
         $product = Product::where('id', $request->id)->first();
         $product->delete();
 
-        return redirect()->to('/products'); 
+        return redirect()->to('/products');
     }
 
     public function editProductPost(Request $request)
@@ -175,9 +176,9 @@ class ProductController extends Controller
         }
 
         $product->save();
-        $selected = Category::where('id',$product->category)->first();
+        $selected = Category::where('id', $product->category)->first();
         $categories = Category::all();
-        return view('product.edit', compact('product', 'categories','selected'));
+        return view('product.edit', compact('product', 'categories', 'selected'));
 
     }
 
@@ -187,62 +188,69 @@ class ProductController extends Controller
         if ($user->userType == 5) {
             $orders = Order::from(Order::alias('o'))
                 ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
-                ->where('processed',0)
+                ->where('processed', 0)
                 ->select([
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                    'o.receipt_id','o.created_at','c.comercial_name','c.regoldiID','o.status','o.invoice_id', 'c.name'
+                    'o.receipt_id', 'o.created_at', 'c.comercial_name', 'c.regoldiID', 'o.status', 'o.invoice_id', 'c.name'
                 ])
                 ->orderBy('o.id', 'DESC')->paginate(25);
-        } else if($user->userType == 1) {
+        } else if ($user->userType == 1) {
             $orders = Order::from(Order::alias('o'))
                 ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
                 ->where('c.salesman', $user->userTypeID)
-                ->where('processed',0)
+                ->where('processed', 0)
                 ->select([
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                    'o.receipt_id','o.created_at','c.comercial_name','c.regoldiID','o.status','o.invoice_id','c.name'
+                    'o.receipt_id', 'o.created_at', 'c.comercial_name', 'c.regoldiID', 'o.status', 'o.invoice_id', 'c.name'
                 ])
                 ->orderBy('o.id', 'DESC')->paginate(25);
-        }else{
+        } else {
             $orders = Order::from(Order::alias('o'))
-            ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
-            ->where('processed',0)
-            ->select([
-                'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                'o.receipt_id','o.created_at','c.comercial_name','c.regoldiID','o.status','o.invoice_id','c.name'
-            ])
-            ->orderBy('o.id', 'DESC')->paginate(25);
+                ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
+                ->where('processed', 0)
+                ->select([
+                    'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
+                    'o.receipt_id', 'o.created_at', 'c.comercial_name', 'c.regoldiID', 'o.status', 'o.invoice_id', 'c.name'
+                ])
+                ->orderBy('o.id', 'DESC')->paginate(25);
         }
 
-        foreach($orders as $order)
-        {
-            $order->receipt = Receipt::where('id',$order->receipt_id)->first()->file ?? null;
-            $order->invoice = Receipt::where('id',$order->invoice_id)->first()->file ?? null;
+        foreach ($orders as $order) {
+            $order->receipt = Receipt::where('id', $order->receipt_id)->first()->file ?? null;
+            $order->invoice = Receipt::where('id', $order->invoice_id)->first()->file ?? null;
         }
 
         return view('orders.index', compact('orders'));
     }
 
-    public function filterOrders(Request $request) 
+    public function filterOrders(Request $request)
     {
 
         $user = Auth::user();
-        $filteredOrders  =  Order::from(Order::alias('o'))
-                            ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
-                            ->select([
-                                'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                                'o.receipt_id','o.created_at','c.name','c.regoldiID','o.status','o.invoice_id'
-                            ]);
+        $filteredOrders = Order::from(Order::alias('o'))
+            ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
+            ->select([
+                'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
+                'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
+            ]);
 
-        if($user->userType) { $filteredOrders->where('c.salesman', $user->userType);}                    
-        
-        if ($request->filled('client')) { $filteredOrders->where('c.name', 'like', '%' . $request->client . '%'); }
+        if ($user->userType) {
+            $filteredOrders->where('c.salesman', $user->userType);
+        }
 
-        if ($request->filled('payment_method')) { $filteredOrders->where('c.payment_method', '=', $request->payment_method); }
+        if ($request->filled('client')) {
+            $filteredOrders->where('c.name', 'like', '%' . $request->client . '%');
+        }
 
-        if ($request->filled('status')) { $filteredOrders->where('o.status', '=', $request->status); }
+        if ($request->filled('payment_method')) {
+            $filteredOrders->where('c.payment_method', '=', $request->payment_method);
+        }
 
-        if ($request->filled('start_date') && $request->filled('end_date') ) {
+        if ($request->filled('status')) {
+            $filteredOrders->where('o.status', '=', $request->status);
+        }
+
+        if ($request->filled('start_date') && $request->filled('end_date')) {
             $start = $request->start_date;
             $end = $request->end_date;
 
@@ -251,39 +259,47 @@ class ProductController extends Controller
         } else if ($request->filled('start_date')) {
 
             $filteredOrders->where('o.created_at', '>=', $request->start_date);
-            
-        } else if($request->filled('end_date')) {
+
+        } else if ($request->filled('end_date')) {
 
             $filteredOrders->where('o.created_at', '<=', $request->end_date);
         }
 
 
         $orders = $filteredOrders->orderBy('o.id', 'DESC')->paginate(25);
-        
+
         return view('orders.index', compact('orders'));
     }
 
-    public function filterProcessedOrders(Request $request) 
+    public function filterProcessedOrders(Request $request)
     {
         $user = Auth::user();
-        $filteredOrders  =  Order::from(Order::alias('o'))
-                            ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
-                            ->where('receipt_id','=',null)
-                            ->where('processed',1)
-                            ->select([
-                                'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                                'o.receipt_id','o.created_at','c.name','c.regoldiID','o.status','o.invoice_id'
-                            ]);
+        $filteredOrders = Order::from(Order::alias('o'))
+            ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
+            ->where('receipt_id', '=', null)
+            ->where('processed', 1)
+            ->select([
+                'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
+                'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
+            ]);
 
-        if($user->userType=4) { $filteredOrders->where('c.salesman', $user->sales_id);}                    
-        
-        if ($request->filled('client')) { $filteredOrders->where('c.name', 'like', '%' . $request->client . '%'); }
+        if ($user->userType = 4) {
+            $filteredOrders->where('c.salesman', $user->sales_id);
+        }
 
-        if ($request->filled('payment_method')) { $filteredOrders->where('c.payment_method', '=', $request->payment_method); }
+        if ($request->filled('client')) {
+            $filteredOrders->where('c.name', 'like', '%' . $request->client . '%');
+        }
 
-        if ($request->filled('status')) { $filteredOrders->where('o.status', '=', $request->status); }
+        if ($request->filled('payment_method')) {
+            $filteredOrders->where('c.payment_method', '=', $request->payment_method);
+        }
 
-        if ($request->filled('start_date') && $request->filled('end_date') ) {
+        if ($request->filled('status')) {
+            $filteredOrders->where('o.status', '=', $request->status);
+        }
+
+        if ($request->filled('start_date') && $request->filled('end_date')) {
             $start = $request->start_date;
             $end = $request->end_date;
 
@@ -292,14 +308,14 @@ class ProductController extends Controller
         } else if ($request->filled('start_date')) {
 
             $filteredOrders->where('o.created_at', '>=', $request->start_date);
-            
-        } else if($request->filled('end_date')) {
+
+        } else if ($request->filled('end_date')) {
 
             $filteredOrders->where('o.created_at', '<=', $request->end_date);
         }
 
         $orders = $filteredOrders->orderBy('o.id', 'DESC')->get();
-        
+
         return view('orders.processedOrders', compact('orders'));
     }
 
@@ -309,40 +325,39 @@ class ProductController extends Controller
         if ($user->userType == 5) {
             $orders = Order::from(Order::alias('o'))
                 ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
-                ->where('processed',1)
-                ->where('receipt_id','=',null)
+                ->where('processed', 1)
+                ->where('receipt_id', '=', null)
                 ->select([
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                    'o.receipt_id','o.created_at','c.name','c.regoldiID','o.status','o.invoice_id'
+                    'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
                 ])
                 ->orderBy('o.id', 'DESC')->get();
         } else if ($user->userType == 1) {
             $orders = Order::from(Order::alias('o'))
                 ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
                 ->where('c.salesman', $user->userTypeID)
-                ->where('receipt_id','=',null)
-                ->where('processed',1)
+                ->where('receipt_id', '=', null)
+                ->where('processed', 1)
                 ->select([
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                    'o.receipt_id','o.created_at','c.name','c.regoldiID','o.status','o.invoice_id'
+                    'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
                 ])
                 ->orderBy('o.id', 'DESC')->get();
-        }else{
+        } else {
             $orders = Order::from(Order::alias('o'))
-            ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
-            ->where('receipt_id','=',null)
-            ->where('processed',1)
-            ->select([
-                'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                'o.receipt_id','o.created_at','c.name','c.regoldiID','o.status','o.invoice_id'
-            ])
-            ->orderBy('o.id', 'DESC')->get();
+                ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
+                ->where('receipt_id', '=', null)
+                ->where('processed', 1)
+                ->select([
+                    'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
+                    'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
+                ])
+                ->orderBy('o.id', 'DESC')->get();
         }
 
-        foreach($orders as $order)
-        {
-            $order->receipt = Receipt::where('id',$order->receipt_id)->first()->file ?? null;
-            $order->invoice = Receipt::where('id',$order->invoice_id)->first()->file ?? null;
+        foreach ($orders as $order) {
+            $order->receipt = Receipt::where('id', $order->receipt_id)->first()->file ?? null;
+            $order->invoice = Receipt::where('id', $order->invoice_id)->first()->file ?? null;
         }
 
         return view('orders.processedOrders', compact('orders'));
@@ -354,45 +369,43 @@ class ProductController extends Controller
         if ($user->userType == 4) {
             $orders = Order::from(Order::alias('o'))
                 ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
-                ->where('client_id',$id)
-                ->where('status','waiting_payment')
-                ->where('receipt_id','=',null)
+                ->where('client_id', $id)
+                ->where('status', 'waiting_payment')
+                ->where('receipt_id', '=', null)
                 ->select([
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                    'o.receipt_id','o.created_at','c.name','c.regoldiID','o.status','o.invoice_id'
+                    'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
                 ])
                 ->orderBy('o.id', 'DESC')->get();
-        } else if($user->userType == 1){
+        } else if ($user->userType == 1) {
             $orders = Order::from(Order::alias('o'))
                 ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
-                ->where('client_id',$id)
-                ->where('status','waiting_payment')
+                ->where('client_id', $id)
+                ->where('status', 'waiting_payment')
                 ->where('c.salesman', $user->userTypeID)
-                ->where('receipt_id','=',null)
+                ->where('receipt_id', '=', null)
                 ->select([
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                    'o.receipt_id','o.created_at','c.name','c.regoldiID','o.status','o.invoice_id'
+                    'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
                 ])
                 ->orderBy('o.id', 'DESC')->get();
-        }else{
+        } else {
             $orders = Order::from(Order::alias('o'))
                 ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
-                ->where('client_id',$id)
-                ->where('status','waiting_payment')
-                ->where('receipt_id','=',null)
+                ->where('client_id', $id)
+                ->where('status', 'waiting_payment')
+                ->where('receipt_id', '=', null)
                 ->select([
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                    'o.receipt_id','o.created_at','c.name','c.regoldiID','o.status','o.invoice_id'
+                    'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
                 ])
                 ->orderBy('o.id', 'DESC')->get();
         }
 
-        foreach($orders as $order)
-        {
-            $order->receipt = Receipt::where('id',$order->receipt_id)->first()->file ?? null;
-            $order->invoice = Receipt::where('id',$order->invoice_id)->first()->file ?? null;
+        foreach ($orders as $order) {
+            $order->receipt = Receipt::where('id', $order->receipt_id)->first()->file ?? null;
+            $order->invoice = Receipt::where('id', $order->invoice_id)->first()->file ?? null;
         }
-
 
 
         return view('orders.unPaidOrders', compact('orders'));
@@ -404,50 +417,48 @@ class ProductController extends Controller
         if ($user->userType == 5) {
             $orders = Order::from(Order::alias('o'))
                 ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
-                ->where('processed',1)
-                ->where('receipt_id','!=',null)
-                ->where('invoice_id','!=',null)
-                ->where('status','paid')
+                ->where('processed', 1)
+                ->where('receipt_id', '!=', null)
+                ->where('invoice_id', '!=', null)
+                ->where('status', 'paid')
                 ->select([
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                    'o.receipt_id','o.created_at','c.name','c.regoldiID','o.status','o.invoice_id'
+                    'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
                 ])
                 ->orderBy('o.id', 'DESC')->paginate(30);
-        } else if($user->userType == 1) {
+        } else if ($user->userType == 1) {
             $orders = Order::from(Order::alias('o'))
                 ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
                 ->where('c.salesman', $user->userTypeID)
-                ->where('receipt_id','=',null)
-                ->where('invoice_id','=',null)
-                ->where('processed',1)
-                ->where('status','paid')
+                ->where('receipt_id', '=', null)
+                ->where('invoice_id', '=', null)
+                ->where('processed', 1)
+                ->where('status', 'paid')
                 ->orderBy('o.id', 'DESC')
                 ->select([
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                    'o.receipt_id','o.created_at','c.name','c.regoldiID','o.status','o.invoice_id'
+                    'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
                 ])
                 ->orderBy('o.id', 'DESC')->paginate(30);
-        }else{
+        } else {
             $orders = Order::from(Order::alias('o'))
                 ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
-                ->where('receipt_id','=',null)
-                ->where('invoice_id','=',null)
-                ->where('processed',1)
-                ->where('status','paid')
+                ->where('receipt_id', '=', null)
+                ->where('invoice_id', '=', null)
+                ->where('processed', 1)
+                ->where('status', 'paid')
                 ->orderBy('o.id', 'DESC')
                 ->select([
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                    'o.receipt_id','o.created_at','c.name','c.regoldiID','o.status','o.invoice_id'
+                    'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
                 ])
                 ->orderBy('o.id', 'DESC')->paginate(30);
         }
 
-        foreach($orders as $order)
-        {
-            $order->receipt = Receipt::where('id',$order->receipt_id)->first()->file ?? null;
-            $order->invoice = Receipt::where('id',$order->invoice_id)->first()->file ?? null;
+        foreach ($orders as $order) {
+            $order->receipt = Receipt::where('id', $order->receipt_id)->first()->file ?? null;
+            $order->invoice = Receipt::where('id', $order->invoice_id)->first()->file ?? null;
         }
-
 
 
         return view('orders.historyOrders', compact('orders'));
@@ -457,18 +468,17 @@ class ProductController extends Controller
     {
 
         $order = Order::where('id', $id)->first();
-        $client = Customer::where('id',$order->client_id)->first();
+        $client = Customer::where('id', $order->client_id)->first();
         $salesman = null;
 
         if (!isset($order))
             return back();
 
 
-        $salesPayment = SalesPayment::where('order_id',$id)->first();
-        if(isset($salesPayment))
-        {
-            $salesman = User::where('userType',1)
-            ->where('userTypeID',$salesPayment->sales_id)->first();
+        $salesPayment = SalesPayment::where('order_id', $id)->first();
+        if (isset($salesPayment)) {
+            $salesman = User::where('userType', 1)
+                ->where('userTypeID', $salesPayment->sales_id)->first();
         }
 
         $cart = Cart::where('id', $order->cart_id)->first();
@@ -483,7 +493,7 @@ class ProductController extends Controller
 
             $total = OrderLine::where('cart_id', $cart->id)->sum('total');
 
-            return view('orders.order', compact('line_items', 'total', 'order','client','salesman'));
+            return view('orders.order', compact('line_items', 'total', 'order', 'client', 'salesman'));
         } else {
 
             return back();
@@ -497,22 +507,21 @@ class ProductController extends Controller
 
         $order = Order::where('id', $id)->first();
 
-        if($order->invoice_id != null)
-        {
+        if ($order->invoice_id != null) {
             $order->processed = 1;
-            $order->processed_time = now();     
+            $order->processed_time = now();
             $order->save();
-        }else{
+        } else {
 
             $error = "Não é possivel processar esta encomenda";
         }
-        $clientUser = Customer::where('id',$order->client_id)->first();
+        $clientUser = Customer::where('id', $order->client_id)->first();
 
         $message = new Message;
 
         $message->sender_id = $user->id;
         $message->receiver_id = $clientUser->ownerID;
-        $message->text = "A sua encomenda nº".$order->id." foi processada. Obrigado.";
+        $message->text = "A sua encomenda nº" . $order->id . " foi processada. Obrigado.";
         $message->viewed = 0;
 
         $message->save();
@@ -520,25 +529,25 @@ class ProductController extends Controller
         if ($user->userType == 5) {
             $orders = Order::from(Order::alias('o'))
                 ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
-                ->where('processed',0)
+                ->where('processed', 0)
                 ->select([
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                    'o.receipt_id','o.created_at','c.name','c.regoldiID','o.status','o.invoice_id'
+                    'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
                 ])
                 ->orderBy('o.id', 'DESC')->paginate(25);
-        } else if($user->userType == 1) {
+        } else if ($user->userType == 1) {
             $orders = Order::from(Order::alias('o'))
                 ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
                 ->where('c.salesman', $user->userTypeID)
-                ->where('processed',0)
+                ->where('processed', 0)
                 ->select([
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                    'o.receipt_id','o.created_at','c.name','c.regoldiID','o.status','o.invoice_id'
+                    'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
                 ])
                 ->orderBy('o.id', 'DESC')->paginate(25);
         }
 
-        return view('orders.index', compact('orders','error'));
+        return view('orders.index', compact('orders', 'error'));
     }
 
     public function payOrder($id)
@@ -550,29 +559,29 @@ class ProductController extends Controller
         $order->status = 'paid';
 
         $order->save();
-        
-        $clientUser = Customer::where('id',$order->client_id)
-        ->select([
-            'ownerID'
-        ])->first();
+
+        $clientUser = Customer::where('id', $order->client_id)
+            ->select([
+                'ownerID'
+            ])->first();
 
         $message = new Message();
 
         $message->sender_id = $user->id;
         $message->receiver_id = $clientUser->ownerID;
-        $message->text = "Pagamento da Encomenda nº".$order->id." recebida pelo vendedor ".$user->name.". Obrigado.";
+        $message->text = "Pagamento da Encomenda nº" . $order->id . " recebida pelo vendedor " . $user->name . ". Obrigado.";
         $message->viewed = 0;
 
         $message->save();
 
         $salesPayment = new SalesPayment;
-        if($user->userType == 5){
+        if ($user->userType == 5) {
             $salesPayment->admin_id = $user->id;
             $salesPayment->order_id = $order->id;
             $salesPayment->value = $order->total;
             $salesPayment->delivered = 0;
             $salesPayment->save();
-        }else{
+        } else {
             $salesPayment->sales_id = $user->sales_id;
             $salesPayment->order_id = $order->id;
             $salesPayment->value = $order->total;
@@ -583,20 +592,20 @@ class ProductController extends Controller
         if ($user->userType == 5) {
             $orders = Order::from(Order::alias('o'))
                 ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
-                ->where('processed',0)
+                ->where('processed', 0)
                 ->select([
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                    'o.receipt_id','o.created_at','c.name','c.regoldiID','o.status','o.invoice_id'
+                    'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
                 ])
                 ->orderBy('o.id', 'DESC')->get();
-        } else if($user->userType == 1) {
+        } else if ($user->userType == 1) {
             $orders = Order::from(Order::alias('o'))
                 ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
                 ->where('c.salesman', $user->userTypeID)
-                ->where('processed',0)
+                ->where('processed', 0)
                 ->select([
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                    'o.receipt_id','o.created_at','c.name','c.regoldiID','o.status','o.invoice_id'
+                    'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
                 ])
                 ->orderBy('o.id', 'DESC')->get();
         }
@@ -609,13 +618,13 @@ class ProductController extends Controller
         $order = Order::where('id', $id)->first();
         $user = Auth::user();
 
-        $clientUser = User::where('client_id',$order->client_id)->first();
+        $clientUser = User::where('client_id', $order->client_id)->first();
 
         $order->status = 'waiting_payment';
 
         $order->save();
 
-        $salesPayment = SalesPayment::where('order_id',$id)->first();
+        $salesPayment = SalesPayment::where('order_id', $id)->first();
         $salesPayment->delete();
 
         return redirect('/processedOrders');
@@ -645,27 +654,27 @@ class ProductController extends Controller
 
         $salesPayment->sales_id = $user->sales_id;
         $salesPayment->order_id = $order->id;
-        $salesPayment->value = number_format($amount,2);
+        $salesPayment->value = number_format($amount, 2);
         $salesPayment->delivered = 0;
         $salesPayment->save();
 
         if ($user->sales_id == null) {
             $orders = Order::from(Order::alias('o'))
                 ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
-                ->where('processed',0)
+                ->where('processed', 0)
                 ->select([
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                    'o.receipt_id','o.created_at','c.name','c.regoldiID','o.status','o.invoice_id'
+                    'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
                 ])
                 ->orderBy('o.id', 'DESC')->get();
         } else {
             $orders = Order::from(Order::alias('o'))
                 ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
                 ->where('c.salesman', $user->sales_id)
-                ->where('processed',0)
+                ->where('processed', 0)
                 ->select([
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                    'o.receipt_id','o.created_at','c.name','c.regoldiID','o.status','o.invoice_id'
+                    'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
                 ])
                 ->orderBy('o.id', 'DESC')->get();
         }
@@ -676,14 +685,14 @@ class ProductController extends Controller
     public function printOrder($id, $type = 'single')
     {
         $order = Order::where('id', $id)
-        ->select([
-            'client_id', 'cart_id', 'created_at','total'
-        ])
-        ->first();
+            ->select([
+                'client_id', 'cart_id', 'created_at', 'total'
+            ])
+            ->first();
 
-        $client = Customer::where('id',$order->client_id)
-        ->first();
-        $totalclient = number_format(Order::where('processed',1)->where('client_id',$client->id)->where('status','waiting_payment')->sum('total'),2);
+        $client = Customer::where('id', $order->client_id)
+            ->first();
+        $totalclient = number_format(Order::where('processed', 1)->where('client_id', $client->id)->where('status', 'waiting_payment')->sum('total'), 2);
         $client->total = $totalclient;
 
         $cart = Cart::where('id', $order->cart_id)->first();
@@ -696,10 +705,10 @@ class ProductController extends Controller
                 $item->product = Product::where('id', $item->product_id)->first();
             }
 
-            if($type === 'single') {
+            if ($type === 'single') {
                 return view('orders.print', compact('line_items', 'order', 'client'));
             } else if ($type === 'multiple') {
-                return ['line_items' => $line_items, 'order' => $order , 'client' => $client];
+                return ['line_items' => $line_items, 'order' => $order, 'client' => $client];
             }
 
         } else {
@@ -723,8 +732,7 @@ class ProductController extends Controller
     {
         $user = Auth::user();
 
-        if($user->sales_id == null and $user->client_id == null and $id == $user->id)
-        {
+        if ($user->sales_id == null and $user->client_id == null and $id == $user->id) {
 
             return view('messages.massmessage');
         }
@@ -775,7 +783,7 @@ class ProductController extends Controller
         $text = $inputs['message'];
         $target = $inputs['target'];
 
-        if($target = 'clients') {
+        if ($target = 'clients') {
             $clients = User::where('client_id', '!=', null)->get();
 
             foreach ($clients as $client) {
@@ -787,7 +795,7 @@ class ProductController extends Controller
                 $message->viewed = 0;
                 $message->save();
             }
-        }elseif($target = 'sales') {
+        } elseif ($target = 'sales') {
 
             $clients = User::where('sales_id', '!=', null)->get();
 
@@ -811,15 +819,14 @@ class ProductController extends Controller
 
         $request->validate([
             'receipt' => 'required',
-        ],[
+        ], [
             'receipt.required' => 'Por favor associe um ficheiro.'
         ]);
 
-        $order = Order::where('id',$inputs['order'])->first();
+        $order = Order::where('id', $inputs['order'])->first();
         $user = Auth::user();
 
-        if($request->hasfile('receipt'))
-        {
+        if ($request->hasfile('receipt')) {
             $receipt = new Receipt;
 
             $receipt->client_id = $order->client_id;
@@ -829,8 +836,8 @@ class ProductController extends Controller
 
             $file = $request->file('receipt');
             $extension = $file->getClientOriginalExtension(); // getting image extension
-            $filename = $file->getClientOriginalName().'.'.$extension;
-            $file->move('uploads/'.$order->client_id.'/', $filename);
+            $filename = $file->getClientOriginalName() . '.' . $extension;
+            $file->move('uploads/' . $order->client_id . '/', $filename);
 
 
             //TODO Envio de email
@@ -838,16 +845,16 @@ class ProductController extends Controller
             $receipt->file = $filename;
             $receipt->save();
         }
-        $clientUser = Customer::where('id',$order->client_id)
-        ->select([
-            'ownerID'
-        ])->first();
+        $clientUser = Customer::where('id', $order->client_id)
+            ->select([
+                'ownerID'
+            ])->first();
 
         $message = new Message;
 
         $message->sender_id = $user->id;
         $message->receiver_id = $clientUser->ownerID;
-        $message->text = "Foi adicionado o recibo à sua encomenda nº".$order->id." . Obrigado.";
+        $message->text = "Foi adicionado o recibo à sua encomenda nº" . $order->id . " . Obrigado.";
         $message->viewed = 0;
 
         $message->save();
@@ -866,14 +873,13 @@ class ProductController extends Controller
 
         $request->validate([
             'receipt' => 'required',
-        ],[
+        ], [
             'receipt.required' => 'Por favor associe um ficheiro.'
         ]);
 
-        $order = Order::where('id',$inputs['order'])->first();
+        $order = Order::where('id', $inputs['order'])->first();
 
-        if($request->hasfile('receipt'))
-        {
+        if ($request->hasfile('receipt')) {
             $receipt = new Receipt;
 
             $receipt->client_id = $order->client_id;
@@ -883,8 +889,8 @@ class ProductController extends Controller
 
             $file = $request->file('receipt');
             $extension = $file->getClientOriginalExtension(); // getting image extension
-            $filename = $file->getClientOriginalName().'.'.$extension;
-            $file->move('uploads/'.$order->client_id.'/', $filename);
+            $filename = $file->getClientOriginalName() . '.' . $extension;
+            $file->move('uploads/' . $order->client_id . '/', $filename);
 
 
             //TODO Envio de email
@@ -898,6 +904,38 @@ class ProductController extends Controller
 
         return redirect('/orders');
 
+    }
+
+    public function showBilling()
+    {
+        $user = Auth::user();
+        if ($user->userType == 5) {
+        $clients = Customer::all();
+
+            foreach ($clients as $client)
+            {
+                $client->orders = Order::where('client_id', $client->id)->where('status', 'waiting_payment')->orderby('created_at','ASC')->get();
+                $client->totalUnpaidAmount = Order::where('client_id',$client->id)->where('status','waiting_payment')->sum('total');
+                $totalUnpaid=$clients->sum('totalUnpaidAmount');
+                $client->totalPaidAmount = Order::where('client_id',$client->id)->where('status','paid')->sum('total');
+                $totalPaid=$clients->sum('totalPaidAmount');
+                $totalBilled=$totalUnpaid+$totalPaid;
+            }
+            return view('product.billing', compact('clients','totalUnpaidAmount','totalUnpaid','totalPaid','totalBilled'));
+        }
+        if ($user->userType == 1) {
+            $clients = Customer::where('salesman', $user->userTypeID)->get();
+
+            foreach ($clients as $client)
+            {
+                $client->orders = Order::where('client_id', $client->id)->where('status', 'waiting_payment')->orderby('created_at','ASC')->get();
+                $client->totalUnpaidAmount = Order::where('client_id',$client->id)->where('status','waiting_payment')->sum('total');
+                $totalUnpaid=$clients->sum('totalUnpaidAmount');
+                $client->totalPaidAmount = Order::where('client_id',$client->id)->where('status','paid')->sum('total');
+                $totalPaid=$clients->sum('totalPaidAmount');
+            }
+            return view('product.billing', compact('clients','totalUnpaidAmount','totalUnpaid','totalPaid'));
+        }
 
     }
 }

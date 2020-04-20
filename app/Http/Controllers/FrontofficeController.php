@@ -56,7 +56,6 @@ class FrontofficeController extends Controller
 
     public function postEditClient(Request $request)
     {
-
         $inputs = $request->all();
         $client = Customer::where('id',$inputs['id'])->first();
 
@@ -72,7 +71,6 @@ class FrontofficeController extends Controller
         $client->save();
 
         return view('frontoffice.edit',compact('client'));
-
     }
 
     public function documents()
@@ -137,7 +135,6 @@ class FrontofficeController extends Controller
 
         return $receipts;
     }
-
 
     public function documentsByType($super, $type)
     {
@@ -291,7 +288,6 @@ class FrontofficeController extends Controller
             }else{
                 $order->total = $product->price1 * $order->amount;
             }
-
             $order->save();
         }
 
@@ -305,7 +301,6 @@ class FrontofficeController extends Controller
         $total = OrderLine::where('cart_id',$cart->id)->sum('total');
 
         return back();
-
     }
 
     public function cartValue()
@@ -331,7 +326,6 @@ class FrontofficeController extends Controller
         $total = OrderLine::where('cart_id',$cart->id)->sum('total');
 
         return $total;
-
     }
 
     public function orders()
@@ -343,7 +337,6 @@ class FrontofficeController extends Controller
 
         return view('frontoffice.orders',compact('orders'));
     }
-
 
     public function viewOrder($id)
     {
@@ -405,7 +398,6 @@ class FrontofficeController extends Controller
         $order_line->delete();
 
         return back();
-
     }
 
     public function removeItem(Request $request)
@@ -438,7 +430,6 @@ class FrontofficeController extends Controller
             
             $order_line->save();
         }
-
         //return back();
     }
 
@@ -454,12 +445,13 @@ class FrontofficeController extends Controller
             $message->viewed = 1;
             $message->save();
         }
-
         return view('frontoffice.messages',compact('messages'));
     }
 
-    public function processCart()
+    public function processCart(Request $request)
     {
+        $inputs = $request->all();
+
         $user = Auth::user();
 
         $auxClientId = Session::get('establismentID');
@@ -484,11 +476,8 @@ class FrontofficeController extends Controller
 
         /*$order = Order::where('client_id',$auxClientId)->where('status','waiting_payment')
         ->where('invoice_id',null)->first();
-        
-        if(!isset($order))
-        {
-            $order = new Order;
-        }*/
+        */
+
         $order = new Order;
         $order->client_id = $auxClientId;
         $order->cart_id = $cart->id;
@@ -497,6 +486,7 @@ class FrontofficeController extends Controller
         $order->processed = 0;
         $order->status = 'waiting_payment';
         $order->external_id = uniqid();
+        $order->note = $inputs['order_note'];
         $order->save();
 
         $total = $order->total;
@@ -514,7 +504,6 @@ class FrontofficeController extends Controller
                 }
             }
             $total = 1.23 * $total;
-
 
             switch ($client->payment_method) {
                 case "Debito Direto":
@@ -584,7 +573,6 @@ class FrontofficeController extends Controller
             $item->product = Product::where('id',$item->product_id)->first();
         }
 
-
         $total = OrderLine::where('cart_id',$cart->id)->sum('total');
         $totalprod = OrderLine::where('cart_id',$cart->id)->sum('total');
 
@@ -623,12 +611,10 @@ class FrontofficeController extends Controller
         array_push($items,$iva);
 
         return view('frontoffice.cart',compact('line_items','total','items','totalprod'));
-
     }
 
-    private function processPayment($cart,$order){
-
-
+    private function processPayment($cart,$order)
+    {
         $user = Auth::user();
 
         $auxClientId = Session::get('establismentID');
@@ -642,12 +628,10 @@ class FrontofficeController extends Controller
         }else{
            return $this->processMainOrder($cart,$order);
         }
-
     }
 
     private function processSideOrder($cart,$order)
     {
-    
         $user = Auth::user();
 
         $auxClientId = Session::get('establismentID');
@@ -681,7 +665,6 @@ class FrontofficeController extends Controller
             $servico['name'] = "Portes";
             $servico['amount'] = 5;
 
-
             array_push($items,$servico);
         }
 
@@ -690,7 +673,6 @@ class FrontofficeController extends Controller
         $iva['descr'] = "Iva";
         $iva['name'] = "Iva";
         $iva['amount'] = number_format($order->total*1.23 - $order->total,2);
-
 
         array_push($items,$iva);
 
@@ -716,8 +698,6 @@ class FrontofficeController extends Controller
             'url_cancel' => 'http://www.regolfood.pt',
             'url_confirm' => 'http://www.regolfood.pt',
         ];
-
-
 
         $url = 'https://services.sandbox.meowallet.pt/api/v2/checkout';
 
@@ -759,8 +739,6 @@ class FrontofficeController extends Controller
             $servico['descr'] = "Serviço HACCP";
             $servico['name'] = "Serviço HACCP";
             $servico['amount'] = $client->contract_value - $order->total;
-
-
             array_push($items,$servico);
         }
 
@@ -769,7 +747,6 @@ class FrontofficeController extends Controller
         $iva['descr'] = "Iva";
         $iva['name'] = "Iva";
         $iva['amount'] = number_format($order->total > $client->contract_value ? $order->total*1.23 - $order->total : $client->contract_value*1.23 - $client->contract_value ,2);
-
 
         $order->total = number_format($order->total > $client->contract_value ? $order->total * 1.23 : $client->contract_value * 1.23,2);
         $order->save();
@@ -796,17 +773,12 @@ class FrontofficeController extends Controller
             'url_confirm' => 'http://www.regolfood.pt',
         ];
 
-
-
-
         $url = 'https://services.sandbox.meowallet.pt/api/v2/checkout';
 
         $response = $this->http($url, $request_data);
 
         return $response;
-
     }
-
 
     private function http($url, $data = null, $method = null){
 
@@ -839,8 +811,5 @@ class FrontofficeController extends Controller
 
         return json_decode($response);
     }
-
-
-  
 
 }

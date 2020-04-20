@@ -91,7 +91,6 @@ Route::get('/frontoffice/reportShow/{idReport}','ReportController@reportShow');
 Route::get('/frontoffice/statistics','ReportController@reportStatistics');
 
 
-
 Route::group(['middleware' => ['backoffice']], function () {
 
     Route::get('/salesman', 'SalesmanController@index');
@@ -101,7 +100,6 @@ Route::group(['middleware' => ['backoffice']], function () {
     //Route::get('/salesman/new', 'ClientController@newSales');
     Route::post('/salesman/add', 'SalesmanController@addSales');
     Route::delete('/salesman/delete', 'SalesmanController@deleteSales');
-
 
     Route::get('/clients', 'ClientController@index');
     Route::get('/clients/new', 'ClientController@newCustomer');
@@ -147,6 +145,8 @@ Route::group(['middleware' => ['backoffice']], function () {
     Route::get('/products/{cat}/{id}', 'ProductController@editProduct');
     Route::delete('/products/delete', 'ProductController@deleteProduct');
     Route::post('/products/edit', 'ProductController@editProductPost');
+    /*luis*/
+    route::get('/billing','ProductController@showBilling');
 
 
     Route::get('/orders', 'ProductController@showOrders');
@@ -164,7 +164,6 @@ Route::group(['middleware' => ['backoffice']], function () {
     Route::post('/orders/semipay', 'ProductController@semiPayOrder');
     Route::get('/orders/filter/q', 'ProductController@filterOrders');
     Route::get('/processedOrders/filter', 'ProductController@filterProcessedOrders');
-
 
 
     Route::get('/messages/{id}', 'ProductController@messages');

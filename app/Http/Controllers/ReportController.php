@@ -534,6 +534,7 @@ class ReportController extends Controller
         $report = Report::where('id',$idReport)
         ->first();
 
+
         $report->concluded=1;
         $report->save();
 
@@ -686,12 +687,11 @@ class ReportController extends Controller
                 }
                 
             }
+            $totalRules == 0 ? $auxPerConf=0 :  $auxPerConf=intval(round(($totalConforme*100)/$totalRules));
 
-            $auxPerConf=intval(round(($totalConforme*100)/$totalRules));
-            
-            $auxPerNCont=intval(round(($totalnConforme*100)/$totalRules,0));
+            $totalRules == 0 ?  $auxPerNCont=0: $auxPerNCont=intval(round(($totalnConforme*100)/$totalRules,0));
 
-            $auxPerNApply=intval(round(($totalnAplicavel*100)/$totalRules,0));
+            $totalRules == 0 ? $auxPerNApply=0 : $auxPerNApply=intval(round(($totalnAplicavel*100)/$totalRules,0));
 
             $section->conforme=$auxPerConf;
             $section->nConforme=$auxPerNCont;
@@ -724,9 +724,9 @@ class ReportController extends Controller
             }
         }
 
-        $auxPerConfGeral=intval(round(($totalConformeGeral*100)/$totalRulesGeral));  
-        $auxPerNConfGeral=intval(round(($totalnConformeGeral*100)/$totalRulesGeral));
-        $auxPerNApplyGeral=intval(round(($totalnAplicavelGeral*100)/$totalRulesGeral));
+        $totalRulesGeral == 0 ? $auxPerConfGeral=0 : $auxPerConfGeral=intval(round(($totalConformeGeral*100)/$totalRulesGeral));
+        $totalRulesGeral == 0 ? $auxPerNConfGeral=0 : $auxPerNConfGeral=intval(round(($totalnConformeGeral*100)/$totalRulesGeral));
+        $totalRulesGeral == 0 ? $auxPerNApplyGeral=0 : $auxPerNApplyGeral=intval(round(($totalnAplicavelGeral*100)/$totalRulesGeral));
 
         $statiscsGeral = (object)[];
         $statiscsGeral->confGeral=$auxPerConfGeral;

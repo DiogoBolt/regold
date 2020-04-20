@@ -122,7 +122,7 @@
 
 <script>
 
-document.addEventListener('DOMContentLoaded', function() { 
+document.addEventListener('DOMContentLoaded', function() {
 
     $('.input-order').change( function() {
 
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             $(this).prev('label').text('Adicionar Factura');
         }
-        
+
     });
 
 });

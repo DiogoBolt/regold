@@ -33,7 +33,6 @@
                             <th>Total</th>
                             <th>Fatura</th>
                             <th>Recibo</th>
-
                         </tr>
                         @foreach($line_items as $item)
                             <tr>
@@ -80,16 +79,15 @@
                                     </td>
                                 @endif
                             </tr>
-
                         @endforeach
-
                     </table>
-
+                        <div class="form-group">
+                            <b style="color:red">Nota de encomenda: </b> <b>{{$order->note}}</b>
+                        </div>
                     <div class="order-info">
                         <h4>Total : {{number_format($total + 0.23*$total,2)}}€</h4>
                         <h5>IVA(23) : {{number_format($total * 0.23,2)}}€</h5>
                     </div>
-
                     <a href="/orders/process/{{$order->id}}" class="btn btn-process">
                         <strong>Processar</strong>
                     </a>
@@ -101,9 +99,6 @@
                         @if(isset($salesman))
                        <h5>Vendedor: {{$salesman->name}}</h5>
                             @endif
-
-
-
                 </div>
             </div>
         </div>

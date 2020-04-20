@@ -1,25 +1,27 @@
 
 function validateNIF(value) {
-    const nif = typeof value === 'string' ? value : value.toString();
-    const validationSets = {
-        one: ['1', '2', '3', '5', '6', '8'],
-        two: ['45', '70', '71', '72', '74', '75', '77', '79', '90', '91', '98', '99']
-    };
+    // const nif = typeof value === 'string' ? value : value.toString();
+    // const validationSets = {
+    //     one: ['1', '2', '3', '5', '6', '8'],
+    //     two: ['45', '70', '71', '72', '74', '75', '77', '79', '90', '91', '98', '99']
+    // };
+    //
+    // if (nif.length !== 9) {
+    //     return false;
+    // }
+    //
+    // if (!validationSets.one.includes(nif.substr(0, 1)) && !validationSets.two.includes(nif.substr(0, 2))) {
+    //     return false;
+    // }
+    //
+    // let total = nif[0] * 9 + nif[1] * 8 + nif[2] * 7 + nif[3] * 6 + nif[4] * 5 + nif[5] * 4 + nif[6] * 3 + nif[7] * 2;
+    // let modulo11 = (Number(total) % 11);
+    //
+    // const checkDigit = modulo11 < 2 ? 0 : 11 - modulo11;
+    //
+    // return checkDigit === Number(nif[8]);
 
-    if (nif.length !== 9) {
-        return false;
-    }
-
-    if (!validationSets.one.includes(nif.substr(0, 1)) && !validationSets.two.includes(nif.substr(0, 2))) {
-        return false;
-    }
-
-    let total = nif[0] * 9 + nif[1] * 8 + nif[2] * 7 + nif[3] * 6 + nif[4] * 5 + nif[5] * 4 + nif[6] * 3 + nif[7] * 2;
-    let modulo11 = (Number(total) % 11);
-
-    const checkDigit = modulo11 < 2 ? 0 : 11 - modulo11;
-
-    return checkDigit === Number(nif[8]);
+    return true;
 }
 
 function validateForm(){
@@ -105,37 +107,43 @@ function validateForm(){
     }
 
 
-function getParishName(postalCode,id){
-    if(postalCode.length==8){
+function getParishName(postalCode,id) {
+    if (postalCode.length == 8) {
         $.ajax({
-            type:'GET',
-            url:'/users/getParish/'+postalCode,
-        }).done(function(data) {
-            if(data.name!=undefined){
-                if(id=="postal_code"){
-                document.getElementsByClassName("labelParish")[0].innerHTML=data.name;
-                document.getElementsByClassName("labelParish")[0].style.display="block";
-                 }else{
-                     alert("aqui");
-                    document.getElementsByClassName("labelParish")[1].innerHTML=data.name;
-                    document.getElementsByClassName("labelParish")[1].style.display="block";
+            type: 'GET',
+            url: '/users/getParish/' + postalCode,
+        }).done(function (data) {
+            if (data.name != undefined) {
+                if (id == "postal_code") {
+                    document.getElementsByClassName("labelParish")[0].innerHTML = data.name;
+                    document.getElementsByClassName("labelParish")[0].style.display = "block";
+                } else {
+                    alert("aqui");
+                    document.getElementsByClassName("labelParish")[1].innerHTML = data.name;
+                    document.getElementsByClassName("labelParish")[1].style.display = "block";
                 }
 
-            }else{
+            } else {
                 console.log("sem resultado");
             }
         });
-    }else{
-        if(id=="postal_code"){
-            document.getElementsByClassName("labelParish")[0].innerHTML="";
-        }else{         
-            document.getElementsByClassName("labelParish")[1].innerHTML="";
+    } else {
+        if (id == "postal_code") {
+            document.getElementsByClassName("labelParish")[0].innerHTML = "";
+        } else {
+            document.getElementsByClassName("labelParish")[1].innerHTML = "";
         }
     }
-    
-
 }
-//aparecer e desaparecer a inserção da morada
+    function showRegistedMail(){
+        document.getElementById("EmailInvoice").style.display="none";
+        document.getElementById('ReceiptEmail').required=false;
+    }
+    function notshowRegistedMail(){
+        document.getElementById("EmailInvoice").style.display="block";
+        document.getElementById('ReceiptEmail').required=true;
+    }
+    //aparecer e desaparecer a inserção da morada
 function showAddressInvoice(){ 
     document.getElementById("AddressInvoice").style.display="block";
     document.getElementById('selectDistrictInvoice').required=true;

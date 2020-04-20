@@ -122,6 +122,10 @@
 <script>
 
     document.addEventListener('DOMContentLoaded', function () {
+        /*const greenlist=document.getElementsByClassName('green');
+        const redlist=document.getElementsByClassName('red');
+        $(greenlist).hide();*/
+
 
         $('#deleteModal').on('show.bs.modal', function (event) {
             let item = $(event.relatedTarget);
@@ -140,6 +144,6 @@
             $('#delete-user').unbind('click');
         });
 
-    }, false);
 
+    }, false);
 </script>

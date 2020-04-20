@@ -60,19 +60,20 @@
                     </div>
                 @endforeach
             </div>
-
-            <div class="cart-info">
-                <p>Total : {{number_format($totalprod, 2, '.', '')}}€</p>
-                @foreach($items as $item)
-                    <p>{{$item['descr']}} : {{number_format($item['amount'], 2, '.','')}} €</p>
-                @endforeach
-                <h4>Total IVA : {{number_format($total,2, '.', '')}} €</h4>
-
-            </div>
-
-            <a href="/frontoffice/cart/process" class="btn btn-cart">validar carrinho</a>
+            <form action="/frontoffice/cart/process">
+                <div class="form-group">
+                    Informações/notas sobre a encomenda <textarea class="form-control" placeholder="Informações/notas sobre a encomenda" name="order_note"></textarea>
+                </div>
+                <div class="cart-info">
+                    <p>Total : {{number_format($totalprod, 2, '.', '')}}€</p>
+                    @foreach($items as $item)
+                        <p>{{$item['descr']}} : {{number_format($item['amount'], 2, '.','')}} €</p>
+                    @endforeach
+                    <h4>Total IVA : {{number_format($total,2, '.', '')}} €</h4>
+                </div>
+                <button class="btn btn-cart">validar carrinho</button>
+            </form>
         @else
-
             <div class="cart-container">
                 <h1>O carrinho encontra-se vazio.</h1>
             </div>
