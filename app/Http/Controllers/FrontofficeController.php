@@ -11,6 +11,7 @@ use App\DocumentType;
 use App\Favorite;
 use App\Group;
 use App\Message;
+use App\OilRecord;
 use App\Order;
 use App\OrderLine;
 use App\Product;
@@ -136,8 +137,9 @@ class FrontofficeController extends Controller
         return $receipts;
     }
 
-    public function documentsByType($super, $type)
+    public function documentsByType($super, $type,Request $request)
     {
+
         $user = Auth::user();
 
         $auxClientId = Session::get('establismentID');
@@ -156,27 +158,43 @@ class FrontofficeController extends Controller
 
         //$receipts=Receipt::whereIN('client_id',$ids)->get();
 
-        $receipts = Receipt::from(Receipt::alias('r'))
-            ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
-            ->leftJoin(DocumentSuperType::alias('dst'), 'dt.superType', '=', 'dst.id')
-            ->groupBy('r.id')
-            ->where('dst.name', $super)
-            ->whereIN('r.client_id',$ids)
-            ->where('dt.id', $type )
-            ->get(['r.id']);
-        $ids = [];
-
-        foreach($receipts as $receipt)
+        if($type==3)
         {
-            $updated = Receipt::where('id',$receipt->id)->first();
-            $updated->viewed = 1;
-            $updated->save();
-            array_push($ids,$receipt->id);
+            $receipts = Receipt::from(Receipt::alias('r'))
+                ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
+                ->leftJoin(DocumentSuperType::alias('dst'), 'dt.superType', '=', 'dst.id')
+                ->groupBy('r.id')
+                ->where('dst.name', $super)
+                ->whereIN('r.client_id',$ids)
+                ->where('dt.id', $type )
+                ->get(['r.id']);
+            $ids = [];
+
+            foreach($receipts as $receipt)
+            {
+                $updated = Receipt::where('id',$receipt->id)->first();
+                $updated->viewed = 1;
+                $updated->save();
+                array_push($ids,$receipt->id);
+            }
+
+            $receipts = Receipt::whereIN('id',$ids)->get();
+        }
+        if($type==29)
+        {
+            //registo oleo
+
+           $inputs = $request->all();
+
+             $oil_records= new OilRecord();
+             $oil_records->report_at=$inputs['report_date'];
+             $oil_records->oil_aspect=$inputs['oil_aspect'];
+             $oil_records->client_id = $auxClientId;
+             $oil_records->save();
+
         }
 
-        $receipts = Receipt::whereIN('id',$ids)->get();
-
-        return view('frontoffice.documentsType',compact('receipts','client','type', 'super'));
+        return view('frontoffice.documentsType',compact('receipts','oil_records','client','type', 'super'));
     }
 
     public function documentsBySuper($super)

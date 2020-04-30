@@ -72,7 +72,6 @@ class ReportController extends Controller
         ->orderBy('id','desc')
         ->first();
 
-
         if(isset($report)){
 
             $establishName=Customer::where('id',$report->idClient)

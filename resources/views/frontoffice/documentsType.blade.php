@@ -28,9 +28,11 @@
         <span class="back-btn__back"><strong>Documentos {{ $super }}</strong></span>
     </a>
 
+    @if($type==3)
+
     <div class="container">
         <div class="container-docs">
-            
+
             @if(count($receipts) > 0)
                 @foreach($receipts as $receipt)
                     <div class="file">
@@ -49,6 +51,36 @@
             @endif
         </div>
     </div>
+    @endif
+    @if($type==29)
+        <form action="/frontoffice/documents/{super}/{type}" method="GET" id="add-form">
 
+            <div class="container">
+                <div class="container-docs">
+                    <div>
+                        <h4 style="text-align:left ; color:#9ac266"> REGISTOS DE MUDANÇA DE ÓLEO</h4>
+                        <label style="text-align:center" for ="report_date">DATA</label>
+                        <input type="date" id="report_date" class="add-form" name="report_date">
+                    </div>
+                    <div>
+                        <h2 style="text-align:center" >ASPETO</h2>
+                        <button class="btn btn-oilRecord" id="1"><strong>1</strong></button>
+                        <button class="btn btn-oilRecord2" id="2"><strong>2</strong></button>
+                        <button class="btn btn-oilRecord3" id="3"><strong>3</strong></button>
+                        <button class="btn btn-oilRecord4" id="4"><strong>4</strong></button>
+                        <button class="btn btn-oilRecord5" id="5"><strong>5</strong></button>
+
+                        <div>
+                            <button class="btn" type="submit" form="add-form">Validar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    @endif
 
 @endsection
+<script>$("button").click(function() {
+        alert(this.id); // or alert($(this).attr('id'));
+    });</script>
+

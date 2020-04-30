@@ -8,6 +8,32 @@
   text-align: center;
   margin: 0 auto;
 }
+.btn-oilRecord {
+  background-color:  #33adff;
+  width: 5%;
+  font-size: 20px;
+}
+.btn-oilRecord2{
+  background-color:  #00e673;
+  width: 5%;
+  font-size: 20px;
+}
+.btn-oilRecord3{
+  background-color:  #00cc00;
+  width: 5%;
+  font-size: 20px;
+}
+.btn-oilRecord4{
+  background-color:  #4d9900;
+  width: 5%;
+  font-size: 20px;
+}
+.btn-oilRecord5{
+  background-color:  #666600;
+  width: 5%;
+  font-size: 20px;
+}
+
 
 .file {
   display: inline-block;

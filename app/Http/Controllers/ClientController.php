@@ -82,6 +82,13 @@ class ClientController extends Controller
                 ->where('r.client_id',$auxClientId)
                 ->where('viewed',0)
                 ->count();
+           $receiptsReg = Receipt::from(Receipt::alias('r'))
+               ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
+               ->leftJoin(DocumentSuperType::alias('dst'), 'dt.superType', '=', 'dst.id')
+               ->where('dst.name','Registos')
+               ->where('r.client_id',$auxClientId)
+               ->where('viewed',0)
+               ->count();
                 
                 $services = ServiceTypeClient::where('id_client',$auxClientId)
                 ->select([
@@ -91,7 +98,7 @@ class ClientController extends Controller
 
                // Session::put('establismentID',$clients[0]->id);
                 
-                return view('client.home',compact('clients','services','receiptsCont','receiptsCP','receiptsHACCP'));
+                return view('client.home',compact('clients','services','receiptsCont','receiptsCP','receiptsHACCP','receiptsReg'));
         
         }else if(Session::has('clientImpersonatedId')){
             
@@ -120,6 +127,13 @@ class ClientController extends Controller
                 ->where('r.client_id',$auxClientId)
                 ->where('viewed',0)
                 ->count();
+           $receiptsReg = Receipt::from(Receipt::alias('r'))
+               ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
+               ->leftJoin(DocumentSuperType::alias('dst'), 'dt.superType', '=', 'dst.id')
+               ->where('dst.name','Registos')
+               ->where('r.client_id',$auxClientId)
+               ->where('viewed',0)
+               ->count();
 
                 $services = ServiceTypeClient::where('id_client',$auxClientId)
                 ->select([
@@ -129,7 +143,7 @@ class ClientController extends Controller
 
                 Session::put('establismentID',$auxClientId);
 
-            return view('client.home',compact('services','receiptsCont','receiptsCP','receiptsHACCP'));
+            return view('client.home',compact('services','receiptsCont','receiptsCP','receiptsHACCP','receiptsReg'));
 
         }else {
             Session::forget('establismentID');
@@ -161,6 +175,13 @@ class ClientController extends Controller
                 ->where('r.client_id',$clients[0]->id)
                 ->where('viewed',0)
                 ->count();
+           $receiptsReg = Receipt::from(Receipt::alias('r'))
+               ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
+               ->leftJoin(DocumentSuperType::alias('dst'), 'dt.superType', '=', 'dst.id')
+               ->where('dst.name','Registos')
+               ->where('r.client_id',$clients[0]->id)
+               ->where('viewed',0)
+               ->count();
                 
                 $services = ServiceTypeClient::where('id_client',$clients[0]->id)
                 ->select([
@@ -170,7 +191,7 @@ class ClientController extends Controller
 
                 Session::put('establismentID',$clients[0]->id);
 
-            return view('client.home',compact('clients','services','receiptsCont','receiptsCP','receiptsHACCP'));
+            return view('client.home',compact('clients','services','receiptsCont','receiptsCP','receiptsHACCP','receiptsReg'));
         }
     }
 
