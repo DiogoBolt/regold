@@ -9,7 +9,7 @@
     <div class="container-bar">
         <p class="container-bar_txt">Documentos {{$type}}</p>
         <div class="container-bar_img">
-            <img src="/img/haccp_icon.png"></a>
+            <img src="/img/haccp_icon.png">
         </div>
     </div>
 
@@ -53,7 +53,7 @@
     </div>
     @endif
     @if($type==29)
-        <form action="/frontoffice/documents/{super}/{type}" method="GET" id="add-form">
+        <form action="/frontoffice/documents/{{$super}}/{{$type}}" method="GET" id="add-form">
 
             <div class="container">
                 <div class="container-docs">
