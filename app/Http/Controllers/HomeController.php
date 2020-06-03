@@ -40,6 +40,12 @@ class HomeController extends Controller
 
         return redirect('/login');
     }
+
+    public function duvidascovid()
+    {
+        return view('frontoffice.covid');
+
+    }
     public function receiveThermo(Request $request)
     {
         $inputs = $request->all();

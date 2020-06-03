@@ -9,7 +9,11 @@
     <div class="container-bar">
         <p class="container-bar_txt">Documentos {{$type}}</p>
         <div class="container-bar_img">
+<<<<<<< HEAD
             <img src="/img/haccp_icon.png"></img>
+=======
+            <img src="/img/haccp_icon.png">
+>>>>>>> 4f2e5879297750ad87fc07344a4a05da10e38e01
         </div>
     </div>
 
@@ -52,9 +56,14 @@
         </div>
     </div>
     @endif
+<<<<<<< HEAD
 
     @if($type==28)
         <form  method="GET" id="add-form">
+=======
+    @if($type==29)
+        <form action="/frontoffice/documents/{{$super}}/{{$type}}" method="GET" id="add-form">
+>>>>>>> 4f2e5879297750ad87fc07344a4a05da10e38e01
 
             <div class="container">
                 <div class="container-docs">

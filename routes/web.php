@@ -26,6 +26,8 @@ Route::post('/api/confirm/', 'ApiController@confirmPayment');
 
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/duvidascovid', 'HomeController@duvidascovid')->name('covid');
+
 
 Auth::routes(['register' => false]);
 
