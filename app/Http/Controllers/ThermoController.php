@@ -106,7 +106,6 @@ class ThermoController extends Controller
     public function editFridge($id)
     {
         $fridge = Fridge::where('id',$id)->first();
-
         return view('frontoffice.edit_fridge',compact('fridge'));
     }
 

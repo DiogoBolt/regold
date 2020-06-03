@@ -257,4 +257,6 @@ function saveEachPersonalize(){
         window.location.replace('/frontoffice/personalizeAreasEquipments')
     );
 
+
+
 }

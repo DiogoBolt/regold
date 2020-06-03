@@ -11,6 +11,7 @@ use App\DocumentType;
 use App\Favorite;
 use App\Group;
 use App\Message;
+use App\NewProductRecords;
 use App\OilRecord;
 use App\Order;
 use App\OrderLine;
@@ -180,21 +181,22 @@ class FrontofficeController extends Controller
 
             $receipts = Receipt::whereIN('id',$ids)->get();
         }
-        if($type==29)
+
+        if($type==28)
         {
-            //registo oleo
+            //registo entrada produto
+            /*$inputs= $request->all();
 
-           $inputs = $request->all();
+            $new_product_records=new NewProductRecords();
 
-             $oil_records= new OilRecord();
-             $oil_records->report_at=$inputs['report_date'];
-             $oil_records->oil_aspect=$inputs['oil_aspect'];
-             $oil_records->client_id = $auxClientId;
-             $oil_records->save();
+           $new_product_records->report_date=$inputs['report_date'];
+           $new_product_records->product_name=$inputs['product_name'];
+           $new_product_records->provider=$inputs['provider'];*/
 
         }
 
-        return view('frontoffice.documentsType',compact('receipts','oil_records','client','type', 'super'));
+        return view('frontoffice.documentsType',compact('receipts','new_product_records','client','type', 'super'));
+
     }
 
     public function documentsBySuper($super)

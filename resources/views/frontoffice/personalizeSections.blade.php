@@ -39,18 +39,21 @@
     
     <h1 class="title">Selecione as secções do cliente</h1>
 
+
+
      <div class="divSection">
         <ul id='ulSections' class="ks-cboxtags">
+            <input  type="checkbox" onClick="toggle(this)" /> Selecionar tudo<br/>
             @if($control->personalizeSections==0)
                 @foreach($sections as $section)
-                    <li><input type="checkbox" id="{{$section->name}}1" name="sections[]" value='{"idSection":{{$section->id}},"idClientSection":{{$section->idClientSection}}}' checked>
+                    <li><input type="checkbox" id="{{$section->name}}1" name="sections[]" value='{"idSection":{{$section->id}},"idClientSection":{{$section->idClientSection}}}' >
                     <label for="{{$section->name}}1">{{$section->name}}</label></li>
                 @endforeach
             @else
                 @foreach($sections as $section)
                     @if($section->checked)
                         <li>
-                            <input type="checkbox" id="{{$section->name}}1" name="sections[]" value='{"idSection":{{$section->id}},"idClientSection":{{$section->idClientSection}}}' checked>
+                            <input type="checkbox" id="{{$section->name}}1" name="sections[]" value='{"idSection":{{$section->id}},"idClientSection":{{$section->idClientSection}}}' >
                             <label for="{{$section->name}}1">{{$section->name}}</label>
                         </li>
                     @else
@@ -64,7 +67,7 @@
             @if(count($clientSections)>0)
                 @foreach($clientSections as $clientSection)
                     <li>
-                        <input type="checkbox" id="{{$clientSection->designation}}" name="sections[]" value='{"idSection":{{$clientSection->id}},"idClientSection":{{$clientSection->id}}}' checked>
+                        <input type="checkbox" id="{{$clientSection->designation}}" name="sections[]" value='{"idSection":{{$clientSection->id}},"idClientSection":{{$clientSection->id}}}' >
                         <label for="{{$clientSection->designation}}">{{$clientSection->designation}}</label>
                     </li>
                 @endforeach
@@ -111,6 +114,19 @@
     </div>
 
 @endsection
+
+<script >
+    function toggle(oInput) {
+        var aInputs = document.getElementsByTagName('input');
+        for (var i=0;i<aInputs.length;i++) {
+            if (aInputs[i] !== oInput) {
+                aInputs[i].checked = oInput.checked;
+            }
+        }
+    }
+</script>
+
+
 
 
     

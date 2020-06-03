@@ -35,7 +35,81 @@
 
     <input type="hidden" id="idSection" value="{{$section->id}}">
 
-    
+    @if($section->id==0)
+
+        <div class="tableContainer">
+            <table class="table" id="reportRules">
+                <tr id="reportRulesTop">
+                    <th>#</th>
+                    <th>Regra</th>
+                    <th onclick="setOptionAll('c')"  ondblclick="forceAll('c')">Conforme</th>
+                    <th onclick="setOptionAll('nc')" ondblclick="forceAll('nc')">Não Conforme</th>
+                    <th onclick="setOptionAll('na')" ondblclick="forceAll('na')">Não Aplicável</th>
+                    <th class="severity">Severidade</th>
+                </tr>
+                <tbody>
+                @foreach($rules as $rule)
+                    <tr>
+                        @if($rule->ruletype==1)
+                            @if($x==0)
+                        <th>Instalações Gerais:</th> {{$x=1}}
+                            @endif
+                        @endif
+                            @if($rule->ruletype==2)
+                                @if($x==1)
+                                <th>Documentação:</th> {{$x=2}}
+                            @endif
+                            @endif
+                    </tr>
+
+                    <tr class="tableRow" id="{{$rule->idAnswerReport}}">
+                        <th class="index" value="{{$rule->id}}">{{$rule->index}}</th>
+                        <td class="tdBackground tdRule" onclick="focusObs({{$rule->index}})"><label class="rule">{{$rule->rule}}</label></td>
+                        <td class="tdBackground" name="radio">
+                            @if($rule->answer == 'c')
+                                <input type=radio onclick="dontShowCorrective({{$rule->index}})"  name="radio{{$rule->id}}" value="c" id="c{{$rule->id}}" checked/>
+                                <label class="conforme" for="c{{$rule->id}}"></label>
+                            @else
+                                <input type=radio onclick="dontShowCorrective({{$rule->index}})"  name="radio{{$rule->id}}" value="c" id="c{{$rule->id}}" />
+                                <label class="conforme" for="c{{$rule->id}}"></label>
+                            @endif
+                        </td>
+                        <td class="tdBackground" name="radio">
+                            @if($rule->answer == 'nc')
+                                <input type=radio  onclick="showCorrective({{$rule->index}})" name="radio{{$rule->id}}" value="nc" id="nc{{$rule->id}}" checked />
+                                <label class="naoConforme" for="nc{{$rule->id}}"></label>
+                            @else
+                                <input type=radio  onclick="showCorrective({{$rule->index}})" name="radio{{$rule->id}}" value="nc" id="nc{{$rule->id}}" />
+                                <label class="naoConforme" for="nc{{$rule->id}}"></label>
+                            @endif
+                        </td>
+                        <td class="tdBackground" name="radio">
+                            @if($rule->answer == 'na')
+                                <input type=radio  onclick="dontShowCorrective({{$rule->index}})" name="radio{{$rule->id}}" value="na" id="na{{$rule->id}}" checked />
+                                <label class="naoAplicavel" for="na{{$rule->id}}"></label>
+                            @else
+                                <input type=radio  onclick="dontShowCorrective({{$rule->index}})" name="radio{{$rule->id}}" value="na" id="na{{$rule->id}}" />
+                                <label class="naoAplicavel" for="na{{$rule->id}}"></label>
+                            @endif
+                        </td>
+                        <td>
+                            <div class="divSeverity">
+                                <div class="range-slider">
+                                    <input class="range-slider__range" disabled onchange="rangeValue(this)" type="range" value="{{$rule->severityValue}}" min="1" max="5">
+                                </div>
+                                <input class="inputRangeValue" disabled type="number" min="1" max="5" value="{{$rule->severityValue}}"/>
+                            </div>
+                            <label class="lblSeverityStatus">{{$rule->severityText}}</label>
+                        </td>
+                    </tr>
+
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+
+    @else
+
     <div class="tableContainer">
         <table class="table" id="reportRules">
             <tr id="reportRulesTop">
@@ -48,7 +122,8 @@
             </tr>
             <tbody>
                 @foreach($rules as $rule)
-                <tr class="tableRow" id="{{$rule->idAnswerReport}}"> 
+
+                <tr class="tableRow" id="{{$rule->idAnswerReport}}">
                     <th class="index" value="{{$rule->id}}">{{$rule->index}}</th>
                     <td class="tdBackground tdRule" onclick="focusObs({{$rule->index}})"><label class="rule">{{$rule->rule}}</label></td>
                     <td class="tdBackground" name="radio">
@@ -81,18 +156,21 @@
                     <td> 
                         <div class="divSeverity">
                             <div class="range-slider">
-                                <input class="range-slider__range" onchange="rangeValue(this)" type="range" value="{{$rule->severityValue}}" min="1" max="5">
+                                <input class="range-slider__range" disabled onchange="rangeValue(this)" type="range" value="{{$rule->severityValue}}" min="1" max="5">
                             </div>
-                            <input class="inputRangeValue" oninput="rangeInputValue(this)" type="number" min="1" max="5" value="{{$rule->severityValue}}"/>
+                            <input class="inputRangeValue" disabled type="number" min="1" max="5" value="{{$rule->severityValue}}"/>
                         </div>
                         <label class="lblSeverityStatus">{{$rule->severityText}}</label>
                     </td>
                 </tr>
+
                 @endforeach
             </tbody>
         </table>
     </div>
-    
+
+    @endif
+
     @if($showTableCorrective==1)
         <h2 id="titleCorrective" class="subTitle">Medidas Corretivas</h2>
     @else

@@ -9,7 +9,7 @@
     <div class="container-bar">
         <p class="container-bar_txt">Documentos {{$type}}</p>
         <div class="container-bar_img">
-            <img src="/img/haccp_icon.png"></a>
+            <img src="/img/haccp_icon.png"></img>
         </div>
     </div>
 
@@ -52,26 +52,36 @@
         </div>
     </div>
     @endif
-    @if($type==29)
-        <form action="/frontoffice/documents/{super}/{type}" method="GET" id="add-form">
+
+    @if($type==28)
+        <form  method="GET" id="add-form">
 
             <div class="container">
                 <div class="container-docs">
                     <div>
-                        <h4 style="text-align:left ; color:#9ac266"> REGISTOS DE MUDANÇA DE ÓLEO</h4>
+                        <h4 style="text-align:left ; color:#9ac266"> REGISTOS DE ENTRADA DE PRODUTO</h4>
                         <label style="text-align:center" for ="report_date">DATA</label>
                         <input type="date" id="report_date" class="add-form" name="report_date">
                     </div>
                     <div>
-                        <h2 style="text-align:center" >ASPETO</h2>
-                        <button class="btn btn-oilRecord" id="1"><strong>1</strong></button>
-                        <button class="btn btn-oilRecord2" id="2"><strong>2</strong></button>
-                        <button class="btn btn-oilRecord3" id="3"><strong>3</strong></button>
-                        <button class="btn btn-oilRecord4" id="4"><strong>4</strong></button>
-                        <button class="btn btn-oilRecord5" id="5"><strong>5</strong></button>
+                        <label style="text-align:center" for="product_name">PRODUTO</label>
+                        <select class="form-control" id="product_name" name="product_name">
+                            <option value="" selected disabled>Seleccione produto</option>
+                            <option value="Fiambre">Fiambre</option>
+                            <option value="Queijo">Queijo</option>
+                            <option value="Leite">Leite</option>
+                        </select>
+
+                        <label style="text-align:center" for="provider">FORNECEDOR</label>
+                        <select class="form-control" id="provider" name="provider">
+                            <option value="" selected disabled>Seleccione fornecedor</option>
+                            <option value="Rei das carnes">REI DAS CARNES</option>
+                            <option value="Rei das carnes222">REI DAS CARNES222</option>
+                            <option value="Rei das carnes333">REI DAS CARNES333</option>
+                        </select>
 
                         <div>
-                            <button class="btn" type="submit" form="add-form">Validar</button>
+                            <a href="/frontoffice/insertProductConformities" class="btnNEXT"><strong>Seguinte</strong></a>
                         </div>
                     </div>
                 </div>
@@ -80,7 +90,12 @@
     @endif
 
 @endsection
-<script>$("button").click(function() {
-        alert(this.id); // or alert($(this).attr('id'));
-    });</script>
+{{--<script type="text/javascript">
+    function reply_click($clicked_id)
+    {
+       var x= document.getElementById($clicked_id);
+       x.style.borderColor="red";
+    }
+</script>--}}
+
 

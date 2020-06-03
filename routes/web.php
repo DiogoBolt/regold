@@ -68,7 +68,7 @@ Route::post('/client/addSessionVar/{id}','ClientController@addSessionVar');
 Route::post('/client/deleteSessionVar','ClientController@deleteSessionVar');
 
 //routes personalize Sections
-Route::get('/frontoffice/personlizeSection','PersonalizeSectionController@getSection');
+Route::get('/frontoffice/personalizeSection','PersonalizeSectionController@getSection');
 Route::post('/frontoffice/personalizeSection/save','PersonalizeSectionController@saveClientSection');
 Route::get('/frontoffice/personalizeAreasEquipments','PersonalizeSectionController@getAreasEquipments');
 Route::get('/frontoffice/personalizeAreasEquipments/personalizeEachSection/{id}','PersonalizeSectionController@personalizeEachSection');
@@ -86,6 +86,12 @@ Route::post('/frontoffice/saveReport/{visitNumber}','ReportController@saveReport
 Route::get('/concluedReport','ReportController@concludeReport');
 Route::get('/frontoffice/reports','ReportController@reportList');
 Route::get('/frontoffice/reportShow/{idReport}','ReportController@reportShow');
+
+//routes Registos
+Route::get('/frontoffice/insertProductConformities', 'RecordsController@insertConformities');
+Route::post('/frontoffice/saveOilRecords', 'RecordsController@saveOilRecords');
+Route::get('/frontoffice/oilRecords','RecordsController@insertOilRecords');
+
 
 //estatisticas route
 Route::get('/frontoffice/statistics','ReportController@reportStatistics');
@@ -169,6 +175,7 @@ Route::group(['middleware' => ['backoffice']], function () {
     Route::get('/messages/{id}', 'ProductController@messages');
     Route::post('/messages/new', 'ProductController@newMessage');
     Route::post('/messages/newmassmessage', 'ProductController@newMassMessage');
+
 
 });
 

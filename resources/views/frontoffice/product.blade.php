@@ -1,4 +1,5 @@
 @extends('layouts.frontoffice')
+@extends('layouts.frontoffice')
 
 @section('styles')
 <!-- Custom CSS -->
@@ -166,11 +167,7 @@
                     removeFavourite.style.display = 'none';
                     addFavourite.style.display = 'block';
                 }
-
             });
-
         });
-
-
     });
 </script>

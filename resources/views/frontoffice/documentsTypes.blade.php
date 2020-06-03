@@ -44,6 +44,16 @@
                     </div>
                 </a>
             @endforeach
+            @if($super==='Registos')
+                    <a class="category {{ $super }}" href="/frontoffice/oilRecords">
+                        <div class="category-body">
+                            <img src="/img/logo2white.png" class="img-responsive"/>
+                        </div>
+                        <div class="category-footer">
+                            REGISTOS DE QUALIDADE DO ÓLEO
+                        </div>
+                    </a>
+                @endif
                 @if($super === 'HACCP')
                 <a class="category {{ $super }}" href="/frontoffice/reports">
                     <div class="category-body">
@@ -66,9 +76,9 @@
                     </div>
                 </a>
                 @if($showSections==1)
-                    <a class="category {{ $super }}" href="/frontoffice/personlizeSection">
+                    <a class="category {{ $super }}" href="/frontoffice/personalizeSection">
                 @else
-                    <a class="category {{ $super }}" href="/frontoffice/personlizeSection" style="display:none">
+                    <a class="category {{ $super }}" href="/frontoffice/personalizeSection" style="display:none">
                 @endif
                     <div class="category-body">
                         <img src="/img/logo2white.png" class="img-responsive"/>

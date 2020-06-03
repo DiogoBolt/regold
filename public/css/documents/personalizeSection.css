@@ -264,6 +264,16 @@ h1.title {
   margin-bottom: 5px;
 }
 
+.btn-del{
+  margin:0 auto;
+  display:block;
+}
+
+#btn-success{
+  margin:0 auto;
+  display:block;
+}
+
 #btnAddSections{
   color: black;
   font-style: bold;

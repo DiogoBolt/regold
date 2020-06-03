@@ -439,12 +439,13 @@ class ClientController extends Controller
         $establisment->transport_note = $inputs['transport_note'];
         $establisment->save();
 
-        /*$qtd = Section::where('activityClientId',$establisment->activity)->count();
+        $qtd = Section::where('activityClientId',$establisment->activity)->count();
 
         $ControlCustomizationClient = new ControlCustomizationClients;
         $ControlCustomizationClient->idClient=$establisment->id;
 
         if($qtd == 1){
+
             $clientSection=new ClientSection;
             $clientSection->id_client=$establisment->id;
 
@@ -453,12 +454,14 @@ class ClientController extends Controller
             $clientSection->designation=$section->name;
 
             $clientSection->save();
-     
+
+
+
             $ControlCustomizationClient->personalizeSections=1;
             $ControlCustomizationClient->save();
         }else{
             $ControlCustomizationClient->save();
-        }*/
+        }
 
         //melhorar isto
         if (array_key_exists('serviceType1', $inputs)) {

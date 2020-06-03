@@ -45,11 +45,24 @@
         <option>Total</option>
         <option>Geral</option>
         <option>Talho</option>
+        <option>Charcutaria</option>
+        <option>Peixaria</option>
+        <option>Frutas e Legumes</option>
+        <option>Cafetaria</option>
+        <option>Restauração</option>
+        <option>Take-Away</option>
+        <option>Padaria e Pastelaria</option>
     </select>
-     <div id="chart"></div>
+
+     <div id="chart">
+         @foreach($reports as $report)
+             {{$report->created_at->format('d-m-y')}}
+         @endforeach
+     </div>
+
 
      <script>
-         changeChart(1);
+        changeChart(1);
      </script>
 @endsection
 

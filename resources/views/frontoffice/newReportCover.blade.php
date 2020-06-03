@@ -37,7 +37,7 @@
         <span class="back-btn__back"><strong>Home</strong></span>
     </a>
     
-    <h1 class="title">Novo Relatório</h1>
+    <h1 class="title">Auditoria de Segurança Alimentar</h1>
 
     <div class="divReportInfo">
         <div>
@@ -45,8 +45,13 @@
             <label value="{{$establishName->id}}"> {{$establishName->name}} </label>
         </div>
 
+        <div>
+            <label class="lblBold">Área de Atividade: </label>
+            <label value="{{$establishName->id}}"> {{$establishName->activity}} </label>
+        </div>
+
         <div >
-            <label class="lblBold">Técnico(a) de HACCP: </label>
+            <label class="lblBold">Auditor: </label>
             <label  value="{{$technicalInfo->id}}"> {{$technicalInfo->name}} </label>
         </div>
 
@@ -56,7 +61,7 @@
         </div>
 
         <div>
-            <label class="lblBold"> Número de Visita: </label>
+            <label class="lblBold"> Relatório Nº: </label>
             <label id="visitNumber"> {{$visitNumber}} </label>
         </div>
 

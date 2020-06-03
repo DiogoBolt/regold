@@ -74,14 +74,14 @@
                             @endforeach
                             @endif
                         @endforeach
-
                     </table>
                 </div>
             </div>
         </div>
     </div>
 @endsection
-<script language="javascript">
+
+<script >
     setTimeout(function(){
         window.location.reload(1);
     }, 20000);

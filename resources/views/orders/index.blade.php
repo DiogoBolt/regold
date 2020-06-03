@@ -104,7 +104,6 @@
                                 <td><a href="/orders/{{$order->id}}">Detalhes</a></td>
 
 
-
                                 <td><a href="/orders/process/{{$order->id}}" class="btn btn-process">
                                     <strong>Processar</strong>
                                 </a></td>
@@ -116,7 +115,6 @@
                                 </td>
                             </tr>
 
-                        
                     @endforeach
 
                 </table>
@@ -128,6 +126,7 @@
 </div>
 
 @endsection
+
 
 <script>
 

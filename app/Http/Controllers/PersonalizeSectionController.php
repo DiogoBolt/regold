@@ -111,6 +111,7 @@ class PersonalizeSectionController extends Controller
         
         foreach($sectionsClient as $sectionClient){
             $exist=false;
+
             foreach($sections as $section){
                 if($sectionClient->id == $section->idClientSection){
                    $exist=true;
@@ -151,7 +152,7 @@ class PersonalizeSectionController extends Controller
         $auxClientId = Session::get('clientImpersonatedId');
 
         $clientSections=ClientSection::where('id_client',$auxClientId)
-        ->where('active',1)
+        /*->where('active',1)*/ //luiiiiiiiiiiiiisssssssssss
         ->select([
             'id',
             'id_section',

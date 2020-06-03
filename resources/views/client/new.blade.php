@@ -32,7 +32,7 @@
                                 <div class="form-group">
                                         <input type="radio" name="sex" value="M" checked >Sr
                                         <input type="radio" name="sex" value="F">Sra
-                         d       </div>
+                               </div>
                             </div>   
                             <div class="col-sm-6">
                                 <div class="form-group">

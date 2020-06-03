@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class AreaSectionClient extends Model
+class NewProductRecords extends Model
 {
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $table = '_area_section_client';
+    protected $table = 'new_product_records';
 
     /**
      * The attributes that should be hidden for arrays.

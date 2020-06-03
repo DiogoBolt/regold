@@ -18,7 +18,7 @@
                         </div>
 
                          <div style="text-align: center; margin-bottom: 20px;">
-                            <img src="\img\regolfoodSmall.png" style="width=100px;">
+                            <img src="\img\regolfoodSmall.png" style="width:100px">
                         </div>
 
                         <h1 class="title">Relatório</h1>
@@ -30,7 +30,7 @@
                                     <label> {{$report->clientName}} </label>
                                 </div>
                                 <div >
-                                    <label class="lblBold">Técnico(a) de HACCP: </label>
+                                    <label class="lblBold">Auditor: </label>
                                     <label > {{$report->technicalName}} </label>
                                 </div>
                                 <div>
@@ -109,9 +109,9 @@
                                                     <td> 
                                                         <div class="divSeverity">
                                                             <div class="range-slider">
-                                                                <input class="range-slider__range" type="range" value="{{$rule->severityValue}}" min="1" max="5" disabled>
+                                                                <input class="range-slider__range" type="range" value="{{$rule->severityAnswer}}" min="1" max="5" disabled>
                                                             </div>
-                                                            <label class="lblRangeValue">{{$rule->severityValue}}</label>
+                                                            <label class="lblRangeValue">{{$rule->severityAnswer}}</label>
                                                         </div>
                                                         <label class="lblSeverityStatus">{{$rule->severityText}}</label>
                                                     </td>

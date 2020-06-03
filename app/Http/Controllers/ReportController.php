@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+
+
 use App\Callback;
 use App\Cart;
 use App\Category;
@@ -75,13 +77,14 @@ class ReportController extends Controller
         if(isset($report)){
 
             $establishName=Customer::where('id',$report->idClient)
-            ->select(['name',])
+            ->select(['name','activity'])
             ->first();
 
             $technicalInfo = User::where('userTypeID',$report->id_tecnichal)
             ->where('userType',2)
             ->select(['id','name','userTypeID'])
             ->first();
+
 
             $visitNumber = $report->numberVisit;
 
@@ -99,7 +102,7 @@ class ReportController extends Controller
             }
         }else{
             $establishName=Customer::where('id',$auxClientId)
-            ->select(['name',])
+            ->select(['name','activity'])
             ->first();
 
             $technicalInfo = User::where('id',$auxTechnical)
@@ -127,7 +130,10 @@ class ReportController extends Controller
     }
 
     public function getRules($id){
+
         $auxClientId = Session::get('clientImpersonatedId');
+
+        $x=0;
 
         //verificar se é o primeiro relatorio caso seja não há reincidencias
         if(Session::get('lastReportId')==null){
@@ -140,17 +146,16 @@ class ReportController extends Controller
             $section = new ClientSection;
             $section->id = 0;
             $section->id_section= 0;
-            $section->designation= "Geral";
+            $section->designation= "PRÉ-REQUISITOS GERAIS DO ESTABELECIMENTO";
         }else{
             $section=ClientSection::where('id',$id)
             ->select(['id','id_section','designation'])
             ->first();
         }
-        
+
         $rules = RulesList::where('idSection',$section->id_section)->get();
-        
         $answered=false;
-        
+
         if(Session::get('sectionsReport') != null){
             $sectionsReport = Session::get('sectionsReport');
             foreach($sectionsReport as $sectionReport){
@@ -278,7 +283,7 @@ class ReportController extends Controller
                             $rules[$i]->answer=$rulesLastReportAnswers[$indexExistLastReport]->answer;
                         }
                          
-                        $rules[$i]->severityValue=$rulesLastReportAnswers[$indexExistLastReport]->severityValue;
+                        $rules[$i]->severityValue=$rulesLastReportAnswers[$indexExistLastReport]->severityAnswer;
 
                         if($rules[$i]->severityValue==1 || $rules[$i]->severityValue==2 ){
                             $rules[$i]->severityText="Não Crítico";
@@ -318,7 +323,7 @@ class ReportController extends Controller
             }
         }
         //dd($showColumnRecidivist);
-        return view('frontoffice.newReportRules',compact('rules','section','showTableCorrective','reportSectionObs','showColumnRecidivist'));
+        return view('frontoffice.newReportRules',compact('rules','x','section','showTableCorrective','reportSectionObs','showColumnRecidivist'));
     }
 
     public function getClientSection(){
@@ -326,7 +331,7 @@ class ReportController extends Controller
         $auxClientId = Session::get('clientImpersonatedId');
 
         $clientSections=ClientSection::where('id_client',$auxClientId)
-        ->where('active',1)
+        /*->where('active',1)*/ //luissssssssssss
         ->select([
             'id',
             'id_section',
@@ -336,7 +341,7 @@ class ReportController extends Controller
         $geralClientSection=New ClientSection;
         $geralClientSection->id=0;
         $geralClientSection->id_section=0;
-        $geralClientSection->designation="Geral";
+        $geralClientSection->designation="PRÉ-REQUISITOS GERAIS DO ESTABELECIMENTO";
         
         $clientSections->prepend($geralClientSection);
 
@@ -380,6 +385,8 @@ class ReportController extends Controller
     }
 
     public function saveAnswers(Request $request){
+
+
         $inputs = $request->all();
         $answers = json_decode($inputs['answers']);
         $obs = json_decode($inputs['obs']);
@@ -389,6 +396,7 @@ class ReportController extends Controller
         $arrayAuxSection=Session::get('sectionsReport');
 
         if($arrayAuxSection != null){
+
             if(in_array($idSection,$arrayAuxSection)){
                 foreach($answers as $answer){
 
@@ -410,14 +418,16 @@ class ReportController extends Controller
                         $change2=true;
                     }
 
-                    if(!($rulesAnswerReport->severityValue == $answer->severityValue)){
-                        $rulesAnswerReport->severityValue = $answer->severityValue;
+                    if(!($rulesAnswerReport->severityAnswer == $answer->severityValue)){
+                        $rulesAnswerReport->severityAnswer = $answer->severityValue;
                         $change3=true;
                     }
         
                     if($change1 || $change2 || $change3){
+
                        $rulesAnswerReport->save();
                     }
+
                 }
 
             //obs
@@ -462,7 +472,7 @@ class ReportController extends Controller
                         $rulesAnswerReport->idRule=$answer->idRule;
                         $rulesAnswerReport->answer=$answer->resp;
                         $rulesAnswerReport->corrective=$answer->corrective;
-                        $rulesAnswerReport->severityValue=$answer->severityValue;
+                        $rulesAnswerReport->severityAnswer=$answer->severityValue;
                         $rulesAnswerReport->idClientSection=$idSection;
                         $rulesAnswerReport->save();
                     }
@@ -487,7 +497,7 @@ class ReportController extends Controller
                     $rulesAnswerReport->idRule=$answer->idRule;
                     $rulesAnswerReport->answer=$answer->resp;
                     $rulesAnswerReport->corrective=$answer->corrective;
-                    $rulesAnswerReport->severityValue=$answer->severityValue;
+                    $rulesAnswerReport->severityAnswer=$answer->severityValue;
                     $rulesAnswerReport->idClientSection=$idSection;
                     $rulesAnswerReport->save();
                 }
@@ -554,7 +564,7 @@ class ReportController extends Controller
 
     public function reportShow($idReport){
         $auxClientId = Session::get('clientImpersonatedId');
-        
+
         $report = Report::where('id',$idReport)
         ->where('idClient',$auxClientId)->first();
 
@@ -609,7 +619,7 @@ class ReportController extends Controller
         $geralClientSection=New ClientSection;
         $geralClientSection->id=0;
         $geralClientSection->id_section=0;
-        $geralClientSection->designation="Geral";
+        $geralClientSection->designation="PRÉ-REQUISITOS GERAIS DO ESTABELECIMENTO";
 
         array_unshift($arraySections,$geralClientSection);
 
@@ -684,7 +694,6 @@ class ReportController extends Controller
                         $totalnAplicavel++;
                     }
                 }
-                
             }
             $totalRules == 0 ? $auxPerConf=0 :  $auxPerConf=intval(round(($totalConforme*100)/$totalRules));
 
@@ -696,7 +705,6 @@ class ReportController extends Controller
             $section->nConforme=$auxPerNCont;
             $section->nApply=$auxPerNApply;
         }
-
 
         //estatisticas geral e por a mensagem de severidade 
         $totalRulesGeral=0;
@@ -736,7 +744,14 @@ class ReportController extends Controller
     }
 
     public function reportStatistics(){
-        return view('frontoffice.reportStatistics');
-    } 
-        
+
+        $auxClientId = Session::get('clientImpersonatedId');
+
+        $reports=Report::where('idClient',$auxClientId)
+            ->where('concluded',1)
+            ->select('created_at')
+            ->get();
+
+        return view('frontoffice.reportStatistics',compact('reports'));
+    }
 }

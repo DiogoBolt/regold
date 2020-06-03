@@ -315,7 +315,7 @@ function continueAnswerReport(){
             url: "/frontoffice/saveAnswers",
             data:{answers:answersJson, obs:obs, idSection:idSection}
         }).then(
-            setTimeout(function(){  
+            setTimeout(function(){
                 window.location.replace('/frontoffice/newReportSections')
             }, 500)
         );
@@ -428,62 +428,61 @@ function rangeInputValue(element){
     }else if(rangeVal>=5){
         lbl.innerHTML="Crítico";
     }
-
 }
 
 function changeChart(t){
-    if(t==1){
+
+    if(t===1){
         array1= [50, 55, 41, 67];
         array2= [90, 55, 41, 67];
     }else{
         array1= [50, 55, 41, 67];
         array2= [20, 55, 41, 67];
     }
-    //alert("lalapapa");
-    array1= [50, 55, 41, 67];
-    var options = {
-        series: [{
-        name: 'Conforme',
-        data: array1,
-      }, {
-        name: 'Não Conforme',
-        data: array2,
-      }, {
-        name: 'Não Aplicavel',
-        data: array1,
-      }],
-        chart: {
-        type: 'bar',
-        height: 350,
-        stacked: true,
-        stackType: '100%'
-      },
-      responsive: [{
-        breakpoint: 480,
-        options: {
-          legend: {
-            position: 'bottom',
-            offsetX: -10,
-            offsetY: 0
-          }
-        }
-      }],
-      xaxis: {
-        categories: ['Report 2001/01/01', 'Report 2001/01/01',
-         'Report 2001/01/01', 'Report 2001/01/01'
-        ],
-      },
-      fill: {
-        opacity: 1
-      },
-      colors:['#00FF00', '#ff0000', '#ffff00'],
-      legend: {
-        position: 'right',
-        offsetX: 0,
-        offsetY: 50
-      },
-      };
 
-      var chart = new ApexCharts(document.getElementById("chart"), options);
-      chart.render();
+    array1= [50, 55, 41, 67];
+
+    var options = {
+
+        series: [{
+            name: 'Conforme',
+            data: array1,
+        }, {
+            name: 'Não Conforme',
+            data: array2,
+        }, {
+            name: 'Não Aplicavel',
+            data: array1,
+        }],
+        chart: {
+            type: 'bar',
+            height: 350,
+            stacked: true,
+            stackType: '100%'
+        },
+        responsive: [{
+            breakpoint: 480,
+            options: {
+                legend: {
+                    position: 'bottom',
+                    offsetX: -10,
+                    offsetY: 0
+                }
+            }
+        }],
+        xaxis: {
+            categories:['categories']
+        },
+        fill: {
+            opacity: 1
+        },
+        colors:['#00FF00', '#ff0000', '#ffff00'],
+        legend: {
+            position: 'right',
+            offsetX: 0,
+            offsetY: 50
+        },
+    };
+    var chart = new ApexCharts(document.getElementById("chart"), options);
+    chart.render();
 }
