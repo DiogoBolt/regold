@@ -93,6 +93,7 @@ Route::get('/frontoffice/reportShow/{idReport}','ReportController@reportShow');
 Route::get('/frontoffice/insertProductConformities', 'RecordsController@insertConformities');
 Route::post('/frontoffice/saveOilRecords', 'RecordsController@saveOilRecords');
 Route::get('/frontoffice/oilRecords','RecordsController@insertOilRecords');
+Route::get('/frontoffice/records/temperatures','RecordsController@getTemperaturesRecords');
 
 
 //estatisticas route
