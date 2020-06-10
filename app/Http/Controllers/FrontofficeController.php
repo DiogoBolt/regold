@@ -182,16 +182,9 @@ class FrontofficeController extends Controller
             $receipts = Receipt::whereIN('id',$ids)->get();
         }
 
-        if($type==28)
+        if($type==26)
         {
-            //registo entrada produto
-            /*$inputs= $request->all();
-
-            $new_product_records=new NewProductRecords();
-
-           $new_product_records->report_date=$inputs['report_date'];
-           $new_product_records->product_name=$inputs['product_name'];
-           $new_product_records->provider=$inputs['provider'];*/
+           return redirect('/frontoffice/records/temperatures');
 
         }
 

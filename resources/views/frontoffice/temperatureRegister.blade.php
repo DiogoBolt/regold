@@ -30,120 +30,66 @@
     <div class="container">
         <div class="register-info">
             <p> registos de temperatura </p>
-            <p> 24/10/2020 </p>
+            <p> {{$today}} </p>
         </div>
+
+
 
         <div class="register-container">
             <!-- meter class correspondente
                 refrigeração -> cooling
                  congelação -> freezing
              -->
+
+            @foreach($clientThermos as $thermo)
+                @if($thermo->type== 1)
             <div class="register-arc cooling">
                 <div class="register-arc__info">
                     <!-- preencher estes dados com vars -->
                     <p>arca de refrigeração</p>
-                    <h1>Nº 1</h1>
+                    <h1>{{$thermo->id}}</h1>
                 </div>
                 <div class="register-arc__data">
-                    <span>intervalo (0ºC a 5ºC)</span>
+                    <span>{{$thermo->fridgeType->min_temp}}º/c até {{$thermo->fridgeType->max_temp}}º/c</span>
                     <div class="register-arc__data_temps">
                         <div>
-                            <h3 class="temperature normal">5º</h3>
+                            <h3 class="temperature normal">{{$thermo->thermo->temperature}}</h3>
                             <p>manhã</p>
                         </div>
                         <div>
-                            <h3 class="temperature normal">4º</h3>
+                            <h3 class="temperature normal">{{$thermo->thermo->temperature}}</h3>
                             <p>tarde</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="register-arc cooling">
-                <div class="register-arc__info">
-                    <!-- preencher estes dados com vars -->
-                    <p>arca de refrigeração</p>
-                    <h1>Nº 2</h1>
-                </div>
-                <div class="register-arc__data">
-                    <span>intervalo (0ºC a 5ºC)</span>
-                    <div class="register-arc__data_temps">
-                        <div>
-                            <h3 class="temperature medium">6º</h3>
-                            <p>manhã</p>
-                        </div>
-                        <div>
-                            <h3 class="temperature high">9º</h3>
-                            <p>tarde</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="register-arc cooling">
-                <div class="register-arc__info">
-                    <!-- preencher estes dados com vars -->
-                    <p>arca de refrigeração</p>
-                    <h1>Nº 3</h1>
-                </div>
-                <div class="register-arc__data">
-                    <span>intervalo (0ºC a 5ºC)</span>
-                    <div class="register-arc__data_temps">
-                        <div>
-                            <h3 class="temperature normal">3º</h3>
-                            <p>manhã</p>
-                        </div>
-                        <div>
-                            <h3 class="temperature">
-                                <img src="/img/question_mark.png"/>
-                            </h3>
-                            <p>tarde</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @else
             <div class="register-arc freezing">
                 <div class="register-arc__info">
                     <!-- preencher estes dados com vars -->
                     <p>arca de congelação</p>
-                    <h1>Nº 1</h1>
+                    <h1>{{$thermo->id}}</h1>
                 </div>
                 <div class="register-arc__data">
-                    <span>intervalo (-18ºC a 0ºC)</span>
-                    <div class="register-arc__data_temps">
-                        <div>
-                            <h3 class="temperature normal">-18º</h3>
-                            <p>manhã</p>
-                        </div>
-                        <div>
-                            <h3 class="temperature normal">-16º</h3>
-                            <p>tarde</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="register-arc freezing">
-                <div class="register-arc__info">
-                    <!-- preencher estes dados com vars -->
-                    <p>arca de congelação</p>
-                    <h1>Nº 2</h1>
-                </div>
-                <div class="register-arc__data">
-                    <span>intervalo (-18ºC a 0ºC)</span>
+                    <span>{{$thermo->fridgeType->min_temp}}º/c até {{$thermo->fridgeType->max_temp}}º/c</span>
                     <div class="register-arc__data_temps">
                         <div>
                             <h3 class="temperature">
-                                <img src="/img/question_mark.png"/>
+                                {{$thermo->thermo->temperature}}
                             </h3>
                             <p>manhã</p>
                         </div>
                         <div>
                             <h3 class="temperature">
-                                <img src="/img/question_mark.png"/>
+                                {{$thermo->thermo->temperature}}
                             </h3>
                             <p>tarde</p>
                         </div>
                     </div>
                 </div>
             </div>
+                @endif
+                @endforeach
         </div>
 
         <button class="btn btn-history">histórico</button>

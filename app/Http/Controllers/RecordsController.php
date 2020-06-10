@@ -1,7 +1,11 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\ClientThermo;
+use App\FridgeType;
 use App\OilRecord;
+use App\Thermo;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -56,6 +60,19 @@ class RecordsController extends Controller
 
     public function getTemperaturesRecords()
     {
-        return view('frontoffice.temperatureRegister');
+        $user = Auth::user();
+
+        $clientThermos = ClientThermo::where('user_id',$user->id)->get();
+
+
+        foreach($clientThermos as $clientthermo)
+        {
+            $clientthermo->thermo = Thermo::where('imei',$clientthermo->imei)->get()->last();
+            $clientthermo->fridgeType = FridgeType::where('id',$clientthermo->type)->first();
+        }
+        
+        $today = Carbon::now()->format('Y-m-d');
+
+        return view('frontoffice.temperatureRegister',compact('today','clientThermos'));
     }
 }
