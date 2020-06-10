@@ -55,20 +55,19 @@ class RecordsController extends Controller
 
         $oil_records->save();
 
-        return redirect('/frontoffice/documents/Registos',compact('oil_records'));
+        return redirect('/frontoffice/documents/registos',compact('oil_records'));
     }
 
     public function getTemperaturesRecords()
     {
         $user = Auth::user();
 
-        $clientThermos = ClientThermo::where('user_id',$user->id)->get();
-
+        $clientThermos = ClientThermo::query()->where('user_id', $user->id)->get();
 
         foreach($clientThermos as $clientthermo)
         {
-            $clientthermo->thermo = Thermo::where('imei',$clientthermo->imei)->get()->last();
-            $clientthermo->fridgeType = FridgeType::where('id',$clientthermo->type)->first();
+            $clientthermo->thermo = Thermo::query()->where('imei',$clientthermo->imei)->get()->last();
+            $clientthermo->fridgeType = FridgeType::query()->where('id',$clientthermo->type)->first();
         }
         
         $today = Carbon::now()->format('Y-m-d');

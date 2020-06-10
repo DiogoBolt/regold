@@ -109,6 +109,42 @@
     width: 100%;
 }
 
+/* File Link */
+
+.file-link {
+    display: inline-block;
+    color: var(--main-color);
+    padding: 3px 12px;
+    text-align: center;
+    border: 2px solid var(--main-color);
+    border-radius: 15px;
+}
+
+.file-link:hover {
+    text-decoration: none;
+    color: #fff;
+    background-color: var(--main-color);
+}
+
+#print-link, #filter-link {
+    display: block;
+    margin-bottom: 20px;
+    padding: 6px 12px;
+}
+
+/* Filter */
+
+#collapse-thermo .card-body {
+    border: 2px solid var(--main-color);
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+#collapse-thermo .card-body .form-control{
+    margin-bottom: 10px;
+}
+
+
 @media (max-width: 480px) {
     .register-container {
         grid-template-columns: repeat(2, minmax(0px, 1fr));
