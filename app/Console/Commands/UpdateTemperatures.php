@@ -33,13 +33,13 @@ class UpdateTemperatures extends Command
 
     private function getThermosRecords()
     {
-        $now = Carbon::now('Europe/Lisbon');
+        $now = Carbon::now();
         $this->isMorning = $now->format('H') < 12;
 
         $start = $this->isMorning ? $now->copy()->startOfDay() : $now->copy()->startOfDay()->addHours(12);
         $end = $this->isMorning ? $now->hour(11)->minute(59)->second(59) : $now->endOfDay();
 
-        $thermos = Thermo::query()->select([
+        return Thermo::query()->select([
             'client_id',
             'thermo_type',
             DB::raw('AVG(cast(temperature AS DECIMAL(4,2))) as average'),
@@ -49,10 +49,7 @@ class UpdateTemperatures extends Command
             ->where(function ($query) use ($start, $end) {
                 $query->whereBetween('last_read', [$start, $end]);
             })
-            ->get()
-            ->keyBy('imei');
-
-        return $thermos;
+            ->get();
     }
 
     private function saveAverageRecords($thermos)
