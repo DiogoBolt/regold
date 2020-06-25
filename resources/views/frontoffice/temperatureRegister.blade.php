@@ -35,14 +35,21 @@
             <p> {{$today}} </p>
         </div>
 
-        <a class="file-link"  id="filter-link" data-toggle="collapse" href="#collapse-thermo" role="button" aria-expanded="false" aria-controls="collapse-thermo">
+        <a class="file-link" id="filter-link" data-toggle="collapse" href="#collapse-thermo" role="button"
+           aria-expanded="false" aria-controls="collapse-thermo">
             <strong>Novo Termometro</strong>
         </a>
 
         <div class="collapse" id="collapse-thermo">
             <div class="card-body">
                 <form method="post" action="/thermo/attachthermo">
-                    Imei : <input name="imei" class="form-control">
+                    Tipo :
+                    <select name="type" class="form-control" required>
+                        <option value="" disabled selected>Seleccione tipo</option>
+                        <option value="1">Refrigeração</option>
+                        <option value="2">Congelação</option>
+                    </select>
+                    Imei : <input name="imei" class="form-control" required>
                     {{ csrf_field() }}
                     <button class="btn btn-add">Adicionar</button>
                 </form>
