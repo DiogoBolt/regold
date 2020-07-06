@@ -93,8 +93,9 @@ Route::get('/frontoffice/reportShow/{idReport}','ReportController@reportShow');
 Route::get('/frontoffice/insertProductConformities', 'RecordsController@insertConformities');
 Route::post('/frontoffice/saveOilRecords', 'RecordsController@saveOilRecords');
 Route::get('/frontoffice/oilRecords','RecordsController@insertOilRecords');
-Route::get('/frontoffice/records/temperatures','RecordsController@getTemperaturesRecords');
-
+Route::get('/frontoffice/records/temperatures','RecordsController@getTemperatureRecords');
+Route::get('/frontoffice/records/temperatures/history','RecordsController@getTemperatureRecordsHistory');
+Route::get('/frontoffice/records/temperatures/history/get','RecordsController@getHistoryByMonth');
 
 //estatisticas route
 Route::get('/frontoffice/statistics','ReportController@reportStatistics');
@@ -180,6 +181,10 @@ Route::group(['middleware' => ['backoffice']], function () {
     Route::post('/messages/newmassmessage', 'ProductController@newMassMessage');
 
 
+    // Apaga isto depois Diogo
+    Route::get('runcron', function() {
+        \Illuminate\Support\Facades\Artisan::call('update:temperatures');
+    });
 });
 
 

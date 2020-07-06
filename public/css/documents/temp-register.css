@@ -107,6 +107,13 @@
     font-weight: bold;
     text-transform: uppercase;
     width: 100%;
+    background-color: var(--main-color);
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.margin-top {
+    margin-top: 20px;
 }
 
 /* File Link */
@@ -143,6 +150,8 @@
 #collapse-thermo .card-body .form-control{
     margin-bottom: 10px;
 }
+
+/* HISTORY */
 
 
 @media (max-width: 480px) {

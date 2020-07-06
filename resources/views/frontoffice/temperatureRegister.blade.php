@@ -57,10 +57,6 @@
         </div>
 
         <div class="register-container">
-            <!-- meter class correspondente
-                refrigeração -> cooling
-                 congelação -> freezing
-             -->
             @foreach($clientThermos as $thermo)
                 @if($thermo->type === 1)
                     <div class="register-arc cooling">
@@ -109,6 +105,6 @@
                 @endif
             @endforeach
         </div>
-        <button class="btn btn-history">histórico</button>
+        <a class="btn btn-history" href="/frontoffice/records/temperatures/history">histórico</a>
     </div>
 @endsection
