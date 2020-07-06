@@ -182,7 +182,7 @@ Route::group(['middleware' => ['backoffice']], function () {
 
 
     // Apaga isto depois Diogo
-    Route::get('runcron', function() {
+    Route::get('/runcron', function() {
         \Illuminate\Support\Facades\Artisan::call('update:temperatures');
     });
 });
