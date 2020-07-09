@@ -29,7 +29,7 @@ class alertTemperatures extends Command
      */
     public function handle()
     {
-        $thermos = Thermo::query()->groupBy('imei')->get();
+        $thermos = Thermo::query()->where('created_at','>',Carbon::now()->subHours(7))->groupBy('imei')->get();
 
         foreach($thermos as $thermo)
         {
