@@ -55,8 +55,9 @@
                 </a>
                 <div class="desc">ENCOMENDAS</div>
             </div>
+
             <div class="box">
-                <a title="Documentos Registos" href="/frontoffice/documents/Registos"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon2.png"></a>
+                <a title="Documentos Registos" href="/frontoffice/documents/Registos"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon8.png"></a>
                 <div class="desc">REGISTOS</div>
                 @if($receiptsReg) <span class="notification">{{$receiptsReg}}</span> @endif
             </div>

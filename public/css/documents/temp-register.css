@@ -1,0 +1,173 @@
+.register-info {
+    display: flex;
+    justify-content: space-between;
+    text-transform: uppercase;
+}
+
+.register-info p:first-child {
+    color: var(--main-color);
+}
+
+.register-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-column-gap: 15px;
+    grid-row-gap: 15px;
+    grid-auto-rows: 1fr;
+    margin-bottom: 15px;
+}
+
+.register-container::before {
+    content: '';
+    width: 0;
+    padding-bottom: 100%;
+    grid-row: 1 / 1;
+    grid-column: 1 / 1;
+}
+
+.register-container > *:first-child {
+    grid-row: 1 / 1;
+    grid-column: 1 / 1;
+}
+
+.register-arc__info, .register-arc__data {
+    height: 50%;
+    text-transform: uppercase;
+    padding: 5px;
+    text-align: center;
+    font-weight: bolder;
+}
+
+.register-arc__info p, .register-arc__data p {
+    color: #fff;
+}
+
+.register-arc__data span {
+    color: #000;
+}
+
+.register-arc__info h1, .register-arc__data h1 {
+    font-size: 40px;
+    color: inherit;
+}
+
+.register-arc__info {
+    background-color: #000;
+    border-bottom: 2px solid #fff;
+}
+
+.register-arc__data_temps {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 0 15px;
+    grid-column-gap: 45px;
+}
+
+.temperature {
+    border-bottom: 1px solid #fff;
+    font-weight: bolder;
+    position: relative;
+    height: 28px;
+}
+
+.temperature img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 28px;
+    height: 28px;
+    margin-top: -14px;
+    margin-left: -14px;
+}
+
+.normal {
+    color: var(--main-color);
+}
+
+.high {
+    color: #ff0100;
+}
+
+.medium {
+    color: #fcff01;
+}
+
+.cooling {
+    background-color: #1aa3ff;
+    color: #1aa3ff;
+}
+
+.freezing {
+    background-color: #ff6b31;
+    color: #ff6b31;
+}
+
+.btn-history {
+    border-radius: 0;
+    font-weight: bold;
+    text-transform: uppercase;
+    width: 100%;
+    background-color: var(--main-color);
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.margin-top {
+    margin-top: 20px;
+}
+
+/* File Link */
+
+.file-link {
+    display: inline-block;
+    color: var(--main-color);
+    padding: 3px 12px;
+    text-align: center;
+    border: 2px solid var(--main-color);
+    border-radius: 15px;
+}
+
+.file-link:hover {
+    text-decoration: none;
+    color: #fff;
+    background-color: var(--main-color);
+}
+
+#print-link, #filter-link {
+    display: block;
+    margin-bottom: 20px;
+    padding: 6px 12px;
+}
+
+/* Filter */
+
+#collapse-thermo .card-body {
+    border: 2px solid var(--main-color);
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+#collapse-thermo .card-body .form-control{
+    margin-bottom: 10px;
+}
+
+/* HISTORY */
+
+
+@media (max-width: 480px) {
+    .register-container {
+        grid-template-columns: repeat(2, minmax(0px, 1fr));
+    }
+
+    .register-arc__info p, .register-arc__data p {
+        font-size: 10px;
+    }
+
+    .register-arc__data span {
+        font-size: 10px;
+    }
+
+    .register-arc__data_temps {
+        grid-column-gap: 15px;
+    }
+}
