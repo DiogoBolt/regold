@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 
 class alertTemperatures extends Command
 {
-    protected $signature = 'alert:temperatures';
+    protected $signature = 'alertTemperatures';
     protected $description = 'Temperatures and Alert';
 
 
