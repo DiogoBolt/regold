@@ -39,7 +39,6 @@ class UpdateTemperatures extends Command
         $start = $this->isMorning ? $now->copy()->startOfDay() : $now->copy()->startOfDay()->addHours(12);
         $end = $this->isMorning ? $now->hour(11)->minute(59)->second(59) : $now->endOfDay();
 
-
         return Thermo::query()->select([
             'client_id',
             'thermo_type',
@@ -65,7 +64,11 @@ class UpdateTemperatures extends Command
                 ]
                 , $thermo->toArray()
             );
-            $thermo = Thermo::where('imei',$thermo['imei'])->where('created_at','<',Carbon::now()->subHours(24))->delete();
+
+            $thermo = Thermo::query()
+                ->where('imei', $thermo['imei'])
+                ->where('created_at', '<', Carbon::now()->subHours(24))
+                ->delete();
         }
     }
 }

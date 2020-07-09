@@ -96,6 +96,7 @@ Route::get('/frontoffice/oilRecords','RecordsController@insertOilRecords');
 Route::get('/frontoffice/records/temperatures','RecordsController@getTemperatureRecords');
 Route::get('/frontoffice/records/temperatures/history','RecordsController@getTemperatureRecordsHistory');
 Route::get('/frontoffice/records/temperatures/history/get','RecordsController@getHistoryByMonth');
+Route::post('/frontoffice/records/temperatures/history/comment','RecordsController@saveComment');
 
 //estatisticas route
 Route::get('/frontoffice/statistics','ReportController@reportStatistics');

@@ -33,59 +33,105 @@
     <div class="container">
         <div class="col-xs-12">
             <form method="get" action="javascript:void(0);" id="history-form">
-                <div class="col-sm-5">
-                    Mês :
-                    <select name="month" class="form-control" required>
-                        <option value="" disabled selected>Seleccione Mês</option>
-                        @foreach($months as $idx => $month)
-                            <option value="{{ $idx  }}">
-                                {{ $month }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-sm-5">
-                    Tipo :
-                    <select name="imei" class="form-control" required>
-                        <option value="" disabled selected>Seleccione Tipo</option>
-                        @foreach($clientThermos as $thermo)
-                            <option value="{{ $thermo->imei  }}">
-                                {{ $thermo->id }} | {{ $thermo->type === 1 ? 'Refrigeração' : 'Congelação' }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-sm-2">
-                    <button class="btn btn-add margin-top" type="submit">Mostrar histórico</button>
+                <div class="row">
+                    <div class="col-sm-5">
+                        Mês :
+                        <select name="month" class="form-control" required>
+                            <option value="" disabled selected>Seleccione Mês</option>
+                            @foreach($months as $idx => $month)
+                                <option value="{{ $idx  }}">
+                                    {{ $month }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-sm-5">
+                        Tipo :
+                        <select name="imei" class="form-control" required>
+                            <option value="" disabled selected>Seleccione Tipo</option>
+                            @foreach($clientThermos as $thermo)
+                                <option value="{{ $thermo->imei  }}" data-type="{{ $thermo->type }}">
+                                    {{ $thermo->id }} | {{ $thermo->type === 1 ? 'Refrigeração' : 'Congelação' }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="btn btn-add margin-top" type="submit">Mostrar histórico</button>
+                    </div>
                 </div>
             </form>
         </div>
         <div class="col-xs-12">
-            <div id="results"></div>
-            <div id="results-table" class="hidden">
-                <table>
+            <div id="no-results"></div>
+            <div id="results-table" class="hidden margin-top">
+                <table class="table table-bordered">
+                    <thead>
                     <tr>
                         <th>Dia</th>
-                        <th>Manhã</th>
-                        <th>Tarde</th>
+                        <th>Manhã (ºC)</th>
+                        <th>Tarde (ºC)</th>
                         <th>Obs.</th>
                     </tr>
+                    </thead>
+                    <tbody id="table-body"></tbody>
                 </table>
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="obsModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">x</button>
+                    <h4 class="modal-title">Observações</h4>
+                </div>
+                <div class="modal-body">
+                    Observação:
+                    <textarea id="observation" class="form-control" rows="10" required></textarea>
+                </div>
+                <div class="modal-footer">
+                    <h4 id="update" class="pull-left hidden"></h4>
+                    <button type="button" class="btn btn-add" id="add-obs">
+                        <strong>Adicionar</strong>
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <strong>Cancelar</strong>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const historyForm = document.getElementById('history-form');
-        const resultsDiv = document.getElementById('results');
+        const noResults = document.getElementById('no-results');
         const table = document.getElementById('results-table');
+        const tableBody = document.getElementById('table-body');
+        const update = document.getElementById('update');
+        const addBtn = $('#add-obs');
+        const tempInterval = {
+            1: [0, 5],
+            2: [-18, 0]
+        };
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
         historyForm.addEventListener('submit', event => handleSubmit(event));
 
         function handleSubmit(event) {
             event.preventDefault();
-            resultsDiv.innerHTML = '';
+            noResults.innerHTML = '';
+            tableBody.innerHTML = '';
             table.classList.add('hidden');
 
             let data = {};
@@ -104,25 +150,91 @@
                 type: 'GET',
                 url: '/frontoffice/records/temperatures/history/get',
                 data,
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                 success: function (response) {
                     if (response.length) {
                         buildResponse(response);
                     } else {
-                        resultsDiv.innerHTML = '<h2 class="text-center margin-top">Sem dados para o filtro fornecido.</h2>';
+                        noResults.innerHTML = '<h2 class="text-center margin-top">Sem dados para o filtro fornecido.</h2>';
                     }
                 },
                 error: function () {
-                    resultsDiv.innerHTML = '<h2 class="text-center margin-top">Ocorreu um erro, por favor, tente mais tarde.</h2>';
+                    noResults.innerHTML = '<h2 class="text-center margin-top">Ocorreu um erro, por favor, tente mais tarde.</h2>';
                 }
             });
         }
 
         function buildResponse(response) {
             table.classList.remove('hidden');
-            console.log(response);
 
+            response.forEach(data => {
+                const morningTemp = data.morning_temp ? parseFloat(data.morning_temp).toFixed(2) : 'Sem dados';
+                const afternoonTemp = data.afternoon_temp ? parseFloat(data.afternoon_temp).toFixed(2) : 'Sem dados';
+                const tempCheck = checkIfHigh(morningTemp, afternoonTemp);
+                /* Weird bug happening, had to send each property separately */
+                const btn = `<button class="btn btn-add" data-toggle="modal" data-target="#obsModal" data-obs="${data.observations}" data-id="${data.id}">Observação</button>`;
+
+                tableBody.innerHTML += `
+                    <tr>
+                        <td>${data.day}</td>
+                        <td class="${tempCheck.morningTemp}">${morningTemp}</td>
+                        <td class="${tempCheck.afternoonTemp}">${afternoonTemp}</td>
+                        <td class="text-center">
+                            ${tempCheck.anomaly ? btn : ''}
+                        </td>
+                    </tr>
+                `;
+            });
         }
+
+        function checkIfHigh(morningTemp, afternoonTemp) {
+            const imeiSelect = historyForm.elements.imei;
+            const selectedOptionType = imeiSelect[imeiSelect.selectedIndex].getAttribute('data-type');
+            const morningCheck = morningTemp < tempInterval[selectedOptionType][0] || morningTemp > tempInterval[selectedOptionType][1];
+            const afternoonCheck = afternoonTemp < tempInterval[selectedOptionType][0] || afternoonTemp > tempInterval[selectedOptionType][1];
+            let check = {};
+            check.morningTemp = morningCheck ? 'high' : '';
+            check.afternoonTemp = afternoonCheck ? 'high' : '';
+            check.anomaly = morningCheck || afternoonCheck;
+            return check;
+        }
+
+        $('#obsModal').on('show.bs.modal', function (event) {
+            const item = $(event.relatedTarget);
+            const obs = item.data('obs');
+            const id = item.data('id');
+            $(this).find('#observation').val(`${obs ? obs : ''}`);
+
+            addBtn.on('click', () => saveObservation(id));
+        });
+
+        function saveObservation(id) {
+            const obs = document.getElementById('observation').value;
+            addBtn.addClass('disabled');
+            $.ajax({
+                type: 'POST',
+                url: '/frontoffice/records/temperatures/history/comment',
+                data: {id, obs},
+                success: function (response) {
+                    if (response.success) {
+                        update.innerText = response.success;
+                        update.style.color = 'green';
+                        update.classList.remove('hidden');
+
+                        setTimeout(window.location.reload.bind(window.location), 2000);
+                    } else {
+                        update.innerText = response.error;
+                        update.style.color = 'red';
+                        update.classList.remove('hidden');
+                    }
+                }
+            });
+        }
+
+        $("#obsModal").on("hidden.bs.modal", function () {
+            addBtn.unbind('click');
+            addBtn.removeClass('disabled');
+            update.classList.add('hidden');
+        });
 
     }, false);
 </script>

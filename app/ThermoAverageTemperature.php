@@ -14,7 +14,8 @@ class ThermoAverageTemperature extends Model
         'thermo_type',
         'imei',
         'morning_temp',
-        'afternoon_temp'
+        'afternoon_temp',
+        'observations'
     ];
 
     public static function alias($alias) {

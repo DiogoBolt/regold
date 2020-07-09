@@ -103,10 +103,24 @@ class RecordsController extends Controller
         $imei = $request->get('imei');
 
         return ThermoAverageTemperature::query()->select([
-            'morning_temp', 'afternoon_temp', DB::raw('DAY(updated_at) as day'),
+            'id', 'morning_temp', 'afternoon_temp', DB::raw('DAY(updated_at) as day'), 'observations'
         ])
-            //->where('imei', '=', $imei)
+            ->where('imei', '=', $imei)
             ->whereBetween('updated_at', [$start_month, $end_month])
+            ->orderBy('updated_at', 'asc')
             ->get();
+    }
+
+    public function saveComment(Request $request)
+    {
+        try {
+            $comment = ThermoAverageTemperature::query()->findOrFail($request->get('id'));
+            $comment->observations = $request->get('obs');
+            $comment->save();
+
+            return ['success' => 'Observação guardada com êxito.'];
+        } catch (\Exception $exception) {
+            return ['error' => 'Ocorreu um erro, por favor, tente mais tarde.'];
+        }
     }
 }
