@@ -97,6 +97,7 @@ Route::get('/frontoffice/records/temperatures','RecordsController@getTemperature
 Route::get('/frontoffice/records/temperatures/history','RecordsController@getTemperatureRecordsHistory');
 Route::get('/frontoffice/records/temperatures/history/get','RecordsController@getHistoryByMonth');
 Route::post('/frontoffice/records/temperatures/history/comment','RecordsController@saveComment');
+Route::get('/frontoffice/records/temperatures/history/print','RecordsController@printReport');
 
 //estatisticas route
 Route::get('/frontoffice/statistics','ReportController@reportStatistics');

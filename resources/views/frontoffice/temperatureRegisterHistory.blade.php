@@ -34,7 +34,18 @@
         <div class="col-xs-12">
             <form method="get" action="javascript:void(0);" id="history-form">
                 <div class="row">
-                    <div class="col-sm-5">
+                    <div class="col-sm-2">
+                        Ano :
+                        <select name="year" class="form-control" required>
+                            <option value="" disabled selected>Seleccione Ano</option>
+                            @foreach($years as $year)
+                                <option value="{{ $year->year }}">
+                                    {{ $year->year }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
                         Mês :
                         <select name="month" class="form-control" required>
                             <option value="" disabled selected>Seleccione Mês</option>
@@ -45,7 +56,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-sm-5">
+                    <div class="col-sm-4">
                         Tipo :
                         <select name="imei" class="form-control" required>
                             <option value="" disabled selected>Seleccione Tipo</option>
@@ -56,15 +67,24 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-sm-2">
-                        <button class="btn btn-add margin-top" type="submit">Mostrar histórico</button>
+                    <div class="col-sm-4 text-right">
+                        <div class="col-xs-6">
+                            <button class="btn btn-add margin-top" type="submit" id="submit-btn" form="history-form">
+                                Mostrar histórico
+                            </button>
+                        </div>
+                        <div class="col-xs-6">
+                            <button class="btn btn-add margin-top" type="button" id="print-btn">
+                                Imprimir Relatório
+                            </button>
+                        </div>
                     </div>
                 </div>
             </form>
         </div>
         <div class="col-xs-12">
             <div id="no-results"></div>
-            <div id="results-table" class="hidden margin-top">
+            <div id="results-table" class="hidden margin-top table-responsive">
                 <table class="table table-bordered">
                     <thead>
                     <tr>
@@ -105,6 +125,10 @@
         </div>
     </div>
 
+    <form action="/frontoffice/records/temperatures/history/print" type="POST" id="print-form">
+        <input type="hidden" name="printReport[]" value="" id="print-items"/>
+    </form>
+
 @endsection
 
 <script>
@@ -114,19 +138,22 @@
         const table = document.getElementById('results-table');
         const tableBody = document.getElementById('table-body');
         const update = document.getElementById('update');
+        const printBtn = document.getElementById('print-btn');
         const addBtn = $('#add-obs');
+        let cacheData = [];
         const tempInterval = {
             1: [0, 5],
             2: [-18, 0]
         };
+
+        historyForm.addEventListener('submit', event => handleSubmit(event));
+        printBtn.addEventListener('click', () => printReport(event));
 
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
-        historyForm.addEventListener('submit', event => handleSubmit(event));
 
         function handleSubmit(event) {
             event.preventDefault();
@@ -152,6 +179,8 @@
                 data,
                 success: function (response) {
                     if (response.length) {
+                        data.type = document.getElementsByName('imei')[0].selectedOptions[0].text;
+                        cacheData.push(data, response);
                         buildResponse(response);
                     } else {
                         noResults.innerHTML = '<h2 class="text-center margin-top">Sem dados para o filtro fornecido.</h2>';
@@ -179,7 +208,7 @@
                         <td class="${tempCheck.morningTemp}">${morningTemp}</td>
                         <td class="${tempCheck.afternoonTemp}">${afternoonTemp}</td>
                         <td class="text-center">
-                            ${tempCheck.anomaly ? btn : ''}
+                            <div class="col-sm-9">${data.observations ? data.observations : ''}</div><div class="col-xs-3">${btn}</div>
                         </td>
                     </tr>
                 `;
@@ -194,7 +223,7 @@
             let check = {};
             check.morningTemp = morningCheck ? 'high' : '';
             check.afternoonTemp = afternoonCheck ? 'high' : '';
-            check.anomaly = morningCheck || afternoonCheck;
+
             return check;
         }
 
@@ -220,7 +249,10 @@
                         update.style.color = 'green';
                         update.classList.remove('hidden');
 
-                        setTimeout(window.location.reload.bind(window.location), 2000);
+                        setTimeout(
+                            document.getElementById('submit-btn').click(),
+                            addBtn.removeClass('disabled')
+                            , 2000);
                     } else {
                         update.innerText = response.error;
                         update.style.color = 'red';
@@ -235,6 +267,13 @@
             addBtn.removeClass('disabled');
             update.classList.add('hidden');
         });
+
+        function printReport() {
+            if(cacheData.length > 0) {
+                document.getElementById("print-items").value = JSON.stringify(cacheData);
+                document.getElementById("print-form").submit();
+            }
+        }
 
     }, false);
 </script>

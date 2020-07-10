@@ -57,31 +57,29 @@ class UpdateTemperatures extends Command
     {
         foreach ($thermos as $thermo) {
             $this->isMorning ? $thermo['morning_temp'] = $thermo['average'] : $thermo['afternoon_temp'] = $thermo['average'];
-            $average = ThermoAverageTemperature::where('imei',$thermo['imei'])->orderBy('id','DESC')->first();
-            $client = ClientThermo::where('imei',$thermo['imei'])->first();
-            if(isset($average))
-            {
-               if(Carbon::parse(ThermoAverageTemperature::where('imei',$thermo['imei'])->orderBy('id','DESC')->first()->created_at)->isToday())
-               {
-                   $average->morning_temp = number_format($thermo['morning_temp'],1);
-                   $average->afternoon_temp = number_format($thermo['afternoon_temp'],1);
-                   $average->user_id = $client->user_id;
-                   $average->client_thermo = $client->type;
-                   $average->imei = $thermo['imei'];
-                   $average->save();
-               }else{
-                   $average = new ThermoAverageTemperature;
-                   $average->morning_temp = number_format($thermo['morning_temp'],1);
-                   $average->afternoon_temp = number_format($thermo['afternoon_temp'],1);
-                   $average->user_id = $client->user_id;
-                   $average->client_thermo = $client->type;
-                   $average->imei = $thermo['imei'];
-                   $average->save();
-               }
-            }else{
+            $average = ThermoAverageTemperature::where('imei', $thermo['imei'])->orderBy('id', 'DESC')->first();
+            $client = ClientThermo::where('imei', $thermo['imei'])->first();
+            if (isset($average)) {
+                if (Carbon::parse(ThermoAverageTemperature::where('imei', $thermo['imei'])->orderBy('id', 'DESC')->first()->created_at)->isToday()) {
+                    $average->morning_temp = number_format($thermo['morning_temp'], 1);
+                    $average->afternoon_temp = number_format($thermo['afternoon_temp'], 1);
+                    $average->user_id = $client->user_id;
+                    $average->client_thermo = $client->type;
+                    $average->imei = $thermo['imei'];
+                    $average->save();
+                } else {
+                    $average = new ThermoAverageTemperature;
+                    $average->morning_temp = number_format($thermo['morning_temp'], 1);
+                    $average->afternoon_temp = number_format($thermo['afternoon_temp'], 1);
+                    $average->user_id = $client->user_id;
+                    $average->client_thermo = $client->type;
+                    $average->imei = $thermo['imei'];
+                    $average->save();
+                }
+            } else {
                 $average = new ThermoAverageTemperature;
-                $average->morning_temp = number_format($thermo['morning_temp'],1);
-                $average->afternoon_temp = number_format($thermo['afternoon_temp'],1);
+                $average->morning_temp = number_format($thermo['morning_temp'], 1);
+                $average->afternoon_temp = number_format($thermo['afternoon_temp'], 1);
                 $average->user_id = $client->user_id;
                 $average->client_thermo = $client->type;
                 $average->imei = $thermo['imei'];

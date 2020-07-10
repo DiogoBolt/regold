@@ -92,14 +92,22 @@ class RecordsController extends Controller
             ->groupBy('id')
             ->get();
 
-        return view('frontoffice.temperatureRegisterHistory', compact(['clientThermos', 'months']));
+        $years = ThermoAverageTemperature::query()
+            ->select([
+                DB::raw('YEAR(created_at) as year')
+            ])
+            ->where('user_id', $user->id)
+            ->groupBy('year')
+            ->get();
+
+        return view('frontoffice.temperatureRegisterHistory', compact(['clientThermos', 'years', 'months']));
     }
 
     public function getHistoryByMonth(Request $request)
     {
-        $month = Carbon::create()->month($request->get('month'));
-        $start_month = $month->copy()->startOfMonth();
-        $end_month = $month->copy()->endOfMonth();
+        $date = Carbon::createFromDate($request->get('year'), $request->get('month'));
+        $start_month = $date->copy()->startOfMonth();
+        $end_month = $date->copy()->endOfMonth();
         $imei = $request->get('imei');
 
         return ThermoAverageTemperature::query()->select([
@@ -122,5 +130,11 @@ class RecordsController extends Controller
         } catch (\Exception $exception) {
             return ['error' => 'Ocorreu um erro, por favor, tente mais tarde.'];
         }
+    }
+
+    public function printReport(Request $request)
+    {
+        $print_data = json_decode($request->get('printReport')[0]);
+        return view('frontoffice.printTemperaturesReport')->with(['details' => $print_data[0] , 'data' => $print_data[1]]);
     }
 }
