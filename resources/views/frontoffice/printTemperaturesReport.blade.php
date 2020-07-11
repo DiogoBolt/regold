@@ -12,7 +12,7 @@
                     </div>
                     <div class="col-xs-12">
                             <h2>{{ $details->type . ' ( imei : ' . $details->imei . ' )' }}</h2>
-                            <h3 style="color: red;">Período : {{ $details->month . '/' . $details->year }}</h3>
+                            <h3 style="color: red !important;">Período : {{ $details->month . '/' . $details->year }}</h3>
                     </div>
                     <div class="col-xs-12">
                         <div class="margin-top table-responsive">
@@ -29,8 +29,8 @@
                                     @foreach ($data as $item)
                                         <tr>
                                             <td>{{ $item->day}}</td>
-                                            <td>{{ $item->morning_temp}}</td>
-                                            <td>{{ $item->afternoon_temp}}</td>
+                                            <td style="color:{{$item->tempCheck->morningTemp ? 'red !important' : ''}}">{{ $item->morning_temp}}</td>
+                                            <td style="color:{{$item->tempCheck->afternoonTemp ? 'red !important' : ''}}">{{ $item->afternoon_temp}}</td>
                                             <td class="text-center">
                                                 <div class="col-sm-9">{{ $item->observations ? $item->observations : ''  }}</div>
                                             </td>

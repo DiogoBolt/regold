@@ -180,7 +180,7 @@
                 success: function (response) {
                     if (response.length) {
                         data.type = document.getElementsByName('imei')[0].selectedOptions[0].text;
-                        cacheData.push(data, response);
+                        cacheData.push(data);
                         buildResponse(response);
                     } else {
                         noResults.innerHTML = '<h2 class="text-center margin-top">Sem dados para o filtro fornecido.</h2>';
@@ -198,21 +198,23 @@
             response.forEach(data => {
                 const morningTemp = data.morning_temp ? parseFloat(data.morning_temp).toFixed(2) : 'Sem dados';
                 const afternoonTemp = data.afternoon_temp ? parseFloat(data.afternoon_temp).toFixed(2) : 'Sem dados';
-                const tempCheck = checkIfHigh(morningTemp, afternoonTemp);
+                data.tempCheck = checkIfHigh(morningTemp, afternoonTemp);
                 /* Weird bug happening, had to send each property separately */
                 const btn = `<button class="btn btn-add" data-toggle="modal" data-target="#obsModal" data-obs="${data.observations}" data-id="${data.id}">Observação</button>`;
 
                 tableBody.innerHTML += `
                     <tr>
                         <td>${data.day}</td>
-                        <td class="${tempCheck.morningTemp}">${morningTemp}</td>
-                        <td class="${tempCheck.afternoonTemp}">${afternoonTemp}</td>
+                        <td class="${data.tempCheck.morningTemp ? 'high' : ''}">${morningTemp}</td>
+                        <td class="${data.tempCheck.afternoonTemp ? 'high' : ''}">${afternoonTemp}</td>
                         <td class="text-center">
                             <div class="col-sm-9">${data.observations ? data.observations : ''}</div><div class="col-xs-3">${btn}</div>
                         </td>
                     </tr>
                 `;
             });
+
+            cacheData.push(response);
         }
 
         function checkIfHigh(morningTemp, afternoonTemp) {
@@ -221,8 +223,8 @@
             const morningCheck = morningTemp < tempInterval[selectedOptionType][0] || morningTemp > tempInterval[selectedOptionType][1];
             const afternoonCheck = afternoonTemp < tempInterval[selectedOptionType][0] || afternoonTemp > tempInterval[selectedOptionType][1];
             let check = {};
-            check.morningTemp = morningCheck ? 'high' : '';
-            check.afternoonTemp = afternoonCheck ? 'high' : '';
+            check.morningTemp = morningCheck;
+            check.afternoonTemp = afternoonCheck;
 
             return check;
         }
