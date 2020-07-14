@@ -117,7 +117,7 @@
                     <div class="codes" id="oneCode">
                         <div class="form-group">
                             Insira o código do dispositivo para aceder:
-                            <input class="form-control" placeholder="Código do Dispositivo" id="cod_device">
+                            <input class="form-control" placeholder="Código do Dispositivo" id="{{$device->id}}">
                             <label class="labelError" id="error" style="display: none">Código Errado!</label>
                         </div>
                     </div>
@@ -143,7 +143,7 @@
 
     function verifyCodeDeviceExist(id) {
 
-        var code=document.getElementById('cod_device').value;
+        var code=document.getElementById(id).value;
 
         $.ajaxSetup({
             headers: {
@@ -155,6 +155,7 @@
             type: 'GET',
             url:'/frontoffice/verifyCodeDeviceExist/'+id+'/'+code,
             async: false,
+
             success:function (data) {
                 if(data==0) {
                     location.replace("/frontoffice/deviceMaintenance"+'/'+id);
