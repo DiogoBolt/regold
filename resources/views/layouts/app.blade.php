@@ -71,6 +71,26 @@
                                     </a>
                                 </li>
 
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
+                                    Agenda <span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu">
+
+                                        <li>
+                                            <a href="/clientsRF">
+                                                RegoldFood
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/newsalesman">
+                                                RegoldPest
+                                            </a>
+                                        </li>
+                                </ul>
+                            </li>
+
                                 <li>
                                     <a href="/orders">
                                         Encomendas 

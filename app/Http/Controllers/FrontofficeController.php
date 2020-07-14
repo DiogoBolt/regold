@@ -140,7 +140,6 @@ class FrontofficeController extends Controller
 
     public function documentsByType($super, $type,Request $request)
     {
-
         $user = Auth::user();
 
         $auxClientId = Session::get('establismentID');
@@ -194,7 +193,11 @@ class FrontofficeController extends Controller
 
     public function documentsBySuper($super)
     {
+
+
         $auxClientId = Session::get('establismentID');
+
+        $auxAdminId=Session::get('impersonated');
 
         $clientActivity = Customer::where('id',$auxClientId)
         ->select(['activity',])
@@ -204,6 +207,24 @@ class FrontofficeController extends Controller
        $controlCustomizationClient=ControlCustomizationClients::where('idClient',$auxClientId)
        ->select(['personalizeSections'])
        ->pluck('personalizeSections')->first();
+
+       $controlFirstServiceClient=ControlCustomizationClients::where('idClient',$auxClientId)
+           ->select(['firstServicePest'])
+           ->pluck('firstServicePest')->first();
+
+       if($auxAdminId==null)
+       {
+           /*$abc=Customer::where('id',$auxClientId)
+               ->select(['ownerID'])
+               ->pluck('ownerID')
+               ->first();*/
+           $userType=4;
+       }else{
+           $userType=User::where('id',$auxAdminId)
+               ->select(['userType'])
+               ->pluck('userType')->first();
+       }
+
 
         $qtd = Section::where('activityClientId',$clientActivity)->count();
 
@@ -217,7 +238,7 @@ class FrontofficeController extends Controller
         
         $types = DocumentType::where('superType', $superId)->get();
 
-        return view('frontoffice.documentsTypes',compact('types','super','showSections','controlCustomizationClient'));
+        return view('frontoffice.documentsTypes',compact('types','userType','super','showSections','controlCustomizationClient','controlFirstServiceClient'));
     }
 
     public function products()

@@ -33,18 +33,16 @@
             <div id="results"></div>
         </div>
 
-        <a id="fav-link" href="/frontoffice/favorites">
-            <img src="/img/filled-fav.png" alt="favoritos">
-        </a>
-
         <div class="categories-container">
+            <a class="category" href="/frontoffice/favorites">
+                <div class="fav">
+                    FAVORITOS
+                </div>
+            </a>
             @foreach($categories as $category)
                 <a class="category" href="/frontoffice/products/{{ $category->id}}">
                     <div class="category-body">
-                        <img src="/img/logoregoldi.png" class="img-responsive" />
-                    </div>
-                    <div class="category-footer">
-                        {{ $category->name }}
+                        {{$category->name}}
                     </div>
                 </a>
             @endforeach

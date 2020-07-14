@@ -1,0 +1,32 @@
+h1.title {
+    color: #000;
+    font-family: 'Rouge Script', cursive;
+    font-size: 70px; font-weight: normal;
+    line-height: 48px;
+    margin: 0 0 50px;
+    text-align: center;
+    text-shadow: 1px 1px 2px #082b34;
+}
+
+h1.title { color: #000; font-family: 'Lobster', cursive; font-size: 40px; font-weight: normal; line-height: 48px; margin: 0 0 18px; text-shadow: 1px 0 0 #fff; }
+
+.btn-add {
+    width: 100%;
+    text-transform: uppercase;
+}
+
+.file {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+input[type=radio]+label{
+    margin-left: 20px;
+}
+
+.labelError{
+    color: red;
+}

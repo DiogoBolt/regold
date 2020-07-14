@@ -44,6 +44,15 @@
   margin-top: 10px;
 }
 
+.btn-addNC {
+  display: inline-block;
+  border: 2px solid var(--main-color) !important;
+  color: var(--main-color);
+  margin-top: -50px;
+  position: absolute;
+  left:  65%;
+}
+
 .btn-add:hover {
   background-color: var(--main-color);
   color: #fff !important;
@@ -142,4 +151,10 @@
 
 #collapseFilter .card-body .form-control{
   margin-bottom: 10px;
+}
+
+input[type=checkbox]
+{
+  width: 30px;
+  height: 30px;
 }

@@ -11,7 +11,9 @@ use App\Group;
 use App\Message;
 use App\Order;
 use App\Receipt;
+use App\Report;
 use App\Salesman;
+use App\TechnicalHACCP;
 use App\User;
 use App\Districts;
 use App\Cities;
@@ -290,6 +292,24 @@ class ClientController extends Controller
 
 
         return view('client.index',compact('clients','unpaid','total', 'districts'));
+    }
+
+    public function indexRF(Request $request)
+    {
+        $user = Auth::user();
+
+        $inputs = $request->all();
+
+        $clients=Report::from(Report::alias('r'))
+            ->leftjoin(Customer::alias('c'),'c.id','=','r.idClient')
+            ->where('r.concluded',1)
+            ->get();
+
+
+
+        $technicals=TechnicalHACCP::all();
+
+        return view('client.indexRF',compact('client','clients','technicals'));
     }
 
     public function newCustomer()

@@ -25,41 +25,58 @@
         @endif
     @endif
     <section >
-        <h1>Regoldi</h1>
+
+
+        @foreach($services as $service)
+                    @if($service->id_service_type==1)
+                        <div class="container index-box">
+                            <div class="box">
+                            <a title="Documentos HACCP" href="/frontoffice/documents/HACCP"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon2.png"></a>
+                            <div class="desc">DOCUMENTOS HACCP</div>
+                            @if($receiptsHACCP) <span class="notification">{{$receiptsHACCP}}</span> @endif
+                            </div>
+                        </div>
+                    @endif
+
+                    @if($service->id_service_type==2)
+                         <div class="container index-box">
+                             <div class="box">
+                                 <a title="Produtos" href="/frontoffice/categories"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon6.png"></a>
+                                 <div class="desc">PRODUTOS</div>
+                             </div>
+                             <div class="box">
+                                  <a title="Encomendas" href="/frontoffice/orders">
+                                   <img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon1.png">
+                                  </a>
+                                  <div class="desc">ENCOMENDAS</div>
+                             </div>
+                         </div>
+                    @endif
+
+                    @if($service->id_service_type==3)
+                         <div class="container index-box">
+                            <div class="box">
+                                <a title="Controlo de Pragas" href="/frontoffice/documents/Controlopragas"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon3.png"></a>
+                                <div class="desc">CONTROLO DE PRAGAS</div>
+                                @if($receiptsCP) <span class="notification">{{$receiptsCP}}</span> @endif
+                            </div>
+                        </div>
+                    @endif
+                    @if($service->id_service_type==4)
+                            <div class="container index-box">
+                                <div class="box">
+                                    <a title="Documentos Registos" href="/frontoffice/documents/Registos"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon2.png"></a>
+                                    <div class="desc">REGISTOS</div>
+                                    @if($receiptsReg) <span class="notification">{{$receiptsReg}}</span> @endif
+                                </div>
+                            </div>
+                    @endif
+        @endforeach
         <div class="container index-box">
-            <div class="box">
-                <a title="Produtos" href="/frontoffice/categories"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon6.png"></a>
-                <div class="desc">PRODUTOS</div>
-            </div>
-            <div class="box">
-                <a title="Documentos HACCP" href="/frontoffice/documents/HACCP"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon2.png"></a>
-                <div class="desc">DOCUMENTOS HACCP</div>
-                @if($receiptsHACCP) <span class="notification">{{$receiptsHACCP}}</span> @endif
-            </div>
-
-            <div class="box">
-                <a title="Controlo de Pragas" href="/frontoffice/documents/Controlopragas"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon3.png"></a>
-                <div class="desc">CONTROLO DE PRAGAS</div>
-                @if($receiptsCP) <span class="notification">{{$receiptsCP}}</span> @endif
-            </div>
-
             <div class="box">
                 <a title="Documentos Contabilisticos" href="/frontoffice/documents/Contabilistico"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon7.png"></a>
                 <div class="desc">DOCUMENTOS CONTABILISTICOS</div>
                 @if($receiptsCont) <span class="notification">{{$receiptsCont}}</span> @endif
-            </div>
-
-            <div class="box">
-                <a title="Encomendas" href="/frontoffice/orders">
-                    <img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon1.png">
-                </a>
-                <div class="desc">ENCOMENDAS</div>
-            </div>
-
-            <div class="box">
-                <a title="Documentos Registos" href="/frontoffice/documents/Registos"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon8.png"></a>
-                <div class="desc">REGISTOS</div>
-                @if($receiptsReg) <span class="notification">{{$receiptsReg}}</span> @endif
             </div>
         </div>
     </section>

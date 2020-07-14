@@ -37,6 +37,8 @@
                             </form>
                         </div>
 
+                    <a href="/newsalesman" class="btn btn-add"><strong>Novo Colaborador</strong></a>
+
                     <table class="table">
                         <tr>
                            <!-- <th>Id</th>-->
@@ -56,7 +58,7 @@
 
 
                     
-                    <a href="/newsalesman" class="btn btn-add"><strong>Novo Colaborador</strong></a>
+
                 </div>
             </div>
         </div>

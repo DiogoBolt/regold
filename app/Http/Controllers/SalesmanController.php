@@ -12,6 +12,7 @@ use App\Product;
 use App\Receipt;
 use App\Salesman;
 use App\SalesPayment;
+use App\TechnicalCP;
 use App\User;
 use App\Districts;
 use App\Cities;
@@ -65,34 +66,40 @@ class SalesmanController extends Controller
         }
         return view('salesman.index', compact('contributors','userstypes'));
     }
-    public function salesman($id){
-        
-        $user = User::where('id',$id)
-        ->first();
+    public function salesman($id)
+    {
 
-        if(Auth::user()->userType == 5)
-        {
+        $user = User::where('id', $id)
+            ->first();
+
+        if (Auth::user()->userType == 5) {
             //dd($user);
-            if($user->userType==1){
+            if ($user->userType == 1) {
                 $salesman = Salesman::where('id', $user->userTypeID)->first();
                 $salesPayments = SalesPayment::where('sales_id', $id)->where('delivered', 0)->get();
-                foreach($salesPayments as $payment)
-                {
-                    $payment->invoice =  Order::where('id',$payment->order_id)->first()->invoice_id;
+                foreach ($salesPayments as $payment) {
+                    $payment->invoice = Order::where('id', $payment->order_id)->first()->invoice_id;
                 }
-    
+
                 $total = SalesPayment::where('sales_id', $id)->where('delivered', 0)->sum('value');
-    
+
                 return view('salesman.show', compact('salesman', 'salesPayments', 'user', 'total'));
 
-            }if($user->userType==2){
+            }
+            if ($user->userType == 2) {
 
                 $salesman = TechnicalHACCP::where('id', $user->userTypeID)->first();
-               
-                return view('salesman.show', compact('salesman','user'));
+
+                return view('salesman.show', compact('salesman', 'user'));
             }
-        }else{
-           return back();
+            if ($user->userType == 3) {
+
+                $salesman = TechnicalCP::where('id', $user->userTypeID)->first();
+
+                return view('salesman.show', compact('salesman', 'user'));
+            } else {
+                return back();
+            }
         }
     }
     public function newSales()
@@ -128,7 +135,19 @@ class SalesmanController extends Controller
             $technicalhaccp->save();
             $user->userType = 2;
             $user->userTypeID = $technicalhaccp->id;
+
+        }else if($inputs['UserType']=='Técnico Controlo de Pragas'){
+            $technicalcp=new TechnicalCP();
+            $technicalcp->name = $inputs['name'];
+            $technicalcp->address = $inputs['address'];
+            $technicalcp->city = $inputs['city'];
+            $technicalcp->nif = $inputs['nif'];
+            $technicalcp->postal_code = $inputs['postal_code'];
+            $technicalcp->save();
+            $user->userType = 3;
+            $user->userTypeID = $technicalcp->id;
         }
+
         $user->name = $inputs['name'];
         $user->email = $inputs['email'];
         $user->password = bcrypt($inputs['password']);
@@ -142,6 +161,8 @@ class SalesmanController extends Controller
             $salesman = Salesman::where('id', $request->usertypeid)->first()->delete();
         }else if($request->usertype == 2){
             $technicalhaccp = TechnicalHACCP::where('id', $request->usertypeid)->first()->delete();
+        }else if($request->usertype==3){
+            $technicalcp=TechnicalCP::where('id',$request->usertypeid)->first()->delete();
         }
         $user_associated = User::where('userTypeID',$request->usertypeid)
         ->where('userType',$request->usertype)

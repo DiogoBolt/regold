@@ -31,19 +31,11 @@
             @foreach($types as $type)
                 <a class="category {{ $super }}" href="{{ $type->name === 'Faturas' ? '/frontoffice/invoices' : '/frontoffice/documents/'. $super . '/' . $type->id }}">
                     <div class="category-body">
-                        @if($super === 'Controlopragas')
-                            <img src="/img/logo1white.png" class="img-responsive"/>
-                        @elseif($super === 'HACCP')
-                            <img src="/img/logo2white.png" class="img-responsive"/>
-                        @else 
-                            <img src="/img/logoregoldi.png" class="img-responsive" />
-                        @endif
-                    </div>
-                    <div class="category-footer">
                         {{ $type->name }}
                     </div>
                 </a>
             @endforeach
+
             @if($super==='Registos')
                     <a class="category {{ $super }}" href="/frontoffice/oilRecords">
                         <div class="category-body">
@@ -53,58 +45,74 @@
                             REGISTOS DE QUALIDADE DO ÓLEO
                         </div>
                     </a>
-                @endif
-                @if($super === 'HACCP')
+            @endif
+
+            @if($super === 'HACCP')
                 <a class="category {{ $super }}" href="/frontoffice/reports">
                     <div class="category-body">
-                        <img src="/img/logo2white.png" class="img-responsive"/>
-                    </div>
-                    <div class="category-footer">
                         RELATÓRIOS
                     </div>
                 </a>
+                @if($userType==2 || $userType==5)
                 @if($controlCustomizationClient==1)
                 <a class="category {{ $super }}" href="/frontoffice/newReport">
                 @else
                 <a class="category {{ $super }}" href="/frontoffice/newReport" style="display:none">
-                @endif
                     <div class="category-body">
-                        <img src="/img/logo2white.png" class="img-responsive"/>
-                    </div>
-                    <div class="category-footer">
                         NOVO RELATÓRIO
                     </div>
                 </a>
+                @endif
                 @if($showSections==1)
                     <a class="category {{ $super }}" href="/frontoffice/personalizeSection">
                 @else
                     <a class="category {{ $super }}" href="/frontoffice/personalizeSection" style="display:none">
                 @endif
                     <div class="category-body">
-                        <img src="/img/logo2white.png" class="img-responsive"/>
-                    </div>
-                    <div class="category-footer">
                         PERSONALIZAR SECÇÕES
                     </div>
                 </a>
-               
+            @endif
+            @endif
                 <a class="category {{ $super }}" href="/frontoffice/personalizeAreasEquipments">
                     <div class="category-body">
-                        <img src="/img/logo2white.png" class="img-responsive"/>
-                    </div>
-                    <div class="category-footer">
                         ÁREAS E EQUIPAMENTOS
                     </div>
                 </a>
 
                 <a class="category {{ $super }}" href="/frontoffice/statistics">
                     <div class="category-body">
-                        <img src="/img/logo2white.png" class="img-responsive"/>
-                    </div>
-                    <div class="category-footer">
                        ESTATÍSTICAS
                     </div>
                 </a>
+
+                @if($super==='Controlopragas')
+                    @if($userType==5 || $userType==3)
+                        @if($controlFirstServiceClient!=1)
+                            <a class="category {{ $super }}" href="/frontoffice/firstService">
+                        @else
+                            <a class="category {{ $super }}" href="/frontoffice/firstService" style="display: none">
+                        @endif
+                            <div class="category-body">
+                                INSTALAÇÃO SERVIÇO
+                            </div>
+                        </a>
+                        <a class="category {{ $super }}" href="/frontoffice/maintenance">
+                            <div class="category-body">
+                                MANUTENÇÃO/GARANTIA
+                            </div>
+                        </a>
+                            <a class="category {{ $super }}" href="/frontoffice/punctual">
+                                <div class="category-body">
+                                     PONTUAL
+                                </div>
+                                </a>
+                    @endif
+                        <a class="category {{ $super }}" href="/frontoffice/pestReports">
+                            <div class="category-body">
+                                RELATÓRIOS
+                            </div>
+                        </a>
                 @endif
         </div>
     </div>

@@ -89,6 +89,25 @@ Route::get('/concluedReport','ReportController@concludeReport');
 Route::get('/frontoffice/reports','ReportController@reportList');
 Route::get('/frontoffice/reportShow/{idReport}','ReportController@reportShow');
 
+//routes Relatorio CONTROLO DE PRAGAS
+Route::get('/frontoffice/firstService','PestController@firstService');
+Route::post('/frontoffice/savefirstService','PestController@savefirstService');
+Route::get('/frontoffice/newDevice','PestController@newDevice');
+Route::post('/frontoffice/addDevice','PestController@addDevice');
+Route::get('/frontoffice/pestReports','PestController@pestReportList');
+Route::get('/frontoffice/reportPestShow/{id}','PestController@reportPestShow');
+Route::get('/frontoffice/reportMaintenanceShow/{idReport}','PestController@reportMaintenanceShow');
+Route::get('/frontoffice/maintenance','PestController@maintenancePest');
+Route::post('/frontoffice/saveMaintenance','PestController@saveMaintenance');
+Route::get('/frontoffice/deviceMaintenance/{id}','PestController@getDeviceMaintenance');
+Route::post('/frontoffice/saveDeviceMaintenance/{id}','PestController@saveDeviceMaintenance');
+Route::get('/frontoffice/punctual','PestController@punctualPest');
+Route::post('/frontoffice/savePunctual','PestController@savePunctualPest');
+Route::get('/frontoffice/reportPunctualShow/{id}','PestController@reportPunctualShow');
+
+Route::get('/frontoffice/verifyCodeDeviceExist/{id}/{code}','PestController@verifyCodeDeviceExist');
+
+
 //routes Registos
 Route::get('/frontoffice/insertProductConformities', 'RecordsController@insertConformities');
 Route::post('/frontoffice/saveOilRecords', 'RecordsController@saveOilRecords');
@@ -96,6 +115,7 @@ Route::get('/frontoffice/oilRecords','RecordsController@insertOilRecords');
 Route::get('/frontoffice/records/temperatures','RecordsController@getTemperatureRecords');
 Route::get('/frontoffice/records/temperatures/history','RecordsController@getTemperatureRecordsHistory');
 Route::get('/frontoffice/records/temperatures/history/get','RecordsController@getHistoryByMonth');
+
 
 //estatisticas route
 Route::get('/frontoffice/statistics','ReportController@reportStatistics');
@@ -110,6 +130,10 @@ Route::group(['middleware' => ['backoffice']], function () {
     //Route::get('/salesman/new', 'ClientController@newSales');
     Route::post('/salesman/add', 'SalesmanController@addSales');
     Route::delete('/salesman/delete', 'SalesmanController@deleteSales');
+
+    Route::get('/clientsRF', 'ClientController@indexRF');
+    Route::get('/clientsRP', 'ClientController@indexRP');
+
 
     Route::get('/clients', 'ClientController@index');
     Route::get('/clients/new', 'ClientController@newCustomer');

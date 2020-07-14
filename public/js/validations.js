@@ -157,7 +157,14 @@ function notshowAddressInvoice(){
     document.getElementById('selectCityInvoice').required=false;
     document.getElementById('invoicePostalCode').required=false
     document.getElementById('invoiceAddress').required=false;
-}          
+}
+function myfuncao(id) {
+    if(id==1)
+    {
+        document.getElementById("contract").style.display="block";
+        document.getElementById("contract").required=true;
+    }
+}
 
 function ownerRegister(myRadio){
     if(myRadio.value=='sim'){
@@ -194,7 +201,6 @@ function verifyEmailExist(email){
         }
     });
     return aux;
-
 
 }
 
@@ -269,5 +275,9 @@ function myFunction() {
     );
       
   }
+
+
+
+
   
 

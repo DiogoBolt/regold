@@ -26,7 +26,7 @@
                         <div id="reportInfo">
                             <div id="divFloatLeft">
                                 <div>
-                                    <label class="lblBold">Establecimento: </label>
+                                    <label class="lblBold">Estabelecimento: </label>
                                     <label> {{$report->clientName}} </label>
                                 </div>
                                 <div >
@@ -85,7 +85,7 @@
                                                             <label class="conforme" ></label>
                                                         @else
                                                             <input type=radio />
-                                                            <label class="conforme"></label>
+                                                            <label class="conforme" ></label>
                                                         @endif
                                                     </td>
                                                     <td class="tdBackground" name="radio">

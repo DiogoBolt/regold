@@ -95,9 +95,9 @@
                         <td>
                             <div class="divSeverity">
                                 <div class="range-slider">
-                                    <input class="range-slider__range" disabled onchange="rangeValue(this)" type="range" value="{{$rule->severityValue}}" min="1" max="5">
+                                    <input class="range-slider__range"  onchange="rangeValue(this)" type="range" value="{{$rule->severityValue}}" min="1" max="5">
                                 </div>
-                                <input class="inputRangeValue" disabled type="number" min="1" max="5" value="{{$rule->severityValue}}"/>
+                                <input class="inputRangeValue"  type="number" min="1" max="5" value="{{$rule->severityValue}}"/>
                             </div>
                             <label class="lblSeverityStatus">{{$rule->severityText}}</label>
                         </td>
@@ -156,9 +156,9 @@
                     <td> 
                         <div class="divSeverity">
                             <div class="range-slider">
-                                <input class="range-slider__range" disabled onchange="rangeValue(this)" type="range" value="{{$rule->severityValue}}" min="1" max="5">
+                                <input class="range-slider__range"  onchange="rangeValue(this)" type="range" value="{{$rule->severityValue}}" min="1" max="5">
                             </div>
-                            <input class="inputRangeValue" disabled type="number" min="1" max="5" value="{{$rule->severityValue}}"/>
+                            <input class="inputRangeValue"  type="number" min="1" max="5" value="{{$rule->severityValue}}"/>
                         </div>
                         <label class="lblSeverityStatus">{{$rule->severityText}}</label>
                     </td>

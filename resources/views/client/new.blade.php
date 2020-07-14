@@ -59,7 +59,7 @@
                             </label> 
                         </div> 
                         <div>
-                        <label class="add-label">Dados do Establecimento</label>
+                        <label class="add-label">Dados do Estabelecimento</label>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
@@ -156,15 +156,12 @@
                                 <input type="radio" name="VerifyEmail" onclick="notshowRegistedMail()" checked="checked" value="false">Não
                             </label>
 
-
                             <div class="form-group">
                                 Telefone: <input class="form-control" placeholder="9********/2********" type="tel" name="telephone" required>
                             </div>
-
                         </div>
 
                         <div class="col-sm-6">
-
                             <div class="form-group">
                                 Actividade do Cliente: <select class="form-control" name="activity" required>        
                                     <option disabled selected value="">Selecione a Atividade/Tipo de Cliente</option>
@@ -180,10 +177,21 @@
                                 <br/>
                                 <div id="serviceTypesDiv">
                                     @foreach($serviceTypes as $serviceType)
-                                        <input type="checkbox" id="serviceType{{$serviceType->id}}" name="serviceType{{$serviceType->id}}" value="{{$serviceType->id}}">{{$serviceType->name}}
+                                        <input type="checkbox" onclick="myfuncao(this.value)" id="serviceType{{$serviceType->id}}" name="serviceType{{$serviceType->id}}" value="{{$serviceType->id}}">{{$serviceType->name}}
                                         <br/> 
                                     @endforeach
                             </div>
+
+                                <div id="contract" class="form-group" style="display: none">
+                                    Tipo de contrato:  <select class="form-control" name="contract_type" {{--onchange="payType(this)"--}} required>
+                                        <option disabled selected value="">Selecione o Tipo de Contrato</option>
+                                        <option value="2">2 Visitas</option>
+                                        <option value="3">3 Visitas</option>
+                                        <option value="4">4 Visitas</option>
+                                        <option value="6">6 Visitas</option>
+                                        <option value="12">12 Visitas</option>
+                                    </select>
+                                </div>
 
                             <div class="form-group">
                                 Valor Contrato: <input type="number" step="0.01" placeholder="Valor de Contrato" min=0 class="form-control" name="value">

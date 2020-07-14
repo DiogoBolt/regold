@@ -23,12 +23,14 @@
         </div>
 
         <div class="categories-container">
+            <a class="category" href="/frontoffice/favorites">
+                <div class="fav">
+                    FAVORITOS
+                </div>
+            </a>
             @foreach($categories as $category)
                 <a class="category" href="/products/{{ $category->id}}">
                     <div class="category-body">
-                        <img src="/img/logoregoldi.png" class="img-responsive" />
-                    </div>
-                    <div class="category-footer">
                         {{ $category->name }}
                     </div>
                 </a>

@@ -486,3 +486,35 @@ function changeChart(t){
     var chart = new ApexCharts(document.getElementById("chart"), options);
     chart.render();
 }
+
+
+
+/*
+function validateCodeDeviceExist(code){
+    var cOde=code.value;
+
+    if(!verifyCodeDeviceExist(cOde)){
+        document.getElementById("cod_device").style.border="2px solid #00ff00";
+        return true;
+    }else{
+        document.getElementById("cod_device").style.border="1px solid #ff0000";
+        return false;
+    }
+}
+*/
+
+//REGOLDPEST REPORTS
+
+function showOptions(){
+    document.getElementById("typeSpecie").style.display="block";
+    document.getElementById('subActiva').style.display="block";
+    document.getElementById('typeSpecie').required=true;
+    document.getElementById('subActiva').required=true;
+}
+function notshowOptions(){
+    document.getElementById("typeSpecie").style.display="none";
+    document.getElementById('subActiva').style.display="none";
+    document.getElementById('typeSpecie').required=false;
+    document.getElementById('subActiva').required=false;
+}
+

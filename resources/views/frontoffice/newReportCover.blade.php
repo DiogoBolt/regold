@@ -41,7 +41,7 @@
 
     <div class="divReportInfo">
         <div>
-            <label class="lblBold">Establecimento: </label>
+            <label class="lblBold">Estabelecimento: </label>
             <label value="{{$establishName->id}}"> {{$establishName->name}} </label>
         </div>
 
