@@ -33,11 +33,13 @@ class alertTemperatures extends Command
 
         foreach($thermos as $thermo)
         {
-            $last4 = Thermo::where('imei',$thermo->imei)->orderBy('id','DESC')->take(4);
-            $maxTemp = FridgeType::where('id',ClientThermo::where('imei',$thermo->imei)->first()->type)->first()->max_temp;
-            $minTemp = FridgeType::where('id',ClientThermo::where('imei',$thermo->imei)->first()->type)->first()->min_temp;
+            $clientThermo = ClientThermo::where('imei',$thermo->imei)->first();
+            $last4 = Thermo::where('imei',$thermo->imei)->orderBy('id','DESC')->take(4)->get();
+            $maxTemp = FridgeType::where('id',$clientThermo->type)->first()->max_temp;
+            $minTemp = FridgeType::where('id',$clientThermo->type)->first()->min_temp;
 
             $rounds = 0;
+
 
             foreach($last4 as $last)
             {
@@ -50,8 +52,8 @@ class alertTemperatures extends Command
             {
                 $message = new Message();
                 $message->sender_id = 0;
-                $message->receiver_id = ClientThermo::where('imei',$thermo->imei)->first()->user_id;
-                $message->text = "A sua Arca numero :" . $thermo->imei . " encontra-se fora da temperatura esperada!";
+                $message->receiver_id = $clientThermo->user_id;
+                $message->text = "A sua Arca numero :" . $clientThermo->id . " encontra-se fora da temperatura esperada!";
                 $message->save();
             }
         }

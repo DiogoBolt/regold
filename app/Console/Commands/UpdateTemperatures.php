@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\ClientThermo;
 use App\Thermo;
 use App\ThermoAverageTemperature;
 use Carbon\Carbon;
@@ -39,7 +40,6 @@ class UpdateTemperatures extends Command
         $start = $this->isMorning ? $now->copy()->startOfDay() : $now->copy()->startOfDay()->addHours(12);
         $end = $this->isMorning ? $now->hour(11)->minute(59)->second(59) : $now->endOfDay();
 
-
         return Thermo::query()->select([
             'client_id',
             'thermo_type',
@@ -57,15 +57,39 @@ class UpdateTemperatures extends Command
     {
         foreach ($thermos as $thermo) {
             $this->isMorning ? $thermo['morning_temp'] = $thermo['average'] : $thermo['afternoon_temp'] = $thermo['average'];
+            $average = ThermoAverageTemperature::where('imei', $thermo['imei'])->orderBy('id', 'DESC')->first();
+            $client = ClientThermo::where('imei', $thermo['imei'])->first();
+            if (isset($average)) {
+                if (Carbon::parse(ThermoAverageTemperature::where('imei', $thermo['imei'])->orderBy('id', 'DESC')->first()->created_at)->isToday()) {
+                    $average->morning_temp = number_format($thermo['morning_temp'], 1);
+                    $average->afternoon_temp = number_format($thermo['afternoon_temp'], 1);
+                    $average->user_id = $client->user_id;
+                    $average->client_thermo = $client->type;
+                    $average->imei = $thermo['imei'];
+                    $average->save();
+                } else {
+                    $average = new ThermoAverageTemperature;
+                    $average->morning_temp = number_format($thermo['morning_temp'], 1);
+                    $average->afternoon_temp = number_format($thermo['afternoon_temp'], 1);
+                    $average->user_id = $client->user_id;
+                    $average->client_thermo = $client->type;
+                    $average->imei = $thermo['imei'];
+                    $average->save();
+                }
+            } else {
+                $average = new ThermoAverageTemperature;
+                $average->morning_temp = number_format($thermo['morning_temp'], 1);
+                $average->afternoon_temp = number_format($thermo['afternoon_temp'], 1);
+                $average->user_id = $client->user_id;
+                $average->client_thermo = $client->type;
+                $average->imei = $thermo['imei'];
+                $average->save();
+            }
 
-            ThermoAverageTemperature::updateOrCreate(
-                [
-                    'client_id' => $thermo['client_id'],
-                    'imei' => $thermo['imei']
-                ]
-                , $thermo->toArray()
-            );
-            $thermo = Thermo::where('imei',$thermo['imei'])->where('created_at','<',Carbon::now()->subHours(24))->delete();
+            $thermo = Thermo::query()
+                ->where('imei', $thermo['imei'])
+                ->where('created_at', '<', Carbon::now()->subHours(24))
+                ->delete();
         }
     }
 }
