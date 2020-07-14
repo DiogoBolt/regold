@@ -310,6 +310,7 @@ function continueAnswerReport(){
             }
         });
 
+
         $.ajax({
             type: 'POST',
             url: "/frontoffice/saveAnswers",

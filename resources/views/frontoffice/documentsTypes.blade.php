@@ -54,25 +54,31 @@
                     </div>
                 </a>
                 @if($userType==2 || $userType==5)
-                @if($controlCustomizationClient==1)
-                <a class="category {{ $super }}" href="/frontoffice/newReport">
-                @else
-                <a class="category {{ $super }}" href="/frontoffice/newReport" style="display:none">
-                    <div class="category-body">
-                        NOVO RELATÓRIO
-                    </div>
+                    @if($controlCustomizationClient==1)
+                    <a class="category {{ $super }}" href="/frontoffice/newReport">
+                        <div class="category-body">
+                            NOVO RELATÓRIO
+                        </div>
+                    @else
+                    <a class="category {{ $super }}" href="/frontoffice/newReport" style="display:none">--}}
+                        <div class="category-body">
+                            NOVO RELATÓRIO
+                        </div>
+                    </a>
+                    @endif
+                        @if($showSections==1)
+                            <a class="category {{ $super }}" href="/frontoffice/personalizeSection">
+                                <div class="category-body">
+                                    PERSONALIZAR SECÇÕES
+                                </div>
+                        @else
+                            <a class="category {{ $super }}" href="/frontoffice/personalizeSection" style="display:none">
+                                <div class="category-body">
+                                    PERSONALIZAR SECÇÕES
+                                </div>
+                        @endif
                 </a>
                 @endif
-                @if($showSections==1)
-                    <a class="category {{ $super }}" href="/frontoffice/personalizeSection">
-                @else
-                    <a class="category {{ $super }}" href="/frontoffice/personalizeSection" style="display:none">
-                @endif
-                    <div class="category-body">
-                        PERSONALIZAR SECÇÕES
-                    </div>
-                </a>
-            @endif
             @endif
                 <a class="category {{ $super }}" href="/frontoffice/personalizeAreasEquipments">
                     <div class="category-body">
