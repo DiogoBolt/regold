@@ -36,20 +36,16 @@
                                 <div class="desc">CONTROLO DE PRAGAS</div>
                                 @if($receiptsCP) <span class="notification">{{$receiptsCP}}</span> @endif
                             </div>
-                        </div>
-                         <div class="container index-box">
-                             <div class="box">
-                                 <a title="Produtos" href="/frontoffice/categories"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon6.png"></a>
-                                 <div class="desc">PRODUTOS</div>
-                             </div>
-                             <div class="box">
-                                  <a title="Encomendas" href="/frontoffice/orders">
-                                   <img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon1.png">
-                                  </a>
-                                  <div class="desc">ENCOMENDAS</div>
-                             </div>
-                         </div>
-                            <div class="container index-box">
+                            <div class="box">
+                                <a title="Produtos" href="/frontoffice/categories"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon6.png"></a>
+                                <div class="desc">PRODUTOS</div>
+                            </div>
+                            <div class="box">
+                                <a title="Encomendas" href="/frontoffice/orders">
+                                    <img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon1.png">
+                                </a>
+                                <div class="desc">ENCOMENDAS</div>
+                            </div>
                                 <div class="box">
                                     <a title="Documentos Registos" href="/frontoffice/documents/Registos"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon2.png"></a>
                                     <div class="desc">REGISTOS</div>
@@ -60,7 +56,9 @@
                                     <div class="desc">DOCUMENTOS CONTABILISTICOS</div>
                                     @if($receiptsCont) <span class="notification">{{$receiptsCont}}</span> @endif
                                 </div>
-                            </div>
+                        </div>
+
+                        
     </section>
 
 <div class="modal fade" id="myModal" role="dialog">
