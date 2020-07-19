@@ -75,6 +75,7 @@ class RecordsController extends Controller
         foreach ($clientThermos as $clientthermo) {
             $clientthermo->thermo = Thermo::query()->where('imei', $clientthermo->imei)->get()->last();
             $clientthermo->fridgeType = FridgeType::query()->where('id', $clientthermo->type)->first();
+            $clientthermo->average = ThermoAverageTemperature::query()->where('imei', $clientthermo->imei)->first();
         }
 
         $today = Carbon::now()->format('Y-m-d');
