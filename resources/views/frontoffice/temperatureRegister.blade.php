@@ -68,14 +68,25 @@
                         <div class="register-arc__data">
                             <span>{{$thermo->fridgeType->min_temp}}º/c até {{$thermo->fridgeType->max_temp}}º/c</span>
                             <div class="register-arc__data_temps">
+                                @if(isset($thermo->average))
                                 <div>
-                                    <h3 class="temperature normal">{{number_format($thermo->average->morning_temp ? $thermo->average->morning_temp : 0 , 1)}}</h3>
+                                    <h3 class="temperature normal">{{number_format($thermo->average->morning_temp , 1)}}</h3>
                                     <p>manhã</p>
                                 </div>
                                 <div>
-                                    <h3 class="temperature normal">{{number_format($thermo->average->afternoon_temp ? $thermo->average->afternoon_temp : 0, 1)}}</h3>
+                                    <h3 class="temperature normal">{{number_format($thermo->average->afternoon_temp , 1)}}</h3>
                                     <p>tarde</p>
                                 </div>
+                                    @else
+                                    <div>
+                                        <h3 class="temperature normal">0</h3>
+                                        <p>manhã</p>
+                                    </div>
+                                    <div>
+                                        <h3 class="temperature normal">0</h3>
+                                        <p>tarde</p>
+                                    </div>
+                                    @endif
                             </div>
                         </div>
                     </div>
@@ -88,18 +99,25 @@
                         <div class="register-arc__data">
                             <span>{{$thermo->fridgeType->min_temp}}º/c até {{$thermo->fridgeType->max_temp}}º/c</span>
                             <div class="register-arc__data_temps">
-                                <div>
-                                    <h3 class="temperature">
-                                        {{number_format($thermo->average->morning_temp ? $thermo->average->morning_temp : 0 , 1)}}
-                                    </h3>
-                                    <p>manhã</p>
-                                </div>
-                                <div>
-                                    <h3 class="temperature">
-                                        {{number_format($thermo->average->afternoon_temp ? $thermo->average->afternoon_temp : 0, 1)}}
-                                    </h3>
-                                    <p>tarde</p>
-                                </div>
+                                @if(isset($thermo->average))
+                                    <div>
+                                        <h3 class="temperature normal">{{number_format($thermo->average->morning_temp , 1)}}</h3>
+                                        <p>manhã</p>
+                                    </div>
+                                    <div>
+                                        <h3 class="temperature normal">{{number_format($thermo->average->afternoon_temp , 1)}}</h3>
+                                        <p>tarde</p>
+                                    </div>
+                                @else
+                                    <div>
+                                        <h3 class="temperature normal">0</h3>
+                                        <p>manhã</p>
+                                    </div>
+                                    <div>
+                                        <h3 class="temperature normal">0</h3>
+                                        <p>tarde</p>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
