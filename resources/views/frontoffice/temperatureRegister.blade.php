@@ -63,7 +63,7 @@
                     <div class="register-arc cooling">
                         <div class="register-arc__info">
                             <p>arca de refrigeração</p>
-                            <h1>{{$thermo->id}}</h1>
+                            <h1>{{$thermo->number}}</h1>
                         </div>
                         <div class="register-arc__data">
                             <span>{{$thermo->fridgeType->min_temp}}º/c até {{$thermo->fridgeType->max_temp}}º/c</span>
@@ -83,7 +83,7 @@
                     <div class="register-arc freezing">
                         <div class="register-arc__info">
                             <p>arca de congelação</p>
-                            <h1>{{$thermo->id}}</h1>
+                            <h1>{{$thermo->number}}</h1>
                         </div>
                         <div class="register-arc__data">
                             <span>{{$thermo->fridgeType->min_temp}}º/c até {{$thermo->fridgeType->max_temp}}º/c</span>

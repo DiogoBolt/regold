@@ -62,7 +62,7 @@
                             <option value="" disabled selected>Seleccione Tipo</option>
                             @foreach($clientThermos as $thermo)
                                 <option value="{{ $thermo->imei  }}" data-type="{{ $thermo->type }}">
-                                    {{ $thermo->id }} | {{ $thermo->type === 1 ? 'Refrigeração' : 'Congelação' }}
+                                    {{ $thermo->number }} | {{ $thermo->type === 1 ? 'Refrigeração' : 'Congelação' }}
                                 </option>
                             @endforeach
                         </select>
