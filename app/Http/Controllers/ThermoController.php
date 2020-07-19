@@ -53,6 +53,7 @@ class ThermoController extends Controller
         $newthermo->user_id = $user->id;
         $newthermo->imei = $inputs['imei'];
         $newthermo->type = $inputs['type'];
+        $newthermo->number = $inputs['number'];
         $newthermo->save();
 
         return back();

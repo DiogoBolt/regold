@@ -43,7 +43,7 @@ class alertTemperatures extends Command
 
             foreach($last4 as $last)
             {
-                if($last->temperature > $maxTemp or $last->temperature < $minTemp)
+                if($last->temperature > $maxTemp+3 or $last->temperature < $minTemp-3)
                 {
                     $rounds++;
                 }

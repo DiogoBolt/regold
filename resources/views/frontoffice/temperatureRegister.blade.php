@@ -50,6 +50,7 @@
                         <option value="2">Congelação</option>
                     </select>
                     Imei : <input name="imei" class="form-control" required>
+                    Numero Arca : <input name="number" class="form-control" required>
                     {{ csrf_field() }}
                     <button class="btn btn-add">Adicionar</button>
                 </form>
