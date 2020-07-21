@@ -88,7 +88,7 @@ class RecordsController extends Controller
         $user = Auth::user();
         $months = $this->months;
 
-        $clientThermos = ClientThermo::query()->select(['id', 'type', 'imei'])
+        $clientThermos = ClientThermo::query()->select(['id', 'type', 'imei','number'])
             ->where('user_id', $user->id)
             ->groupBy('id')
             ->get();
