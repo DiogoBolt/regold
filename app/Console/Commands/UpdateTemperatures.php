@@ -102,8 +102,7 @@ class UpdateTemperatures extends Command
                 $average->save();
             }
 
-            $thermo = Thermo::query()
-                ->where('imei', $thermo['imei'])
+            $thermo = Thermo::where('imei', $thermo['imei'])
                 ->where('created_at', '<', Carbon::now()->subHours(24))
                 ->delete();
         }
