@@ -59,6 +59,20 @@ class ThermoController extends Controller
         return back();
     }
 
+    public function deleteThermo(Request $request)
+    {
+        try {
+            $id_to_delete = $request->get('id');
+
+            $thermo = ClientThermo::query()->findOrFail($id_to_delete);
+            $thermo->delete();
+
+            return back();
+        } catch (\Exception $exception ) {
+            return back()->withErrors(['msg' => 'Ocorreu um erro, por favor tente mais tarde.']);
+        }
+    }
+
     public function getTemperature($imei)
     {
         $temperature = Thermo::where('imei',$imei)->get()->last()->temperature;

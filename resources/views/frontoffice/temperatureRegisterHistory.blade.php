@@ -178,6 +178,7 @@
                 url: '/frontoffice/records/temperatures/history/get',
                 data,
                 success: function (response) {
+                    cacheData = [];
                     if (response.length) {
                         data.type = document.getElementsByName('imei')[0].selectedOptions[0].text;
                         cacheData.push(data);
@@ -187,6 +188,7 @@
                     }
                 },
                 error: function () {
+                    cacheData = [];
                     noResults.innerHTML = '<h2 class="text-center margin-top">Ocorreu um erro, por favor, tente mais tarde.</h2>';
                 }
             });

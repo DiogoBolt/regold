@@ -29,8 +29,8 @@
                                     @foreach ($data as $item)
                                         <tr>
                                             <td>{{ $item->day}}</td>
-                                            <td style="color:{{$item->tempCheck->morningTemp ? 'red !important' : ''}}">{{ $item->morning_temp}}</td>
-                                            <td style="color:{{$item->tempCheck->afternoonTemp ? 'red !important' : ''}}">{{ $item->afternoon_temp}}</td>
+                                            <td style="color:{{$item->tempCheck->morningTemp ? 'red !important' : ''}}">{{ $item->morning_temp ?? 'Sem dados'}}</td>
+                                            <td style="color:{{$item->tempCheck->afternoonTemp ? 'red !important' : ''}}">{{ $item->afternoon_temp ?? 'Sem dados'}}</td>
                                             <td class="text-center">
                                                 <div class="col-sm-9">{{ $item->observations ? $item->observations : ''  }}</div>
                                             </td>
