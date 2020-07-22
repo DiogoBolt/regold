@@ -79,11 +79,11 @@
                                 </div>
                                     @else
                                     <div>
-                                        <h3 class="temperature normal">0</h3>
+                                        <h3 class="temperature normal">N/A</h3>
                                         <p>manhã</p>
                                     </div>
                                     <div>
-                                        <h3 class="temperature normal">0</h3>
+                                        <h3 class="temperature normal">N/A</h3>
                                         <p>tarde</p>
                                     </div>
                                     @endif
@@ -110,11 +110,11 @@
                                     </div>
                                 @else
                                     <div>
-                                        <h3 class="temperature normal">0</h3>
+                                        <h3 class="temperature normal">N/A</h3>
                                         <p>manhã</p>
                                     </div>
                                     <div>
-                                        <h3 class="temperature normal">0</h3>
+                                        <h3 class="temperature normal">N/A</h3>
                                         <p>tarde</p>
                                     </div>
                                 @endif
