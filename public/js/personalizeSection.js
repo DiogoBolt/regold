@@ -254,7 +254,7 @@ function saveEachPersonalize(){
         url: "/frontoffice/personalizeAreasEquipments/personalizeEachSection/save",
         data:{areas: areas,equipments:equipments,idSection:idSection}
     }).then(
-        window.location.replace('/frontoffice/personalizeAreasEquipments')
+       window.location.replace('/frontoffice/personalizeAreasEquipments')
     );
 
 

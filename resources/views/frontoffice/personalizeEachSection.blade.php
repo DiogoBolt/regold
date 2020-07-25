@@ -11,7 +11,7 @@
     <div class="container-bar">
         <p class="container-bar_txt">Personalizar Secções </p>
         <div class="container-bar_img">
-            <img src="/img/haccp_icon.png"></a>
+            <img src="/img/haccp_icon.png">
         </div>
     </div>
 
@@ -54,7 +54,7 @@
             <tr class="tableRow">
                 <td>
                     <input type="hidden" id="idClientArea" value="{{$area->idAreaSectionClient}}">
-                    <label>{{$area->designation}}</label></td>
+                    <label>{{$area->designacao}}</label></td>
                 <td>
                     <select id="product">
                     <option value="" disabled>Produto</option>
@@ -199,7 +199,7 @@
                     <select id="cleaning">
                     <option value="" disabled>Limpeza</option>
                         @foreach($cleaningFrequencys as $cleaningFrequency)
-                            @if($equipment->idFrequencyCleaning == $cleaningFrequency->id)
+                            @if($equipment->idCleaningFrequency == $cleaningFrequency->id)
                                 <option value="{{$cleaningFrequency->id}}" selected>{{$cleaningFrequency->designation}}</option>
                             @else
                                 <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>
@@ -236,7 +236,7 @@
                     <select id="cleaning">
                     <option value="" disabled>Limpeza</option>
                         @foreach($cleaningFrequencys as $cleaningFrequency)
-                            @if($equipment->idFrequencyCleaning == $cleaningFrequency->id)
+                            @if($equipment->idCleaningFrequency == $cleaningFrequency->id)
                                 <option value="{{$cleaningFrequency->id}}" selected>{{$cleaningFrequency->designation}}</option>
                             @else
                                 <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>

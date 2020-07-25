@@ -53,7 +53,6 @@ class PersonalizeSectionController extends Controller
         ->pluck('activity')->first();
 
         $sections=Section::where('activityClientId',$activityTypeId)
-        ->select(['id','name',])
         ->get();
 
         $clientSections=ClientSection::where('id_client',$auxClientId)
@@ -70,16 +69,16 @@ class PersonalizeSectionController extends Controller
 
         if($control->personalizeSections==1){
             foreach($sections as $section){
+                $section->idClientSection = ClientSection::where('id_client',$auxClientId)->where('id_section',$section->id)->first() ? ClientSection::where('id_client',$auxClientId)->where('id_section',$section->id)->first()->id : 0;
                 for($i=0; $i<count($clientSections); $i++){
                     $auxName=$section->name."1";
                     if($auxName==$clientSections[$i]->designation){
                         $section->checked=1;
-                        $section->idClientSection=$clientSections[$i]->id;
+
                         array_push($index,$i);
                         break;
                     }else{
                         $section->checked=0;
-                        $section->idClientSection=0;
                     }
                 }
             }
@@ -89,9 +88,9 @@ class PersonalizeSectionController extends Controller
         }else{
             foreach($sections as $section){
                 $section->checked=0;
-                $section->idClientSection=0;
             }
         }
+
 
         return view('frontoffice.personalizeSections',compact('sections','clientSections','control'));
     }
@@ -252,6 +251,7 @@ class PersonalizeSectionController extends Controller
             'designation',
         ])->get();
 
+
         return view('frontoffice.personalizeEachSection',compact('clientSection','areas','areasSectionClients','equipments','equipmentsSectionClient','products','cleaningFrequencys'));
     }
 
@@ -296,13 +296,13 @@ class PersonalizeSectionController extends Controller
                 $AreaSectionClient->idClient=$auxClientId;
                 $AreaSectionClient->idSection=$idSection;
                 $AreaSectionClient->designation=$area->designation;
-                $AreaSectionClient->idFrequencyCleaning=$area->idCleaningFrequency;
+                $AreaSectionClient->idCleaningFrequency=$area->idCleaningFrequency;
                 $AreaSectionClient->idProduct=$area->idProduct;
                 $AreaSectionClient->active=1;
                 $AreaSectionClient->save();
             }else{
                 $AreaSectionClient =AreaSectionClient::where('id',$area->idAreaSectionClient)->first();
-                $AreaSectionClient->idFrequencyCleaning=$area->idCleaningFrequency;
+                $AreaSectionClient->idCleaningFrequency=$area->idCleaningFrequency;
                 $AreaSectionClient->idProduct=$area->idProduct;
                 $AreaSectionClient->save();
             }
