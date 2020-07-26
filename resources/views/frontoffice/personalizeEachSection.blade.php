@@ -50,6 +50,28 @@
             <th>Checked</th>
         </tr>
         <tbody>
+        <tr class="tableRow" style="display:none">
+            <td>
+                <input type="hidden" id="idClientArea" value="0">
+                <label>0</label></td>
+            <td>
+                <select id="product">
+                    <option value="" disabled>Produto</option>
+                    @foreach($products as $product)
+                            <option value="{{$product->id}}">{{$product->name}}</option>
+                    @endforeach
+                </select>
+            </td>
+            <td>
+                <select id="cleaning">
+                    <option value="" disabled>Limpeza</option>
+                    @foreach($cleaningFrequencys as $cleaningFrequency)
+                            <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>
+                    @endforeach
+                </select>
+            </td>
+                <td><input id="checkedArea" type="Checkbox" name="checkedArea[]" checked></td>
+        </tr>
         @foreach($areas as $area)
             <tr class="tableRow">
                 <td>
@@ -177,6 +199,32 @@
             <th>Checked</th>
         </tr>
         <tbody>
+        <tr class="tableRow" style="display:none">
+            <td>
+                <input type="hidden" id="idClientEquipment" value="0">
+                <label></label>
+            </td>
+            <td>
+                <select id="product">
+                    <option value="" disabled>Produto</option>
+                    @foreach($products as $product)
+
+                            <option value="{{$product->id}}">{{$product->name}}</option>
+                    @endforeach
+                </select>
+            </td>
+            <td>
+                <select id="cleaning">
+                    <option value="" disabled>Limpeza</option>
+                    @foreach($cleaningFrequencys as $cleaningFrequency)
+
+                            <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>
+                    @endforeach
+                </select>
+            </td>
+                <td><input id="checkedArea" type="Checkbox" name="checkedArea[]" checked></td>
+
+        </tr>
         @foreach($equipments as $equipment)
             <tr class="tableRow">
                 <td>
