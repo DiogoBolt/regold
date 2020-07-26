@@ -46,7 +46,7 @@ class PersonalizeSectionController extends Controller
     }
 
     public function getSection(){
-        $auxClientId = Session::get('clientImpersonatedId');
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Auth::user()->id;
 
         $activityTypeId=Customer::where('id',$auxClientId)
         ->select(['activity'])
