@@ -69,7 +69,7 @@ class PersonalizeSectionController extends Controller
 
         if($control->personalizeSections==1){
             foreach($sections as $section){
-                $section->idClientSection = ClientSection::where('id_client',$auxClientId)->where('id_section',$section->id)->first() ? ClientSection::where('id_client',$auxClientId)->where('id_section',$section->id)->first()->id : 0;
+
                 for($i=0; $i<count($clientSections); $i++){
                     $auxName=$section->name."1";
                     if($auxName==$clientSections[$i]->designation){
@@ -91,7 +91,10 @@ class PersonalizeSectionController extends Controller
             }
         }
 
-
+        foreach($sections as $section)
+        {
+            $section->idClientSection = ClientSection::where('id_client',$auxClientId)->where('id_section',$section->id)->first() ? ClientSection::where('id_client',$auxClientId)->where('id_section',$section->id)->first()->id : 0;
+        }
         return view('frontoffice.personalizeSections',compact('sections','clientSections','control'));
     }
 
