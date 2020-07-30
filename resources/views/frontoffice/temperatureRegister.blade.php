@@ -31,7 +31,7 @@
 
     <div class="container">
         @if($errors->any())
-            <h4>{{$errors->first()}}</h4>
+            <h4 class="high">{{$errors->first()}}</h4>
         @endif
         <div class="register-info">
             <p> registos de temperatura </p>

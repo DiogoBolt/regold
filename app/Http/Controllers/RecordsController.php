@@ -1,7 +1,11 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\AreaSectionClient;
+use App\CleaningFrequency;
+use App\ClientSection;
 use App\ClientThermo;
+use App\EquipmentSectionClient;
 use App\FridgeType;
 use App\OilRecord;
 use App\Thermo;
@@ -85,6 +89,18 @@ class RecordsController extends Controller
         $today = Carbon::now()->format('Y-m-d');
 
         return view('frontoffice.temperatureRegister', compact('today', 'clientThermos'));
+    }
+
+    public function getHygieneRecords()
+    {
+        $user = Auth::user();
+
+
+
+
+        $today = Carbon::now()->format('Y-m-d');
+
+        return view('frontoffice.hygieneRegister', compact('today'));
     }
 
     public function getTemperatureRecordsHistory()
