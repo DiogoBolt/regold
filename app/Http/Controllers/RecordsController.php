@@ -95,9 +95,14 @@ class RecordsController extends Controller
     {
         $user = Auth::user();
 
+        $sections = ClientSection::where('id_client',$user->id)->get();
 
-
-
+        foreach($sections as $section)
+        {
+            $section->equipments = EquipmentSectionClient::where('idSection',$section->id)->get();
+            $section->areas = AreaSectionClient::where('idSection',$section->id)->get();
+        }
+        
         $today = Carbon::now()->format('Y-m-d');
 
         return view('frontoffice.hygieneRegister', compact('today'));
