@@ -30,12 +30,26 @@
     grid-column: 1 / 1;
 }
 
+.register-arc {
+    display: flex;
+    flex-direction: column;
+}
+
 .register-arc__info, .register-arc__data {
-    height: 50%;
+    flex: 1 1 auto;
     text-transform: uppercase;
     padding: 5px;
     text-align: center;
     font-weight: bolder;
+}
+
+.register-arc__info-extra {
+    display: flex;
+    justify-content: space-between;
+}
+
+.register-arc__info-extra span {
+    padding: 5px;
 }
 
 .register-arc__info p, .register-arc__data p {
@@ -56,7 +70,7 @@
     border-bottom: 2px solid #fff;
 }
 
-.delete {
+.delete, .show-info {
     cursor: pointer;
 }
 
