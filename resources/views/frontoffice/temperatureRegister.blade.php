@@ -190,7 +190,7 @@
 
     }, false);
 
-    setInterval(window.location.reload(),10000);
+    setInterval(function(){window.location.reload()},20000);
 
 </script>
 
