@@ -125,10 +125,6 @@ class ThermoController extends Controller
         return view('frontoffice.edit_fridge',compact('fridge'));
     }
 
-    public function updateFridge(Request $request)
-    {
-
-    }
 
 
 }

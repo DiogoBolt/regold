@@ -190,5 +190,7 @@
 
     }, false);
 
+    setInterval(window.location.reload(),10000);
+
 </script>
 
