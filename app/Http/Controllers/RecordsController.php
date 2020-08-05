@@ -94,7 +94,7 @@ class RecordsController extends Controller
             elseif($clientthermo->thermo->signal_power < 22) {
                 $clientthermo->signal_power = 3;
             }
-            elseif($clientthermo->thermo->signal_power > 22) {
+            elseif($clientthermo->thermo->signal_power >= 22) {
                 $clientthermo->signal_power = 4;
             }
         }
