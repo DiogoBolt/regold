@@ -159,6 +159,7 @@ function addAreasTable(){
         clone.children[1].childNodes[1].selectedIndex=productAux;
         clone.children[2].childNodes[1].selectedIndex=cleaningFrequencyAux;
         clone.children[3].childNodes[0].checked=true;
+        clone.style = "display:true";
 
         table.appendChild(clone); // add new row to end of table
     }
@@ -188,6 +189,7 @@ function addEquipmentTable(){
         clone.children[1].childNodes[1].selectedIndex=productAux;
         clone.children[2].childNodes[1].selectedIndex=cleaningFrequencyAux;
         clone.children[3].childNodes[0].checked=true;
+        clone.style = "display:true";
 
         table.appendChild(clone); // add new row to end of table
 
@@ -206,16 +208,17 @@ function saveEachPersonalize(){
        /*console.log("designation-> "+ rowsArea[i].cells[0].children[0].textContent);
        console.log("idProduto-> "+ rowsArea[i].cells[1].children[0].value);
        console.log("idFrequencia-> "+ rowsArea[i].cells[2].children[0].value);*/
-
-        if(rowsArea[i].cells[3].children[0].checked){
-            var area = {};
-            area.idAreaSectionClient=rowsArea[i].cells[0].children[0].value;
-            area.designation= rowsArea[i].cells[0].children[1].textContent;
-            area.idProduct=rowsArea[i].cells[1].children[0].value;
-            area.idCleaningFrequency=rowsArea[i].cells[2].children[0].value;
-            area.idSection=idSection;
-            areasSelected.push(area);
-        }
+       if(i>0) {
+           if (rowsArea[i].cells[3].children[0].checked) {
+               var area = {};
+               area.idAreaSectionClient = rowsArea[i].cells[0].children[0].value;
+               area.designation = rowsArea[i].cells[0].children[1].textContent;
+               area.idProduct = rowsArea[i].cells[1].children[0].value;
+               area.idCleaningFrequency = rowsArea[i].cells[2].children[0].value;
+               area.idSection = idSection;
+               areasSelected.push(area);
+           }
+       }
     }
     var areas = JSON.stringify(areasSelected);
 
@@ -228,18 +231,23 @@ function saveEachPersonalize(){
        /*console.log("designation-> "+ rowsEquipments[i].cells[0].children[0].textContent);
        console.log("idProduto-> "+ rowsEquipments[i].cells[1].children[0].value);
        console.log("idFrequencia-> "+ rowsEquipments[i].cells[2].children[0].value);*/
-
-        if(rowsEquipments[i].cells[3].children[0].checked){
-            var equipment = {};
-            equipment.idAreaSectionClient = rowsEquipments[i].cells[0].children[0].value;
-            equipment.designation = rowsEquipments[i].cells[0].children[1].textContent;
-            equipment.idProduct = rowsEquipments[i].cells[1].children[0].value;
-            equipment.idCleaningFrequency = rowsEquipments[i].cells[2].children[0].value;
-            equipment.idSection = idSection;
-            equipmentsSelected.push(equipment);
+        if(i>0)
+        {
+            if(rowsEquipments[i].cells[3].children[0].checked){
+                var equipment = {};
+                equipment.idAreaSectionClient = rowsEquipments[i].cells[0].children[0].value;
+                equipment.designation = rowsEquipments[i].cells[0].children[1].textContent;
+                equipment.idProduct = rowsEquipments[i].cells[1].children[0].value;
+                equipment.idCleaningFrequency = rowsEquipments[i].cells[2].children[0].value;
+                equipment.idSection = idSection;
+                equipmentsSelected.push(equipment);
+            }
         }
+
     }
     var equipments = JSON.stringify(equipmentsSelected);
+
+    console.log(equipments);
 
     //console.log(areas);
     //console.log(equipments);
@@ -254,7 +262,7 @@ function saveEachPersonalize(){
         url: "/frontoffice/personalizeAreasEquipments/personalizeEachSection/save",
         data:{areas: areas,equipments:equipments,idSection:idSection}
     }).then(
-        window.location.replace('/frontoffice/personalizeAreasEquipments')
+       window.location.replace('/frontoffice/personalizeAreasEquipments')
     );
 
 

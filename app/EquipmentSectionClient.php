@@ -13,7 +13,7 @@ class EquipmentSectionClient extends Model
      *
      * @var array
      */
-    protected $table = 'equipment_section_c_lient';
+    protected $table = 'equipment_section_client';
 
     /**
      * The attributes that should be hidden for arrays.

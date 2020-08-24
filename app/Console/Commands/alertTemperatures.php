@@ -50,11 +50,15 @@ class alertTemperatures extends Command
             }
             if($rounds == 4)
             {
-                $message = new Message();
-                $message->sender_id = 0;
-                $message->receiver_id = $clientThermo->user_id;
-                $message->text = "A sua Arca numero :" . $clientThermo->id . " encontra-se fora da temperatura esperada!";
-                $message->save();
+                $lastmessage = Message::where('receiver_id',$clientThermo->user_id)->orderBy('id','DESC')->first();
+                if(!$lastmessage->created_at > Carbon::now()->subHours(12))
+                {
+                    $message = new Message();
+                    $message->sender_id = 0;
+                    $message->receiver_id = $clientThermo->user_id;
+                    $message->text = "A sua Arca numero :" . $clientThermo->id . " encontra-se fora da temperatura esperada!";
+                    $message->save();
+                }
             }
         }
 

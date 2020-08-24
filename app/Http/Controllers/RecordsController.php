@@ -1,7 +1,11 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\AreaSectionClient;
+use App\CleaningFrequency;
+use App\ClientSection;
 use App\ClientThermo;
+use App\EquipmentSectionClient;
 use App\FridgeType;
 use App\OilRecord;
 use App\Thermo;
@@ -80,11 +84,41 @@ class RecordsController extends Controller
                 ->where('created_at','>',Carbon::now()->startOfDay())
                 ->where('created_at','<',Carbon::now()->endOfDay())
                 ->get()->last();
+            if($clientthermo->thermo->signal_power < 6) {
+                $clientthermo->signal_power = 1;
+            }
+            elseif($clientthermo->thermo->signal_power < 12) {
+                $clientthermo->signal_power = 2;
+            }
+
+            elseif($clientthermo->thermo->signal_power < 22) {
+                $clientthermo->signal_power = 3;
+            }
+            elseif($clientthermo->thermo->signal_power >= 22) {
+                $clientthermo->signal_power = 4;
+            }
         }
 
         $today = Carbon::now()->format('Y-m-d');
 
         return view('frontoffice.temperatureRegister', compact('today', 'clientThermos'));
+    }
+
+    public function getHygieneRecords()
+    {
+        $user = Auth::user();
+
+        $sections = ClientSection::where('id_client',$user->id)->get();
+
+        foreach($sections as $section)
+        {
+            $section->equipments = EquipmentSectionClient::where('idSection',$section->id)->get();
+            $section->areas = AreaSectionClient::where('idSection',$section->id)->get();
+        }
+        
+        $today = Carbon::now()->format('Y-m-d');
+
+        return view('frontoffice.hygieneRegister', compact('today'));
     }
 
     public function getTemperatureRecordsHistory()
@@ -141,5 +175,15 @@ class RecordsController extends Controller
     {
         $print_data = json_decode($request->get('printReport')[0]);
         return view('frontoffice.printTemperaturesReport')->with(['details' => $print_data[0] , 'data' => $print_data[1]]);
+    }
+
+    public function getLast5Temperatures($id)
+    {
+        $imei = ClientThermo::where('id',$id)->first()->imei;
+
+        $last5reads = Thermo::where('imei',$imei)->orderBy('id','DESC')->get()->take(5);
+
+        return $last5reads;
+
     }
 }

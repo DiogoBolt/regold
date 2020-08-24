@@ -11,7 +11,7 @@
     <div class="container-bar">
         <p class="container-bar_txt">Personalizar Secções </p>
         <div class="container-bar_img">
-            <img src="/img/haccp_icon.png"></a>
+            <img src="/img/haccp_icon.png">
         </div>
     </div>
 
@@ -50,11 +50,33 @@
             <th>Checked</th>
         </tr>
         <tbody>
+        <tr class="tableRow" style="display:none">
+            <td>
+                <input type="hidden" id="idClientArea" value="0">
+                <label>0</label></td>
+            <td>
+                <select id="product">
+                    <option value="" disabled>Produto</option>
+                    @foreach($products as $product)
+                            <option value="{{$product->id}}">{{$product->name}}</option>
+                    @endforeach
+                </select>
+            </td>
+            <td>
+                <select id="cleaning">
+                    <option value="" disabled>Limpeza</option>
+                    @foreach($cleaningFrequencys as $cleaningFrequency)
+                            <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>
+                    @endforeach
+                </select>
+            </td>
+                <td><input id="checkedArea" type="Checkbox" name="checkedArea[]" checked></td>
+        </tr>
         @foreach($areas as $area)
             <tr class="tableRow">
                 <td>
                     <input type="hidden" id="idClientArea" value="{{$area->idAreaSectionClient}}">
-                    <label>{{$area->designation}}</label></td>
+                    <label>{{$area->designacao}}</label></td>
                 <td>
                     <select id="product">
                     <option value="" disabled>Produto</option>
@@ -177,6 +199,32 @@
             <th>Checked</th>
         </tr>
         <tbody>
+        <tr class="tableRow" style="display:none">
+            <td>
+                <input type="hidden" id="idClientEquipment" value="0">
+                <label></label>
+            </td>
+            <td>
+                <select id="product">
+                    <option value="" disabled>Produto</option>
+                    @foreach($products as $product)
+
+                            <option value="{{$product->id}}">{{$product->name}}</option>
+                    @endforeach
+                </select>
+            </td>
+            <td>
+                <select id="cleaning">
+                    <option value="" disabled>Limpeza</option>
+                    @foreach($cleaningFrequencys as $cleaningFrequency)
+
+                            <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>
+                    @endforeach
+                </select>
+            </td>
+                <td><input id="checkedArea" type="Checkbox" name="checkedArea[]" checked></td>
+
+        </tr>
         @foreach($equipments as $equipment)
             <tr class="tableRow">
                 <td>
@@ -199,7 +247,7 @@
                     <select id="cleaning">
                     <option value="" disabled>Limpeza</option>
                         @foreach($cleaningFrequencys as $cleaningFrequency)
-                            @if($equipment->idFrequencyCleaning == $cleaningFrequency->id)
+                            @if($equipment->idCleaningFrequency == $cleaningFrequency->id)
                                 <option value="{{$cleaningFrequency->id}}" selected>{{$cleaningFrequency->designation}}</option>
                             @else
                                 <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>
@@ -236,7 +284,7 @@
                     <select id="cleaning">
                     <option value="" disabled>Limpeza</option>
                         @foreach($cleaningFrequencys as $cleaningFrequency)
-                            @if($equipment->idFrequencyCleaning == $cleaningFrequency->id)
+                            @if($equipment->idCleaningFrequency == $cleaningFrequency->id)
                                 <option value="{{$cleaningFrequency->id}}" selected>{{$cleaningFrequency->designation}}</option>
                             @else
                                 <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>
