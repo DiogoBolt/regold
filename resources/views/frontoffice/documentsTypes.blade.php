@@ -39,10 +39,12 @@
             @if($super==='Registos')
                     <a class="category {{ $super }}" href="/frontoffice/oilRecords">
                         <div class="category-body">
-                            <img src="/img/logo2white.png" class="img-responsive"/>
-                        </div>
-                        <div class="category-footer">
                             REGISTOS DE QUALIDADE DO ÓLEO
+                        </div>
+                    </a>
+                    <a class="category {{ $super }}" href="/frontoffice/insertProductConformities">
+                        <div class="category-body">
+                            REGISTOS DE ENTRADA DE PRODUTO
                         </div>
                     </a>
             @endif
@@ -105,14 +107,19 @@
                         </a>
                         <a class="category {{ $super }}" href="/frontoffice/maintenance">
                             <div class="category-body">
-                                MANUTENÇÃO/GARANTIA
+                                MANUTENÇÃO
                             </div>
                         </a>
+                                    <a class="category {{ $super }}" href="/frontoffice/warranty">
+                                        <div class="category-body">
+                                            GARANTIA
+                                        </div>
+                                    </a>
                             <a class="category {{ $super }}" href="/frontoffice/punctual">
                                 <div class="category-body">
                                      PONTUAL
                                 </div>
-                                </a>
+                            </a>
                     @endif
                         <a class="category {{ $super }}" href="/frontoffice/pestReports">
                             <div class="category-body">

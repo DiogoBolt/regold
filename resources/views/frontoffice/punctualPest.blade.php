@@ -63,11 +63,16 @@
 
                             <div id="subActiva" class="form-group" >
                                 Substância Activa:  <select class="form-control" name="subs_active" {{--onchange="payType(this)"--}}required>
-                                    <option disabled selected value="">Selecione a Substância</option>
-                                    <option value="Debito Direto">Débito Direto</option>
-                                    <option value="Contra Entrega">Contra Entrega</option>
-                                    <option value="Tranferência/30dias">Tranferência/30 dias</option>
-                                    <option value="Fatura Contra Fatura">Fatura Contra Fatura</option>
+                                    <option disabled selected value="">Selecione o Isco</option>
+                                    <option value="A-Cipermetrina">A-Cipermetrina</option>
+                                    <option value="Clotiamidina">"Clotiamidina</option>
+                                    <option value="Imidaclopride">Imidaclopride</option>
+                                    <option value="Telas de cola">Telas de cola</option>
+                                    <option value="Brodifacume">Brodifacume</option>
+                                    <option value="Bromadiolona">Bromadiolona</option>
+                                    <option value="Difenacume">Difenacume</option>
+                                    <option value="Fipronil">Fipronil</option>
+                                    <option value="Tiametoxam">Tiametoxam</option>
                                 </select>
                             </div>
 

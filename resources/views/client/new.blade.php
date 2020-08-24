@@ -182,6 +182,19 @@
                                     @endforeach
                             </div>
 
+                                <div class="form-group">
+                                    Técnico HACCP: <select class="form-control" id="technical" name="technical" style="display: none">
+                                        <option disabled selected value="">Selecione o Técnico HACCP</option>
+                                        @foreach($technicalhaccp as $technical)
+                                            @if( $technical->id == Auth::user()->userTypeID )
+                                                <option selected value="{{$technical->id}}">{{$technical->name}}</option>
+                                            @else
+                                                <option value="{{$technical->id}}">{{$technical->name}}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+
                                 <div id="contract" class="form-group" style="display: none">
                                     Tipo de contrato:  <select class="form-control" name="contract_type" {{--onchange="payType(this)"--}} required>
                                         <option disabled selected value="">Selecione o Tipo de Contrato</option>

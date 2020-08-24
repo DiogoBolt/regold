@@ -18,7 +18,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item" aria-current="page">Home</li>
             <li class="breadcrumb-item " aria-current="page">Documentos HACCP</li>
-            <li class="breadcrumb-item active" aria-current="page">Documento</li>
+            <li class="breadcrumb-item active" aria-current="page">Relatórios</li>
         </ol>
     </nav>
 

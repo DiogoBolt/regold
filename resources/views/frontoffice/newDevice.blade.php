@@ -40,29 +40,34 @@
                         <form action="/frontoffice/addDevice" method="post">
                             {{ csrf_field() }}
                             <div class="form-group">
-                                Nº Dispositivo: <input id="num_device" class="form-control" type="text" pattern="[0-9]{4}" placeholder="****"  name="num_device" required>
+                                Nº Dispositivo: <input id="num_device" class="form-control" type="text" pattern="[0-9]"  name="num_device" required>
                             </div>
                             <div class="form-group">
-                                Código Dispositivo: <input id="cod_device" class="form-control" type="text" pattern="[A-Z]{1}[0-9]{4}" placeholder="P1234"  name="cod_device" oninput="validateCodeDeviceExist(this)" required>
+                                Código Dispositivo: <input id="cod_device" class="form-control" type="text" pattern="[B,C,D,P,G]{1}[0-9]{4}" placeholder="P1234"  name="cod_device" oninput="validateCodeDeviceExist(this)" required>
                             </div>
 
                             <div class="form-group">
                                 Tipo de Espécie:  <select class="form-control" name="type_specie" {{--onchange="payType(this)"--}} required>
                                     <option disabled selected value="">Selecione a Espécie</option>
-                                    <option value="Debito Direto">Débito Direto</option>
-                                    <option value="Contra Entrega">Contra Entrega</option>
-                                    <option value="Tranferência/30dias">Tranferência/30 dias</option>
-                                    <option value="Fatura Contra Fatura">Fatura Contra Fatura</option>
+                                    <option value="Ratos e Ratazanas">Ratos e Ratazanas</option>
+                                    <option value="Baratas">Baratas</option>
+                                    <option value="Formigas">Formigas</option>
+                                    <option value="Insectos voadores">Insectos voadores</option>
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 Tipo de Isco:  <select class="form-control" name="type_isco" {{--onchange="payType(this)"--}} required>
                                     <option disabled selected value="">Selecione o Isco</option>
-                                    <option value="Debito Direto">Débito Direto</option>
-                                    <option value="Contra Entrega">Contra Entrega</option>
-                                    <option value="Tranferência/30dias">Tranferência/30 dias</option>
-                                    <option value="Fatura Contra Fatura">Fatura Contra Fatura</option>
+                                    <option value="A-Cipermetrina">A-Cipermetrina</option>
+                                    <option value="Clotiamidina">Clotiamidina</option>
+                                    <option value="Imidaclopride">Imidaclopride</option>
+                                    <option value="Telas de cola">Telas de cola</option>
+                                    <option value="Brodifacume">Brodifacume</option>
+                                    <option value="Bromadiolona">Bromadiolona</option>
+                                    <option value="Difenacume">Difenacume</option>
+                                    <option value="Fipronil">Fipronil</option>
+                                    <option value="Tiametoxam">Tiametoxam</option>
                                 </select>
                             </div>
 

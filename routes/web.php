@@ -105,6 +105,11 @@ Route::post('/frontoffice/saveDeviceMaintenance/{id}','PestController@saveDevice
 Route::get('/frontoffice/punctual','PestController@punctualPest');
 Route::post('/frontoffice/savePunctual','PestController@savePunctualPest');
 Route::get('/frontoffice/reportPunctualShow/{id}','PestController@reportPunctualShow');
+Route::get('/frontoffice/warranty','PestController@warrantyPest');
+Route::post('/frontoffice/saveWarranty','PestController@saveWarrantyPest');
+Route::get('frontoffice/reportWarrantyShow/{id}','PestController@reportWarrantyShow');
+Route::get('/frontoffice/deviceWarranty/{id}','PestController@getDeviceWarranty');
+Route::post('/frontoffice/saveDeviceWarranty/{id}','PestController@saveDeviceWarranty');
 
 Route::get('/frontoffice/verifyCodeDeviceExist/{id}/{code}','PestController@verifyCodeDeviceExist');
 
@@ -134,8 +139,10 @@ Route::group(['middleware' => ['backoffice']], function () {
     Route::post('/salesman/add', 'SalesmanController@addSales');
     Route::delete('/salesman/delete', 'SalesmanController@deleteSales');
 
-    Route::get('/clientsRF', 'ClientController@indexRF');
-    Route::get('/clientsRP', 'ClientController@indexRP');
+    Route::get('/clients/regolfood', 'ClientController@indexRegolfood');
+    Route::post('/schedule/regolfood/save/{id}','ClientController@saveScheduleRegolfood');
+    Route::get('/clients/regolpest', 'ClientController@indexRegolpest');
+    Route::get('/schedule','ClientController@getSchedule');
 
 
     Route::get('/clients', 'ClientController@index');

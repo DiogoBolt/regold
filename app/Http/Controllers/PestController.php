@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\AnswerDeviceMain;
+use App\AnswerDeviceWarranty;
 use App\Callback;
 use App\Cart;
 use App\Category;
@@ -21,6 +22,7 @@ use App\OrderLine;
 use App\Product;
 use App\Receipt;
 use App\ReportPunctual;
+use App\ReportWarranty;
 use App\User;
 use App\Section;
 use App\ClientSection;
@@ -180,7 +182,11 @@ class PestController extends Controller
             ->orderBy('id','desc')
             ->get();
 
-        return view('frontoffice.pestReportList',compact('report_pest','report_maintenance','report_punctual'));
+        $report_warranty=ReportWarranty::where('idClient',$auxClientId)
+            ->orderBy('id','desc')
+            ->get();
+
+        return view('frontoffice.pestReportList',compact('report_pest','report_maintenance','report_punctual','report_warranty'));
     }
 
     public function reportPestShow($id)
@@ -309,7 +315,6 @@ class PestController extends Controller
 
         $devices = Devices::where('id',$id)
             ->where('idClient',$auxClientId)->first();
-
 
         /*$count=0;
 
@@ -458,7 +463,6 @@ class PestController extends Controller
             ->first();
 
         return view('frontoffice.reportPunctualShow',compact('report_punctual','idReport'));
-
     }
 
   public function verifyCodeDeviceExist($id,$code){
@@ -476,4 +480,165 @@ class PestController extends Controller
     }
 
     /*public function verifyCodeDeviceExist()*/
+
+    public function warrantyPest()
+    {
+        $auxClientId = Session::get('clientImpersonatedId');
+
+        $devices=Devices::where('idClient',$auxClientId)->get();
+        $count=0;
+
+        /*$abc=Devices::where('idClient',$auxClientId)
+            ->where('status','!=',null)
+            ->get();*/
+
+        foreach ($devices as $device)
+        {
+            $count++;
+            $device->index=$count;
+        }
+
+        return view ('frontoffice.warrantyPest',compact('devices'));
+    }
+    
+    public function saveWarrantyPest(Request $request)
+    {
+        $inputs = $request->all();
+
+        $auxClientId = Session::get('clientImpersonatedId');
+        $auxTechnical = Session::get('impersonated');
+
+        $technicalInfo = User::where('id',$auxTechnical)
+            ->select(['id','name','userTypeID'])
+            ->first();
+
+        $countVisits= ReportWarranty::where('idClient',$auxClientId)
+            ->orderBy('id', 'desc')
+            ->first();
+
+        if(!isset($countVisits)){
+            $visitNumber=1;
+        }else{
+            if( Carbon::now()->year > $countVisits->created_at->year){
+                $visitNumber=1;
+            }else{
+                $visitNumber=$countVisits->numberVisit+1;
+            }
+        }
+
+        $report_WarrantyPest=new ReportWarranty();
+        $report_WarrantyPest->pest_presence=$inputs['pest_presence'];
+        if($inputs['pest_presence']=='sim')
+        {
+            $report_WarrantyPest->specie=$inputs['type_specie'];
+            $report_WarrantyPest->sub_active=$inputs['subs_active'];
+        }else
+        {
+            $report_WarrantyPest->specie=null;
+            $report_WarrantyPest->sub_active=null;
+        }
+        $report_WarrantyPest->note=$inputs['note'];
+        $report_WarrantyPest->idClient=$auxClientId;
+        $report_WarrantyPest->numberVisit=$visitNumber;
+        $report_WarrantyPest->id_tecnichal=$technicalInfo->userTypeID;
+        $report_WarrantyPest->save();
+
+        $answerDevices= AnswerDeviceWarranty::where('idClient',$auxClientId)
+            ->where('idReportWarranty','=',0)
+            ->get();
+
+        foreach ($answerDevices as $answerDevice)
+        {
+            $answerDevice->idReportWarranty=$report_WarrantyPest->id;
+            $answerDevice->save();
+        }
+
+        $devices=Devices::where('idClient',$auxClientId)->get();
+        foreach ($devices as $device)
+        {
+            $device->controlWarranty=null;
+            $device->save();
+        }
+
+        return redirect('/frontoffice/documents/Controlopragas');
+    }
+
+    public function reportWarrantyShow($id)
+    {
+        $auxClientId = Session::get('clientImpersonatedId');
+
+        $report_warranty = ReportWarranty::where('id',$id)
+            ->where('idClient',$auxClientId)->first();
+
+        $report_warranty->technicalName= User::where('userTypeID',$report_warranty->id_tecnichal)
+            ->where('userType',3)
+            ->select(['name'])
+            ->pluck('name')
+            ->first();
+        $report_warranty->clientName=Customer::where('id',$report_warranty->idClient)
+            ->select(['name'])
+            ->pluck('name')
+            ->first();
+
+        User::where('userTypeID',$report_warranty->id_tecnichal)
+            ->where('userType',3)
+            ->select(['id','name','userTypeID'])
+            ->first();
+
+        $answerDevices=AnswerDeviceWarranty::where('idClient',$auxClientId)
+            ->where('idReportWarranty','=',$id)
+            ->get();
+
+        $count=0;
+
+        foreach ($answerDevices as $device)
+        {
+            $count++;
+            $device->index=$count;
+        }
+
+        return view('frontoffice.reportWarrantyShow',compact('report_warranty','id','answerDevices','device'));
+    }
+    public function getDeviceWarranty($id)
+    {
+        $auxClientId = Session::get('clientImpersonatedId');
+
+        $devices = Devices::where('id',$id)
+            ->where('idClient',$auxClientId)->first();
+
+        return view ('frontoffice.deviceWarranty',compact('devices'));
+    }
+
+    public function saveDeviceWarranty(Request $request, $id)
+    {
+        $auxClientId = Session::get('clientImpersonatedId');
+
+        $device = Devices::where('id',$id)
+            ->select(['number_device','cod_device','specie','isco'])
+            ->first();
+
+        $inputs = $request->all();
+
+        $answer_device=new AnswerDeviceWarranty();
+        $answer_device->status=$inputs['device_status'];
+        $answer_device->idClient=$auxClientId;
+        $answer_device->number_device=$device->number_device;
+        $answer_device->cod_device=$device->cod_device;
+        $answer_device->specie=$device->specie;
+        $answer_device->isco=$device->isco;
+        $answer_device->id_device=$id;
+        $answer_device->save();
+
+        if($answer_device->status=='em falta')
+        {
+            $answer_device=Devices::where('id','=', $id)->delete();
+        }
+
+        $control= Devices::where('id',$id)->first();
+        $control->controlWarranty=1;
+        $control->save();
+
+        return redirect('/frontoffice/warranty');
+    }
+
 }

@@ -163,6 +163,9 @@ function myfuncao(id) {
     {
         document.getElementById("contract").style.display="block";
         document.getElementById("contract").required=true;
+        document.getElementById("technical").style.display="block";
+        document.getElementById("technical").required=true;
+
     }
 }
 

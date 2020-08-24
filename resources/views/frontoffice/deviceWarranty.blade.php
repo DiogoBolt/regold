@@ -30,7 +30,7 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <form action="/frontoffice/saveDeviceMaintenance/{{$devices->id}}" method="post">
+                        <form action="/frontoffice/saveDeviceWarranty/{{$devices->id}}" method="post">
                             {{ csrf_field() }}
                             <div>
                                 <label class="lblBold">Código Dispositivo: </label>
@@ -59,7 +59,7 @@
                                 <button class="btn btn-add" >Concluir</button>
                             </div>
 
-                            <a type="button" class="btn btn-default" href="/frontoffice/maintenance">
+                            <a type="button" class="btn btn-default" href="/frontoffice/warranty">
                                 <strong>Cancelar</strong>
                             </a>
                         </form>

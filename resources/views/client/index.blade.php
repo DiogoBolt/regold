@@ -21,12 +21,11 @@
                             <input id="client-search" name="search" class="form-control"
                                    placeholder="Pesquisa de clientes.."/>
                         </form>
-
+                        <script src="{{ URL::asset('/js/validations.js') }}"></script>
                         <a data-toggle="collapse" href="#collapseFilter" role="button"
                            aria-expanded="false" aria-controls="collapseFilter">
                             <strong>Filtrar por cidade</strong>
                         </a>
-
                         <div class="collapse" id="collapseFilter">
                             <form action="/clients" method="GET" id="filter-form">
                                 <div class="card card-body">
@@ -39,7 +38,7 @@
                                     </select>
                                     <label for="city-filter">Cidade</label>
                                         <select id="selectCityInvoice" class="form-control" name="cityInvoice" >
-                                            <option disabled selected value="">Selecione a Cidade</option>  
+                                            <option disabled selected value="">Selecione a Cidade</option>
                                         </select>
                                 </div>
                                 <button class="btn" type="submit" form="filter-form">Filtrar</button>

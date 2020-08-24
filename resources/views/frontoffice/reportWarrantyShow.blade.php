@@ -20,36 +20,36 @@
                         <img src="\img\regolfoodSmall.png" style="width:100px">
                     </div>--}}
 
-                    <h1 class="title">Relatório Manutenção</h1>
+                    <h1 class="title">Relatório Garantia</h1>
 
                     <div id="reportInfo">
                         <div id="divFloatLeft">
                             <div>
                                 <label class="lblBold">Estabelecimento: </label>
-                                <label> {{$report_maintenance->clientName}} </label>
+                                <label> {{$report_warranty->clientName}} </label>
                             </div>
                             <div >
                                 <label class="lblBold">Técnico Controlo de Pragas: </label>
-                                <label > {{$report_maintenance->technicalName}} </label>
+                                <label > {{$report_warranty->technicalName}} </label>
                             </div>
                             <div>
                                 <label class="lblBold"> Número de Visita: </label>
-                                <label id="visitNumber"> {{$report_maintenance->numberVisit}} </label>
+                                <label id="visitNumber"> {{$report_warranty->numberVisit}} </label>
                             </div>
                         </div>
 
                         <div id="divFloatRigth">
                             <div>
                                 <label class="lblBold">Data: </label>
-                                <label id="date"> {{$report_maintenance->updated_at->toDateString()}} </label>
+                                <label id="date"> {{$report_warranty->updated_at->toDateString()}} </label>
                             </div>
                             <div>
                                 <label class="lblBold">Hora de Início: </label>
-                                <label>{{$report_maintenance->created_at->format('H:i')}}</label>
+                                <label>{{$report_warranty->created_at->format('H:i')}}</label>
                             </div>
                             <div>
                                 <label class="lblBold">Hora de Fim: </label>
-                                <label> {{$report_maintenance->updated_at->format('H:i')}}</label>
+                                <label> {{$report_warranty->updated_at->format('H:i')}}</label>
                             </div>
                         </div>
 
@@ -59,11 +59,11 @@
                     <div>
                         <label>Foram revistos todos os dispositivos. </label>
 
-                        @if($report_maintenance->pest_presence=='sim')
-                        <label>Foi detetada a presença da praga {{$report_maintenance->specie}} e aplicada a substância activa {{$report_maintenance->sub_active}}.  </label>
+                        @if($report_warranty->pest_presence=='sim')
+                            <label>Foi detetada a presença da praga {{$report_warranty->specie}} e aplicada a substância activa {{$report_warranty->sub_active}}.  </label>
                         @else
                             <label>Não foi detetada a presença de pragas.  </label>
-                            @endif
+                        @endif
                     </div>
 
                     <div class="tableContainer">
@@ -90,7 +90,7 @@
                     </div>
                     <div>
                         <label class="lblBold" style="color: red">Recomendações: </label>
-                        <label> {{$report_maintenance->note}}</label>
+                        <label> {{$report_warranty->note}}</label>
                     </div>
                 </div>
             </div>

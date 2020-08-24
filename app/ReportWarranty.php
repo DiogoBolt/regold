@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Customer extends Model
+class ReportWarranty extends Model
 {
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $table = 'clients';
+    protected $table = 'report_warranty';
 
     /**
      * The attributes that should be hidden for arrays.
@@ -24,5 +24,4 @@ class Customer extends Model
     public static function alias($alias) {
         return (new static)->table . ' as ' . $alias;
     }
-
 }

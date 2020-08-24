@@ -17,6 +17,7 @@ use App\Order;
 use App\OrderLine;
 use App\Product;
 use App\Receipt;
+use App\Schedule;
 use App\User;
 use App\Section;
 use App\ClientSection;
@@ -539,13 +540,18 @@ class ReportController extends Controller
     public function concludeReport(){
         
         $idReport= Session::get('reportId');
+        $auxClientId = Session::get('clientImpersonatedId');
 
         $report = Report::where('id',$idReport)
         ->first();
-
-
         $report->concluded=1;
         $report->save();
+
+        $scheduled_client=Schedule::where('idClient',$auxClientId)
+            ->where('month',Carbon::now()->month)
+            ->first();
+        $scheduled_client->check_s=1;
+        $scheduled_client->save();
 
         Session::forget('sectionsReport');
         Session::forget('reportId');

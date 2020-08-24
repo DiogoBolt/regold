@@ -64,33 +64,39 @@
                                     </a>
                                 </li>
                             @endif
-
                                 <li>
                                     <a href="{{ url('/clients') }}">
                                         Clientes 
                                     </a>
                                 </li>
+                            @if(Auth::user()->userType==2)
+                                <li>
+                                    <a href="/schedule">
+                                        Agenda
+                                    </a>
+                                </li>
+                            @endif
 
+                            @if(Auth::user()->userType == 5)
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
                                     Agenda <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu">
-
                                         <li>
-                                            <a href="/clientsRF">
-                                                RegoldFood
+                                            <a href="/clients/regolfood">
+                                                RegolFood
                                             </a>
                                         </li>
                                         <li>
                                             <a href="/newsalesman">
-                                                RegoldPest
+                                                RegolPest
                                             </a>
                                         </li>
                                 </ul>
                             </li>
-
+                            @endif
                                 <li>
                                     <a href="/orders">
                                         Encomendas 

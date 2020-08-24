@@ -59,24 +59,14 @@
                            <div id="divFloatLeft">
                                <div>
                                    <label class="lblBold">Espécie a controlar: </label>
-                                   @if($report_pest->specie == 'barata')
-                                       <label>Baratas</label>
-                                       @else
-                                       <label>Ratos</label>
-                                       @endif
+                                   <label> {{$report_pest->specie}}</label>
                                </div>
                                <div >
                                    <label class="lblBold">Avaliação das instalações: </label>
-                                   @if($report_pest->rating=='b')
-                                       <label>Bom</label>
-                                       @elseif($report_pest->rating=='s')
-                                       <label>Satisfatório</label>
-                                       @else
-                                       <label>Não Satisfatório</label>
-                                       @endif
+                                   <label> {{$report_pest->rating}}</label>
                                </div>
                                <div>
-                                   <label>Foi efetuado um serviço de desinsfestação ao local, foram instalados <strong>{{$device->index}}</strong> dispositivos no local. </label>
+                                   <label>Foi prestado o 1º serviço de desinfestação ao local, foram instalados <strong>{{$device->index}}</strong> dispositivos no local. </label>
                                </div>
                            </div>
                        </div>
@@ -86,7 +76,6 @@
                             <tr id="reportRulesTop">
                                 <th class="thBackground">Dispositivo</th>
                                 <th class="thBackground">Nº Dispositivo</th>
-                                <th class="thBackground">Código Dispositivo</th>
                                 <th class="thBackground">Espécie</th>
                                 <th class="thBackground">Isco</th>
                             </tr>
@@ -95,7 +84,6 @@
                                     <tr class="tableRow">
                                         <td class="tdBackground tdRule"><label class="rule">{{$device->index}}</label></td>
                                         <td class="tdBackground tdRule"><label class="rule">{{$device->number_device}}</label></td>
-                                        <td class="tdBackground tdRule"><label class="rule">{{$device->cod_device}}</label></td>
                                         <td class="tdBackground tdRule"><label class="rule">{{$device->specie}}</label></td>
                                         <td class="tdBackground tdRule"><label class="rule">{{$device->isco}}</label></td>
                                     </tr>

@@ -153,8 +153,10 @@
   margin-bottom: 10px;
 }
 
-input[type=checkbox]
+input[type=checkbox]:disabled
 {
   width: 30px;
   height: 30px;
 }
+
+

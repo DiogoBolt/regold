@@ -20,11 +20,13 @@ use App\Cities;
 use App\ServiceType;
 use App\ServiceTypeClient;
 use App\UserType;
+use App\Schedule;
 use App\PostalCodes;
 use App\ActivityClient;
 use App\ControlCustomizationClients;
 use App\ClientSection;
 use App\Section;
+use DemeterChain\C;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -33,6 +35,11 @@ use Illuminate\Support\Facades\Validator;
 
 class ClientController extends Controller
 {
+    private $months = [
+        1 => 'Janeiro', 2 => 'Fevereiro', 3 => 'Março', 4 => 'Abril', 5 => 'Maio',
+        6 => 'Junho', 7 => 'Julho', 8 => 'Agosto', 9 => 'Setembro', 10 => 'Outubro',
+        11 => 'Novembro', 12 => 'Dezembro'
+    ];
     /**
      * Create a new controller instance.
      *
@@ -206,7 +213,6 @@ class ClientController extends Controller
 
         $messages = Message::where('receiver_id',$user->id)->where('viewed',0)->count();
 
-
         return $messages;
     }
 
@@ -217,10 +223,9 @@ class ClientController extends Controller
     {
         $user = Auth::user();
 
-
         $inputs = $request->all();
 
-        if($user->userType == 5 || $user->userType == 2)
+        if($user->userType == 5||$user->userType==3 /*|| $user->userType == 2*/)
         {
             $clients = Customer::from(Customer::alias('c'))
 
@@ -241,30 +246,49 @@ class ClientController extends Controller
                     'c.comercial_name',
                     'c.city'
                 ])
-
                 ->get();
-
         } else {
+            if($user->userType==1)
+            {
+                $clients = Customer::from(Customer::alias('c'))
+                    ->leftJoin(User::alias('u'), 'u.client_id', '=', 'c.id')
+                    ->where('c.salesman',$user->userTypeID)
+                    ->when($request->filled('cityInvoice'), function ($query) use ($inputs) {
+                        return $query->where('c.city', '=', $inputs['cityInvoice']);
+                    })
+                    ->when($request->filled('search'), function ($query) use ($inputs) {
+                        return $query->where('c.name', 'LIKE', '%' . $inputs['search'] . '%')
+                            ->orWhere('c.id', 'LIKE', '%' . $inputs['search'] . '%');
+                    })
 
-            $clients = Customer::from(Customer::alias('c'))
-                ->leftJoin(User::alias('u'), 'u.client_id', '=', 'c.id')
-                ->where('c.salesman',$user->userTypeID)
-                ->when($request->filled('cityInvoice'), function ($query) use ($inputs) {
-                    return $query->where('c.city', '=', $inputs['cityInvoice']);
-                })
-                ->when($request->filled('search'), function ($query) use ($inputs) {
-                    return $query->where('c.name', 'LIKE', '%' . $inputs['search'] . '%')
-                        ->orWhere('c.id', 'LIKE', '%' . $inputs['search'] . '%');
-                })
+                    ->select([
+                        'c.id',
+                        'u.id as userid',
+                        'c.name',
+                        'c.regoldiID',
+                        'c.comercial_name',
+                    ])->get();
+            }elseif ($user->userType==2)
+            {
+                $clients = Customer::from(Customer::alias('c'))
+                    ->leftJoin(User::alias('u'), 'u.client_id', '=', 'c.id')
+                    ->where('c.technical_haccp',$user->userTypeID)
+                    ->when($request->filled('cityInvoice'), function ($query) use ($inputs) {
+                        return $query->where('c.city', '=', $inputs['cityInvoice']);
+                    })
+                    ->when($request->filled('search'), function ($query) use ($inputs) {
+                        return $query->where('c.name', 'LIKE', '%' . $inputs['search'] . '%')
+                            ->orWhere('c.id', 'LIKE', '%' . $inputs['search'] . '%');
+                    })
 
-                ->select([
-                    'c.id',
-                    'u.id as userid',
-                    'c.name',
-                    'c.regoldiID',
-                    'c.comercial_name',
-                ])->get();
-
+                    ->select([
+                        'c.id',
+                        'u.id as userid',
+                        'c.name',
+                        'c.regoldiID',
+                        'c.comercial_name',
+                    ])->get();
+            }
         }
 
         $unpaid = 0;
@@ -286,40 +310,92 @@ class ClientController extends Controller
         }
 
         $districts = Districts::all();
-
         $clients =$clients->sortBy('order');
         $clients->values()->all();
-
 
         return view('client.index',compact('clients','unpaid','total', 'districts'));
     }
 
-    public function indexRF(Request $request)
+    public function indexRegolfood(Request $request)
+    {
+        $inputs = $request->all();
+
+      $olderScheduled= Schedule::where('month',Carbon::now()->month)->pluck('idClient')->all();
+
+      $clients=Customer::whereNotIn('c.id',$olderScheduled)
+          ->when($request->filled('cityInvoice'), function ($query) use ($inputs) {
+              return $query->where('c.city', '=', $inputs['cityInvoice']);
+          })
+          ->when($request->filled('search'), function ($query) use ($inputs) {
+              return $query->where('c.name', 'LIKE', '%' . $inputs['search'] . '%')
+                  ->orWhere('c.id', 'LIKE', '%' . $inputs['search'] . '%');
+          })
+          ->from(Customer::alias('c'))
+          ->Join(Report::alias('r'), 'r.idClient', '=', 'c.id')
+         /* ->whereMonth('r.created_at',Carbon::now()->month - 'c.contract_type')*/
+          ->select(['r.idClient','c.name','r.numberVisit','c.regoldiID','c.city','c.id'])
+          ->groupBy('r.idClient')
+          ->get();
+
+          $scheduledClients=Schedule::from(Schedule::alias('s'))
+              ->leftJoin(Customer::alias('c'),'s.idClient','=','c.id')
+              ->when($request->filled('month'),
+                  function($query) use ($inputs){
+                      return $query->where('month', $inputs['month']);
+                  })
+              ->groupBy('s.idClient')
+              ->get();
+
+        $months = $this->months;
+        $districts = Districts::all();
+        $technicals=TechnicalHACCP::all();
+        $cities=Cities::all();
+
+        return view('client.indexRF',compact('clients','months','scheduledClients','cities','reports','districts','technicals'));
+    }
+
+    public function saveScheduleRegolfood(Request $request,$id)
+    {
+        $inputs = $request->all();
+
+        $schedule_haccp=new Schedule();
+        $schedule_haccp->technical=$inputs['technical'];
+        $schedule_haccp->month=Carbon::now()->month;
+        $schedule_haccp->idClient=$id;
+        $schedule_haccp->save();
+
+        return redirect('/clients/regolfood');
+    }
+
+    public function getSchedule()
     {
         $user = Auth::user();
 
-        $inputs = $request->all();
+        $userTypeID=User::where('id',$user->id)
+            ->first();
 
-        $clients=Report::from(Report::alias('r'))
-            ->leftjoin(Customer::alias('c'),'c.id','=','r.idClient')
-            ->where('r.concluded',1)
+        $scheduledClients=Schedule::from(Schedule::alias('s'))
+            ->leftJoin(Customer::alias('c'),'c.id','=','s.idClient')
+            ->where('s.technical',$userTypeID->userTypeID)
+            ->whereDate('s.month',Carbon::now()->month)
+            ->groupBy('c.id')
             ->get();
 
+        $districts = Districts::all();
+        $cities=Cities::all();
 
-
-        $technicals=TechnicalHACCP::all();
-
-        return view('client.indexRF',compact('client','clients','technicals'));
+        return view('client.schedule',compact('scheduledClients','districts','cities'));
     }
 
     public function newCustomer()
     {
         $salesman = Salesman::all();
+        $technicalhaccp = TechnicalHACCP::all();
         $districts = Districts::all();
         $serviceTypes = ServiceType::all();
         $activityTypes = ActivityClient::all();
 
-        return view('client.new',compact('salesman','districts','serviceTypes','activityTypes'));
+        return view('client.new',compact('salesman','technicalhaccp','districts','serviceTypes','activityTypes'));
     }
 
     public function getCitiesByDistrict($id)
@@ -364,7 +440,6 @@ class ClientController extends Controller
         }else{
             return 0;
         }
-       
     }
 
     //funcao para verificar se o email é unico
@@ -437,7 +512,6 @@ class ClientController extends Controller
             $establisment->invoice_postal_code = $establisment->postal_code;
         }
 
-
         $establisment->email = $user->email;
 
         if($inputs['VerifyEmail']==true){
@@ -447,14 +521,15 @@ class ClientController extends Controller
         }
 
         //email
-
         $establisment->nif = $inputs['nif'];
         $establisment->activity = $inputs['activity'];
         $establisment->salesman = $inputs['salesman'];
+        $establisment->technical_haccp = $inputs['technical'];
         $establisment->telephone = $inputs['telephone'];
         $establisment->payment_method = $inputs['payment_method'];
         $establisment->nib = $inputs['nib'];
         $establisment->contract_value = $inputs['value'];
+        $establisment->contract_type = $inputs['contract_type'];
         $establisment->regoldiID = $inputs['regoldiID'];
         $establisment->transport_note = $inputs['transport_note'];
         $establisment->save();
@@ -474,8 +549,6 @@ class ClientController extends Controller
             $clientSection->designation=$section->name;
 
             $clientSection->save();
-
-
 
             $ControlCustomizationClient->personalizeSections=1;
             $ControlCustomizationClient->save();
@@ -507,12 +580,17 @@ class ClientController extends Controller
        
         $userL = Auth::user();
 
-        if($userL->userType==5 || $userL->userType==2 ){
+        if($userL->userType==5){
             $clients = Customer::all();
         }else if($userL->userType==1){
             $clients = Customer::from(Customer::alias('c'))
             ->where('c.salesman',$userL->userTypeID)
             ->get();
+        }else if($userL->userType==2)
+        {
+            $clients = Customer::from(Customer::alias('c'))
+                ->where('c.technical_haccp',$userL->userTypeID)
+                ->get();
         }
 
         $unpaid = 0;
@@ -572,6 +650,7 @@ class ClientController extends Controller
         //$client->email = $inputs['email'];
         $client->activity = $inputs['activity'];
         $client->salesman = $inputs['salesman'];
+        $client->technical_haccp=$inputs['technical'];
         $client->telephone = $inputs['telephone'];
         $client->payment_method = $inputs['payment_method'];
         //$client->client_type = $inputs['client_type'];

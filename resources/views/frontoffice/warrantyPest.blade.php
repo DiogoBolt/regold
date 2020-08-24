@@ -12,7 +12,7 @@
     <script src="{{ URL::asset('/js/report.js') }}"></script>
 
     <div class="container-bar">
-        <p class="container-bar_txt">Relatório Manutenção</p>
+        <p class="container-bar_txt">Relatório Garantia</p>
         <div class="container-bar_img">
             <img src="/img/reportPest.png"></a>
         </div>
@@ -24,38 +24,37 @@
         <span class="back-btn__back"><strong>Documentos Controlo Pragas</strong></span>
     </a>
 
-    <h1 class="title">Manutenção</h1>
+    <h1 class="title">Garantia</h1>
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <form action="/frontoffice/saveMaintenance" method="post">
+                        <form action="/frontoffice/saveWarranty" method="post">
                             {{ csrf_field() }}
-
                             @foreach($devices as $device)
-                                @if($device->controlMain==null)
-                                <div class="file">
-                                    <div>
-                                        <a type="button" data-toggle="modal" data-target="#myModal{{$device->id}}" >
-                                            <img class="img-responsive" src="{{ URL::to('/') }}/img/reportPest.png">
-                                        </a>
+                                @if($device->controlWarranty==null)
+                                    <div class="file">
+                                        <div>
+                                            <a type="button" data-toggle="modal" data-target="#myModal{{$device->id}}" >
+                                                <img class="img-responsive" src="{{ URL::to('/') }}/img/reportPest.png">
+                                            </a>
+                                        </div>
+                                        <div >
+                                            Dispositivo {{$device->number_device}}
+                                        </div>
                                     </div>
-                                    <div >
-                                        Dispositivo {{$device->number_device}}
-                                    </div>
-                                </div>
                                 @else
-                                <div class="file">
-                                    <div>
-                                        <a>
-                                            <img class="img-responsive" src="{{ URL::to('/') }}/img/reportPestRed.png">
-                                        </a>
+                                    <div class="file">
+                                        <div>
+                                            <a>
+                                                <img class="img-responsive" src="{{ URL::to('/') }}/img/reportPestRed.png">
+                                            </a>
+                                        </div>
+                                        <div style="color: red">
+                                            Dispositivo {{$device->number_device}}
+                                        </div>
                                     </div>
-                                    <div style="color: red">
-                                        Dispositivo {{$device->number_device}}
-                                    </div>
-                                </div>
                                 @endif
                             @endforeach
 
@@ -112,33 +111,33 @@
     </div>
 
     @foreach($devices as $device)
-    <div class="modal fade" id="myModal{{$device->id}}" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">x</button>
-                    <h4 class="modal-title" >Dispositivo {{$device->number_device}}</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="codes" id="oneCode">
-                        <div class="form-group">
-                            Insira o código do dispositivo para aceder:
-                            <input class="form-control" placeholder="Código do Dispositivo" id="{{$device->id}}">
-                            <label class="labelError" id="error" style="display: none">Código Errado!</label>
+        <div class="modal fade" id="myModal{{$device->id}}" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">x</button>
+                        <h4 class="modal-title" >Dispositivo {{$device->number_device}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="codes" id="oneCode">
+                            <div class="form-group">
+                                Insira o código do dispositivo para aceder:
+                                <input class="form-control" placeholder="Código do Dispositivo" id="{{$device->id}}">
+                                <label class="labelError" id="error" style="display: none">Código Errado!</label>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button id="{{$device->id}}" class="btn modal-del" onclick="verifyCodeDeviceExist(this.id)">
-                        <strong>Confirmar</strong>
-                    </button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                        <strong>Cancelar</strong>
-                    </button>
+                    <div class="modal-footer">
+                        <button id="{{$device->id}}" class="btn modal-del" onclick="verifyCodeDeviceExist(this.id)">
+                            <strong>Confirmar</strong>
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            <strong>Cancelar</strong>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     @endforeach
 
 @endsection
@@ -164,7 +163,7 @@
 
             success:function (data) {
                 if(data==0) {
-                    location.replace("/frontoffice/deviceMaintenance"+'/'+id);
+                    location.replace("/frontoffice/deviceWarranty"+'/'+id);
                 }else {
                     document.getElementById("cod_device").style.border="1px solid #ff0000";
                     document.getElementById("error").style.display="inline"
@@ -175,7 +174,4 @@
         );*/
     }
 </script>
-
-
-
 

@@ -36,10 +36,12 @@
                                 <label>Espécie a controlar:</label>
                             </div>
                             <div class="form-group">
-                                <label for="rato">Ratos</label>
-                                <input type="radio" name="specie" id="rato" value="rato" required>
-                                <label for="barata">Baratas</label>
-                                <input type="radio" name="specie" id="barata" value="barata" required>
+                                <label for="rato">Rato</label>
+                                <input type="radio" name="specie" id="rato" value="Rato" required>
+                                <label for="barata">Barata</label>
+                                <input type="radio" name="specie" id="barata" value="Barata" required>
+                                <label for="barata">Rato e Barata</label>
+                                <input type="radio" name="specie" id="barata" value="Rato e Barata" required>
                             </div>
 
                             @foreach($devices as $device)
@@ -62,11 +64,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="bom">Bom</label>
-                                <input type="radio" name="rating" id="b" value="b" required>
+                                <input type="radio" name="rating" id="b" value="Bom" required>
                                 <label for="satisfatorio">Satisfatório</label>
-                                <input type="radio" name="rating" id="s" value="s" required>
+                                <input type="radio" name="rating" id="s" value="Satisfatório" required>
                                 <label for="bom">Não satisfatório</label>
-                                <input type="radio" name="rating" id="ns" value="ns" required>
+                                <input type="radio" name="rating" id="ns" value="Não satisfatório" required>
                             </div>
 
                             <div class="form-group">

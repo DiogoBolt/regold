@@ -18,7 +18,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item" aria-current="page">Home</li>
             <li class="breadcrumb-item " aria-current="page">Documentos Controlo Pragas</li>
-            <li class="breadcrumb-item active" aria-current="page">Documento</li>
+            <li class="breadcrumb-item active" aria-current="page">Relatórios</li>
         </ol>
     </nav>
 
@@ -51,7 +51,7 @@
         </div>
     </div>
 
-    <h1 class="title">Relatório Manutenção/Garantia</h1>
+    <h1 class="title">Relatório Manutenção</h1>
 
     <div class="container">
         <div class="container-docs">
@@ -86,6 +86,29 @@
                         </div>
                         <div class="file-body" href="/frontoffice/reportPunctualShow/{{$reportPunctual->id}}">
                             <a href="/frontoffice/reportPunctualShow/{{$reportPunctual->id}}">
+                                <img class="file-body__img" src="{{asset('uploads\reports\Report.png')}}">
+                            </a>
+                        </div>
+                    </div>
+                @endforeach
+            @else
+                <h2>Sem Relatórios Realizados.</h2>
+            @endif
+        </div>
+    </div>
+
+    <h1 class="title">Relatório Garantia</h1>
+
+    <div class="container">
+        <div class="container-docs">
+            @if(count($report_warranty) > 0)
+                @foreach($report_warranty as $reportWarranty)
+                    <div class="file">
+                        <div class="file-head">
+                            Relatório {{$reportWarranty->updated_at->toDateString()}}
+                        </div>
+                        <div class="file-body" href="/frontoffice/reportWarrantyShow/{{$reportWarranty->id}}">
+                            <a href="/frontoffice/reportWarrantyShow/{{$reportWarranty->id}}">
                                 <img class="file-body__img" src="{{asset('uploads\reports\Report.png')}}">
                             </a>
                         </div>
