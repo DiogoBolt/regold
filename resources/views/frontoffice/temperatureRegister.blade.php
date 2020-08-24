@@ -65,6 +65,10 @@
                 @if($thermo->type === 1)
                     <div class="register-arc cooling">
                         <div class="register-arc__info">
+                            <div class="register-arc__info-extra">
+                                <span><img style="width:20px;height:20px" src="{{ URL::to('/') }}/img/signal-icon-{{$thermo->signal_power}}.png"></span>
+                                <span class="show-info" data-toggle="modal" data-target="#info-modal" onclick="showLastReads({{$thermo->id}})"><i class="glyphicon glyphicon-info-sign"></i></span>
+                            </div>
                             <p>arca de refrigeração</p>
                             <h1>{{$thermo->number}}</h1>
                         </div>
@@ -100,6 +104,10 @@
                 @else
                     <div class="register-arc freezing">
                         <div class="register-arc__info">
+                            <div class="register-arc__info-extra">
+                                    <span><img style="width:20px;height:20px" src="{{ URL::to('/') }}/img/signal-icon-{{$thermo->signal_power}}.png"></span>
+                                <span class="show-info" data-toggle="modal" data-target="#info-modal" onclick="showLastReads({{$thermo->id}})"><i class="glyphicon glyphicon-info-sign"></i></span>
+                            </div>
                             <p>arca de congelação</p>
                             <h1>{{$thermo->number}}</h1>
                         </div>
@@ -138,7 +146,7 @@
         <a class="btn btn-history" href="/frontoffice/records/temperatures/history">histórico</a>
     </div>
 
-    <!-- Modal -->
+    <!-- Delete Modal -->
     <div class="modal fade" id="deleteModal" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -158,18 +166,51 @@
             </div>
         </div>
     </div>
-
     <form action="/thermo/deletethermo" method="post" id="delete-form">
         {{ csrf_field() }}
-        <input type="hidden" name="_method" value="delete" />
+        <input type="hidden" name="_method" value="delete"/>
         <input type="hidden" value="" name="id" id="thermo-id">
     </form>
+
+    <!-- Info Modal -->
+    <div id="info-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Info</h4>
+                </div>
+                <div class="modal-body" id="infomodal">
+                    <!-- METE AQUI O TEXTO POR JS STICK LA PICE -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
 @endsection
 
 <script>
 
-    document.addEventListener('DOMContentLoaded', function(){
+    function showLastReads(id)
+    {
+        $('#infomodal').html('');
+        $.get('/frontoffice/getlastreads/'+id, function( data ) {
+            for(i=0;i<4;i++)
+            {
+           $('#infomodal').append('<tr></td><td>'+data[i]['temperature']+'------</td><td>'+data[i]['last_read']+'</td></tr>');
+            }
+        });
+
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+        $('#info-modal').on('show.bs.modal', function (event) {
+          /* vê como fiz em baixo, se tiveres dificuldades apita */
+
+        });
 
         $('#deleteModal').on('show.bs.modal', function (event) {
             const item = $(event.relatedTarget);
@@ -177,7 +218,7 @@
 
             $(this).find('.modal-body').text(`Tem a certeza que quer apagar o seguinte termometro, ${data.fridgeType ? data.fridgeType.name : ''} n.º ${data.number}? `);
 
-            $('#delete-thermo').on('click', function() {
+            $('#delete-thermo').on('click', function () {
                 $('#thermo-id').val(data.id);
                 $('#delete-form').submit();
             });
@@ -189,6 +230,8 @@
         });
 
     }, false);
+
+    setInterval(function(){window.location.reload()},100000);
 
 </script>
 

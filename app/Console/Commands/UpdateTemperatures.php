@@ -42,7 +42,6 @@ class UpdateTemperatures extends Command
 
         return Thermo::query()->select([
             'client_id',
-            'thermo_type',
             DB::raw('AVG(cast(temperature AS DECIMAL(4,2))) as average'),
             'imei'
         ])
