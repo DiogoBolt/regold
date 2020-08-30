@@ -51,8 +51,9 @@ class alertTemperatures extends Command
             if($rounds == 4)
             {
                 $lastmessage = Message::where('receiver_id',$clientThermo->user_id)->orderBy('id','DESC')->first();
-                if(!$lastmessage->created_at > Carbon::now()->subHours(12))
+                if($lastmessage->created_at < Carbon::now()->subHours(12))
                 {
+                    $this->line("Here");
                     $message = new Message();
                     $message->sender_id = 0;
                     $message->receiver_id = $clientThermo->user_id;
