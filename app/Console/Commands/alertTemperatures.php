@@ -51,7 +51,7 @@ class alertTemperatures extends Command
             if($rounds == 4)
             {
                 $lastmessage = Message::where('receiver_id',$clientThermo->user_id)->orderBy('id','DESC')->first();
-                if(!$lastmessage->created_at > Carbon::now()->subHours(12))
+                if($lastmessage->created_at < Carbon::now()->subHours(12))
                 {
                     $message = new Message();
                     $message->sender_id = 0;
@@ -59,6 +59,14 @@ class alertTemperatures extends Command
                     $message->text = "A sua Arca numero :" . $clientThermo->id . " encontra-se fora da temperatura esperada!";
                     $message->save();
                 }
+            }
+            if(Thermo::where('imei',$thermo->imei)->orderBy('id','DESC')->first()->created_at < Carbon::now()->subHours(1))
+            {
+                $message = new Message();
+                $message->sender_id = 0;
+                $message->receiver_id = $clientThermo->user_id;
+                $message->text = "O termómetro da arca  :" . $clientThermo->id . " não está a responder.";
+                $message->save();
             }
         }
 
