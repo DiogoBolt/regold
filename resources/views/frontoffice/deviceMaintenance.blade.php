@@ -12,9 +12,9 @@
     <script src="{{ URL::asset('/js/report.js') }}"></script>
 
     <div class="container-bar">
-        <p class="container-bar_txt">Dispositivo</p>
+        <p class="container-bar_txt">Dispositivo {{$devices->number_device}}</p>
         <div class="container-bar_img">
-            <img src="/img/haccp_icon.png"></a>
+            <img src="/img/haccp_icon.png">
         </div>
     </div>
 

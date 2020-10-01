@@ -19,7 +19,7 @@
                     <div class="panel-body table-responsive">
                         <form method="get" action="/clients">
                             <input id="client-search" name="search" class="form-control"
-                                   placeholder="Pesquisa de clientes.."/>
+                                   placeholder="Pesquisa de clientes..."/>
                         </form>
                         <script src="{{ URL::asset('/js/validations.js') }}"></script>
                         <a data-toggle="collapse" href="#collapseFilter" role="button"

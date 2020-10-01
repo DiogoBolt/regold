@@ -86,7 +86,6 @@ class ReportController extends Controller
             ->select(['id','name','userTypeID'])
             ->first();
 
-
             $visitNumber = $report->numberVisit;
 
             $sectionReportIds=RulesAnswerReport::where('idReport',$report->id)
@@ -102,6 +101,7 @@ class ReportController extends Controller
                 Session::put('sectionsReport',$arraySec);
             }
         }else{
+
             $establishName=Customer::where('id',$auxClientId)
             ->select(['name','activity'])
             ->first();
@@ -124,7 +124,6 @@ class ReportController extends Controller
                 }
             }
         }
-
         $date=Carbon::now()->toDateString();
 
         return view('frontoffice.newReportCover',compact('technicalInfo','visitNumber','establishName','date'));
@@ -550,8 +549,11 @@ class ReportController extends Controller
         $scheduled_client=Schedule::where('idClient',$auxClientId)
             ->where('month',Carbon::now()->month)
             ->first();
-        $scheduled_client->check_s=1;
-        $scheduled_client->save();
+        if(isset($scheduled_client))
+        {
+            $scheduled_client->check_s=1;
+            $scheduled_client->save();
+        }
 
         Session::forget('sectionsReport');
         Session::forget('reportId');

@@ -9,7 +9,7 @@
     <div class="container-bar">
         <p class="container-bar_txt" id="demo"></p>
         <div class="container-bar_img">
-            <img src="{{ asset('img/clientes.jpg') }}"/>
+            <img src="{{ asset('img/index/icon4.png') }}"/>
         </div>
     </div>
     <div class="container">
@@ -54,25 +54,25 @@
                                 <th>Técnico HACCP</th>
                               {{--  <th>Auditoria</th>--}}
                             </tr>
-                            @foreach($clients as $client)
+                            @foreach($clients as $abc)
                                     <tr>
-                                        <td><a href="/clients/{{$client->id}}">{{$client->regoldiID}}</a></td>
-                                        <td><a href="/clients/{{$client->id}}">{{$client->name}}</a></td>
+                                        <td><a href="/clients/{{$abc->id}}">{{$abc->regoldiID}}</a></td>
+                                        <td><a href="/clients/{{$abc->id}}">{{$abc->name}}</a></td>
                                        <td>@foreach($cities as $city)
-                                                @if( $city->id == $client->city)
+                                                @if( $city->id == $abc->city)
                                                     {{$city->name}}
                                                 @endif
                                             @endforeach
                                         </td>
                                         <td>
                                             <div>
-                                                <select id="{{$client->id}}" class="dropdown" name="technical" >
+                                                <select id="{{$abc->id}}" class="dropdown" name="technical" >
                                                     <option disabled selected value="">Selecione o Técnico HACCP</option>
                                                     @foreach($technicals as $technical)
                                                         <option  class="form-control" value="{{$technical->id}}">{{$technical->name}}</option>
                                                     @endforeach
                                                 </select>
-                                                <button  class="btn-success" id="{{$client->id}}" onclick="confirm(this.id)" style="display: inline-flex">Confirmar</button>
+                                                <button  class="btn-success" id="{{$abc->id}}" onclick="confirm(this.id)" style="display: inline-flex">Confirmar</button>
                                             </div>
                                         </td>
                                     </tr>
@@ -111,6 +111,7 @@
                                 <th>Cidade</th>
                                 <th>Técnico HACCP</th>
                                 <th>Auditoria</th>
+                                <th>Obs.</th>
                             </tr>
                             @foreach($scheduledClients as $scheduledClient)
                                 <tr>
@@ -136,6 +137,9 @@
                                             <input type="checkbox" disabled>
                                             @endif
                                     </td>
+                                    <td>
+
+                                    </td>
                                 </tr>
                             @endforeach
                         </table>
@@ -146,6 +150,7 @@
     </div>
 @endsection
 
+
 <script>
     window.onload = function month() {
         const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
@@ -154,7 +159,6 @@
         const d = new Date();
         document.getElementById("demo").innerHTML='Agenda '+monthNames[d.getMonth()]
         /*$("#current_month").val($idx=monthNames[d.getMonth()]);*/
-
     }
 
 

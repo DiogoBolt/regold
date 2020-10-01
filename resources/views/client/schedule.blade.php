@@ -3,13 +3,16 @@
 @section('styles')
     <!-- Custom CSS -->
     <link href="{{ asset('css/client/client-bo.css') }}" rel="stylesheet">
+
+
+
 @endsection
 
 @section('content')
     <div class="container-bar">
         <p class="container-bar_txt" id="demo"></p>
         <div class="container-bar_img">
-            <img src="{{ asset('img/clientes.jpg') }}"/>
+            <img src="{{ asset('img/index/icon4.png') }}"/>
         </div>
     </div>
     <div class="container">
@@ -22,12 +25,19 @@
 
                         <script src="{{ URL::asset('/js/validations.js') }}"></script>
 
+
+
+
+                        <input id="datetimepicker" type="text" >
+
                         <table class="table table-bordered">
                             <tr>
                                 <th>Id</th>
                                 <th>Nome</th>
                                 <th>Cidade</th>
                                 <th>Auditoria</th>
+                                <th>Agendar</th>
+                                <th>Obs.</th>
                             </tr>
                             @foreach($scheduledClients as $scheduledClient)
                                 <tr>
@@ -46,6 +56,19 @@
                                             <input type="checkbox" disabled>
                                         @endif
                                     </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <select class="form-control" name="obs">
+                                            <option disabled selected value="">Selecione a Ação</option>
+                                            <option value="Cliente não atendeu">Cliente não atendeu</option>
+                                            <option value="Cliente desmarcou">Cliente desmarcou</option>
+                                            <option value="Cliente Fechou">Cliente Fechou</option>
+                                            <option value="Cliente de férias">Cliente de férias</option>
+                                            <option value="Outro">Outro</option>
+                                        </select>
+                                        <button  class="btn-success" onclick="confirm(this.id)" style="display: inline-flex">Confirmar</button>
+                                    </td>
                                 </tr>
                             @endforeach
                         </table>
@@ -56,8 +79,9 @@
     </div>
 @endsection
 
-<script>
 
+
+<script>
     window.onload = function month() {
         const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
             "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
@@ -65,5 +89,4 @@
         const d = new Date();
         document.getElementById("demo").innerHTML='Agenda '+monthNames[d.getMonth()]
     }
-
 </script>

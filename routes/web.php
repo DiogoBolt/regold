@@ -111,8 +111,15 @@ Route::get('frontoffice/reportWarrantyShow/{id}','PestController@reportWarrantyS
 Route::get('/frontoffice/deviceWarranty/{id}','PestController@getDeviceWarranty');
 Route::post('/frontoffice/saveDeviceWarranty/{id}','PestController@saveDeviceWarranty');
 
-Route::get('/frontoffice/verifyCodeDeviceExist/{id}/{code}','PestController@verifyCodeDeviceExist');
+Route::get('/frontoffice/verifyPin/{id}/{pin}','PestController@verifyPin');
 
+//relatório pontual de cliente nao criado na plataforma
+Route::get('/frontoffice/reports/punctualList','PestController@getList');
+Route::get('/frontoffice/report/punctual','PestController@punctualData');
+Route::post('/frontoffice/report/savePunctual','PestController@savePunctualData');
+Route::get('/frontoffice/report/punctualData/{id}','PestController@punctualDataShow');
+
+Route::get('/frontoffice/verifyCodeDeviceExist/{id}/{code}','PestController@verifyCodeDeviceExist');
 
 //routes Registos
 Route::get('/frontoffice/insertProductConformities', 'RecordsController@insertConformities');

@@ -30,6 +30,9 @@
                                     Nome:<input class="form-control" placeholder="Nome" id='ownerName'  name="ownerName" required>
                                 </div>
                                 <div class="form-group">
+                                    PIN: <input class="form-control" placeholder="****" type="password" id="pin" name="pin" required>
+                                </div>
+                                <div class="form-group">
                                         <input type="radio" name="sex" value="M" checked >Sr
                                         <input type="radio" name="sex" value="F">Sra
                                </div>

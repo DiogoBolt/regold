@@ -519,3 +519,40 @@ function notshowOptions(){
     document.getElementById('subActiva').required=false;
 }
 
+///VERIFICAR O PIN
+function verifyPin(id) {
+
+    var pin=$('#pin').val();
+    var url=$('#form').attr('action');
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        type: 'GET',
+        url:'/frontoffice/verifyPin/'+id+'/'+pin,
+        async: false,
+        success:function (data) {
+            if(data==1) {
+                $.ajax({
+                    type:'POST',
+                    url:url,
+                    async:false,
+                    data:$("#form :input").serialize()
+                }).done(
+                    setTimeout(function(){
+                        window.location.replace('/frontoffice/documents/Controlopragas');
+                    },1000)
+                );
+            }else {
+                document.getElementById("error").style.display="inline"
+            }
+        }
+    })
+}
+
+
+

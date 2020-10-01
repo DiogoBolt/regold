@@ -323,20 +323,23 @@ class ClientController extends Controller
       $olderScheduled= Schedule::where('month',Carbon::now()->month)->pluck('idClient')->all();
 
       $clients=Customer::whereNotIn('c.id',$olderScheduled)
-          ->when($request->filled('cityInvoice'), function ($query) use ($inputs) {
-              return $query->where('c.city', '=', $inputs['cityInvoice']);
-          })
-          ->when($request->filled('search'), function ($query) use ($inputs) {
-              return $query->where('c.name', 'LIKE', '%' . $inputs['search'] . '%')
-                  ->orWhere('c.id', 'LIKE', '%' . $inputs['search'] . '%');
-          })
           ->from(Customer::alias('c'))
           ->Join(Report::alias('r'), 'r.idClient', '=', 'c.id')
-         /* ->whereMonth('r.created_at',Carbon::now()->month - 'c.contract_type')*/
-          ->select(['r.idClient','c.name','r.numberVisit','c.regoldiID','c.city','c.id'])
           ->groupBy('r.idClient')
+          ->select(['r.idClient','c.name','r.numberVisit','c.regoldiID','c.city','c.id','c.contract_type','r.created_at'])
           ->get();
 
+      foreach ($clients as $client)
+      {
+          $contract=$client->contract_type;
+          $today=Carbon::now()->startOfMonth()->month;
+          $nrMonths=$today-$contract;
+          $abc = Report::from(Report::alias('r'))
+              ->leftJoin(Customer::alias('c'),'c.id','=','r.idClient')
+              ->where('r.idClient',$client->id)->whereMonth('r.created_at','<=',$nrMonths)
+              ->select(['r.idClient','c.name','r.numberVisit','c.regoldiID','c.city','c.id','c.contract_type','r.created_at'])
+              ->get();
+      }
           $scheduledClients=Schedule::from(Schedule::alias('s'))
               ->leftJoin(Customer::alias('c'),'s.idClient','=','c.id')
               ->when($request->filled('month'),
@@ -351,7 +354,7 @@ class ClientController extends Controller
         $technicals=TechnicalHACCP::all();
         $cities=Cities::all();
 
-        return view('client.indexRF',compact('clients','months','scheduledClients','cities','reports','districts','technicals'));
+        return view('client.indexRF',compact('clients','abc','months','scheduledClients','cities','reports','districts','technicals'));
     }
 
     public function saveScheduleRegolfood(Request $request,$id)
@@ -362,6 +365,7 @@ class ClientController extends Controller
         $schedule_haccp->technical=$inputs['technical'];
         $schedule_haccp->month=Carbon::now()->month;
         $schedule_haccp->idClient=$id;
+        $schedule_haccp->obs=$inputs['obs'];
         $schedule_haccp->save();
 
         return redirect('/clients/regolfood');
@@ -482,6 +486,7 @@ class ClientController extends Controller
             $user->email = $inputs['loginMail'];
             $user->userType=4;
             $user->password = bcrypt($inputs['password']);
+            $user->pin=bcrypt($inputs['pin']);
             $user->save();
             $establisment->ownerID=$user->id;
         }else{
@@ -692,7 +697,6 @@ class ClientController extends Controller
         return redirect('/clients/'.$inputs['id']);
     }
 
-
     public function deleteCustomer(Request $request) 
     {
         /* Delete user favourites */
@@ -815,7 +819,6 @@ class ClientController extends Controller
         if($request->hasfile('receipt') and Customer::where('id',$inputs['client'])->first() != null)
         {
             $receipt = new Receipt;
-
             $receipt->client_id = $inputs['client'];
             $receipt->name = date('Y-m-d');
             $receipt->document_type_id = $inputs['type'];
@@ -837,23 +840,18 @@ class ClientController extends Controller
             ])->first();
 
             $message = new Message();
-
             $message->receiver_id = $clientUser->ownerID;
             $message->sender_id = Auth::user()->id;
             $message->text = "Foi adicionado um documento à sua conta";
             $message->viewed = 0;
-            
             $message->save();
         }
-
         return back();
-
     }
 
     public function groups()
     {
         $groups = Group::query()->orderBy('next_visit')->get();
-
 
         return view('group.index',compact('groups'));
     }
@@ -868,12 +866,10 @@ class ClientController extends Controller
         $inputs = $request->all();
 
         $group = new Group;
-
         $group->name = $inputs['name'];
         $group->visit_time = $inputs['visit_time'];
         $group->next_visit = $inputs['next_visit'];
         $group->order_deadline = Carbon::parse($inputs['next_visit'])->subDay(4);
-
         $group->save();
 
         $groups = Group::all();
@@ -899,7 +895,6 @@ class ClientController extends Controller
         $group->visit_time = $inputs['visit_time'];
         $group->next_visit = $inputs['next_visit'];
         $group->order_deadline = Carbon::parse($inputs['next_visit'])->subDay(4);
-
         $group->save();
 
         $groups = Group::query()->orderBy('next_visit')->get();
@@ -934,7 +929,6 @@ class ClientController extends Controller
                     'g.name as group',
                 ])->get();
         }
-
         $districts = Districts::all();
 
         return view('client.index',compact('clients','districts'));
@@ -962,7 +956,6 @@ class ClientController extends Controller
     public function documentTypes()
     {
         $documentTypes = DocumentType::all();
-
 
         return view('documents.index',compact('documentTypes'));
     }
@@ -1002,7 +995,6 @@ class ClientController extends Controller
     {
         $inputs = $request->all();
         $type = DocumentType::where('id',$inputs['id'])->first();
-
         $type->name = $inputs['name'];
         $type->save();
 
@@ -1028,11 +1020,8 @@ class ClientController extends Controller
         $inputs = $request->all();
 
         $category = new Category;
-
         $category->name = $inputs['name'];
-
         $category->save();
-
         $documentTypes = Category::all();
 
         return view('categories.index',compact('documentTypes'));

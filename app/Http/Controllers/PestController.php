@@ -22,6 +22,7 @@ use App\OrderLine;
 use App\Product;
 use App\Receipt;
 use App\ReportPunctual;
+use App\ReportPunctualData;
 use App\ReportWarranty;
 use App\User;
 use App\Section;
@@ -37,10 +38,12 @@ use App\RulesList;
 use App\Report;
 use App\RulesAnswerReport;
 use App\ReportSectionObs;
+use Illuminate\Hashing\BcryptHasher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -66,6 +69,10 @@ class PestController extends Controller
         $report_pest = Report::where('idClient',$auxClientId)
             ->first();
 
+        $client=Customer::where('id',$auxClientId)
+            ->select(['ownerID'])
+            ->first();
+
         $devices=Devices::where('idClient',$auxClientId)->get();
 
         $count=0;
@@ -76,7 +83,7 @@ class PestController extends Controller
             $device->index=$count;
         }
 
-        return view('frontoffice.firstService',compact('devices','report_pest'));
+        return view('frontoffice.firstService',compact('devices','client','report_pest'));
     }
 
     public function savefirstService(Request $request)
@@ -230,6 +237,15 @@ class PestController extends Controller
     {
         $auxClientId = Session::get('clientImpersonatedId');
 
+
+
+        $client=Customer::where('id',$auxClientId)
+            ->select(['ownerID'])
+            ->first();
+
+
+
+
         $devices=Devices::where('idClient',$auxClientId)->get();
         $count=0;
 
@@ -243,7 +259,7 @@ class PestController extends Controller
             $device->index=$count;
         }
 
-        return view ('frontoffice.maintenancePest',compact('devices'));
+        return view ('frontoffice.maintenancePest',compact('devices','client'));
     }
 
     public function saveMaintenance(Request $request)
@@ -398,8 +414,13 @@ class PestController extends Controller
 
     public function punctualPest()
     {
+        $auxClientId = Session::get('clientImpersonatedId');
 
-        return view('frontoffice.punctualPest');
+        $client=Customer::where('id',$auxClientId)
+            ->select(['ownerID'])
+            ->first();
+
+        return view('frontoffice.punctualPest',compact('client'));
     }
 
     public function savePunctualPest(Request $request)
@@ -491,6 +512,9 @@ class PestController extends Controller
         /*$abc=Devices::where('idClient',$auxClientId)
             ->where('status','!=',null)
             ->get();*/
+        $client=Customer::where('id',$auxClientId)
+            ->select(['ownerID'])
+            ->first();
 
         foreach ($devices as $device)
         {
@@ -498,7 +522,7 @@ class PestController extends Controller
             $device->index=$count;
         }
 
-        return view ('frontoffice.warrantyPest',compact('devices'));
+        return view ('frontoffice.warrantyPest',compact('devices','client'));
     }
     
     public function saveWarrantyPest(Request $request)
@@ -641,4 +665,60 @@ class PestController extends Controller
         return redirect('/frontoffice/warranty');
     }
 
+    public function getList()
+    {
+        $punctual_datas=ReportPunctualData::get();
+
+        return view('frontoffice.punctualPestDataList',compact('punctual_datas'));
+    }
+    public function punctualData()
+    {
+        return view('frontoffice.punctualPestData');
+    }
+    public function savePunctualData(Request $request)
+    {
+        $inputs = $request->all();
+
+        $auxTechnical = Session::get('impersonated');
+
+        $punctual_data=new ReportPunctualData();
+        $punctual_data->name=$inputs['name'];
+        $punctual_data->address=$inputs['address'];
+        $punctual_data->nif=$inputs['nif'];
+        $punctual_data->value=$inputs['value'];
+        $punctual_data->specie=$inputs['specie'];
+        $punctual_data->note=$inputs['note'];
+        $punctual_data->sub_active=$inputs['subs_active'];
+        $punctual_data->action=$inputs['action'];
+        /*$punctual_data->id_tecnichal=$technicalInfo->userTypeID;*/
+        $punctual_data->save();
+
+        return redirect('/frontoffice/reports/punctualList');
+
+    }
+    public function punctualDataShow($id)
+    {
+        $report_punctual_data = ReportPunctualData::where('id',$id)
+            ->first();
+
+        $report_punctual_data->technicalName= User::where('userTypeID',$report_punctual_data->id_tecnichal)
+            ->where('userType',3)
+            ->select(['name'])
+            ->pluck('name')
+            ->first();
+
+        return view('frontoffice.punctualDataShow',compact('report_punctual_data','idReport'));
+    }
+
+    public function verifyPin($id,$pin)
+    {
+        $pinClient=User::where('id',$id)
+            ->select(['pin'])
+            ->first();
+
+        if(Hash::check($pin, $pinClient->pin)) {
+           return 1;
+        }else
+            return 0;
+    }
 }

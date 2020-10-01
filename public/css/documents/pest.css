@@ -30,3 +30,13 @@ input[type=radio]+label{
 .labelError{
     color: red;
 }
+.btn-add
+{
+    background-color:var(--main-color);
+    color:white;
+}
+
+.modal-del
+{
+    color: white;
+}

@@ -1,10 +1,9 @@
-@extends('layouts.frontoffice')
+@extends('layouts.app')
 
 @section('styles')
     <!-- Custom CSS -->
-    <link href="{{ asset('/css/documents/pest.css') }}" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="{{ mix('/css/app.css') }}">
-
+    <link href="{{ asset('css/documents/type.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/orders/orders-bo.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -18,11 +17,6 @@
         </div>
     </div>
 
-    {{-- Go Back Button --}}
-    <a class="back-btn" href="/frontoffice/documents/Controlopragas">
-        <span class="back-btn__front"><strong>Voltar</strong></span>
-        <span class="back-btn__back"><strong>Documentos Controlo Pragas</strong></span>
-    </a>
 
     <h1 class="title">Pontual</h1>
     <div class="container">
@@ -30,8 +24,27 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <form id="form" action="/frontoffice/savePunctual" method="post">
+                        <form action="/frontoffice/report/savePunctual" method="post">
                             {{ csrf_field() }}
+                            <div id="ownerRegister" style="display:block">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        Nome:<input class="form-control" placeholder="Nome" id='name'  name="name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        NIF: <input id="nif" class="form-control" type="number" pattern="[0-9]{9}" placeholder="Insira o NIF"  name="nif" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        Morada: <input class="form-control" placeholder="Insira a Morada"  id="address" name="address" required>
+                                    </div>
+                                    <div class="form-group">
+                                        Valor: <input type="number" step="0.01" placeholder="Valor" min=0 class="form-control" name="value">
+                                    </div>
+                                </div>
+                            </div>
+
                             <div>
                                 <label>Espécie a controlar:</label>
                             </div>
@@ -81,7 +94,7 @@
                                 <textarea class="form-control"  name="note"></textarea>
                             </div>
                             <div>
-                                <button type="button" data-toggle="modal" data-target="#myModal"  class="btn btn-add" >Concluir</button>
+                                <button class="btn btn-add" >Concluir</button>
                             </div>
                         </form>
                     </div>
@@ -89,33 +102,4 @@
             </div>
         </div>
     </div>
-
-    <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">x</button>
-                    <h4 class="modal-title" >PIN Cliente</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="codes" id="oneCode">
-                        <div class="form-group">
-                            Insira o Pin:
-                            <input name="pin" class="form-control" type="password" placeholder="****" id="pin">
-                            <label class="labelError" id="error" style="display: none">Pin Errado!</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button id="{{$client->ownerID}}" class="btn modal-del" onclick="verifyPin(this.id)">
-                        <strong>Confirmar</strong>
-                    </button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                        <strong>Cancelar</strong>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
-

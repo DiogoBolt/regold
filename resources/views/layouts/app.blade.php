@@ -90,7 +90,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/newsalesman">
+                                            <a>
                                                 RegolPest
                                             </a>
                                         </li>
@@ -106,6 +106,12 @@
                             <li>
                                 <a href="/processedOrders">
                                     Encomendas Processadas
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="/frontoffice/reports/punctualList">
+                                    Relatório Pontual
                                 </a>
                             </li>
 

@@ -12,14 +12,14 @@
     <script src="{{ URL::asset('/js/report.js') }}"></script>
 
     <div class="container-bar">
-        <p class="container-bar_txt">Dispositivo</p>
+        <p class="container-bar_txt">Dispositivo {{$devices->number_device}}</p>
         <div class="container-bar_img">
             <img src="/img/haccp_icon.png"></a>
         </div>
     </div>
 
     {{-- Go Back Button --}}
-    <a class="back-btn" href="/frontoffice/maintenance">
+    <a class="back-btn" href="/frontoffice/warranty">
         <span class="back-btn__front"><strong>Voltar</strong></span>
         <span class="back-btn__back"><strong>Documentos Controlo Pragas</strong></span>
     </a>
@@ -68,5 +68,4 @@
             </div>
         </div>
     </div>
-
 @endsection

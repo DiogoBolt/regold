@@ -30,7 +30,7 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <form action="/frontoffice/savefirstService" method="post">
+                        <form id="form" action="/frontoffice/savefirstService" method="post">
                             {{ csrf_field() }}
                             <div>
                                 <label>Espécie a controlar:</label>
@@ -41,7 +41,7 @@
                                 <label for="barata">Barata</label>
                                 <input type="radio" name="specie" id="barata" value="Barata" required>
                                 <label for="barata">Rato e Barata</label>
-                                <input type="radio" name="specie" id="barata" value="Rato e Barata" required>
+                                <input type="radio" name="specie" id="rato e barata" value="Rato e Barata" required>
                             </div>
 
                             @foreach($devices as $device)
@@ -76,7 +76,7 @@
                                 <textarea class="form-control"  name="note"></textarea>
                             </div>
                             <div>
-                                <button class="btn btn-add" >Concluir</button>
+                                <button type="button" data-toggle="modal" data-target="#myModal"  class="btn btn-add" >Concluir</button>
                             </div>
                         </form>
                     </div>
@@ -84,4 +84,34 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">x</button>
+                    <h4 class="modal-title" >PIN Cliente</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="codes" id="oneCode">
+                        <div class="form-group">
+                            Insira o Pin:
+                            <input name="pin" class="form-control" type="password" placeholder="****" id="pin">
+                            <label class="labelError" id="error" style="display: none">Pin Errado!</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="{{$client->ownerID}}" class="btn modal-del" onclick="verifyPin(this.id)">
+                        <strong>Confirmar</strong>
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <strong>Cancelar</strong>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
+
