@@ -24,7 +24,7 @@
 
    h1.title { 
     color: #000;
-    font-family: 'Rouge Script', cursive;
+    font-family: Univia Pro;
     font-size: 70px; font-weight: normal; 
     line-height: 48px;
     margin: 0 0 50px;
@@ -33,8 +33,8 @@
    }
   
    
-   h1.title { color: #000; font-family: 'Lobster', cursive; font-size: 40px; font-weight: normal; line-height: 48px; margin: 0 0 18px; text-shadow: 1px 0 0 #fff; }
-   h2.subTitle { color: #000; font-family: 'Lobster', cursive; font-size: 30px; font-weight: normal; line-height: 48px; margin: 0 0 18px; text-shadow: 1px 0 0 #fff; text-align: center;}
+   h1.title { color: #000; font-family: Univia Pro; font-size: 40px; font-weight: normal; line-height: 48px; margin: 0 0 18px; text-shadow: 1px 0 0 #fff; }
+   h2.subTitle { color: #000; font-family: Univia Pro; font-size: 30px; font-weight: normal; line-height: 48px; margin: 0 0 18px; text-shadow: 1px 0 0 #fff; text-align: center;}
   
   label{
     color: black;
@@ -42,7 +42,7 @@
   }
   
   .lblBold{ 
-    font-family: "Roboto", sans-serif;
+    font-family: Univia Pro;
     font-weight: bold;
   }
   

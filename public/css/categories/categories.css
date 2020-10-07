@@ -17,32 +17,56 @@
 }
 
 .fav{
+
+  background-color: rgb(108 ,202 ,152);
   height: 100px;
-  background-color: rgba(191,255,174,0.93);
+
   position: relative;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
-  color: white;
-  font-size: 25px;
+  box-shadow: 3px 4px 0px 0px #899599;
+  color: #E5E1E6;
+  border-radius: 15px;
+  border: 1px solid #d6bcd6;
+  font-size: 18px;
+  font-weight: bolder;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.fav:hover {
+  background:linear-gradient(to bottom, rgb(0, 149, 121) 5%, rgb(108, 202, 152) 100%);
+  background-color:deeppink;
+}
+.fav:active {
+  position:relative;
+  top:1px;
+}
+
+
+
+.category-body {
+  height: 100px;
+  background-color: var(--main-color);
+  position: relative;
+  box-shadow: 3px 4px 0px 0px #899599;
+  color: #E5E1E6;
+  border-radius:15px;
+  border:1px solid #d6bcd6;
+  font-size: 18px;
   font-weight: bolder;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.category-body {
-  height: 100px;
-  background-color: var(--main-color);
-  position: relative;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
-  color: white;
-  font-size: 25px;
-  font-weight: bolder;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.category-body:hover {
+  background:linear-gradient(to bottom, rgb(0, 149, 121) 5%, rgb(108, 202, 152) 100%);
+  background-color:deeppink;
 }
+.category-body:active {
+  position:relative;
+  top:1px;
+}
+
 
 /*.category-body img {
   width: 80%;
@@ -66,7 +90,7 @@
 /* Document types */
 
 .HACCP .category-body {
-  background-color: rgb(255, 165, 0);
+  background-color: #153E35;
 }
 
 /*.HACCP img {
@@ -76,7 +100,7 @@
 }*/
 
 .Controlopragas .category-body {
-  background-color: #654321;
+  background-color: #153E35;
 }
 
 .Controlopragas img {
@@ -85,7 +109,7 @@
 }
 
 .Contabilistico .category-body {
-  background-color: rgb(144, 144, 144);
+  background-color: #153E35;
 }
 
 /* Search */

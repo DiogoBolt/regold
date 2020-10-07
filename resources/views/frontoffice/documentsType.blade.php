@@ -80,7 +80,6 @@
                             <option value="Rei das carnes222">REI DAS CARNES222</option>
                             <option value="Rei das carnes333">REI DAS CARNES333</option>
                         </select>
-
                         <div>
                             <a href="/frontoffice/insertProductConformities" class="btnNEXT"><strong>Seguinte</strong></a>
                         </div>

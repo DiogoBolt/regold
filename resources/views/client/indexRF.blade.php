@@ -175,9 +175,9 @@
             type: 'POST',
             url: "/schedule/regolfood/save/"+id,
             data: {technical}
-        }).then(
+        })/*.then(
             window.location.reload()
-        );
+        );*/
     }
 
 </script>

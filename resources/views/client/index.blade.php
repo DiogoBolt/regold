@@ -44,6 +44,9 @@
                                 <button class="btn" type="submit" form="filter-form">Filtrar</button>
                             </form>
                         </div>
+
+                        <a href="/clients/new" class="btn btn-add"><strong>Novo Cliente</strong></a>
+
                         <h3>{{$unpaid}}/{{$total}} Encomendas</h3>
                         <table class="table">
                             <tr>
@@ -82,7 +85,7 @@
                             @endforeach
                         </table>
 
-                        <a href="/clients/new" class="btn btn-add"><strong>Novo Cliente</strong></a>
+
                     </div>
                 </div>
             </div>

@@ -33,12 +33,15 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/clients') }}">
-                        <img src="{{ URL::to('/') }}/img/navbar/logoindexcolor.png" alt="logo">
+                        <img src="{{ URL::to('/') }}/img/navbar/logoRegolfood.png" alt="logo">
                     </a>
+
+
 
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
+
             
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">

@@ -87,10 +87,10 @@
                             @endforeach
                             </tbody>
                         </table>
-                    </div>
-                    <div>
-                        <label class="lblBold" style="color: red">Recomendações: </label>
-                        <label> {{$report_maintenance->note}}</label>
+                        <div>
+                            <label class="lblBold" >Recomendações: </label>
+                            <label> {{$report_maintenance->note}}</label>
+                        </div>
                     </div>
                 </div>
             </div>

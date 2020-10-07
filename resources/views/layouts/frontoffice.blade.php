@@ -45,7 +45,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/home') }}">
-                        <img src="{{ URL::to('/') }}/img/navbar/logoindexcolor.png" alt="logo">
+                        <img src="{{ URL::to('/') }}/img/navbar/logoRegolfood.png" alt="logo">
                     </a>
 
                     @auth

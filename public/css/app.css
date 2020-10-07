@@ -9,7 +9,7 @@
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 
 html {
-  font-family: sans-serif;
+  font-family: Univia Pro;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
@@ -133,7 +133,7 @@ code,
 kbd,
 pre,
 samp {
-  font-family: monospace, monospace;
+  font-family: Univia Pro;
   font-size: 1em;
 }
 
@@ -1405,7 +1405,7 @@ html {
 }
 
 body {
-  font-family: "Raleway", sans-serif;
+  font-family: Univia Pro;
   font-size: 14px;
   line-height: 1.6;
   color: #636b6f;
@@ -1944,7 +1944,7 @@ code,
 kbd,
 pre,
 samp {
-  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-family: Univia Pro;
 }
 
 code {
@@ -3306,6 +3306,7 @@ label {
   display: inline-block;
   max-width: 100%;
   margin-bottom: 5px;
+  margin: 5px;
   font-weight: 700;
 }
 
@@ -3966,7 +3967,6 @@ select[multiple].input-lg,
 
 .btn {
   display: inline-block;
-  margin-bottom: 0;
   font-weight: normal;
   text-align: center;
   white-space: nowrap;
@@ -3984,6 +3984,7 @@ select[multiple].input-lg,
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  margin-bottom: 20px;
 }
 
 .btn:focus,
@@ -4267,31 +4268,31 @@ fieldset[disabled] .btn-info.focus {
 }
 
 .btn-warning {
-  color: #fff;
-  background-color: #cbb956;
-  border-color: #c5b143;
+  color: #E5E1E6;
+  background-color: #153E35;
+  border-color: #153E35;
 }
 
 .btn-warning:focus,
 .btn-warning.focus {
-  color: #fff;
-  background-color: #b6a338;
-  border-color: #685d20;
+  color: #E5E1E6;
+  background-color: #009579;
+  border-color: #009579;
 }
 
 .btn-warning:hover {
-  color: #fff;
-  background-color: #b6a338;
-  border-color: #9b8a30;
+  color: #E5E1E6;
+  background-color: #009579;
+  border-color: #009579;
 }
 
 .btn-warning:active,
 .btn-warning.active,
 .open > .btn-warning.dropdown-toggle {
-  color: #fff;
-  background-color: #b6a338;
+  color: #E5E1E6;
+  background-color: #009579;
   background-image: none;
-  border-color: #9b8a30;
+  border-color: #009579;
 }
 
 .btn-warning:active:hover,
@@ -4303,9 +4304,9 @@ fieldset[disabled] .btn-info.focus {
 .open > .btn-warning.dropdown-toggle:hover,
 .open > .btn-warning.dropdown-toggle:focus,
 .open > .btn-warning.dropdown-toggle.focus {
-  color: #fff;
-  background-color: #9b8a30;
-  border-color: #685d20;
+  color: #E5E1E6;
+  background-color: #009579;
+  border-color: #009579;
 }
 
 .btn-warning.disabled:hover,
@@ -7476,7 +7477,7 @@ button.close {
   position: absolute;
   z-index: 1070;
   display: block;
-  font-family: "Raleway", sans-serif;
+  font-family: Univia Pro;
   font-style: normal;
   font-weight: 400;
   line-height: 1.6;
@@ -7610,7 +7611,7 @@ button.close {
   display: none;
   max-width: 276px;
   padding: 1px;
-  font-family: "Raleway", sans-serif;
+  font-family: Univia Pro;
   font-style: normal;
   font-weight: 400;
   line-height: 1.6;
@@ -7916,7 +7917,7 @@ button.close {
 .carousel-control .icon-next {
   width: 20px;
   height: 20px;
-  font-family: serif;
+  font-family: Univia Pro;
   line-height: 1;
 }
 

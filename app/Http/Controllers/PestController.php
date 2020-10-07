@@ -716,7 +716,7 @@ class PestController extends Controller
             ->select(['pin'])
             ->first();
 
-        if(Hash::check($pin, $pinClient->pin)) {
+        if(password_verify($pin, $pinClient->pin)) {
            return 1;
         }else
             return 0;

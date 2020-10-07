@@ -28,92 +28,108 @@
         <span class="back-btn__back"><strong>Documentos Controlo Pragas</strong></span>
     </a>
 
-    <h1 class="title">Relatório Instalação</h1>
-
     <div class="container">
         <div class="container-docs">
             @if(count($report_pest) > 0)
-                @foreach($report_pest as $reportPest)
-                    <div class="file">
-                        <div class="file-head">
-                            Relatório {{$reportPest->updated_at->toDateString()}}
-                        </div>
-                        <div class="file-body" href="/frontoffice/reportPestShow/{{$reportPest->id}}">
-                            <a href="/frontoffice/reportPestShow/{{$reportPest->id}}">
-                                <img class="file-body__img" src="{{asset('uploads\reports\Report.png')}}">
-                            </a>
-                        </div>
-                    </div>
-                @endforeach
+                <table class="table">
+                    <caption>Relatório Instalação</caption>
+                    <tr>
+                        <th>Nº Relatório</th>
+                        <th>Data/Hora</th>
+                        <th></th>
+                    </tr>
+
+                    @foreach($report_pest as $reportPest)
+                        <tr>
+                            <td>
+                                {{$reportPest->id}} Relatório
+                            </td>
+                            <td>{{$reportPest->updated_at}}</td>
+                            <td><a href="/frontoffice/reportPestShow/{{$reportPest->id}}">Ver</a></td>
+                        </tr>
+                    @endforeach
+                </table>
             @else
                 <h2>Sem Relatórios Realizados.</h2>
             @endif
         </div>
     </div>
-
-    <h1 class="title">Relatório Manutenção</h1>
 
     <div class="container">
         <div class="container-docs">
             @if(count($report_maintenance) > 0)
-                @foreach($report_maintenance as $reportMaintenance)
-                    <div class="file">
-                        <div class="file-head">
-                            Relatório {{$reportMaintenance->updated_at->toDateString()}}
-                        </div>
-                        <div class="file-body" href="/frontoffice/reportMaintenanceShow/{{$reportMaintenance->id}}">
-                            <a href="/frontoffice/reportMaintenanceShow/{{$reportMaintenance->id}}">
-                                <img class="file-body__img" src="{{asset('uploads\reports\Report.png')}}">
-                            </a>
-                        </div>
-                    </div>
-                @endforeach
+                    <table class="table">
+                        <caption>Relatório Manutenção</caption>
+                        <tr>
+                            <th>Nº Relatório</th>
+                            <th>Data/Hora</th>
+                            <th></th>
+                        </tr>
+
+                            @foreach($report_maintenance as $reportMaintenance)
+                                <tr>
+                                    <td>
+                                        {{$reportMaintenance->id}} Relatório
+                                    </td>
+                                    <td>{{$reportMaintenance->updated_at}}</td>
+                                    <td><a href="/frontoffice/reportMaintenanceShow/{{$reportMaintenance->id}}">Ver</a></td>
+                                </tr>
+                            @endforeach
+                    </table>
             @else
                 <h2>Sem Relatórios Realizados.</h2>
             @endif
         </div>
     </div>
-
-    <h1 class="title">Relatório Pontual</h1>
 
     <div class="container">
         <div class="container-docs">
             @if(count($report_punctual) > 0)
-                @foreach($report_punctual as $reportPunctual)
-                    <div class="file">
-                        <div class="file-head">
-                            Relatório {{$reportPunctual->updated_at->toDateString()}}
-                        </div>
-                        <div class="file-body" href="/frontoffice/reportPunctualShow/{{$reportPunctual->id}}">
-                            <a href="/frontoffice/reportPunctualShow/{{$reportPunctual->id}}">
-                                <img class="file-body__img" src="{{asset('uploads\reports\Report.png')}}">
-                            </a>
-                        </div>
-                    </div>
-                @endforeach
+                <table class="table">
+                    <caption>Relatório Pontual</caption>
+                    <tr>
+                        <th>Nº Relatório</th>
+                        <th>Data/Hora</th>
+                        <th></th>
+                    </tr>
+
+                    @foreach($report_punctual as $reportPunctual)
+                        <tr>
+                            <td>
+                                {{$reportPunctual->id}} Relatório
+                            </td>
+                            <td>{{$reportPunctual->updated_at}}</td>
+                            <td><a href="/frontoffice/reportPunctualShow/{{$reportPunctual->id}}">Ver</a></td>
+                        </tr>
+                    @endforeach
+                </table>
             @else
                 <h2>Sem Relatórios Realizados.</h2>
             @endif
         </div>
     </div>
 
-    <h1 class="title">Relatório Garantia</h1>
-
     <div class="container">
         <div class="container-docs">
             @if(count($report_warranty) > 0)
-                @foreach($report_warranty as $reportWarranty)
-                    <div class="file">
-                        <div class="file-head">
-                            Relatório {{$reportWarranty->updated_at->toDateString()}}
-                        </div>
-                        <div class="file-body" href="/frontoffice/reportWarrantyShow/{{$reportWarranty->id}}">
-                            <a href="/frontoffice/reportWarrantyShow/{{$reportWarranty->id}}">
-                                <img class="file-body__img" src="{{asset('uploads\reports\Report.png')}}">
-                            </a>
-                        </div>
-                    </div>
-                @endforeach
+                <table class="table">
+                    <caption>Relatório Garantia</caption>
+                    <tr>
+                        <th>Nº Relatório</th>
+                        <th>Data/Hora</th>
+                        <th></th>
+                    </tr>
+
+                    @foreach($report_warranty as $reportWarranty)
+                        <tr>
+                            <td>
+                                {{$reportWarranty->id}} Relatório
+                            </td>
+                            <td>{{$reportWarranty->updated_at}}</td>
+                            <td><a href="/frontoffice/reportWarrantyShow/{{$reportWarranty->id}}">Ver</a></td>
+                        </tr>
+                    @endforeach
+                </table>
             @else
                 <h2>Sem Relatórios Realizados.</h2>
             @endif
@@ -121,3 +137,5 @@
     </div>
 
 @endsection
+
+<?php $i=0 ?>

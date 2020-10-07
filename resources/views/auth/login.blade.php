@@ -10,7 +10,7 @@
 
     <div class="col-md-8 col-md-offset-2">
         <div>
-            <img src="{{ asset('img/navbar/logoindexcolor.png') }}" class="img-responsive logo" alt="logo"/>
+            <img src="{{ asset('img/navbar/RegolFoodLogin.png') }}" class="img-responsive logo" alt="logo"/>
 
             <div class="panel-body">
                 <form class="form-horizontal" method="POST" action="{{ route('login') }}">

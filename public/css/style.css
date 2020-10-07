@@ -5,7 +5,7 @@
 
 /*** Manel additions ***/
 :root {
-    --main-color: #9ac266; 
+    --main-color: #153E35;
     --secondary-green: darkgreen;
     --light-green: #ddf0de;
 }
@@ -38,7 +38,7 @@ p,
 li,
 li a,
 label {color: #555;}
-a {color: #72c02c; text-decoration: none;}
+a {color: rgb(61, 174, 43); text-decoration: none;}
 a,
 a:focus,
 a:hover,
@@ -51,7 +51,7 @@ select::-ms-expand {display: none;}
 
 button {
     background-color: var(--main-color);
-    color: #fff;
+    color: #E5E1E6;
 }
 
 .header-v6 {z-index: 99; position: relative;}
@@ -266,7 +266,7 @@ button {
 
 .list-group-item:first-child,
 .list-group-item:last-child {border-radius: 0;}
-.list-toggle:after {top: 7px;right: 10px;color: #777;font-size: 14px;content: "\f105";position: absolute;font-weight: normal;display: inline-block;font-family: FontAwesome;}
+.list-toggle:after {top: 7px;right: 10px;color: #777;font-size: 14px;content: "\f105";position: absolute;font-weight: normal;display: inline-block;font-family: Univia Pro;}
 .list-toggle.active:after {color: #fff;content: "\f107";}
 
 .footer-logo {margin: 17px 0 20px;}
@@ -305,9 +305,9 @@ h4 {line-height: 25px;}
 h5 {line-height: 20px;}
 h6 {line-height: 18px;}
 
-.font-open-sans {font-family: "Open Sans", Arial, sans-serif;}
+.font-open-sans {font-family: Univia Pro;}
 
-h1, h2, h3, h4, h5, h6 {color: #555;margin-top: 5px;text-shadow: none;font-weight: normal;font-family: "Open Sans", Arial, sans-serif;}
+h1, h2, h3, h4, h5, h6 {color: #555;margin-top: 5px;text-shadow: none;font-weight: normal;font-family: Univia Pro;}
 h1 i, h2 i, h3 i, h4 i, h5 i, h6 i {margin-right: 5px;}
 
 .headline-center {text-align: center;position: relative;}
@@ -439,7 +439,7 @@ img.img-center,.img-center img {margin-left: auto; margin-right: auto;}
 .cube-portfolio .cbp-l-caption-buttonRight {background: #72c02c;}
 .cube-portfolio .cbp-l-caption-buttonLeft:hover,
 .cube-portfolio .cbp-l-caption-buttonRight:hover {background: #5fb611;}
-.cube-portfolio .cbp-l-grid-agency-title {color: #fff !important; font-size: 15px; font-weight: 400; letter-spacing: 1px; text-transform: uppercase; font-family: 'Open Sans', sans-serif;}
+.cube-portfolio .cbp-l-grid-agency-title {color: #fff !important; font-size: 15px; font-weight: 400; letter-spacing: 1px; text-transform: uppercase; font-family: Univia Pro;}
 .cube-portfolio .cbp-l-grid-agency-desc {color: #fff; font-size: 11px; text-transform: uppercase;}
 .cube-portfolio .cbp-title-dark .cbp-l-grid-agency-title {color: #444 !important;}
 .cube-portfolio .cbp-title-dark .cbp-l-grid-agency-desc {color: #555;}
@@ -3553,9 +3553,9 @@ img.img-center,.img-center img {margin-left: auto; margin-right: auto;}
  }
  
  .navbar-brand img {
-     margin-top:-4px; 
-     margin-left:-10px; 
-     width:75px;
+     margin-top:-45px;
+     margin-left:-60px;
+     width:200px;
  }
  
  .navbar-cart {
@@ -3588,7 +3588,7 @@ img.img-center,.img-center img {margin-left: auto; margin-right: auto;}
   
   .container-bar_txt {
     text-transform: uppercase;
-    color: #fff;
+    color: #E5E1E6;
     font-size: 16px;
     font-weight: bold;
     display: inline-block;

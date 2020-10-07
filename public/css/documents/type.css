@@ -23,7 +23,7 @@
   height: 46px;
   position: relative;
   background-color: #808080;
-  color: #fff;
+  color: #E5E1E6;
   font-weight: bold;
   font-size: 18px;
   text-transform: uppercase;
@@ -127,7 +127,7 @@
 /*** OLEO ***/
 
 .active{
-  color:#FFF
+  color:#E5E1E6
 }
 
 .btn-oilRecord {
@@ -173,14 +173,64 @@
 
 /*** REPORTPESTLIST ***/
 
-h1.title {
-  color: #000;
-  font-family: 'Rouge Script', cursive;
-  font-size: 70px; font-weight: normal;
-  line-height: 48px;
-  margin: 0 0 50px;
-  text-align: center;
-  text-shadow: 1px 1px 2px #082b34;
+.table {
+  background-color: #fff;
 }
 
-h1.title { color: #000; font-family: 'Lobster', cursive; font-size: 40px; font-weight: normal; line-height: 48px; margin: 0 0 18px; text-shadow: 1px 0 0 #fff; }
+.table > tbody > tr > td,
+.table > tbody > tr > th,
+.table > tfoot > tr > td,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > thead > tr > th {
+  border-top: none;
+  vertical-align: middle;
+}
+caption {
+  background: #153E35;
+  font-size: 25px;
+  text-align: center;
+  color: #E5E1E6;
+}
+
+.table th {
+  background-color: #009579;
+  color: #E5E1E6;
+  text-align: center;
+  font-size: 18px;
+}
+
+.table tr:nth-child(odd) {
+  background-color: var(--light-green);
+}
+.table td{
+  font-size: 18px;
+}
+.table td img {
+  width: 100px;
+  margin: 0 auto;
+  display: block;
+}
+
+/*Butao novo relatorio*/
+
+.file-link {
+  display: inline-block;
+  color: var(--main-color);
+  padding: 3px 12px;
+  text-align: center;
+  border: 2px solid var(--main-color);
+  border-radius: 15px;
+}
+
+.file-link:hover {
+  text-decoration: none;
+  color: #fff;
+  background-color: var(--main-color);
+}
+#print-link, #filter-link {
+  display: block;
+  margin-bottom: 20px;
+  padding: 6px 12px;
+}
+

@@ -20,7 +20,7 @@
 
 .table th {
   background-color: var(--main-color);
-  color: #fff;
+  color: #E5E1E6;
 }
 
 .table tr:nth-child(odd) {

@@ -74,12 +74,11 @@
                                 <label class="lblBold">Substâncias Activas: </label>
                                 <label>{{$report_punctual_data->sub_active}}</label>
                             </div>
+                            <div>
+                                <label class="lblBold">Recomendações: </label>
+                                <label> {{$report_punctual_data->note}}</label>
+                            </div>
                         </div>
-                    </div>
-
-                    <div>
-                        <label class="lblBold" style="color: red">Recomendações: </label>
-                        <label> {{$report_punctual_data->note}}</label>
                     </div>
                 </div>
             </div>

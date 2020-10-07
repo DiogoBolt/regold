@@ -18,7 +18,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="col-sm-12">
-                        <img class="salesman-img img-responsive" src="/img/navbar/logoindexcolor.png"/>
+
                         
                         <button class="btn">
                             <a href="/clients/edit/{{$client->id}}" style="color: #fff;">Editar</a>

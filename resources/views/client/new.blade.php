@@ -18,9 +18,6 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <div>
-                        <img class="img-responsive add-img" src="/img/navbar/logoindexcolor.png"/>
-                    </div>
                     <form action="/clients/add" method="post" onsubmit="return validateForm()" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div id="ownerRegister" style="display:block">

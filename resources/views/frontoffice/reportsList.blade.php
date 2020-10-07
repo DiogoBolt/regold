@@ -31,20 +31,26 @@
     <div class="container">
         <div class="container-docs">
             @if(count($reports) > 0)
-                @foreach($reports as $report)
-                    <div class="file">
-                        <div class="file-head">
-                           Relatório {{$report->updated_at->toDateString()}}
-                        </div>
-                        <div class="file-body" href="/frontoffice/reportShow/{{$report->id}}">
-                            <a href="/frontoffice/reportShow/{{$report->id}}">
-                                <img class="file-body__img" src="{{asset('uploads\reports\Report.png')}}">
-                            </a>
-                        </div>
-                    </div>
-                @endforeach      
+                <table class="table">
+                    <caption>Relatórios</caption>
+                    <tr>
+                        <th>Nº Relatório</th>
+                        <th>Data/Hora</th>
+                        <th></th>
+                    </tr>
+
+                    @foreach($reports as $report)
+                        <tr>
+                            <td>
+                                {{$report->id}} Relatório
+                            </td>
+                            <td>{{$report->updated_at}}</td>
+                            <td><a href="/frontoffice/reportShow/{{$report->id}}">Ver</a></td>
+                        </tr>
+                    @endforeach
+                </table>
             @else
-                <h2>Sem Relatórios Realizados.</h2>
+                <h1>Sem Relatórios Realizados.</h1>
             @endif
         </div>
     </div>

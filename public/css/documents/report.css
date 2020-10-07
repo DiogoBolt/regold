@@ -1,18 +1,21 @@
 /*** report ***/
 
+
+
  h1.title { 
   color: #000;
-  font-family: 'Rouge Script', cursive;
-  font-size: 70px; font-weight: normal; 
+   font-family: Univia Pro;
+  font-size: 70px; font-weight: normal;
   line-height: 48px;
   margin: 0 0 50px;
   text-align: center;
   text-shadow: 1px 1px 2px #082b34;
  }
 
- 
- h1.title { color: #000; font-family: 'Lobster', cursive; font-size: 40px; font-weight: normal; line-height: 48px; margin: 0 0 18px; text-shadow: 1px 0 0 #fff; }
- h2.subTitle { color: #000; font-family: 'Lobster', cursive; font-size: 30px; font-weight: normal; line-height: 48px; margin: 0 0 18px; text-shadow: 1px 0 0 #fff; text-align: center;}
+
+ h1.title { color: #000;
+   font-family:Univia Pro; font-size: 40px; font-weight: normal; line-height: 48px; margin: 0 0 18px; text-shadow: 1px 0 0 #fff; }
+ h2.subTitle { color: #000; font-family: Univia Pro; font-size: 30px; font-weight: normal; line-height: 48px; margin: 0 0 18px; text-shadow: 1px 0 0 #fff; text-align: center;}
 
 label{
   color: black;
@@ -20,7 +23,7 @@ label{
 }
 
 .lblBold{ 
-  font-family: "Roboto", sans-serif;
+  font-family: Univia Pro;
   font-weight: bold;
 }
 
@@ -345,4 +348,13 @@ main {
   font-size: 15px;
   margin-top: 5px;
   margin-left: 10%;
+}
+.btn-del{
+  margin:0 auto;
+  display:block;
+  color: #E5E1E6;
+  border: 2px solid rgb(0, 149, 121);
+  background-color: rgb(0, 149, 121);
+  border-radius: 10px;
+  margin-top: 5px;
 }

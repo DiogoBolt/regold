@@ -65,7 +65,7 @@
             <label id="visitNumber"> {{$visitNumber}} </label>
         </div>
 
-        <button onclick="continueReport()">Próximo</button>
+        <button class="btn-del" onclick="continueReport()">Próximo</button>
 
     </div>
     

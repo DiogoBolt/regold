@@ -51,8 +51,8 @@
                                 <input type="radio" name="device_status" id="em falta" value="em falta">
                                 <label for="inacessivel">Inacessivel</label>
                                 <input type="radio" name="device_status" id="inacessivel" value="inacessivel">
-                                <label for="deteorado">Deteorado</label>
-                                <input type="radio" name="device_status" id="deteorado" value="deteorado">
+                                <label for="deteriorado">Deteriorado</label>
+                                <input type="radio" name="device_status" id="deteriorado" value="deteriorado">
                             </div>
 
                             <div>

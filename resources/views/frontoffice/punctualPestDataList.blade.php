@@ -3,7 +3,6 @@
 @section('styles')
     <!-- Custom CSS -->
     <link href="{{ asset('css/documents/type.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/orders/orders-bo.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -22,20 +21,26 @@
     <div class="container">
         <div class="container-docs">
             @if(count($punctual_datas) > 0)
-                @foreach($punctual_datas as $punctual_data)
-                    <div class="file">
-                        <div class="file-head">
-                            Relatório {{$punctual_data->created_at->toDateString()}}
-                        </div>
-                        <div class="file-body" href="/frontoffice/report/punctualData/{{$punctual_data->id}}">
-                            <a href="/frontoffice/report/punctualData/{{$punctual_data->id}}">
-                                <img class="file-body__img" src="{{asset('uploads\reports\Report.png')}}">
-                            </a>
-                        </div>
-                    </div>
-                @endforeach
+                <table class="table">
+                    <caption>Relatórios</caption>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Data/Hora</th>
+                        <th></th>
+                    </tr>
+
+                    @foreach($punctual_datas as $punctual_data)
+                        <tr>
+                            <td>
+                                {{$punctual_data->name}}
+                            </td>
+                            <td>{{$punctual_data->updated_at}}</td>
+                            <td><a href="/frontoffice/report/punctualData/{{$punctual_data->id}}">Ver</a></td>
+                        </tr>
+                    @endforeach
+                </table>
             @else
-                <h2>Sem Relatórios Realizados.</h2>
+                <h1>Sem Relatórios Realizados.</h1>
             @endif
         </div>
     </div>

@@ -20,7 +20,7 @@
 
 .table th {
   background-color: var(--main-color);
-  color: #fff;
+  color: #E5E1E6;
 }
 
 .table tr:nth-child(odd) {
@@ -42,6 +42,8 @@
   border: 2px solid var(--main-color) !important;
   color: var(--main-color);
   margin-top: 10px;
+  margin-bottom: 10px;
+  float: right;
 }
 
 .btn-addNC {
@@ -59,10 +61,9 @@
 }
 
 .btn-del {
-  color: #fff;
-  border: 2px solid rgb(235, 72, 72);
-  background-color: rgb(235, 72, 72);
-  padding: 6px 12px;
+  color: #E5E1E6;
+  border: 2px solid rgb(0, 149, 121);
+  background-color: rgb(0, 149, 121);
   border-radius: 15px;
 }
 

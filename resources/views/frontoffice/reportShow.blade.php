@@ -17,10 +17,6 @@
                             <button class="btn btn-warning" onclick="printReport()">Imprimir</button>
                         </div>
 
-                         <div style="text-align: center; margin-bottom: 20px;">
-                            <img src="\img\regolfoodSmall.png" style="width:100px">
-                        </div>
-
                         <h1 class="title">Relatório</h1>
 
                         <div id="reportInfo">
