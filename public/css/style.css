@@ -21,9 +21,9 @@ body {
     color: #333; 
     font-size: 13px; 
     line-height: 1.6;
-    background-image: url('/img/fundowhite.jpg');
+    background-image: url('/img/fundo_agua.png');
     background-size:     100%;                      
-    background-repeat:   repeat;
+    background-repeat:   no-repeat;
     background-position: center center; 
     background-attachment: fixed;
 }

@@ -162,56 +162,46 @@
                         </div>
 
                         <div class="col-sm-6">
-                            <div class="form-group">
-                                Actividade do Cliente: <select class="form-control" name="activity" required>        
-                                    <option disabled selected value="">Selecione a Atividade/Tipo de Cliente</option>
-                                    
-                                    @foreach($activityTypes as $activityType)
-                                        <option value="{{$activityType->id}}">{{$activityType->designation}}</option>
-                                    @endforeach
+                            <div id="packs" class="form-group" >
+                                Tipo de Pack:  <select class="form-control" name="packs" onchange="packType(this)" >
+                                        <option disabled selected value="">Selecione o Tipo de Pack</option>
+                                        <option value="s">Pack S</option>
+                                        <option value="sp">Pack SP</option>
+                                        <option value="sp free">Pack SP Free</option>
+                                        <option value="st">Pack ST</option>
+                                        <option value="t">Pack T</option>
+                                    </select>
+                                </div>
+
+                            <div class="form-group" id="divThermos" style="display: none">
+                                Nº Termômetros: <input class="form-control" placeholder="NºTermômetros" type="number" name="n_thermos" >
+                            </div>
+
+                            <div id="divServicesType" class="form-group" style="display: none">
+                                Tipo de Serviços: <select class="form-control" name="serviceType" >
+                                    <option disabled selected value="">Selecione o Tipo de Serviço</option>
+                                    <option value="haccp">HACCP</option>
+                                    <option value="cp">Controlo de Pragas</option>
+                                    <option value="haccp/cp">HACCP e Controlo de Pragas</option>
                                 </select>
                             </div>
-                            
-                            <div class="form-group" id="clientType">
-                                Tipo Cliente:
-                                <br/>
-                                <div id="serviceTypesDiv">
-                                    @foreach($serviceTypes as $serviceType)
-                                        <input type="checkbox" onclick="myfuncao(this.value)" id="serviceType{{$serviceType->id}}" name="serviceType{{$serviceType->id}}" value="{{$serviceType->id}}">{{$serviceType->name}}
-                                        <br/> 
-                                    @endforeach
-                            </div>
 
-                                <div class="form-group">
-                                    Técnico HACCP: <select class="form-control" id="technical" name="technical" style="display: none">
-                                        <option disabled selected value="">Selecione o Técnico HACCP</option>
-                                        @foreach($technicalhaccp as $technical)
-                                            @if( $technical->id == Auth::user()->userTypeID )
-                                                <option selected value="{{$technical->id}}">{{$technical->name}}</option>
-                                            @else
-                                                <option value="{{$technical->id}}">{{$technical->name}}</option>
-                                            @endif
-                                        @endforeach
-                                    </select>
+                                <div class="form-group" id="divHaccp" style="display: none">
+                                    Visitas HACCP: <input class="form-control" placeholder="NºVisitas" type="number" name="haccp_visits" >
+                                </div>
+                                <div class="form-group" id="divCp" style="display: none">
+                                    Visitas Controlo de Pragas: <input class="form-control"  placeholder="NºVisitas" type="number" name="cp_visits" >
                                 </div>
 
-                                <div id="contract" class="form-group" style="display: none">
-                                    Tipo de contrato:  <select class="form-control" name="contract_type" {{--onchange="payType(this)"--}} required>
-                                        <option disabled selected value="">Selecione o Tipo de Contrato</option>
-                                        <option value="2">2 Visitas</option>
-                                        <option value="3">3 Visitas</option>
-                                        <option value="4">4 Visitas</option>
-                                        <option value="6">6 Visitas</option>
-                                        <option value="12">12 Visitas</option>
-                                    </select>
-                                </div>
 
-                            <div class="form-group">
-                                Valor Contrato: <input type="number" step="0.01" placeholder="Valor de Contrato" min=0 class="form-control" name="value">
+                            <div class="form-group" id="divEscalao" style="display: none">
+                                <input type="radio" name="escalao" value="basic" >Basic
+                                <input type="radio" name="escalao" value="premium">Premium
+                                <input type="radio" name="escalao" value="gold">Gold
                             </div>
 
-                            <div class="form-group">
-                                Método Pagamento:  <select class="form-control" name="payment_method" onchange="payType(this)" required>
+                           <div class="form-group" id="divPayment" style="display: none">
+                                Método Pagamento:  <select class="form-control" name="payment_method" onchange="payType(this)" >
                                         <option disabled selected value="">Selecione o Método de Pagamento</option>
                                         <option value="Debito Direto">Débito Direto</option>
                                         <option value="Contra Entrega">Contra Entrega</option>
@@ -222,6 +212,10 @@
 
                             <div id="divNib" class="form-group" style="display:none" >
                                 NIB: <input id="nib" type="number" placeholder="Insira o nib" class="form-control" type="number" name="nib">
+                            </div>
+
+                            <div class="form-group" id="divContract_value" style="display: none">
+                                Valor Contrato: <input type="number" step="0.01" placeholder="Valor de Contrato" min=0 class="form-control" name="value">
                             </div>
 
                             <div class="form-group">
@@ -235,7 +229,6 @@
                     <div>
                         <button class="btn btn-add" >Criar</button>
                     </div>
-                        </div>
                 </form>
                 </div>
             </div>

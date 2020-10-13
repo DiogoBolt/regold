@@ -496,7 +496,6 @@ class ClientController extends Controller
             ])->first();
             $establisment->ownerID=$idEmail->id;
         }
-
         //Registar o establecimento
         $establisment->name = $inputs['name'];
         $establisment->comercial_name = $inputs['invoiceName'];
@@ -527,14 +526,47 @@ class ClientController extends Controller
 
         //email
         $establisment->nif = $inputs['nif'];
-        $establisment->activity = $inputs['activity'];
         $establisment->salesman = $inputs['salesman'];
-        $establisment->technical_haccp = $inputs['technical'];
         $establisment->telephone = $inputs['telephone'];
-        $establisment->payment_method = $inputs['payment_method'];
-        $establisment->nib = $inputs['nib'];
-        $establisment->contract_value = $inputs['value'];
-        $establisment->contract_type = $inputs['contract_type'];
+
+        //packs
+
+        $establisment->pack_type = $inputs['packs'];
+        if(isset($inputs['serviceType'])==0) $establisment->service_type = null; else $establisment->service_type =$inputs['serviceType'];
+        if(isset($inputs['haccp_visits'])==0) $establisment->haccp_visits = null; else $establisment->haccp_visits=$inputs['haccp_visits'];
+        if(isset($inputs['cp_visits'])==0) $establisment->cp_visits = null; else $establisment->cp_visits=$inputs['cp_visits'];
+        if(isset($inputs['payment_method'])==0) $establisment->payment_method = null; else $establisment->payment_method=$inputs['payment_method'];
+        if(isset($inputs['value'])==0) $establisment->contract_value = null; else $establisment->contract_value=$inputs['value'];
+        if(isset($inputs['escalao'])==0)
+            $establisment->escala_type = null;
+        else{
+            $establisment->escala_type=$inputs['escalao'];
+            switch ($inputs['escalao']) {
+                case 'basic':
+                    $establisment->contract_value = 29.90;
+                    $establisment->haccp_visits = 2;
+                    $establisment->cp_visits = 1;
+                    $establisment->payment_method='Debito Direto';
+                    break;
+                case 'premium':
+                    $establisment->contract_value = 39.90;
+                    $establisment->haccp_visits = 3;
+                    $establisment->cp_visits = 2;
+                    $establisment->payment_method='Debito Direto';
+                    break;
+                case 'gold':
+                    $establisment->contract_value = 49.90;
+                    $establisment->haccp_visits = 4;
+                    $establisment->cp_visits = 3;
+                    $establisment->payment_method='Debito Direto';
+                    break;
+            }
+        }
+        if(isset($inputs['nib'])==0) $establisment->nib = null; else $establisment->nib=$inputs['nib'];
+        if(isset($inputs['n_thermos'])==0) $establisment->n_thermos=null; else $establisment->n_thermos=$inputs['n_thermos'];
+
+        //fim packs
+
         $establisment->regoldiID = $inputs['regoldiID'];
         $establisment->transport_note = $inputs['transport_note'];
         $establisment->save();
@@ -562,7 +594,7 @@ class ClientController extends Controller
         }
 
         //melhorar isto
-        if (array_key_exists('serviceType1', $inputs)) {
+        /*if (array_key_exists('serviceType1', $inputs)) {
             $serviceTypeClient = new ServiceTypeClient;
             $serviceTypeClient->id_client= $establisment->id;
             $serviceTypeClient->id_service_type=$inputs['serviceType1'];
@@ -581,7 +613,7 @@ class ClientController extends Controller
             $serviceTypeClient->id_client= $establisment->id;
             $serviceTypeClient->id_service_type=$inputs['serviceType4'];
             $serviceTypeClient->save();
-        }
+        }*/
        
         $userL = Auth::user();
 
@@ -599,11 +631,10 @@ class ClientController extends Controller
         }
 
         $unpaid = 0;
-
         $total = $clients->count();
         $districts = Districts::all();
 
-        return view('client.index',compact('clients','unpaid','total','districts'));
+        return redirect('/clients');
     }
 
     public function editCustomer($id)

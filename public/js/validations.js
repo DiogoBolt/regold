@@ -135,6 +135,9 @@ function getParishName(postalCode,id) {
         }
     }
 }
+
+
+
     function showRegistedMail(){
         document.getElementById("EmailInvoice").style.display="none";
         document.getElementById('ReceiptEmail').required=false;
@@ -158,14 +161,59 @@ function notshowAddressInvoice(){
     document.getElementById('invoicePostalCode').required=false
     document.getElementById('invoiceAddress').required=false;
 }
-function myfuncao(id) {
-    if(id==1)
-    {
-        document.getElementById("contract").style.display="block";
-        document.getElementById("contract").required=true;
-        document.getElementById("technical").style.display="block";
-        document.getElementById("technical").required=true;
+function packType(type) {
 
+    switch (type.value) {
+        case 's':
+            $("#divServicesType").show();
+            $("#divHaccp").show();
+            $("#divCp").show();
+            $("#divPayment").show();
+            $("#divContract_value").show();
+            $("#divEscalao").hide();
+            $("#divNib").hide();
+            $("#divThermos").hide();
+            break;
+        case 'sp':
+            $("#divServicesType").hide();
+            $("#divHaccp").hide();
+            $("#divCp").hide();
+            $("#divContract_value").hide();
+            $("#divNib").hide();
+            $("#divPayment").show();
+            $("#divEscalao").show();
+            $("#divThermos").hide();
+            break;
+        case 'sp free':
+            $("#divServicesType").hide();
+            $("#divHaccp").hide();
+            $("#divCp").hide();
+            $("#divContract_value").hide();
+            $("#divPayment").hide();
+            $("#divEscalao").show();
+            $("#divNib").show();
+            $("#divThermos").hide();
+            break;
+        case 'st':
+            $("#divServicesType").hide();
+            $("#divHaccp").hide();
+            $("#divCp").hide();
+            $("#divPayment").hide();
+            $("#divEscalao").show();
+            $("#divContract_value").show();
+            $("#divNib").show();
+            $("#divThermos").show();
+            break;
+        case 't':
+            $("#divServicesType").hide();
+            $("#divHaccp").hide();
+            $("#divCp").hide();
+            $("#divPayment").show();
+            $("#divEscalao").hide();
+            $("#divContract_value").show();
+            $("#divNib").show();
+            $("#divThermos").show();
+            break;
     }
 }
 
