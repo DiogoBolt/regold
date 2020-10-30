@@ -9,6 +9,8 @@
             <div class="panel">
                 <div class="panel-body table-responsive printall">
 
+                    <img class="logoReport" src="{{ URL::to('/') }}/img/navbar/RegolfoodLogin.png" alt="logo">
+
                     <div id="divBtns">
                         <a class="btn btn-warning" href="/frontoffice/pestReports">
                             Voltar
@@ -52,18 +54,22 @@
                                 <label> {{$report_maintenance->updated_at->format('H:i')}}</label>
                             </div>
                         </div>
-
                     </div>
+
                     <h1 class="title">Ações Desenvolvidas</h1>
-
-                    <div>
-                        <label>Foram revistos todos os dispositivos. </label>
-
-                        @if($report_maintenance->pest_presence=='sim')
-                        <label>Foi detetada a presença da praga {{$report_maintenance->specie}} e aplicada a substância activa {{$report_maintenance->sub_active}}.  </label>
-                        @else
-                            <label>Não foi detetada a presença de pragas.  </label>
-                            @endif
+                    <div id="reportInfo">
+                        <div id="divFloatLeft">
+                            <div>
+                                <label>Foram revistos todos os dispositivos. </label>
+                            </div>
+                            <div>
+                                @if($report_maintenance->pest_presence=='sim')
+                                    <label>Foi detetada a presença da praga {{$report_maintenance->specie}} e aplicada a substância activa {{$report_maintenance->sub_active}}.  </label>
+                                @else
+                                    <label>Não foi detetada a presença de pragas.  </label>
+                                @endif
+                            </div>
+                        </div>
                     </div>
 
                     <div class="tableContainer">
@@ -94,6 +100,9 @@
                     </div>
                 </div>
             </div>
+            <footer id="footer" style="display:none" >
+                <img class="report_footer" src="{{ URL::to('/') }}/img/footer.png" alt="logo">
+            </footer>
         </div>
     </div>
 </div>

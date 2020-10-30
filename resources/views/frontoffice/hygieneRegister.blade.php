@@ -24,7 +24,7 @@
     </nav>
 
     {{-- Go Back Button --}}
-    <a class="back-btn" href="/frontoffice/documents/registos">
+    <a class="back-btn" href="/frontoffice/documents/Registos">
         <span class="back-btn__front"><strong>Voltar</strong></span>
         <span class="back-btn__back"><strong>Documentos Registos</strong></span>
     </a>

@@ -225,7 +225,6 @@ class FrontofficeController extends Controller
                ->pluck('userType')->first();
        }
 
-
         $qtd = Section::where('activityClientId',$clientActivity)->count();
 
         if($qtd > 1){
@@ -302,7 +301,6 @@ class FrontofficeController extends Controller
         {
             $order_line->total = $product->price2 * $order_line->amount;
         }else{
-
             $order_line->total = $product->price1 * $order_line->amount;
         }
 

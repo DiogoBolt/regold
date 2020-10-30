@@ -10,6 +10,8 @@
             <div class="panel">
                 <div class="panel-body table-responsive printall">
 
+                        <img class="logoReport" src="{{ URL::to('/') }}/img/navbar/RegolfoodLogin.png" alt="logo">
+
                     <div id="divBtns">
                         <a class="btn btn-warning" href="/frontoffice/pestReports">
                             Voltar
@@ -96,7 +98,12 @@
                         </div>
                     </div>
                 </div>
+                <footer id="footer" style="display: none" >
+                    <img class="report_footer" src="{{ URL::to('/') }}/img/footer.png" alt="logo">
+                </footer>
             </div>
         </div>
     </div>
 </div>
+
+

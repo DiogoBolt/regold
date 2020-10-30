@@ -310,7 +310,6 @@ function continueAnswerReport(){
             }
         });
 
-
         $.ajax({
             type: 'POST',
             url: "/frontoffice/saveAnswers",
@@ -375,6 +374,7 @@ function printReport(){
         setTimeout(function () {
             console.log(document.querySelectorAll('.line'));
             document.getElementById("divBtns").style.display="none";
+            document.getElementById("footer").style.display="block";
             lines=document.querySelectorAll('.line');
 
             for (i = 0; i < lines.length; i++) {
@@ -384,6 +384,7 @@ function printReport(){
             document.title="report"+document.getElementById("date").innerHTML.trim();
             window.print();
             document.getElementById("divBtns").style.display="block";
+            document.getElementById("footer").style.display="none";
             
             for (i = 0; i < lines.length; i++) {
                 lines[i].style.display = "block";

@@ -6,19 +6,8 @@
 @endsection
 
 @section('content')
-    <div class="container-bar">
-        <p class="container-bar_txt">documentos {{ $super }}</p>
-        <div class="container-bar_img">
-            <img src="{{ asset('img/encomendas.jpg') }}" />
-        </div>
-    </div>
 
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item" aria-current="page">Home</li>
-            <li class="breadcrumb-item active" aria-current="page">Documentos {{ $super }}</li>
-        </ol>
-    </nav>
+
 
     {{-- Go Back Button --}}
     <a class="back-btn" href="/home">
@@ -31,6 +20,7 @@
             @foreach($types as $type)
                 <a class="category {{ $super }}" href="{{ $type->name === 'Faturas' ? '/frontoffice/invoices' : '/frontoffice/documents/'. $super . '/' . $type->id }}">
                     <div class="category-body">
+                        <img class="img-categories" src="{{ URL::to('/') }}{{$type->url_image}}">
                         {{ $type->name }}
                     </div>
                 </a>
@@ -39,19 +29,22 @@
             @if($super==='Registos')
                     <a class="category {{ $super }}" href="/frontoffice/oilRecords">
                         <div class="category-body">
-                            REGISTOS DE QUALIDADE DO ÓLEO
+                            <img class="img-categories" src="{{ URL::to('/') }}/img/relatorio.png">
+                            QUALIDADE DO ÓLEO
                         </div>
                     </a>
                     <a class="category {{ $super }}" href="/frontoffice/insertProductConformities">
                         <div class="category-body">
-                            REGISTOS DE ENTRADA DE PRODUTO
+                            <img class="img-categories" src="{{ URL::to('/') }}/img/relatorio.png">
+                            ENTRADA DE PRODUTO
                         </div>
                     </a>
             @endif
 
             @if($super === 'HACCP')
-                <a class="category {{ $super }}" href="/frontoffice/reports">
-                    <div class="category-body">
+                <a class="category {{ $super }}"  href="/frontoffice/reports">
+                    <div  class="category-body">
+                        <img class="img-categories" src="{{ URL::to('/') }}/img/relatorio.png">
                         RELATÓRIOS
                     </div>
                 </a>
@@ -59,11 +52,13 @@
                     @if($controlCustomizationClient==1)
                     <a class="category {{ $super }}" href="/frontoffice/newReport">
                         <div class="category-body">
+                            <img class="img-categories" src="{{ URL::to('/') }}/img/novo.png">
                             NOVO RELATÓRIO
                         </div>
                     @else
                     <a class="category {{ $super }}" href="/frontoffice/newReport" style="display:none">--}}
                         <div class="category-body">
+                            <img class="img-categories" src="{{ URL::to('/') }}/img/novo.png">
                             NOVO RELATÓRIO
                         </div>
                     </a>
@@ -71,28 +66,38 @@
                         @if($showSections==1)
                             <a class="category {{ $super }}" href="/frontoffice/personalizeSection">
                                 <div class="category-body">
+                                    <img class="img-categories" src="{{ URL::to('/') }}/img/personalizar.png">
                                     PERSONALIZAR SECÇÕES
                                 </div>
                         @else
                             <a class="category {{ $super }}" href="/frontoffice/personalizeSection" style="display:none">
                                 <div class="category-body">
+                                    <img class="img-categories" src="{{ URL::to('/') }}/img/personalizar.png">
                                     PERSONALIZAR SECÇÕES
                                 </div>
                         @endif
                 </a>
                 @endif
-            @endif
-                <a class="category {{ $super }}" href="/frontoffice/personalizeAreasEquipments">
-                    <div class="category-body">
-                        ÁREAS E EQUIPAMENTOS
-                    </div>
-                </a>
+                                <a class="category {{ $super }}" href="/frontoffice/personalizeAreasEquipments">
+                                    <div class="category-body">
+                                        <img class="img-categories" src="{{ URL::to('/') }}/img/areas_equipamentos.png">
+                                        ÁREAS E EQUIPAMENTOS
+                                    </div>
+                                </a>
 
-                <a class="category {{ $super }}" href="/frontoffice/statistics">
-                    <div class="category-body">
-                       ESTATÍSTICAS
-                    </div>
-                </a>
+                                <a class="category {{ $super }}" href="/frontoffice/statistics">
+                                    <div class="category-body">
+                                        <img class="img-categories" src="{{ URL::to('/') }}/img/estatisticas.png">
+                                        ESTATÍSTICAS
+                                    </div>
+                                </a>
+            @endif
+                                <a class="category {{ $super }}" href="/frontoffice/personalizeAreasEquipments">
+                                    <div class="category-body">
+                                        <img class="img-categories" src="{{ URL::to('/') }}/img/areas_equipamentos.png">
+                                        ÁREAS E EQUIPAMENTOS
+                                    </div>
+                                </a>
 
                 @if($super==='Controlopragas')
                     @if($userType==5 || $userType==3)
@@ -102,27 +107,32 @@
                             <a class="category {{ $super }}" href="/frontoffice/firstService" style="display: none">
                         @endif
                             <div class="category-body">
+                                <img class="img-categories" src="{{ URL::to('/') }}/img/novo.png">
                                 INSTALAÇÃO SERVIÇO
                             </div>
                         </a>
                         <a class="category {{ $super }}" href="/frontoffice/maintenance">
                             <div class="category-body">
+                                <img class="img-categories" src="{{ URL::to('/') }}/img/novo.png">
                                 MANUTENÇÃO
                             </div>
                         </a>
                                     <a class="category {{ $super }}" href="/frontoffice/warranty">
                                         <div class="category-body">
+                                            <img class="img-categories" src="{{ URL::to('/') }}/img/novo.png">
                                             GARANTIA
                                         </div>
                                     </a>
                             <a class="category {{ $super }}" href="/frontoffice/punctual">
                                 <div class="category-body">
+                                    <img class="img-categories" src="{{ URL::to('/') }}/img/novo.png">
                                      PONTUAL
                                 </div>
                             </a>
                     @endif
                         <a class="category {{ $super }}" href="/frontoffice/pestReports">
                             <div class="category-body">
+                                <img class="img-categories" src="{{ URL::to('/') }}/img/relatorio.png">
                                 RELATÓRIOS
                             </div>
                         </a>

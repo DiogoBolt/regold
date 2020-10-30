@@ -8,7 +8,20 @@
   position: relative;
   max-width: 25%;
   padding: 10px 15px;
+  border: 1px solid;
+  border-color: #d3e0e9;
+  color: var(--main-color);
+  text-transform: uppercase;
+  font-size: 14px;
+  text-align: center;
 }
+
+/*.box:hover{
+  color: #E5E1E6;
+  background-color:#6ABD84;
+  text-decoration: none;
+}*/
+
 
 .box img {
   margin-top: 8px;
@@ -16,12 +29,13 @@
   width: 100%;
 }
 
-.desc {
+/*.desc {
   color: var(--main-color);
   text-transform: uppercase;
   font-size: 14px;
   text-align: center;
-}
+}*/
+
 
 #myModal input {
   margin-bottom: 10px;
@@ -29,21 +43,22 @@
   width: 100%;
 }
 
-
-
 @media screen and (max-width: 800px) {
   .index-box {
     justify-content: space-between;
   }
 
   .box {
-    flex: 40%;
-    max-width: 40%;
+    flex: 50%;
+    max-width: 50%;
   }
 
-  .desc {
+
+ /* .desc {
     font-size: 12px;
   }
+*/
+
 }
 
 /*#divSelectLoja{

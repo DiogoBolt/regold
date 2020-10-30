@@ -272,7 +272,10 @@ class ClientController extends Controller
             {
                 $clients = Customer::from(Customer::alias('c'))
                     ->leftJoin(User::alias('u'), 'u.client_id', '=', 'c.id')
-                    ->where('c.technical_haccp',$user->userTypeID)
+
+                    /*filtro clientes por tecnico
+
+                    /*->where('c.technical_haccp',$user->userTypeID)*/
                     ->when($request->filled('cityInvoice'), function ($query) use ($inputs) {
                         return $query->where('c.city', '=', $inputs['cityInvoice']);
                     })

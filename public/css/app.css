@@ -1,10 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);@charset "UTF-8";
 
-@font-face{
-  font-family: Univia Pro;
-  src:url(/fonts/EM-Univia.Pro/UniviaPro-Regular.otf) format("opentype");
-}
-
 /*!
  * Bootstrap v3.4.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 Twitter, Inc.
@@ -3989,7 +3984,7 @@ select[multiple].input-lg,
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  margin-bottom: -10px;
+  margin-bottom: 20px;
 }
 
 .btn:focus,

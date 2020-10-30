@@ -43,7 +43,6 @@
 
 
 <div class="container">
-
     <div class="product">
         <div class="product__img" style="background-image: url('/uploads/products/{{$product->file}}')"></div>
         <div class="product__body">

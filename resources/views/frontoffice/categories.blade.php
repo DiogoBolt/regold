@@ -6,34 +6,39 @@
 @endsection
 
 @section('content')
-    <div class="container-bar">
-        <p class="container-bar_txt">categorias</p>
-        <div class="container-bar_img">
-            <img src="{{ asset('img/encomendas.jpg') }}" />
-        </div>
-    </div>
 
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item" aria-current="page">Home</li>
-            <li class="breadcrumb-item active" aria-current="page">Categorias</li>
-        </ol>
-    </nav>
+
+
 
     {{-- Go Back Button --}}
     <a class="back-btn" href="/home">
         <span class="back-btn__front"><strong>Voltar</strong></span>
         <span class="back-btn__back"><strong>Home</strong></span>
     </a>
+    <a class="fav" href="/frontoffice/favorites">
+        <img class="favorito" src="{{ URL::to('/') }}/img/filled-fav.png">FAVORITOS
+    </a>
 
     <div class="container">
 
-        <div class="search-container">
-            <input id="product-search" name="search" placeholder="Pesquisa de produtos.." />
-            <div id="results"></div>
+
+        <div class="search-container" data-toggle="modal">
+            <div class="fav">
+{{--                <a class="fav" href="/frontoffice/favorites">--}}
+{{--                    <img src="{{ URL::to('/') }}/img/filled-fav.png">FAVORITOS--}}
+{{--                </a>--}}
+                <input id="product-search" name="search" placeholder="Pesquisa de produtos.." />
+{{--                <a class="fav" href="/frontoffice/favorites">--}}
+{{--                    <img class="favorito" src="{{ URL::to('/') }}/img/filled-fav.png">FAVORITOS--}}
+{{--                </a>--}}
+                <div id="results"></div>
+            </div>
+
+           {{-- <input id="product-search" name="search" placeholder="Pesquisa de produtos.." />
+            <div id="results"></div>--}}
         </div>
 
-        <div class="categories-container">
+       {{-- <--}}{{--div class="categories-container">
             <a class="category" href="/frontoffice/favorites">
                 <div class="fav">
                     FAVORITOS
@@ -46,9 +51,19 @@
                     </div>
                 </a>
             @endforeach
+        </div>--}}
+        <div class="row">
+        @foreach($categories as $category)
+            <div class="column">
+               <a class="produtos" href="/frontoffice/products/{{ $category->id}}">
+                        {{$category->name}}
+               </a>
+            </div>
+
+            @endforeach
         </div>
+        @endsection
     </div>
-@endsection
 
 <script>
 
@@ -84,12 +99,12 @@
                     if(searchTerm === '')  {
                         searchResults.innerHTML = '';
                     }
-
                 });
             } else {
                 searchResults.innerHTML = '';
             }
         });
     });
+
 
 </script>

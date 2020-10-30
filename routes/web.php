@@ -125,6 +125,12 @@ Route::get('/frontoffice/verifyCodeDeviceExist/{id}/{code}','PestController@veri
 Route::get('/frontoffice/insertProductConformities', 'RecordsController@insertConformities');
 Route::post('/frontoffice/saveOilRecords', 'RecordsController@saveOilRecords');
 Route::get('/frontoffice/oilRecords','RecordsController@insertOilRecords');
+
+Route::get('/frontoffice/records/oil/history','RecordsController@getOilRecordsHistory');
+Route::get('/frontoffice/records/oil/history/get','RecordsController@getHistByMonth');
+Route::get('/frontoffice/records/oil/history/print','RecordsController@printReportOil');
+
+
 Route::get('/frontoffice/records/temperatures','RecordsController@getTemperatureRecords');
 Route::get('/frontoffice/records/temperatures/history','RecordsController@getTemperatureRecordsHistory');
 Route::get('/frontoffice/records/temperatures/history/get','RecordsController@getHistoryByMonth');

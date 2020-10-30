@@ -10,6 +10,8 @@
             <div class="panel">
                 <div class="panel-body table-responsive printall">
 
+                    <img class="logoReport" src="{{ URL::to('/') }}/img/navbar/RegolfoodLogin.png" alt="logo">
+
                     <div id="divBtns">
                         <a class="btn btn-warning" href="/frontoffice/pestReports">
                             Voltar
@@ -70,15 +72,18 @@
                                 <label class="lblBold">Substâncias Activas: </label>
                                 <label>{{$report_punctual->sub_active}}</label>
                             </div>
+                            <div>
+                                <label class="lblBold" >Recomendações: </label>
+                                <label> {{$report_punctual->note}}</label>
+                            </div>
                         </div>
                     </div>
-
-                    <div>
-                        <label class="lblBold" style="color: red">Recomendações: </label>
-                        <label> {{$report_punctual->note}}</label>
-                    </div>
                 </div>
+
             </div>
+            <footer id="footer" style="display:none" >
+                <img class="report_footer" src="{{ URL::to('/') }}/img/footer.png" alt="logo">
+            </footer>
         </div>
     </div>
 </div>

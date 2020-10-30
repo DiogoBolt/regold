@@ -26,36 +26,37 @@
     @endif
     <section >
                         <div class="container index-box">
-                            <div class="box">
-                            <a title="Documentos HACCP" href="/frontoffice/documents/HACCP"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon2.png"></a>
-                            <div class="desc">DOCUMENTOS HACCP</div>
+                            {{--<div class="box">--}}
+                            <a class="box" title="Documentos HACCP" href="/frontoffice/documents/HACCP"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/Haccp.png">HACCP</a>
+                            {{--<div class="desc">HACCP</div>--}}
+
                             @if($receiptsHACCP) <span class="notification">{{$receiptsHACCP}}</span> @endif
-                            </div>
-                            <div class="box">
-                                <a title="Controlo de Pragas" href="/frontoffice/documents/Controlopragas"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon3.png"></a>
-                                <div class="desc">CONTROLO DE PRAGAS</div>
+                            {{--</div>--}}
+
+                                <a class="box" title="Controlo de Pragas" href="/frontoffice/documents/Controlopragas"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/ControloPragas.png">CONTROLO DE PRAGAS</a>
+                                {{--<div class="desc">CONTROLO DE PRAGAS</div>--}}
                                 @if($receiptsCP) <span class="notification">{{$receiptsCP}}</span> @endif
-                            </div>
-                            <div class="box">
-                                <a title="Produtos" href="/frontoffice/categories"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon6.png"></a>
-                                <div class="desc">PRODUTOS</div>
-                            </div>
-                            <div class="box">
-                                <a title="Encomendas" href="/frontoffice/orders">
-                                    <img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon1.png">
+
+
+                                <a class="box" title="Produtos" href="/frontoffice/categories"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/Produtos.png">PRODUTOS</a>
+                                {{--<div class="desc">PRODUTOS</div>--}}
+
+
+                                <a class="box" title="Encomendas" href="/frontoffice/orders">
+                                    <img class="img-responsive" src="{{ URL::to('/') }}/img/index/Encomendas.png">ENCOMENDAS
                                 </a>
-                                <div class="desc">ENCOMENDAS</div>
-                            </div>
-                                <div class="box">
-                                    <a title="Documentos Registos" href="/frontoffice/documents/Registos"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon2.png"></a>
-                                    <div class="desc">REGISTOS</div>
+                                {{--<div class="desc">ENCOMENDAS</div>--}}
+
+
+                                    <a class="box" title="Documentos Registos" href="/frontoffice/documents/Registos"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/Registos.png">REGISTOS</a>
+                                    {{--<div class="desc">REGISTOS</div>--}}
                                     @if($receiptsReg) <span class="notification">{{$receiptsReg}}</span> @endif
-                                </div>
-                                <div class="box">
-                                    <a title="Documentos Contabilisticos" href="/frontoffice/documents/Contabilistico"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/icon7.png"></a>
-                                    <div class="desc">DOCUMENTOS CONTABILISTICOS</div>
+
+
+                                    <a class="box" title="Documentos Contabilisticos" href="/frontoffice/documents/Contabilistico"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/DocumentosCont.png">DOCUMENTOS CONTABILISTICOS</a>
+                                    {{--<div class="desc">DOCUMENTOS CONTABILISTICOS</div>--}}
                                     @if($receiptsCont) <span class="notification">{{$receiptsCont}}</span> @endif
-                                </div>
+
                         </div>
 
 

@@ -124,6 +124,25 @@
 
 /*** REGISTOS ***/
 
+.btn-history{
+  background-color: var(--main-color);
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid transparent;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.6;
+  border-radius: 4px;
+  user-select: none;
+  margin-bottom: 20px;
+  color: #E5E1E6;
+}
+.btn-history:hover{
+  text-decoration: none;
+  color: #5a5a5a;
+}
+
 /*** OLEO ***/
 
 .active{
@@ -132,29 +151,42 @@
 
 .btn-oilRecord {
   background-color:  #33adff;
-  width: 5%;
   font-size: 20px;
+  color: #E5E1E6;
 }
 .btn-oilRecord2{
   background-color:  #00e673;
-  width: 5%;
   font-size: 20px;
+  margin-left: 10px;
+  color: #E5E1E6;
 }
 .btn-oilRecord3{
   background-color:  #00cc00;
-  width: 5%;
   font-size: 20px;
+  margin-left: 10px;
+  color: #E5E1E6;
 }
 .btn-oilRecord4{
   background-color:  #4d9900;
-  width: 5%;
   font-size: 20px;
+  margin-left: 10px;
+  color: #E5E1E6;
 }
 .btn-oilRecord5{
   background-color:  #666600;
-  width: 5%;
   font-size: 20px;
+  margin-left: 10px;
+  color: #E5E1E6;
 }
+.date{
+  margin:auto;
+  display: table;
+}
+.btn-oilVal{
+  margin:auto;
+  display: table;
+}
+
 
 /*** ENTRADA PRODUTO ***/
 

@@ -81,10 +81,9 @@ class ReportController extends Controller
             ->select(['name','activity'])
             ->first();
 
-            $technicalInfo = User::where('userTypeID',$report->id_tecnichal)
-            ->where('userType',2)
-            ->select(['id','name','userTypeID'])
-            ->first();
+            $technicalInfo = User::where('id',$auxTechnical)
+                ->select(['id','name','userTypeID'])
+                ->first();
 
             $visitNumber = $report->numberVisit;
 

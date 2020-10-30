@@ -1,31 +1,12 @@
-.categories-container {
-  margin-bottom: 30px;
-  text-align: center;
-}
 
-.category {
-  width: 288px;
-  height: 100px;
-  box-shadow: 0 8px 5px rgba(0, 0, 0, 0.12);
-  margin: 10px;
-  display: inline-block;
-  vertical-align: top;
-}
 
 .category:hover {
   text-decoration: none;
 }
 
-.fav{
-
-  background-color: rgb(108 ,202 ,152);
-  height: 100px;
-
-  position: relative;
-  box-shadow: 3px 4px 0px 0px #899599;
+/*.fav{
+  height: 20px;
   color: #E5E1E6;
-  border-radius: 15px;
-  border: 1px solid #d6bcd6;
   font-size: 18px;
   font-weight: bolder;
   display: flex;
@@ -39,32 +20,44 @@
 .fav:active {
   position:relative;
   top:1px;
-}
+}*/
 
-
-
-.category-body {
-  height: 100px;
-  background-color: var(--main-color);
-  position: relative;
-  box-shadow: 3px 4px 0px 0px #899599;
-  color: #E5E1E6;
-  border-radius:15px;
-  border:1px solid #d6bcd6;
-  font-size: 18px;
+a.fav{
+  color: #2b542c;
   font-weight: bolder;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  float: right;
+  padding: 10px;
+  margin-top: 4px;
 }
+a.favoritos{
+  text-decoration: underline;
+  color: #2b542c;
+
+}
+.fav img{
+  width: 20px;
+  filter: grayscale(1);
+  margin-right: 5px;
+}
+
+.img-categories{
+  display: inline;
+  max-width: 100%;
+  height: auto;
+  margin-right: 5px;
+}
+
+.img-categories:hover{
+  color: red;
+  text-decoration: underline;
+}
+
+
 
 .category-body:hover {
-  background:linear-gradient(to bottom, rgb(0, 149, 121) 5%, rgb(108, 202, 152) 100%);
-  background-color:deeppink;
-}
-.category-body:active {
-  position:relative;
-  top:1px;
+  color: rgb(61 174 43);
+  text-decoration: underline;
+  filter: none;
 }
 
 
@@ -89,9 +82,7 @@
 
 /* Document types */
 
-.HACCP .category-body {
-  background-color: #153E35;
-}
+
 
 /*.HACCP img {
   width: 100%;
@@ -99,18 +90,19 @@
   top: -20px;
 }*/
 
-.Controlopragas .category-body {
-  background-color: #153E35;
+.HACCP img{
+  position: relative;
 }
 
 .Controlopragas img {
   position: relative;
-  top: 0;
 }
 
-.Contabilistico .category-body {
-  background-color: #153E35;
+.Contabilistico img {
+  position: relative;
 }
+
+
 
 /* Search */
 
@@ -197,7 +189,47 @@
   color: #fff;
   background-color: var(--main-color);
 }
+/* novo design*/
+.column {
+  float: left;
+  width: 16.66%;
+  color: #2b542c;
+  text-align: center;
+}
 
+.row:after {
+  content: "";
+  display: grid;
+  clear: both;
+}
+
+.produtos {
+  color: #0d3625;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-break: anywhere;
+  font-size: 10px;
+  font-weight: bolder;
+  border: 1px solid;
+  border-color: #E5E1E6;
+}
+.produtos:hover{
+  background-color: #6ABD84;
+  color:white;
+  text-decoration: none;
+}
+.category-body {
+  height: 50px;
+  font-size: 20px;
+  color:#153E35;
+}
+
+
+
+
+/*fim design novo*/
 
 @media (max-width: 480px) {
   .category {
@@ -206,24 +238,43 @@
   }
 
   .category-body {
-    height: 80px;
-    font-size: 17px;
+    height: 50px;
+    font-size: 20px;
+    color:#153E35;
   }
 
-  /*.category-footer {
-    font-size: 12px;
-    line-height: 2;
-    text-overflow: ellipsis;
-    white-space: normal;
-  }*/
-
-  .Controlopragas img {
-    width: 100%;
-    height: 100%;
+  /*novo design*/
+  .column {
+    float: left;
+    width: 33.33%;
+    color: #2b542c;
+    text-align: center;
   }
 
-  .HACCP img {
-    top: 10px;
+  .row:after {
+    content: "";
+    display: grid;
+    clear: both;
   }
+  .produtos:hover{
+    background-color: #6CCA98;
+    color:white;
+    text-decoration: none;
+  }
+  .produtos {
+    color: #0d3625;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-break: anywhere;
+    font-size: 10px;
+    font-weight: bolder;
+    border: 1px solid;
+    border-color: #E5E1E6;
+  }
+  /*fim design novo*/
+
+
 
 }

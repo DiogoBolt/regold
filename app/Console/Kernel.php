@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\alertTemperatures;
+use App\Console\Commands\monthlyFee;
 use App\Console\Commands\UpdateTemperatures;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -17,6 +18,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         UpdateTemperatures::class,
         alertTemperatures::class,
+        monthlyFee::class,
     ];
 
     /**
@@ -31,7 +33,10 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
 
         $schedule->command('update:temperatures')->hourly();
+        //$schedule->command('monthlyFee')->lastDayOfMonth('23:59');
     }
+
+
 
     /**
      * Register the commands for the application.

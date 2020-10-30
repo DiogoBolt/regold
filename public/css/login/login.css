@@ -12,6 +12,7 @@
   margin: 0 auto;
   margin-bottom: 35px;
   width: 400px;
+
 }
 
 .input-group {
@@ -114,5 +115,12 @@
   color: #fff;
   border-top-left-radius: 15px;
   border-bottom-right-radius: 15px;
+}
+body, div#app{
+  background-size:     100%;
+  background-repeat:   no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-image: url(/img/folhas_20%.png);
 }
 

@@ -45,29 +45,22 @@ class RecordsController extends Controller
     public function insertOilRecords()
     {
         /*$UserTypes = UserType::all();*/
-
-
         return view('frontoffice.oilRecords'/*,compact('UserTypes')*/);
-
     }
     public function saveOilRecords(Request $request)
     {
-        dd("dsf");
         $user = Auth::user();
 
         $auxClientId = Session::get('establismentID');
 
         $inputs = $request->all();
-
         $oil_records= new OilRecord();
-        $oil_records->report_date= $inputs['report_date'];
-        $oil_records->oil_aspect=$inputs['oil_aspect'];
-
+        $oil_records->record_date= $inputs['record_date'];
+        $oil_records->oil_aspect= $inputs['oilAspect'];
         $oil_records->client_id = $auxClientId;
-
         $oil_records->save();
 
-        return redirect('/frontoffice/documents/registos',compact('oil_records'));
+        return redirect('/frontoffice/documents/Registos');
     }
 
     public function getTemperatureRecords()
@@ -185,5 +178,52 @@ class RecordsController extends Controller
 
         return $last5reads;
 
+    }
+    public function getOilRecordsHistory()
+    {
+
+        $auxClientId = Session::get('clientImpersonatedId');
+        $months = $this->months;
+
+
+
+
+        $clientThermos = OilRecord::query()->select(['id', 'client_id', 'oil_aspect','record_date'])
+            ->where('client_id', $auxClientId)
+            ->get();
+
+
+
+        $years = OilRecord::query()
+            ->select([
+                DB::raw('YEAR(created_at) as year')
+            ])
+            ->where('client_id', $auxClientId)
+            ->groupBy('year')
+            ->get();
+
+
+        return view('frontoffice.oilRecordsHistory', compact(['clientThermos', 'years','months']));
+    }
+    public function getHistByMonth(Request $request)
+    {
+        $auxClientId = Session::get('clientImpersonatedId');
+        $date = Carbon::createFromDate($request->get('year'), $request->get('month'));
+        $start_month = $date->copy()->startOfMonth();
+        $end_month = $date->copy()->endOfMonth();
+
+
+        return OilRecord::query()->select([
+            'id', 'client_id', 'oil_aspect', DB::raw('DAY(updated_at) as day')
+        ])
+            ->where('client_id',$auxClientId)
+           ->whereBetween('updated_at', [$start_month, $end_month])
+            ->orderBy('updated_at', 'asc')
+            ->get();
+    }
+    public function printReportOil(Request $request)
+    {
+        $print_data = json_decode($request->get('printReport')[0]);
+        return view('frontoffice.printOilReport')->with(['details' => $print_data[0] , 'data' => $print_data[1]]);
     }
 }

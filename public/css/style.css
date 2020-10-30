@@ -21,12 +21,13 @@ body {
     color: #333; 
     font-size: 13px; 
     line-height: 1.6;
-    background-image: url('/img/fundo_agua.png');
+    background-color: white;
     background-size:     100%;                      
-    background-repeat:   no-repeat;
+    background-repeat:   repeat;
     background-position: center center; 
     background-attachment: fixed;
 }
+
 body.header-fixed-space {padding-top: 94px;}
 body.header-fixed-space-v2 {padding-top: 135px;}
 
@@ -3654,6 +3655,7 @@ img.img-center,.img-center img {margin-left: auto; margin-right: auto;}
     transform-style:preserve-3d;
     margin-left: 20px;
     margin-bottom: 20px;
+    margin-top: 8px;
     font-size: 14px;
     cursor:pointer;
     transition:all .3s ease;
