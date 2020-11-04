@@ -224,12 +224,14 @@ function ownerRegister(myRadio){
         document.getElementById('ownerName').required=false;
         document.getElementById('loginMail').required=false;
         document.getElementById('password').required=false;
+        document.getElementById('pin').required=false;
         document.getElementById('registedMail').required=true;
     }else{
         document.getElementById("ownerRegister").style.display="block";
         document.getElementById("registeredOwner").style.display="none";
         document.getElementById('ownerName').required=true;
         document.getElementById('loginMail').required=true;
+        document.getElementById('pin').required=true;
         document.getElementById('password').required=true;
         document.getElementById('registedMail').required=false;
     }
