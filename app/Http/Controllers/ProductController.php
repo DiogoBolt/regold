@@ -71,8 +71,8 @@ class ProductController extends Controller
             $product->price1 = $inputs['price1'];
             $product->price2 = $inputs['price2'];
             $product->price3 = $inputs['price3'];
-            $product->amount2 = $inputs['amount2'];
-            $product->amount3 = $inputs['amount3'];
+            $product->price4 = $inputs['price4'];
+            $product->price5 = $inputs['price5'];
             $product->details = $inputs['details'];
             $product->ref = $inputs['ref'];
             $product->category = $inputs['category'];
@@ -141,8 +141,8 @@ class ProductController extends Controller
         $product->price1 = $inputs['price1'];
         $product->price2 = $inputs['price2'];
         $product->price3 = $inputs['price3'];
-        $product->amount2 = $inputs['amount2'];
-        $product->amount3 = $inputs['amount3'];
+        $product->price4 = $inputs['price4'];
+        $product->price5 = $inputs['price5'];
         $product->ref = $inputs['ref'];
         $product->details = $inputs['details'];
         $product->category = $inputs['category'];

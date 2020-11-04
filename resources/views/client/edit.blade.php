@@ -167,6 +167,9 @@
                                 Valor Contrato: <input type="number" step="0.01" placeholder="Valor de Contrato" value="{{$client->contract_value}}" min=0 class="form-control" name="value">
                             </div>
                             <div class="form-group">
+                                PVP acordado: <input type="number" step="1" placeholder="Pvp acordado" value="{{$client->pvp}}" min=1 class="form-control" name="pvp">
+                            </div>
+                            <div class="form-group">
                                 Método Pagamento:  <select class="form-control" name="payment_method" value="siuihus" required>
                                         <option disabled selected value="">Selecione o Método de Pagamento</option>
                                         <option selected value="{{$client->payment_method}}">{{$client->payment_method}}</option>

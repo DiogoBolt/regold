@@ -692,6 +692,7 @@ class ClientController extends Controller
         $client->technical_haccp=$inputs['technical'];
         $client->telephone = $inputs['telephone'];
         $client->payment_method = $inputs['payment_method'];
+        $client->pbp = $inputs['pvp'];
         //$client->client_type = $inputs['client_type'];
         $client->receipt_email = $inputs['invoiceEmail'];
         $client->nib = $inputs['nib'];
