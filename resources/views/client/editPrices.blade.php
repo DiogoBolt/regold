@@ -17,11 +17,13 @@
 </div>
 <div class="container">
     <div class="row">
+        <input type="text" class="form-control" id="searchinput" style="width:40%;float:left">
+        <button class="btn btn-primary" onclick="searchFocus()" style="display:inline">Procurar</button>
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-body">
                    @foreach($pvps as $pvp)
-                       <h3>{{$pvp->name}}</h3>
+                       <h3 id="{{$pvp->name}}">{{$pvp->name}}</h3>
                         @switch($pvp->pvp)
                             @case(1)
                             <input type="checkbox" class="radio-inline"  onchange="sendPost({{$pvp}},1)" id="{{$pvp}}pvp1" name="{{$pvp}}" value="1" checked>
@@ -112,6 +114,13 @@
             }
         });
     };
+
+        function searchFocus()
+        {
+            id = $('#searchinput').val();
+            console.log(id);
+        window.find(id);
+        }
 
 </script>
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Cart;
 use App\Category;
+use App\ClientProduct;
 use App\Customer;
 use App\DocumentType;
 use App\Group;
@@ -105,6 +106,16 @@ class ProductController extends Controller
                 $product->seguranca = $filename;
             }
             $product->save();
+
+            $clients = Customer::all();
+            foreach($clients as $client)
+            {
+                $pvp = new ClientProduct;
+                $pvp->client_id = $client->id;
+                $pvp->product_id = $product->id;
+                $pvp->pvp = 1;
+                $pvp->save();
+            }
         }
 
         $categories = Category::all();
