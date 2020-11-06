@@ -22,7 +22,10 @@
                         
                         <button class="btn">
                             <a href="/clients/edit/{{$client->id}}" style="color: #fff;">Editar</a>
-                        </button>                    
+                        </button>
+                        <button class="btn">
+                            <a href="/clients/editPrices/{{$client->id}}" style="color: #fff;">Editar Preços</a>
+                        </button>
                     </div>
                     <br/>
                     <div class="col-sm-6">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\ClientProduct;
 use App\Customer;
 use App\DocumentSuperType;
 use App\DocumentType;
@@ -10,6 +11,7 @@ use App\Favorite;
 use App\Group;
 use App\Message;
 use App\Order;
+use App\Product;
 use App\Receipt;
 use App\Report;
 use App\Salesman;
@@ -573,6 +575,8 @@ class ClientController extends Controller
         $establisment->regoldiID = $inputs['regoldiID'];
         $establisment->transport_note = $inputs['transport_note'];
         $establisment->save();
+        $user->client_id = $establisment->id;
+        $user->save();
 
         $qtd = Section::where('activityClientId',$establisment->activity)->count();
 
@@ -594,6 +598,16 @@ class ClientController extends Controller
             $ControlCustomizationClient->save();
         }else{
             $ControlCustomizationClient->save();
+        }
+
+        $products = Product::all();
+        foreach($products as $product)
+        {
+                $newpvp = new ClientProduct;
+                $newpvp->client_id = $establisment->id;
+                $newpvp->product_id = $product->id;
+                $newpvp->pvp = 1;
+                $newpvp->save();
         }
 
         //melhorar isto
@@ -692,6 +706,7 @@ class ClientController extends Controller
         $client->technical_haccp=$inputs['technical'];
         $client->telephone = $inputs['telephone'];
         $client->payment_method = $inputs['payment_method'];
+        $client->pbp = $inputs['pvp'];
         //$client->client_type = $inputs['client_type'];
         $client->receipt_email = $inputs['invoiceEmail'];
         $client->nib = $inputs['nib'];
@@ -1191,6 +1206,27 @@ class ClientController extends Controller
     //função para apagar uma variavel de sessão
     public function deleteSessionVar($id){
         Session::forget('establismentID');
+    }
+
+    public function editClientPrices($id)
+    {
+        $client = Customer::where('id',$id)->first();
+        $pvps = ClientProduct::where('client_id',$id)->get();
+        foreach($pvps as $pvp)
+        {
+            $pvp->name = Product::where('id',$pvp->product_id)->first()->name;
+        }
+        return view('client.editPrices',compact('client','pvps'));
+    }
+
+    public function editClientPvp(Request $request)
+    {
+        $inputs = $request->all();
+
+        $pvp = ClientProduct::where('id',$inputs['id'])->first();
+        $pvp->pvp = $inputs['value'];
+        $pvp->save();
+
     }
 
 

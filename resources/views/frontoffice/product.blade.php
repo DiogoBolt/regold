@@ -1,5 +1,4 @@
 @extends('layouts.frontoffice')
-@extends('layouts.frontoffice')
 
 @section('styles')
 <!-- Custom CSS -->
@@ -74,21 +73,21 @@
             <div class="product_body-table-prices">
                 <table>
                     <tr>
-                        <th>Escalão 1</th>
-                        <th>Escalão 2</th>
-                        <th>Escalão 3</th>
+                        <th>PVP</th>
+
                     </tr>
                     <tr>
-                        <td class="price-amount" data-amount="1">1 unidade</td>
-                        <td class="price-amount" data-amount="{{ $product->amount2 }}">{{ $product->amount2 }} unidades
-                        </td>
-                        <td class="price-amount" data-amount="{{ $product->amount3 }}">{{ $product->amount3 }} unidades
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="price-tag">{{ $product->price1 }}</td>
-                        <td class="price-tag">{{ $product->price2 }}</td>
-                        <td class="price-tag">{{ $product->price3 }}</td>
+                        @if($pvp == 1)
+                            <td class="price-tag">{{ $product->price1 }}€</td>
+                        @elseif($pvp == 2)
+                            <td class="price-tag">{{ $product->price2 }}€</td>
+                        @elseif(($pvp == 3))
+                            <td class="price-tag">{{ $product->price3 }}€</td>
+                        @elseif(($pvp == 4))
+                            <td class="price-tag">{{ $product->price4 }}€</td>
+                        @else
+                            <td class="price-tag">{{ $product->price5 }}€</td>
+                            @endif
                     </tr>
                 </table>
             </div>

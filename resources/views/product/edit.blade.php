@@ -54,10 +54,10 @@
                                 Preço Escalão 3:<input class="form-control"  name="price3" value="{{$product->price3}}" >
                             </div>
                             <div class="form-group">
-                               Total Escalão 2:<input class="form-control"  name="amount2" value="{{$product->amount2}}" >
+                                Preço Escalão 4: <input class="form-control"  name="price4" value="{{$product->price4}}">
                             </div>
                             <div class="form-group">
-                               Total Escalão 3:<input class="form-control"  name="amount3" value="{{$product->amount3}}" >
+                                Preço Escalão 5: <input class="form-control"  name="price5" value="{{$product->price5}}">
                             </div>
                         </div>
                         <div class="col-sm-6">

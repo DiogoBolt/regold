@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Callback;
 use App\Cart;
 use App\Category;
+use App\ClientProduct;
 use App\Customer;
 use App\DocumentSuperType;
 use App\DocumentType;
@@ -142,7 +143,7 @@ class FrontofficeController extends Controller
     {
         $user = Auth::user();
 
-        $auxClientId = Session::get('establismentID');
+        $auxClientId = $user->client_id;
 
         $clients = Customer::where('ownerID',$user->id)
         ->select([
@@ -193,9 +194,9 @@ class FrontofficeController extends Controller
 
     public function documentsBySuper($super)
     {
+        $user = Auth::user();
 
-
-        $auxClientId = Session::get('establismentID');
+        $auxClientId = $user->client_id;
 
         $auxAdminId=Session::get('impersonated');
 
@@ -269,7 +270,9 @@ class FrontofficeController extends Controller
 
         $user = Auth::user();
 
-        $auxClientId = Session::get('establismentID');
+        $auxClientId = $user->client_id;
+
+
         
         $cart = Cart::where('client_id',$auxClientId)->where('processed',0)->first();
 
@@ -294,16 +297,26 @@ class FrontofficeController extends Controller
 
         $product = Product::where('id',$order_line->product_id)->first();
 
-        if($order_line->amount >= $product->amount3)
-        {
-            $order_line->total = $product->price3 * $order_line->amount;
-        }elseif($order_line->amount >= $product->amount2)
-        {
-            $order_line->total = $product->price2 * $order_line->amount;
-        }else{
-            $order_line->total = $product->price1 * $order_line->amount;
-        }
 
+        $pvp = ClientProduct::where('client_id',$auxClientId)->where('product_id',$product->id)->first()->pvp;
+
+        switch ($pvp) {
+            case 1:
+                $order_line->total = $product->price1 * $order_line->amount;
+                break;
+            case 2:
+                $order_line->total = $product->price2 * $order_line->amount;
+                break;
+            case 3:
+                $order_line->total = $product->price3 * $order_line->amount;
+                break;
+            case 4:
+                $order_line->total = $product->price4 * $order_line->amount;
+                break;
+            case 5:
+                $order_line->total = $product->price5 * $order_line->amount;
+                break;
+        }
         $order_line->save();
 
         $order_lines = OrderLine::where('cart_id',$cart->id)->get();
@@ -311,10 +324,10 @@ class FrontofficeController extends Controller
         foreach($order_lines as $order)
         {
             $product = Product::where('id',$order->product_id)->first();
-            if($order->amount >= $product->amount3 and count($order_lines) >= 4)
+            if($pvp == 3)
             {
                 $order->total = $product->price3 * $order->amount;
-            }elseif($order->amount >= $product->amount2 and count($order_lines) >= 3)
+            }elseif($pvp = 2)
             {
                 $order->total = $product->price2 * $order->amount;
             }else{
@@ -338,7 +351,7 @@ class FrontofficeController extends Controller
     public function cartValue()
     {
         $user = Auth::user();
-        $auxClientId = Session::get('establismentID');
+        $auxClientId = $user->client_id;
         $cart = Cart::where('client_id',$auxClientId)->where('processed',0)->first();
 
         if(!isset($cart))
@@ -363,7 +376,7 @@ class FrontofficeController extends Controller
     public function orders()
     {
         $user = Auth::user();
-        $auxClientId = Session::get('establismentID');
+        $auxClientId = $user->client_id;
 
         $orders = Order::where('client_id',$auxClientId)->orderBy('id','DESC')->get();
 
@@ -376,10 +389,12 @@ class FrontofficeController extends Controller
 
         $order = Order::where('id',$id)->where('client_id',$user->client_id)->first();
 
+
+
         if(!isset($order))
         return back();
 
-       $cart = Cart::where('user_id',$user->id)->where('id',$order->cart_id)->first();
+       $cart = Cart::where('client_id',$user->client_id)->where('id',$order->cart_id)->first();
 
         if(isset($cart))
         {
@@ -401,7 +416,21 @@ class FrontofficeController extends Controller
 
     public function productsByCategory($id)
     {
+        $user = Auth::user();
         $products = Product::where('category',$id)->get();
+
+        foreach($products as $product)
+        {
+            $pvp = ClientProduct::where('client_id',$user->client_id)->where('product_id',$product->id)->first();
+
+            if(isset($pvp))
+            {
+                $product->pvp = $pvp->pvp;
+            }else{
+                $product->pvp = 1;
+            }
+
+        }
 
         return view('frontoffice.products',compact('products'));
     }
@@ -409,11 +438,12 @@ class FrontofficeController extends Controller
     public function productById($id)
     {
         $user = Auth::user();
+        $pvp = ClientProduct::where('client_id',$user->client_id)->where('product_id',$id)->first()->pvp;
 
         $product = Product::where('id', $id)->first();
         $isFavourite = Favorite::where('product_id', $id)->where('user_id', $user->id)->first();
 
-        return view('frontoffice.product',compact('product', 'isFavourite'));
+        return view('frontoffice.product',compact('product', 'isFavourite','pvp'));
     }
 
     public function deleteLineFromCart($id)
@@ -437,7 +467,7 @@ class FrontofficeController extends Controller
         $user = Auth::user();
         $inputs = $request->all();
         
-        $auxClientId = Session::get('establismentID');
+        $auxClientId = $user->client_id;
         
         $order_line = OrderLine::where('id',$inputs['id'])->first();
 
@@ -486,7 +516,7 @@ class FrontofficeController extends Controller
 
         $user = Auth::user();
 
-        $auxClientId = Session::get('establismentID');
+        $auxClientId = $user->client_id;
 
         $client = Customer::where('id',$auxClientId)->first();
         $cart = Cart::where('client_id',$auxClientId)->where('processed',0)->first();
@@ -579,12 +609,12 @@ class FrontofficeController extends Controller
     {
         $user = Auth::user();
 
-        $auxClientId = Session::get('establismentID');
+        $auxClientId = $user->client_id;
 
         $client = Customer::where('id',$auxClientId)->first();
 
         $orders = Order::where('client_id',$auxClientId)
-        //->where('processed',1)
+        ->where('processed',1)
         ->where('created_at','>=',Carbon::now()->startOfMonth())->count();
 
         $cart = Cart::where('client_id',$auxClientId)->where('processed',0)->first();
@@ -649,7 +679,7 @@ class FrontofficeController extends Controller
     {
         $user = Auth::user();
 
-        $auxClientId = Session::get('establismentID');
+        $auxClientId = $user->client_id;
 
         $orders = Order::where('client_id',$auxClientId)->where('id','!=',$order->id)->where('processed',1)
         ->where('created_at','>=',Carbon::now()->startOfMonth())->count();
@@ -666,7 +696,7 @@ class FrontofficeController extends Controller
     {
         $user = Auth::user();
 
-        $auxClientId = Session::get('establismentID');
+        $auxClientId =$user->client_id;
 
         $orderlines = OrderLine::where('cart_id',$cart->id)->get();
         $client = Customer::where('id',$auxClientId)->first();
@@ -741,7 +771,7 @@ class FrontofficeController extends Controller
     private function processMainOrder($cart,$order)
     {
         $user = Auth::user();
-        $auxClientId = Session::get('establismentID');
+        $auxClientId = $user->client_id;
 
         $orderlines = OrderLine::where('cart_id',$cart->id)->get();
         $client = Customer::where('id',$auxClientId)->first();
@@ -787,7 +817,7 @@ class FrontofficeController extends Controller
 
         $payment = [
             'client' => ['address' => ['address' => $customer->address,'city'=>$customer->city,'country'=>'PT'], 'email' => $customer->email,'name' => $customer->name],
-            'amount' => number_format($order->total > $client->contract_value ? $order->total * 1.23 : $client->contract_value * 1.23,2),
+            'amount' => number_format($order->total,2),
             'currency' => 'EUR',
             'items' =>$items,
             'ext_invoiceid' => $order->external_id,

@@ -73,10 +73,10 @@
                                 Preço Escalão 3: <input class="form-control"  name="price3" required>
                             </div>
                             <div class="form-group">
-                                Total Escalão 2: <input class="form-control"  name="amount2" required>
+                                Preço Escalão 4: <input class="form-control"  name="price4" required>
                             </div>
                             <div class="form-group">
-                                Total Escalão 3: <input class="form-control"  name="amount3" required>
+                                Preço Escalão 5: <input class="form-control"  name="price5" required>
                             </div>
                         </div>
                         <div>
