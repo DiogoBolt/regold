@@ -98,7 +98,7 @@
         {
         $.ajax({
             type: "POST",
-            url: "/clients/editpricepvp/",
+            url: "/editpricepvp",
             data: {
                 "_token": "{{ csrf_token() }}",
                 id: id, // < note use of 'this' here
