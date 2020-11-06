@@ -226,7 +226,7 @@ class FrontofficeController extends Controller
        }
 
         $qtd = Section::where('activityClientId',$clientActivity)->count();
-
+       
         if($qtd > 1){
             $showSections=1;
         }else{

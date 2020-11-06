@@ -27,7 +27,7 @@
             @endforeach
 
             @if($super==='Registos')
-                    <a class="category {{ $super }}" href="/frontoffice/oilRecords">
+                    <a class="category {{ $super }}" href="/frontoffice/records/oil">
                         <div class="category-body">
                             <img class="img-categories" src="{{ URL::to('/') }}/img/relatorio.png">
                             QUALIDADE DO ÓLEO
@@ -37,6 +37,12 @@
                         <div class="category-body">
                             <img class="img-categories" src="{{ URL::to('/') }}/img/relatorio.png">
                             ENTRADA DE PRODUTO
+                        </div>
+                    </a>
+                    <a class="category {{ $super }}" href="/frontoffice/personalizeAreasEquipments">
+                        <div class="category-body">
+                            <img class="img-categories" src="{{ URL::to('/') }}/img/areas_equipamentos.png">
+                            ÁREAS E EQUIPAMENTOS
                         </div>
                     </a>
             @endif
@@ -75,8 +81,8 @@
                                     <img class="img-categories" src="{{ URL::to('/') }}/img/personalizar.png">
                                     PERSONALIZAR SECÇÕES
                                 </div>
+                            </a>
                         @endif
-                </a>
                 @endif
                                 <a class="category {{ $super }}" href="/frontoffice/personalizeAreasEquipments">
                                     <div class="category-body">
@@ -92,12 +98,8 @@
                                     </div>
                                 </a>
             @endif
-                                <a class="category {{ $super }}" href="/frontoffice/personalizeAreasEquipments">
-                                    <div class="category-body">
-                                        <img class="img-categories" src="{{ URL::to('/') }}/img/areas_equipamentos.png">
-                                        ÁREAS E EQUIPAMENTOS
-                                    </div>
-                                </a>
+
+
 
                 @if($super==='Controlopragas')
                     @if($userType==5 || $userType==3)

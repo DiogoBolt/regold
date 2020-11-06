@@ -46,199 +46,203 @@
             <button class="tablinks" onclick="openCity(event, 4)">Mensal</button>
         </div>
 
-        <div id="1" class="tabcontent">
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>Area</th>
-                    <th>Produto</th>
-                    <th><input onClick="checkBoxes(this)" type="Checkbox" > Selecionar tudo</th>
-                </tr>
-                </thead>
-                @foreach($section->areas as $a )
-                    @if($a->idCleaningFrequency==1)
-                <tbody>
-                    <td>{{$a->designation}}</td>
+        <form action="/frontoffice/records/hygiene/save" method="POST">
+            <div id="1" class="tabcontent">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Area</th>
+                        <th>Produto</th>
+                        <th><input onClick="checkBoxes(this)" type="Checkbox" > Selecionar tudo</th>
+                    </tr>
+                    </thead>
+                    @foreach($section->areas as $a )
+                        @if($a->idCleaningFrequency==1)
+                            <tbody>
+                            <td>{{$a->designation}}</td>
 
-                    <td>@foreach($products as $product)
-                            @if($a->idProduct==$product->id)
-                                {{$product->name}}
-                            @endif
-                        @endforeach</td>
-                    <td><input  type="Checkbox" ></td>
-                </tbody>
-                    @endif
-                @endforeach
-            </table>
+                            <td>@foreach($products as $product)
+                                    @if($a->idProduct==$product->id)
+                                        <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
+                                    @endif
+                                @endforeach</td>
+                            <td><input  type="Checkbox" ></td>
+                            </tbody>
+                        @endif
+                    @endforeach
+                </table>
 
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>Equipamento</th>
-                    <th>Produto</th>
-                    <th><input onClick="checkBoxes(this)" type="Checkbox" > Selecionar tudo</th>
-                </tr>
-                </thead>
-                @foreach($section->equipments as $a )
-                    @if($a->idCleaningFrequency==1)
-                    <tbody>
-                    <td>{{$a->designation}}</td>
-                    <td>@foreach($products as $product)
-                            @if($a->idProduct==$product->id)
-                                {{$product->name}}
-                            @endif
-                        @endforeach</td>
-                    <td><input  type="Checkbox" ></td>
-                    </tbody>
-                    @endif
-                @endforeach
-            </table>
-            <button id="savePersolize" class="btn-del" {{--onclick="saveEachPersonalize()"--}}>Guardar</button>
-        </div>
-        <div id="2" class="tabcontent">
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>Area</th>
-                    <th>Produto</th>
-                    <th><input  onClick="checkBoxes(this)" type="Checkbox" > Selecionar tudo</th>
-                </tr>
-                </thead>
-                @foreach($section->areas as $a )
-                    @if($a->idCleaningFrequency==2)
-                        <tbody>
-                        <td>{{$a->designation}}</td>
-                        <td>@foreach($products as $product)
-                                @if($a->idProduct==$product->id)
-                                    {{$product->name}}
-                                @endif
-                            @endforeach</td>
-                        <td><input type="Checkbox" ></td>
-                        </tbody>
-                    @endif
-                @endforeach
-            </table>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Equipamento</th>
+                        <th>Produto</th>
+                        <th><input onClick="checkBoxes(this)" type="Checkbox" > Selecionar tudo</th>
+                    </tr>
+                    </thead>
+                    @foreach($section->equipments as $a )
+                        @if($a->idCleaningFrequency==1)
+                            <tbody>
+                            <td>{{$a->designation}}</td>
+                            <td>@foreach($products as $product)
+                                    @if($a->idProduct==$product->id)
+                                        <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
+                                    @endif
+                                @endforeach</td>
+                            <td><input  type="Checkbox" ></td>
+                            </tbody>
+                        @endif
+                    @endforeach
+                </table>
+                <button id="savePersolize" class="btn-del" {{--onclick="saveEachPersonalize()"--}}>Guardar</button>
+            </div>
+            <div id="2" class="tabcontent">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Area</th>
+                        <th>Produto</th>
+                        <th><input  onClick="checkBoxes(this)" type="Checkbox" > Selecionar tudo</th>
+                    </tr>
+                    </thead>
+                    @foreach($section->areas as $a )
+                        @if($a->idCleaningFrequency==2)
+                            <tbody>
+                            <td>{{$a->designation}}</td>
+                            <td>@foreach($products as $product)
+                                    @if($a->idProduct==$product->id)
+                                        <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
+                                    @endif
+                                @endforeach</td>
+                            <td><input type="Checkbox" ></td>
+                            </tbody>
+                        @endif
+                    @endforeach
+                </table>
 
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>Equipamento</th>
-                    <th>Produto</th>
-                    <th><input  onClick="checkBoxes(this)" type="Checkbox"> Selecionar tudo</th>
-                </tr>
-                </thead>
-                @foreach($section->equipments as $a )
-                    @if($a->idCleaningFrequency==2)
-                        <tbody>
-                        <td>{{$a->designation}}</td>
-                        <td>@foreach($products as $product)
-                                @if($a->idProduct==$product->id)
-                                    {{$product->name}}
-                                @endif
-                            @endforeach</td>
-                        <td><input type="Checkbox" ></td>
-                        </tbody>
-                    @endif
-                @endforeach
-            </table>
-            <button id="savePersolize" class="btn-del" {{--onclick="saveEachPersonalize()"--}}>Guardar</button>
-        </div>
-        <div id="3" class="tabcontent">
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>Area</th>
-                    <th>Produto</th>
-                    <th><input onClick="checkBoxes(this)" type="Checkbox" > Selecionar tudo</th>
-                </tr>
-                </thead>
-                @foreach($section->areas as $a )
-                    @if($a->idCleaningFrequency==3)
-                        <tbody>
-                        <td>{{$a->designation}}</td>
-                        <td>@foreach($products as $product)
-                                @if($a->idProduct==$product->id)
-                                    {{$product->name}}
-                                @endif
-                            @endforeach</td>
-                        <td><input  type="Checkbox" ></td>
-                        </tbody>
-                    @endif
-                @endforeach
-            </table>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Equipamento</th>
+                        <th>Produto</th>
+                        <th><input  onClick="checkBoxes(this)" type="Checkbox"> Selecionar tudo</th>
+                    </tr>
+                    </thead>
+                    @foreach($section->equipments as $a )
+                        @if($a->idCleaningFrequency==2)
+                            <tbody>
+                            <td>{{$a->designation}}</td>
+                            <td>@foreach($products as $product)
+                                    @if($a->idProduct==$product->id)
+                                        <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
+                                    @endif
+                                @endforeach</td>
+                            <td><input type="Checkbox" ></td>
+                            </tbody>
+                        @endif
+                    @endforeach
+                </table>
+                <button id="savePersolize" class="btn-del" {{--onclick="saveEachPersonalize()"--}}>Guardar</button>
+            </div>
+            <div id="3" class="tabcontent">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Area</th>
+                        <th>Produto</th>
+                        <th><input onClick="checkBoxes(this)" type="Checkbox" > Selecionar tudo</th>
+                    </tr>
+                    </thead>
+                    @foreach($section->areas as $a )
+                        @if($a->idCleaningFrequency==3)
+                            <tbody>
+                            <td>{{$a->designation}}</td>
+                            <td>@foreach($products as $product)
+                                    @if($a->idProduct==$product->id)
+                                        <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
+                                    @endif
+                                @endforeach</td>
+                            <td><input  type="Checkbox" ></td>
+                            </tbody>
+                        @endif
+                    @endforeach
+                </table>
 
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>Equipamento</th>
-                    <th>Produto</th>
-                    <th><input  onClick="checkBoxes(this)" type="Checkbox" > Selecionar tudo</th>
-                </tr>
-                </thead>
-                @foreach($section->equipments as $a )
-                    @if($a->idCleaningFrequency==3)
-                        <tbody>
-                        <td>{{$a->designation}}</td>
-                        <td>@foreach($products as $product)
-                                @if($a->idProduct==$product->id)
-                                    {{$product->name}}
-                                @endif
-                            @endforeach</td>
-                        <td><input  type="Checkbox" ></td>
-                        </tbody>
-                    @endif
-                @endforeach
-            </table>
-            <button id="savePersolize" class="btn-del" {{--onclick="saveEachPersonalize()"--}}>Guardar</button>
-        </div>
-        <div id="4" class="tabcontent">
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>Area</th>
-                    <th>Produto</th>
-                    <th><input  onClick="checkBoxes(this)" type="Checkbox" > Selecionar tudo</th>
-                </tr>
-                </thead>
-                @foreach($section->areas as $a )
-                    @if($a->idCleaningFrequency==4)
-                        <tbody>
-                        <td>{{$a->designation}}</td>
-                        <td>@foreach($products as $product)
-                                @if($a->idProduct==$product->id)
-                                    {{$product->name}}
-                                @endif
-                            @endforeach</td>
-                        <td><input type="Checkbox" ></td>
-                        </tbody>
-                    @endif
-                @endforeach
-            </table>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Equipamento</th>
+                        <th>Produto</th>
+                        <th><input  onClick="checkBoxes(this)" type="Checkbox" > Selecionar tudo</th>
+                    </tr>
+                    </thead>
+                    @foreach($section->equipments as $a )
+                        @if($a->idCleaningFrequency==3)
+                            <tbody>
+                            <td>{{$a->designation}}</td>
+                            <td>@foreach($products as $product)
+                                    @if($a->idProduct==$product->id)
+                                        <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
+                                    @endif
+                                @endforeach</td>
+                            <td><input  type="Checkbox" ></td>
+                            </tbody>
+                        @endif
+                    @endforeach
+                </table>
+                <button id="savePersolize" class="btn-del" {{--onclick="saveEachPersonalize()"--}}>Guardar</button>
+            </div>
+            <div id="4" class="tabcontent">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Area</th>
+                        <th>Produto</th>
+                        <th><input  onClick="checkBoxes(this)" type="Checkbox" > Selecionar tudo</th>
+                    </tr>
+                    </thead>
+                    @foreach($section->areas as $a )
+                        @if($a->idCleaningFrequency==4)
+                            <tbody>
+                            <td>{{$a->designation}}</td>
+                            <td>@foreach($products as $product)
+                                    @if($a->idProduct==$product->id)
+                                        <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
+                                    @endif
+                                @endforeach</td>
+                            <td><input type="Checkbox" ></td>
+                            </tbody>
+                        @endif
+                    @endforeach
+                </table>
 
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>Equipamento</th>
-                    <th>Produto</th>
-                    <th><input  onClick="checkBoxes(this)" type="Checkbox" > Selecionar tudo</th>
-                </tr>
-                </thead>
-                @foreach($section->equipments as $a )
-                    @if($a->idCleaningFrequency==4)
-                        <tbody>
-                        <td>{{$a->designation}}</td>
-                        <td>@foreach($products as $product)
-                                @if($a->idProduct==$product->id)
-                                    {{$product->name}}
-                                @endif
-                            @endforeach</td>
-                        <td><input type="Checkbox" ></td>
-                        </tbody>
-                    @endif
-                @endforeach
-            </table>
-            <button id="savePersolize" class="btn-del" {{--onclick="saveEachPersonalize()"--}}>Guardar</button>
-        </div>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Equipamento</th>
+                        <th>Produto</th>
+                        <th><input  onClick="checkBoxes(this)" type="Checkbox" > Selecionar tudo</th>
+                    </tr>
+                    </thead>
+                    @foreach($section->equipments as $a )
+                        @if($a->idCleaningFrequency==4)
+                            <tbody>
+                            <td>{{$a->designation}}</td>
+                            <td>@foreach($products as $product)
+                                    @if($a->idProduct==$product->id)
+                                        <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
+                                    @endif
+                                @endforeach</td>
+                            <td><input type="Checkbox" ></td>
+                            </tbody>
+                        @endif
+                    @endforeach
+                </table>
+                <button id="savePersolize" class="btn-del" {{--onclick="saveEachPersonalize()"--}}>Guardar</button>
+            </div>
+        </form>
+
+
     </div>
 
 <script>

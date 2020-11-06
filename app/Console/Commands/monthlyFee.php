@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\DB;
 class monthlyFee extends Command
 {
     protected $signature = 'monthlyFee';
-    protected $description = 'o beto é fixe';
+    protected $description = 'o beto';
 
 
     public function __construct()

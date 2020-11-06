@@ -7,6 +7,7 @@ use App\ClientSection;
 use App\ClientThermo;
 use App\EquipmentSectionClient;
 use App\FridgeType;
+use App\HygieneRecords;
 use App\OilRecord;
 use App\Product;
 use App\Thermo;
@@ -102,16 +103,9 @@ class RecordsController extends Controller
     {
         $user = Auth::user();
 
-
-
-
-
         $sections = ClientSection::where('id_client',$user->client_id)->get();
 
         $products=Product::all();
-
-
-
 
         foreach($sections as $section)
         {
@@ -119,13 +113,30 @@ class RecordsController extends Controller
             $section->areas = AreaSectionClient::all();
         }
 
-
-
-
         $today = Carbon::now()->format('Y-m-d');
 
         return view('frontoffice.hygieneRegister', compact('today','sections','section','products'));
     }
+
+    /*public function saveHygieneRecords(Request $request)
+    {
+        $user = Auth::user();
+
+        $auxClientId = Session::get('establismentID');
+
+        $inputs = $request->all();
+        $hygiene_records= new HygieneRecords();
+        $hygiene_records->client_id = $auxClientId;
+        $hygiene_records->id_area=;
+        $hygiene_records->id_equipment=;
+        $hygiene_records->idCleaningFrequency=;
+        $hygiene_records->idProduct=;
+        $hygiene_records->checked=;
+
+        $hygiene_records->save();
+
+        return redirect('/frontoffice/records/hygiene');
+    }*/
 
     public function getTemperatureRecordsHistory()
     {

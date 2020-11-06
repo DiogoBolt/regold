@@ -28,7 +28,7 @@
         <span class="back-btn__back"><strong>Documentos Registos</strong></span>
     </a>
 
-    <form action="/frontoffice/saveOilRecords" method="POST">
+    <form action="/frontoffice/records/oil/save" method="POST">
         {{ csrf_field() }}
         <div class="container">
             <table class="table">
