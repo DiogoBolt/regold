@@ -77,13 +77,13 @@
 
                     </tr>
                     <tr>
-                        @if($client->pvp == 1)
+                        @if($pvp == 1)
                             <td class="price-tag">{{ $product->price1 }}€</td>
-                        @elseif($client->pvp == 2)
+                        @elseif($pvp == 2)
                             <td class="price-tag">{{ $product->price2 }}€</td>
-                        @elseif(($client->pvp == 3))
+                        @elseif(($pvp == 3))
                             <td class="price-tag">{{ $product->price3 }}€</td>
-                        @elseif(($client->pvp == 4))
+                        @elseif(($pvp == 4))
                             <td class="price-tag">{{ $product->price4 }}€</td>
                         @else
                             <td class="price-tag">{{ $product->price5 }}€</td>

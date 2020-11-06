@@ -34,7 +34,7 @@
                     <div class="product-img" style="background-image: url('/uploads/products/{{$product->file}}')">
                         <a href="/frontoffice/product/{{$product->id}}"></a>
                         <span class="product-img__price">
-                            @switch($pvp)
+                            @switch($product->pvp)
                                 @case(1)
                                 {{$product->price1}}€
                                 @break
