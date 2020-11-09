@@ -17,6 +17,7 @@
 </div>
 <div class="container">
     <div class="row">
+        <a href="/" class="btn btn-primary" style="float:left">Voltar</a>
         <input type="text" class="form-control" id="searchinput" style="width:40%;float:left">
         <button class="btn btn-primary" onclick="searchFocus()" style="display:inline">Procurar</button>
         <div class="col-md-8 col-md-offset-2">

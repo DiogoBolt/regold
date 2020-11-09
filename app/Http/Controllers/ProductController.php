@@ -137,9 +137,15 @@ class ProductController extends Controller
     public function deleteProduct(Request $request)
     {
         $product = Product::where('id', $request->id)->first();
+        $pvps = ClientProduct::where('product_id',$product->id)->get();
+        foreach($pvps as $pvp)
+        {
+            $pvp->delete();
+        }
         $product->delete();
 
-        return redirect()->to('/products');
+
+        return reduirect()->to('/products');
     }
 
     public function editProductPost(Request $request)
