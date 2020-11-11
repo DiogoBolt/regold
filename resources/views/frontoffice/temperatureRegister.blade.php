@@ -281,7 +281,7 @@
                     <h4 class="modal-title">Editar Valor</h4>
                 </div>
                 <div class="modal-body" id="infomodal">
-                    <form action="/frontoffice/thermos/editvalue/" method="post">
+                    <form action="/frontoffice/editthermosvalue" method="POST">
                         {{ csrf_field() }}
                     <input id="dayTime" name="dayTime" type="hidden" value="">
                     <input id="idThermo" name="idThermo" type="hidden" value="">
