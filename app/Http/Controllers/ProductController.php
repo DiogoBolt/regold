@@ -453,6 +453,7 @@ class ProductController extends Controller
                 ->where('status', 'paid')
                 ->orderBy('o.id', 'DESC')
                 ->select([
+
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
                     'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
                 ])

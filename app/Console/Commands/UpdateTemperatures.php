@@ -69,7 +69,7 @@ class UpdateTemperatures extends Command
                         $average->afternoon_temp = number_format($thermo['afternoon_temp'], 1);
                     }
                     $average->user_id = isset($client->user_id) ? $client->user_id : 0;
-                    $average->client_thermo = isset($client->type) ? $client->type : 0;;
+                    $average->client_thermo = isset($client->id) ? $client->id : 0;;
                     $average->imei = $thermo['imei'];
                     $average->save();
                 } else {
@@ -82,7 +82,7 @@ class UpdateTemperatures extends Command
                     }
                     $average->afternoon_temp = number_format($thermo['afternoon_temp'], 1);
                     $average->user_id = isset($client->user_id) ? $client->user_id : 0;
-                    $average->client_thermo = isset($client->type) ? $client->type : 0;;
+                    $average->client_thermo = isset($client->id) ? $client->id : 0;;
                     $average->imei = $thermo['imei'];
                     $average->save();
                 }
@@ -96,7 +96,7 @@ class UpdateTemperatures extends Command
                 }
                 $average->afternoon_temp = number_format($thermo['afternoon_temp'], 1);
                 $average->user_id = isset($client->user_id) ? $client->user_id : 0;
-                $average->client_thermo = isset($client->type) ? $client->type : 0;;
+                $average->client_thermo = isset($client->id) ? $client->id : 0;;
                 $average->imei = $thermo['imei'];
                 $average->save();
             }
