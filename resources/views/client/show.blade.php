@@ -18,8 +18,6 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="col-sm-12">
-
-                        
                         <button class="btn">
                             <a href="/clients/edit/{{$client->id}}" style="color: #fff;">Editar</a>
                         </button>
@@ -53,9 +51,6 @@
                             <b> Email Contacto:</b> {{$user->email}}
                         </div>
                         <div class="form-group">
-                            <b>Actividade:</b> {{$client->activityType}}
-                        </div>
-                        <div class="form-group">
                             <b> Telefone:</b> {{$client->telephone}}
                         </div>
                         <div class="form-group">
@@ -66,15 +61,18 @@
                         <div class="form-group">
                             <b> Vendedor:</b> {{$client->salesman}}
                         </div>
-                        <div class="form-group">
-                            <b>Tipo Cliente:</b> 
-                            @foreach($client->client_type as $type)
-                                {{$type}} 
-                            @endforeach
-                            
-                        </div>
+
                         <div class="form-group">
                             <b> Email Faturação:</b> {{$client->receipt_email}}
+                        </div>
+                        <div class="form-group">
+                            <b> Tipo de Pack:</b> {{$client->pack_type}}
+                        </div>
+                        <div class="form-group">
+                            <b> Escalão:</b> {{$client->escala_type}}
+                        </div>
+                        <div class="form-group">
+                            <b> Nº Termómetros:</b> {{$client->n_thermos}}
                         </div>
                         <div class="form-group">
                             <b> NIB:</b> {{$client->nib}}

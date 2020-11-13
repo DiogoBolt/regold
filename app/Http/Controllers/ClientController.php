@@ -533,6 +533,7 @@ class ClientController extends Controller
         $establisment->nif = $inputs['nif'];
         $establisment->salesman = $inputs['salesman'];
         $establisment->telephone = $inputs['telephone'];
+        $establisment->activity=1;
 
         //packs
 
@@ -701,19 +702,19 @@ class ClientController extends Controller
 
         $client->nif = $inputs['nif'];
         //$client->email = $inputs['email'];
-        $client->activity = $inputs['activity'];
+        /*$client->activity = $inputs['activity'];*/
         $client->salesman = $inputs['salesman'];
-        $client->technical_haccp=$inputs['technical'];
+        /*$client->technical_haccp=$inputs['technical'];*/
         $client->telephone = $inputs['telephone'];
         $client->payment_method = $inputs['payment_method'];
-        $client->pbp = $inputs['pvp'];
+        $client->pvp = $inputs['pvp'];
         //$client->client_type = $inputs['client_type'];
         $client->receipt_email = $inputs['invoiceEmail'];
         $client->nib = $inputs['nib'];
         $client->contract_value = $inputs['value'];
         $client->regoldiID = $inputs['regoldiID'];
         $client->transport_note = $inputs['transport_note'];
-        $type = ServiceTypeClient::where('id_client', $inputs['id'])->delete();
+        /*$type = ServiceTypeClient::where('id_client', $inputs['id'])->delete();
            //melhorar isto
            if (array_key_exists('serviceType1', $inputs)) {
             $serviceTypeClient = new ServiceTypeClient;
@@ -734,12 +735,16 @@ class ClientController extends Controller
             $serviceTypeClient->id_client= $client->id;
             $serviceTypeClient->id_service_type=$inputs['serviceType4'];
             $serviceTypeClient->save();
-        }
+        }*/
         $options = [
             'cost' => 10
         ];
         if($inputs['password']!=""){
             $user->password = password_hash($inputs['password'], PASSWORD_BCRYPT, $options);
+            $user->save();
+        }
+        if($inputs['pin']!=""){
+            $user->pin=password_hash($inputs['pin'], PASSWORD_BCRYPT, $options);
             $user->save();
         }
         $client->save();

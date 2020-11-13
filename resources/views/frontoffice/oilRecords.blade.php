@@ -50,7 +50,7 @@
                 <tr>
                     <td>
                         <div class="btn-oilVal">
-                            <div class="btn-group" data-toggle="buttons">
+                            <div class="btn-group" data-toggle="buttons" >
                                 <label class="btn btn-oilRecord">
                                     <input type="radio" name="oilAspect" value="1"> 1
                                 </label>
@@ -61,17 +61,15 @@
                                     <input type="radio" name="oilAspect" value="3"> 3
                                 </label>
                                 <label class="btn btn-oilRecord4">
-                                    <input type="radio" name="oilAspect" value="4"> 4
+                                    <input type="radio" name="oilAspect" value="4" onclick="show()"> 4
                                 </label>
                                 <label class="btn btn-oilRecord5">
-                                    <input type="radio" name="oilAspect" value="5"> 5
+                                    <input type="radio" name="oilAspect" value="5" onclick="show()"> 5
                                 </label>
-
+                                <div class="trocarOleo" id="divTrocarOleo" style="display: none">
+                                    <input type="radio" name="trocaOleo" value="TrocarOleo">Troquei o óleo
+                                </div>
                             </div>
-                            {{--<input type="radio" class="btn btn-oilRecord2" name="oilAspect" onclick="jQuery(this).toggleClass('active')" id="2" value="2">
-                            <input type="radio" class="btn btn-oilRecord3" name="oilAspect" onclick="jQuery(this).toggleClass('active')" id="3" value="3">
-                            <input type="radio" class="btn btn-oilRecord4" name="oilAspect" onclick="jQuery(this).toggleClass('active')" id="4" value="4">
-                            <input type="radio" class="btn btn-oilRecord5" name="oilAspect" onclick="jQuery(this).toggleClass('active')" id="5" value="5">--}}
                         </div>
                     </td>
                 </tr>
@@ -81,20 +79,12 @@
         </div>
     </form>
 
-
-
-
-
-
-
-
-
-   {{-- <script type="text/javascript">
-    function reply_click($clicked_id)
-    {
-       var x= document.getElementById($clicked_id);
-       x.style.borderColor="red";
-    }
-</script>--}}
-
 @endsection
+
+<script>
+
+    function show() {
+        document.getElementById('divTrocarOleo').style.display='block';
+    }
+
+</script>

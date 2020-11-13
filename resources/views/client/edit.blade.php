@@ -129,8 +129,8 @@
                             </div>
                         </div>
                         <div class="col-sm-6">
-                        <div class="form-group">
-                            Actividade do Cliente: <select class="form-control" name="activity" required>        
+                       {{-- <div class="form-group">
+                            Actividade do Cliente: <select class="form-control" name="activity" required>
                                 <option disabled  value="">Selecione a Atividade/Tipo de Cliente</option>
                                 @foreach($activityTypes as $activityType)
                                     @if($activityType->id==$client->activity)
@@ -138,30 +138,21 @@
                                     @else
                                         <option value="{{$activityType->id}}">{{$activityType->designation}}</option>
                                     @endif
-                                
+
                                         @endforeach
                             </select>
-                        </div>
-                            <div class="form-group" id="clientType">
-                                Tipo Cliente:
-                                <br/>
-                                <div id="serviceTypesDiv"> 
-                                    @foreach($serviceTypes as $serviceType)
-                                        @foreach($client->client_type as $cliType) 
-                                            @if($serviceType->id == $cliType->id_service_type)
-                                                <input checked type="checkbox" id="serviceType{{$serviceType->id}}" name="serviceType{{$serviceType->id}}" value="{{$serviceType->id}}">{{$serviceType->name}}
-                                                <br/>
-                                                @continue(2)
-                                            @endif 
-                                        @endforeach
-                                        <input type="checkbox" id="serviceType{{$serviceType->id}}" name="serviceType{{$serviceType->id}}" value="{{$serviceType->id}}">{{$serviceType->name}}
-                                        <br/> 
-                                    @endforeach
-                                </div>
-                            </div>
+                        </div>--}}
+
                             <div class="form-group">
                                 NIB: <input type="number" placeholder="Insira o nib" class="form-control" type="number" value="{{$client->nib}}" name="nib">
                             </div>
+                            {{--<div class="form-group">
+                                Tipo de Pack: <input type="number" placeholder="Insira o nib" class="form-control" type="number" value="{{$client->nib}}" name="nib">
+                            </div>--}}
+                            {{--<div class="form-group">
+                                NIB: <input type="number" placeholder="Insira o nib" class="form-control" type="number" value="{{$client->nib}}" name="nib">
+                            </div>--}}
+
 
                             <div class="form-group">
                                 Valor Contrato: <input type="number" step="0.01" placeholder="Valor de Contrato" value="{{$client->contract_value}}" min=0 class="form-control" name="value">
@@ -192,6 +183,10 @@
                             <label>Nova Password</label>
                             <div class="form-group">
                                 Password: <input class="form-control" value="{{$client->password}}" type="password" name="password">
+                            </div>
+                            <label>Novo Pin</label>
+                            <div class="form-group">
+                                Pin: <input class="form-control" value="{{$client->pin}}" type="password" name="pin">
                             </div>
                         </div>
                         <div>

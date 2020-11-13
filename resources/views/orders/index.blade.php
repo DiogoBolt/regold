@@ -101,7 +101,7 @@
                                     </td>
                                 @endif
 
-                                <td><a href="/orders/{{$order->id}}">Detalhes</a></td>
+                                <td>@if($order->cart_id==null)(SP FREE s/ encomenda)@else<a href="/orders/{{$order->id}}">Detalhes</a>@endif</td>
 
 
                                 <td><a href="/orders/process/{{$order->id}}" class="btn btn-process">

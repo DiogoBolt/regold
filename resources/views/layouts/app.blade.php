@@ -35,8 +35,6 @@
                         <img src="{{ URL::to('/') }}/img/navbar/logoRegolfood.png" alt="logo">
                     </a>
 
-
-
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
@@ -80,7 +78,7 @@
                             @endif
 
                             @if(Auth::user()->userType == 5)
-                            <li class="dropdown">
+                            {{--<li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
                                     Agenda <span class="caret"></span>
                                 </a>
@@ -97,7 +95,7 @@
                                             </a>
                                         </li>
                                 </ul>
-                            </li>
+                            </li>--}}
                             @endif
                                 <li>
                                     <a href="/orders">

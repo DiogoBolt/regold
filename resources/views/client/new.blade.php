@@ -193,7 +193,6 @@
                                     Visitas Controlo de Pragas: <input class="form-control"  placeholder="NºVisitas" type="number" name="cp_visits" >
                                 </div>
 
-
                             <div class="form-group" id="divEscalao" style="display: none">
                                 <input type="radio" name="escalao" value="basic" >Basic
                                 <input type="radio" name="escalao" value="premium">Premium

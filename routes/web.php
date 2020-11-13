@@ -124,8 +124,9 @@ Route::get('/frontoffice/verifyCodeDeviceExist/{id}/{code}','PestController@veri
 //routes Registos
 Route::get('/frontoffice/insertProductConformities', 'RecordsController@insertConformities');
 
-Route::post('/frontoffice/records/oil/save', 'RecordsController@saveOilRecords');
+
 Route::get('/frontoffice/records/oil','RecordsController@insertOilRecords');
+Route::post('/frontoffice/records/oil/save', 'RecordsController@saveOilRecords');
 Route::get('/frontoffice/records/oil/history','RecordsController@getOilRecordsHistory');
 Route::get('/frontoffice/records/oil/history/get','RecordsController@getHistByMonth');
 Route::get('/frontoffice/records/oil/history/print','RecordsController@printReportOil');
@@ -135,10 +136,14 @@ Route::get('/frontoffice/records/temperatures/history','RecordsController@getTem
 Route::get('/frontoffice/records/temperatures/history/get','RecordsController@getHistoryByMonth');
 Route::post('/frontoffice/records/temperatures/history/comment','RecordsController@saveComment');
 Route::get('/frontoffice/records/temperatures/history/print','RecordsController@printReport');
+Route::get('/frontoffice/getlastreads/{id}', 'RecordsController@getLast5Temperatures');
+
 
 Route::get('/frontoffice/records/hygiene','RecordsController@getHygieneRecords');
 Route::post('/frontoffice/records/hygiene/save','RecordsController@saveHygieneRecords');
-Route::get('/frontoffice/getlastreads/{id}', 'RecordsController@getLast5Temperatures');
+Route::get('/frontoffice/records/hygiene/history','RecordsController@getHygieneRecordsHistory');
+Route::get('/frontoffice/records/hygiene/history/get','RecordsController@getHygieneByMonth');
+Route::get('/frontoffice/records/hygiene/history/print','RecordsController@printRecordsHygiene');
 
 //estatisticas route
 Route::get('/frontoffice/statistics','ReportController@reportStatistics');

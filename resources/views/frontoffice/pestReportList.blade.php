@@ -49,8 +49,6 @@
                         </tr>
                     @endforeach
                 </table>
-            @else
-                <h2>Sem Relatórios Realizados.</h2>
             @endif
         </div>
     </div>
@@ -76,8 +74,6 @@
                                 </tr>
                             @endforeach
                     </table>
-            @else
-                <h2>Sem Relatórios Realizados.</h2>
             @endif
         </div>
     </div>
@@ -103,8 +99,6 @@
                         </tr>
                     @endforeach
                 </table>
-            @else
-                <h2>Sem Relatórios Realizados.</h2>
             @endif
         </div>
     </div>
@@ -130,8 +124,6 @@
                         </tr>
                     @endforeach
                 </table>
-            @else
-                <h2>Sem Relatórios Realizados.</h2>
             @endif
         </div>
     </div>

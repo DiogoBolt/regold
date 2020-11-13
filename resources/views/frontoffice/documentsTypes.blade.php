@@ -33,6 +33,12 @@
                             QUALIDADE DO ÓLEO
                         </div>
                     </a>
+                    <a class="category {{ $super }}" href="/frontoffice/records/hygiene">
+                        <div class="category-body">
+                            <img class="img-categories" src="{{ URL::to('/') }}/img/relatorio.png">
+                            REGISTOS DE HIGIENE
+                        </div>
+                    </a>
                     <a class="category {{ $super }}" href="/frontoffice/insertProductConformities">
                         <div class="category-body">
                             <img class="img-categories" src="{{ URL::to('/') }}/img/relatorio.png">
