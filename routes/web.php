@@ -122,9 +122,9 @@ Route::get('/frontoffice/report/punctualData/{id}','PestController@punctualDataS
 Route::get('/frontoffice/verifyCodeDeviceExist/{id}/{code}','PestController@verifyCodeDeviceExist');
 
 //routes Registos
-<<<<<<< HEAD
+
 Route::get('/frontoffice/insertProductConformities', 'RecordsController@insertConformities');
-=======
+
 Route::get('/frontoffice/records/insertProduct', 'RecordsController@insertRecords');
 Route::post('/frontoffice/records/insertProduct/save', 'RecordsController@saveInsertRecords');
 Route::get('/frontoffice/records/insertProduct/history','RecordsController@getInsertRecords');
@@ -133,7 +133,7 @@ Route::get('/frontoffice/records/insertProduct/history/get','RecordsController@g
 
 Route::post('/frontoffice/saveOilRecords', 'RecordsController@saveOilRecords');
 Route::get('/frontoffice/oilRecords','RecordsController@insertOilRecords');
->>>>>>> 9823fc3a7fc42c682a02c81a26eba558ee42fd3e
+
 
 
 Route::get('/frontoffice/records/oil','RecordsController@insertOilRecords');
@@ -147,12 +147,12 @@ Route::get('/frontoffice/records/temperatures/history','RecordsController@getTem
 Route::get('/frontoffice/records/temperatures/history/get','RecordsController@getHistoryByMonth');
 Route::post('/frontoffice/records/temperatures/history/comment','RecordsController@saveComment');
 Route::get('/frontoffice/records/temperatures/history/print','RecordsController@printReport');
-<<<<<<< HEAD
-=======
+
+
 Route::any('/frontoffice/editthermosvalue','RecordsController@editThermoTemperature');
 
 Route::get('/frontoffice/records/hygiene','RecordsController@getHygieneRecords');
->>>>>>> 9823fc3a7fc42c682a02c81a26eba558ee42fd3e
+
 Route::get('/frontoffice/getlastreads/{id}', 'RecordsController@getLast5Temperatures');
 
 
