@@ -33,7 +33,7 @@
    }
   
    
-   h1.title { color: #000; font-family: Univia Pro; font-size: 40px; font-weight: normal; line-height: 48px; margin: 0 0 18px; text-shadow: 1px 0 0 #fff; }
+   h1.title { color: #000; font-family: Univia Pro; font-size: 40px; font-weight: normal; line-height: 48px; margin: 0 0 18px; text-shadow: 1px 0 0 #fff; margin-top: 80px;}
    h2.subTitle { color: #000; font-family: Univia Pro; font-size: 30px; font-weight: normal; line-height: 48px; margin: 0 0 18px; text-shadow: 1px 0 0 #fff; text-align: center;}
   
   label{
@@ -276,7 +276,8 @@
 
  #divBtns{
      display: inline-block;
-     margin-left: 10%;
+     float: right;
+     margin-top: -50;
  }
 
  #correctiveRuleCorrective{

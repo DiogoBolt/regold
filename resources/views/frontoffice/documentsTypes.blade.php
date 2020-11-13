@@ -33,7 +33,7 @@
                             QUALIDADE DO ÓLEO
                         </div>
                     </a>
-                    <a class="category {{ $super }}" href="/frontoffice/insertProductConformities">
+                    <a class="category {{ $super }}" href="/frontoffice/records/insertProduct">
                         <div class="category-body">
                             <img class="img-categories" src="{{ URL::to('/') }}/img/relatorio.png">
                             ENTRADA DE PRODUTO

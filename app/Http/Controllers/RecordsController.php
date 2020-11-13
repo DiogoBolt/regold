@@ -9,6 +9,7 @@ use App\EquipmentSectionClient;
 use App\FridgeType;
 use App\OilRecord;
 use App\Product;
+use App\ProductRecords;
 use App\Thermo;
 use App\ThermoAverageTemperature;
 use Carbon\Carbon;
@@ -35,18 +36,70 @@ class RecordsController extends Controller
     {
         $this->middleware('auth');
     }
-
-    public function insertConformities()
-    {
-
-
-        return view('frontoffice.insertProductConformities',compact('oil_records'));
-    }
-
     public function insertOilRecords()
     {
         /*$UserTypes = UserType::all();*/
         return view('frontoffice.oilRecords'/*,compact('UserTypes')*/);
+    }
+    public function insertRecords()
+    {
+        return view('frontoffice.insertProductConformities');
+    }
+    public function saveInsertRecords(Request $request){
+        $user = Auth::user();
+
+        $auxClientId = Session::get('establismentID');
+
+        $inputs = $request->all();
+        $product_records= new ProductRecords();
+        $product_records->product= $inputs['product'];
+        $product_records->provider= $inputs['provider'];
+        $product_records->date=$inputs['date'];
+        $product_records->temperature= $inputs['temperature'];
+        $product_records->cleaning= $inputs['cleaning'];
+        $product_records->product_status= $inputs['product_status'];
+        $product_records->package= $inputs['package'];
+        $product_records->label= $inputs['label'];
+        $product_records->client_id = $auxClientId;
+        $product_records->save();
+
+        return redirect('/frontoffice/documents/Registos');
+    }
+    function getInsertRecords()
+    {
+        $user = Auth::user();
+        $months = $this->months;
+
+        $clientProducts = ProductRecords::query()->select(['id', 'date', 'product','provider','temperature','cleaning','product_status','package','label', DB::raw('DAY(updated_at) as day'),
+        ])
+            ->where('client_id', $user->id)
+            ->groupBy('id')
+            ->get();
+
+        $years = ProductRecords::query()
+            ->select([
+                DB::raw('YEAR(created_at) as year')
+            ])
+            ->where('client_id', $user->id)
+            ->groupBy('year')
+            ->get();
+
+        return view('frontoffice.insertProductRecordsHistory',compact('months','years','clientProducts'));
+    }
+    function getInsertProductByMonth(Request $request){
+
+        $auxClientId = Session::get('establismentID');
+        $date = Carbon::createFromDate($request->get('year'), $request->get('month'));
+        $start_month = $date->copy()->startOfMonth();
+        $end_month = $date->copy()->endOfMonth();
+
+        return ProductRecords::query()->select([
+            'id', 'date', 'product','provider','temperature','cleaning','product_status','package','label', DB::raw('DAY(updated_at) as day'),
+        ])
+            ->where('client_id',$auxClientId)
+            ->whereBetween('updated_at', [$start_month, $end_month])
+            ->orderBy('updated_at', 'asc')
+            ->get();
     }
     public function saveOilRecords(Request $request)
     {
@@ -102,25 +155,15 @@ class RecordsController extends Controller
     {
         $user = Auth::user();
 
-
-
-
-
         $sections = ClientSection::where('id_client',$user->client_id)->get();
 
         $products=Product::all();
-
-
-
 
         foreach($sections as $section)
         {
             $section->equipments = EquipmentSectionClient::all();
             $section->areas = AreaSectionClient::all();
         }
-
-
-
 
         $today = Carbon::now()->format('Y-m-d');
 
