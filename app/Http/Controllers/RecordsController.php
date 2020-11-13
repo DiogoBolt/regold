@@ -68,9 +68,9 @@ class RecordsController extends Controller
     }
     function getInsertRecords()
     {
-<<<<<<< HEAD
+
         return view('frontoffice.insertProductConformities',compact('oil_records'));
-=======
+
         $user = Auth::user();
         $months = $this->months;
 
@@ -89,7 +89,7 @@ class RecordsController extends Controller
             ->get();
 
         return view('frontoffice.insertProductRecordsHistory',compact('months','years','clientProducts'));
->>>>>>> 9823fc3a7fc42c682a02c81a26eba558ee42fd3e
+
     }
     function getInsertProductByMonth(Request $request){
 
@@ -161,7 +161,7 @@ class RecordsController extends Controller
     {
         $user = Auth::user();
 
-<<<<<<< HEAD
+
 
         $sections = ClientSection::where('id_client',$user->client_id)->get();
 
@@ -174,14 +174,14 @@ class RecordsController extends Controller
         }
 
         $today = Carbon::now()->format('Y-m-d');
-=======
+
         $sections = ClientSection::where('id_client',$user->client_id)->get();
->>>>>>> 9823fc3a7fc42c682a02c81a26eba558ee42fd3e
+
 
         return view('frontoffice.hygieneRegister', compact('today','sections','section','products'));
     }
 
-<<<<<<< HEAD
+
     public function saveHygieneRecords(Request $request)
     {
         $user = Auth::user();
@@ -194,9 +194,6 @@ class RecordsController extends Controller
 
 
         foreach ($checkboxes as $checkbox)
-=======
-        foreach($sections as $section)
->>>>>>> 9823fc3a7fc42c682a02c81a26eba558ee42fd3e
         {
             $recordsHygiene = new HygieneRecords();
             $recordsHygiene->idClient=$auxClientId;
@@ -217,7 +214,6 @@ class RecordsController extends Controller
         $auxClientId = Session::get('clientImpersonatedId');
         $months = $this->months;
 
-<<<<<<< HEAD
         $years = HygieneRecords::query()
             ->select([
                 DB::raw('YEAR(created_at) as year')
@@ -295,9 +291,9 @@ class RecordsController extends Controller
             ->whereBetween('updated_at', [$start_month, $end_month])
             ->orderBy('updated_at', 'asc')
             ->get();*/
-=======
-        $today = Carbon::now()->format('Y-m-d');
->>>>>>> 9823fc3a7fc42c682a02c81a26eba558ee42fd3e
+
+        /*$today = Carbon::now()->format('Y-m-d');*/
+
 
     }
 
