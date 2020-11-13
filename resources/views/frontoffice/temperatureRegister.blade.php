@@ -52,7 +52,7 @@
                         <option value="1">Refrigeração</option>
                         <option value="2">Congelação</option>
                     </select>
-                    Imei : <input name="imei" class="form-control" required>
+                    Imei : <input name="imei" class="form-control" >
                     Numero Arca : <input name="number" class="form-control" required>
                     {{ csrf_field() }}
                     <button class="btn btn-add">Adicionar</button>
@@ -62,6 +62,7 @@
 
         <div class="register-container">
             @foreach($clientThermos as $thermo)
+                @if($thermo->thermo->imei != null)
                 @if($thermo->type === 1)
                     <div class="register-arc cooling">
                         <div class="register-arc__info">
@@ -141,6 +142,87 @@
                         </div>
                     </div>
                 @endif
+                @else
+                    @if($thermo->type === 1)
+                        <div class="register-arc cooling">
+                            <div class="register-arc__info">
+                                <div class="register-arc__info-extra">
+                                    <span><img style="width:20px;height:20px" src="{{ URL::to('/') }}/img/signal-icon-{{$thermo->signal_power}}.png"></span>
+                                    <span class="show-info" data-toggle="modal" data-target="#info-modal" onclick="showLastReads({{$thermo->id}})"><i class="glyphicon glyphicon-info-sign"></i></span>
+                                </div>
+                                <p>arca de refrigeração</p>
+                                <h1>{{$thermo->number}}</h1>
+                            </div>
+                            <div class="register-arc__data">
+                                <span>{{$thermo->fridgeType->min_temp}}º/c até {{$thermo->fridgeType->max_temp}}º/c</span>
+                                <div class="register-arc__data_temps">
+                                    @if(isset($thermo->average))
+                                        <div>
+                                            <h3 class="temperature normal" onclick="showEditTemp({{$thermo->id}},'m')" >{{number_format($thermo->average->morning_temp , 1)}}</h3>
+                                            <p>manhã</p>
+                                        </div>
+                                        <div>
+                                            <h3 class="temperature normal" onclick="showEditTemp({{$thermo->id}},'t')">{{number_format($thermo->average->afternoon_temp , 1)}}</h3>
+                                            <p>tarde</p>
+                                        </div>
+                                    @else
+                                        <div>
+                                            <h3 class="temperature normal" onclick="showEditTemp({{$thermo->id}},'m')">N/A</h3>
+                                            <p>manhã</p>
+                                        </div>
+                                        <div>
+                                            <h3 class="temperature normal" onclick="showEditTemp({{$thermo->id}},'t')">N/A</h3>
+                                            <p>tarde</p>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="register-arc__info delete" data-toggle="modal" data-target="#deleteModal"
+                                 data-item="{{ $thermo }}">
+                                eliminar
+                            </div>
+                        </div>
+                    @else
+                        <div class="register-arc freezing">
+                            <div class="register-arc__info">
+                                <div class="register-arc__info-extra">
+                                    <span><img style="width:20px;height:20px" src="{{ URL::to('/') }}/img/signal-icon-{{$thermo->signal_power}}.png"></span>
+                                    <span class="show-info" data-toggle="modal" data-target="#info-modal" onclick="showLastReads({{$thermo->id}})"><i class="glyphicon glyphicon-info-sign"></i></span>
+                                </div>
+                                <p>arca de congelação</p>
+                                <h1>{{$thermo->number}}</h1>
+                            </div>
+                            <div class="register-arc__data">
+                                <span>{{$thermo->fridgeType->min_temp}}º/c até {{$thermo->fridgeType->max_temp}}º/c</span>
+                                <div class="register-arc__data_temps">
+                                    @if(isset($thermo->average))
+                                        <div>
+                                            <h3 class="temperature normal" onclick="showEditTemp({{$thermo->id}},'m')">{{number_format($thermo->average->morning_temp , 1)}}</h3>
+                                            <p>manhã</p>
+                                        </div>
+                                        <div>
+                                            <h3 class="temperature normal" onclick="showEditTemp({{$thermo->id}},'t')">{{number_format($thermo->average->afternoon_temp , 1)}}</h3>
+                                            <p>tarde</p>
+                                        </div>
+                                    @else
+                                        <div>
+                                            <h3 class="temperature normal" onclick="showEditTemp({{$thermo->id}},'m')">N/A</h3>
+                                            <p>manhã</p>
+                                        </div>
+                                        <div>
+                                            <h3 class="temperature normal" onclick="showEditTemp({{$thermo->id}},'t')">N/A</h3>
+                                            <p>tarde</p>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="register-arc__info delete" data-toggle="modal" data-target="#deleteModal"
+                                 data-item="{{ $thermo }}">
+                                eliminar
+                            </div>
+                        </div>
+                    @endif
+                @endif
             @endforeach
         </div>
         <a class="btn btn-history" href="/frontoffice/records/temperatures/history">histórico</a>
@@ -191,9 +273,40 @@
         </div>
     </div>
 
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Editar Valor</h4>
+                </div>
+                <div class="modal-body" id="infomodal">
+                    <form action="/frontoffice/editthermosvalue" method="POST">
+                        {{ csrf_field() }}
+                    <input id="dayTime" name="dayTime" type="hidden" value="">
+                    <input id="idThermo" name="idThermo" type="hidden" value="">
+                    <input  name="valor" class="form-control">
+                    <button type="submit" class="btn btn-primary">Editar</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 @endsection
 
 <script>
+
+    function showEditTemp(id,time)
+    {
+        $('#myModal').modal('show');
+        $('#dayTime').val(time) ;
+        $('#idThermo').val(id);
+    }
 
     function showLastReads(id)
     {
@@ -208,9 +321,10 @@
     }
     document.addEventListener('DOMContentLoaded', function () {
         $('#info-modal').on('show.bs.modal', function (event) {
-          /* vê como fiz em baixo, se tiveres dificuldades apita */
+            /* vê como fiz em baixo, se tiveres dificuldades apita */
 
         });
+
 
         $('#deleteModal').on('show.bs.modal', function (event) {
             const item = $(event.relatedTarget);

@@ -124,10 +124,11 @@ class RecordsController extends Controller
         $clientThermos = ClientThermo::query()->where('user_id', $user->id)->get();
 
         foreach ($clientThermos as $clientthermo) {
+
             $clientthermo->thermo = Thermo::query()->where('imei', $clientthermo->imei)->get()->last();
             $clientthermo->fridgeType = FridgeType::query()->where('id', $clientthermo->type)->first();
             $clientthermo->average = ThermoAverageTemperature::query()
-                ->where('imei', $clientthermo->imei)
+                ->where('client_thermo', $clientthermo->id)
                 ->where('created_at','>',Carbon::now()->startOfDay())
                 ->where('created_at','<',Carbon::now()->endOfDay())
                 ->get()->last();
@@ -281,5 +282,43 @@ class RecordsController extends Controller
     {
         $print_data = json_decode($request->get('printReport')[0]);
         return view('frontoffice.printOilReport')->with(['details' => $print_data[0] , 'data' => $print_data[1]]);
+    }
+
+    public function editThermoTemperature(Request $request)
+    {
+        $inputs = $request->all();
+        $thermo = ClientThermo::where('id',$inputs['idThermo'])->first();
+        $daytime = $inputs['dayTime'];
+
+        $average = ThermoAverageTemperature::where('client_thermo',$thermo->id)->where('created_at','>',Carbon::now()->startOfDay())->first();
+
+        if($daytime == 'm')
+        {
+            if(isset($average))
+            {
+                $average->morning_temp = $inputs['valor'];
+                $average->save();
+            }else{
+                $average = new ThermoAverageTemperature;
+                $average->client_thermo = $thermo->id;
+                $average->user_id = Auth::user()->client_id;
+                $average->morning_temp = $inputs['valor'];
+                $average->save();
+            }
+        }else{
+            if(isset($average))
+            {
+                $average->afternoon_temp = $inputs['valor'];
+                $average->save();
+            }else{
+                $average = new ThermoAverageTemperature;
+                $average->client_thermo = $thermo->id;
+                $average->user_id = Auth::user()->client_id;
+                $average->afternoon_temp = $inputs['valor'];
+                $average->save();
+            }
+        }
+        return back();
+
     }
 }
