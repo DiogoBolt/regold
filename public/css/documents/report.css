@@ -56,14 +56,14 @@ input[type=radio] + label.conforme{
   
 }
 input[type=radio]:checked + label.conforme{
-  background: rgb(0, 255, 0);
+  background: limegreen;
 }
 
 input[type=radio] + label.naoConforme{
   background: rgb(255,0, 0,0.5);
 }
 input[type=radio]:checked + label.naoConforme{
-  background: rgb(255, 0, 0);
+  background: rgb(255, 0, 0, 1);
 }
 
 input[type=radio] + label.naoAplicavel{
@@ -282,7 +282,7 @@ hr.line{
 
 .inputRangeValue{
   float: right;
-  width: 15%; 
+  width: 20%;
   margin-left: 3%;
 }
 

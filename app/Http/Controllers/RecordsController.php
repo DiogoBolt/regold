@@ -10,6 +10,7 @@ use App\FridgeType;
 use App\HygieneRecords;
 use App\OilRecord;
 use App\Product;
+use App\ProductRecords;
 use App\Thermo;
 use App\ThermoAverageTemperature;
 use Carbon\Carbon;
@@ -36,16 +37,74 @@ class RecordsController extends Controller
     {
         $this->middleware('auth');
     }
-
-    public function insertConformities()
-    {
-        return view('frontoffice.insertProductConformities',compact('oil_records'));
-    }
-
     public function insertOilRecords()
     {
         /*$UserTypes = UserType::all();*/
         return view('frontoffice.oilRecords'/*,compact('UserTypes')*/);
+    }
+    public function insertRecords()
+    {
+        return view('frontoffice.insertProductConformities');
+    }
+    public function saveInsertRecords(Request $request){
+        $user = Auth::user();
+
+        $auxClientId = Session::get('establismentID');
+
+        $inputs = $request->all();
+        $product_records= new ProductRecords();
+        $product_records->product= $inputs['product'];
+        $product_records->provider= $inputs['provider'];
+        $product_records->date=$inputs['date'];
+        $product_records->temperature= $inputs['temperature'];
+        $product_records->cleaning= $inputs['cleaning'];
+        $product_records->product_status= $inputs['product_status'];
+        $product_records->package= $inputs['package'];
+        $product_records->label= $inputs['label'];
+        $product_records->client_id = $auxClientId;
+        $product_records->save();
+
+        return redirect('/frontoffice/documents/Registos');
+    }
+    function getInsertRecords()
+    {
+<<<<<<< HEAD
+        return view('frontoffice.insertProductConformities',compact('oil_records'));
+=======
+        $user = Auth::user();
+        $months = $this->months;
+
+        $clientProducts = ProductRecords::query()->select(['id', 'date', 'product','provider','temperature','cleaning','product_status','package','label', DB::raw('DAY(updated_at) as day'),
+        ])
+            ->where('client_id', $user->id)
+            ->groupBy('id')
+            ->get();
+
+        $years = ProductRecords::query()
+            ->select([
+                DB::raw('YEAR(created_at) as year')
+            ])
+            ->where('client_id', $user->id)
+            ->groupBy('year')
+            ->get();
+
+        return view('frontoffice.insertProductRecordsHistory',compact('months','years','clientProducts'));
+>>>>>>> 9823fc3a7fc42c682a02c81a26eba558ee42fd3e
+    }
+    function getInsertProductByMonth(Request $request){
+
+        $auxClientId = Session::get('establismentID');
+        $date = Carbon::createFromDate($request->get('year'), $request->get('month'));
+        $start_month = $date->copy()->startOfMonth();
+        $end_month = $date->copy()->endOfMonth();
+
+        return ProductRecords::query()->select([
+            'id', 'date', 'product','provider','temperature','cleaning','product_status','package','label', DB::raw('DAY(updated_at) as day'),
+        ])
+            ->where('client_id',$auxClientId)
+            ->whereBetween('updated_at', [$start_month, $end_month])
+            ->orderBy('updated_at', 'asc')
+            ->get();
     }
     public function saveOilRecords(Request $request)
     {
@@ -70,10 +129,11 @@ class RecordsController extends Controller
         $clientThermos = ClientThermo::query()->where('user_id', $user->id)->get();
 
         foreach ($clientThermos as $clientthermo) {
+
             $clientthermo->thermo = Thermo::query()->where('imei', $clientthermo->imei)->get()->last();
             $clientthermo->fridgeType = FridgeType::query()->where('id', $clientthermo->type)->first();
             $clientthermo->average = ThermoAverageTemperature::query()
-                ->where('imei', $clientthermo->imei)
+                ->where('client_thermo', $clientthermo->id)
                 ->where('created_at','>',Carbon::now()->startOfDay())
                 ->where('created_at','<',Carbon::now()->endOfDay())
                 ->get()->last();
@@ -101,6 +161,7 @@ class RecordsController extends Controller
     {
         $user = Auth::user();
 
+<<<<<<< HEAD
 
         $sections = ClientSection::where('id_client',$user->client_id)->get();
 
@@ -113,10 +174,14 @@ class RecordsController extends Controller
         }
 
         $today = Carbon::now()->format('Y-m-d');
+=======
+        $sections = ClientSection::where('id_client',$user->client_id)->get();
+>>>>>>> 9823fc3a7fc42c682a02c81a26eba558ee42fd3e
 
         return view('frontoffice.hygieneRegister', compact('today','sections','section','products'));
     }
 
+<<<<<<< HEAD
     public function saveHygieneRecords(Request $request)
     {
         $user = Auth::user();
@@ -129,6 +194,9 @@ class RecordsController extends Controller
 
 
         foreach ($checkboxes as $checkbox)
+=======
+        foreach($sections as $section)
+>>>>>>> 9823fc3a7fc42c682a02c81a26eba558ee42fd3e
         {
             $recordsHygiene = new HygieneRecords();
             $recordsHygiene->idClient=$auxClientId;
@@ -149,6 +217,7 @@ class RecordsController extends Controller
         $auxClientId = Session::get('clientImpersonatedId');
         $months = $this->months;
 
+<<<<<<< HEAD
         $years = HygieneRecords::query()
             ->select([
                 DB::raw('YEAR(created_at) as year')
@@ -226,6 +295,9 @@ class RecordsController extends Controller
             ->whereBetween('updated_at', [$start_month, $end_month])
             ->orderBy('updated_at', 'asc')
             ->get();*/
+=======
+        $today = Carbon::now()->format('Y-m-d');
+>>>>>>> 9823fc3a7fc42c682a02c81a26eba558ee42fd3e
 
     }
 
@@ -333,5 +405,43 @@ class RecordsController extends Controller
     {
         $print_data = json_decode($request->get('printReport')[0]);
         return view('frontoffice.printOilReport')->with(['details' => $print_data[0] , 'data' => $print_data[1]]);
+    }
+
+    public function editThermoTemperature(Request $request)
+    {
+        $inputs = $request->all();
+        $thermo = ClientThermo::where('id',$inputs['idThermo'])->first();
+        $daytime = $inputs['dayTime'];
+
+        $average = ThermoAverageTemperature::where('client_thermo',$thermo->id)->where('created_at','>',Carbon::now()->startOfDay())->first();
+
+        if($daytime == 'm')
+        {
+            if(isset($average))
+            {
+                $average->morning_temp = $inputs['valor'];
+                $average->save();
+            }else{
+                $average = new ThermoAverageTemperature;
+                $average->client_thermo = $thermo->id;
+                $average->user_id = Auth::user()->client_id;
+                $average->morning_temp = $inputs['valor'];
+                $average->save();
+            }
+        }else{
+            if(isset($average))
+            {
+                $average->afternoon_temp = $inputs['valor'];
+                $average->save();
+            }else{
+                $average = new ThermoAverageTemperature;
+                $average->client_thermo = $thermo->id;
+                $average->user_id = Auth::user()->client_id;
+                $average->afternoon_temp = $inputs['valor'];
+                $average->save();
+            }
+        }
+        return back();
+
     }
 }

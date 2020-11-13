@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Cart;
 use App\Category;
+use App\ClientProduct;
 use App\Customer;
 use App\DocumentType;
 use App\Group;
@@ -105,6 +106,16 @@ class ProductController extends Controller
                 $product->seguranca = $filename;
             }
             $product->save();
+
+            $clients = Customer::all();
+            foreach($clients as $client)
+            {
+                $pvp = new ClientProduct;
+                $pvp->client_id = $client->id;
+                $pvp->product_id = $product->id;
+                $pvp->pvp = 1;
+                $pvp->save();
+            }
         }
 
         $categories = Category::all();
@@ -126,9 +137,15 @@ class ProductController extends Controller
     public function deleteProduct(Request $request)
     {
         $product = Product::where('id', $request->id)->first();
+        $pvps = ClientProduct::where('product_id',$product->id)->get();
+        foreach($pvps as $pvp)
+        {
+            $pvp->delete();
+        }
         $product->delete();
 
-        return redirect()->to('/products');
+
+        return reduirect()->to('/products');
     }
 
     public function editProductPost(Request $request)
@@ -436,6 +453,7 @@ class ProductController extends Controller
                 ->where('status', 'paid')
                 ->orderBy('o.id', 'DESC')
                 ->select([
+
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
                     'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
                 ])

@@ -14257,4 +14257,9 @@ readers do not read off random characters that represent icons */
 .fab {
   font-family: 'Font Awesome 5 Brands';
 }
-
+img.logoReport{
+  display: flex;
+  width: 200px;
+  margin-top: 10px;
+  margin-left: 80px;
+}
