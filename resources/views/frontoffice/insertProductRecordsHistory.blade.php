@@ -94,9 +94,9 @@
         </div>
     </div>
 
-   {{-- <form action="/frontoffice/records/temperatures/history/print" type="POST" id="print-form">
+    <form action="/frontoffice/records/insertProduct/history/print" type="POST" id="print-form">
         <input type="hidden" name="printReport[]" value="" id="print-items"/>
-    </form>--}}
+    </form>
 
 @endsection
 
@@ -176,13 +176,12 @@
             cacheData.push(response);
         }
 
-
-        /*function printReport() {
+        function printReport() {
             if(cacheData.length > 0) {
                 document.getElementById("print-items").value = JSON.stringify(cacheData);
                 document.getElementById("print-form").submit();
             }
-        }*/
+        }
 
     }, false);
 </script>

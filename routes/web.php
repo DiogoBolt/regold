@@ -128,12 +128,8 @@ Route::get('/frontoffice/insertProductConformities', 'RecordsController@insertCo
 Route::get('/frontoffice/records/insertProduct', 'RecordsController@insertRecords');
 Route::post('/frontoffice/records/insertProduct/save', 'RecordsController@saveInsertRecords');
 Route::get('/frontoffice/records/insertProduct/history','RecordsController@getInsertRecords');
-Route::get('/frontoffice/records/insertProduct/history/get','RecordsController@getInsertRecordsByMonth');
-
-
-Route::post('/frontoffice/saveOilRecords', 'RecordsController@saveOilRecords');
-Route::get('/frontoffice/oilRecords','RecordsController@insertOilRecords');
-
+Route::get('/frontoffice/records/insertProduct/history/get','RecordsController@getInsertProductByMonth');
+Route::get('/frontoffice/records/insertProduct/history/print','RecordsController@printReportProducts');
 
 
 Route::get('/frontoffice/records/oil','RecordsController@insertOilRecords');

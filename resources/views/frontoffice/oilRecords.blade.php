@@ -39,7 +39,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <input class="date" type="date" id="record_date"  name="record_date">
+                        <input class="date" type="date" value={{$today}} id="record_date" name="record_date">
                     </td>
                 </tr>
                 <tr>
@@ -50,15 +50,14 @@
                 <tr>
                     <td>
                         <div class="btn-oilVal">
-                            <div class="btn-group" data-toggle="buttons" >
                                 <label class="btn btn-oilRecord">
-                                    <input type="radio" name="oilAspect" value="1"> 1
+                                    <input type="radio" name="oilAspect" value="1" onclick="notShow()"> 1
                                 </label>
                                 <label class="btn btn-oilRecord2">
-                                    <input type="radio" name="oilAspect" value="2"> 2
+                                    <input type="radio" name="oilAspect" value="2" onclick="notShow()"> 2
                                 </label>
                                 <label class="btn btn-oilRecord3">
-                                    <input type="radio" name="oilAspect" value="3"> 3
+                                    <input type="radio" name="oilAspect" value="3" onclick="notShow()"> 3
                                 </label>
                                 <label class="btn btn-oilRecord4">
                                     <input type="radio" name="oilAspect" value="4" onclick="show()"> 4
@@ -67,9 +66,8 @@
                                     <input type="radio" name="oilAspect" value="5" onclick="show()"> 5
                                 </label>
                                 <div class="trocarOleo" id="divTrocarOleo" style="display: none">
-                                    <input type="radio" name="trocaOleo" value="TrocarOleo">Troquei o óleo
+                                    <input type="radio" name="trocaOleo" value="1">Troquei o óleo
                                 </div>
-                            </div>
                         </div>
                     </td>
                 </tr>
@@ -82,9 +80,11 @@
 @endsection
 
 <script>
-
     function show() {
-        document.getElementById('divTrocarOleo').style.display='block';
+        document.getElementById('divTrocarOleo').style.display='inline';
+    }
+    function notShow() {
+        document.getElementById('divTrocarOleo').style.display='none';
     }
 
 </script>

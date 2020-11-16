@@ -80,6 +80,7 @@
                     <tr>
                         <th>Dia</th>
                         <th>Aspeto do óleo</th>
+                        <th>Troca de óleo</th>
                     </tr>
                     </thead>
                     <tbody id="table-body"></tbody>
@@ -162,6 +163,7 @@
                         <td>
                             ${data.oil_aspect}
                         </td>
+                        <td>${data.changeOil ? 'Sim':'Não'}</td>
                     </tr>
                 `;
             });

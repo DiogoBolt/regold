@@ -91,8 +91,8 @@
                 <table id="myTable" class="table table-bordered">
                     <thead>
                     <tr>
-                        <th onclick="sortTable(0)">Área/Equipamento</th>
-                        <th onclick="sortTable(1)">Dia</th>
+                        <th onclick="sortTable(0)">Área/Equipamento<i class="arrow up"></i></th>
+                        <th onclick="sortTable(1)">Dia<i class="arrow down"></i></th>
                         <th>Limpo</th>
                     </tr>
                     </thead>

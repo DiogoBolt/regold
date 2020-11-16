@@ -37,14 +37,74 @@ class RecordsController extends Controller
     {
         $this->middleware('auth');
     }
+
+////////////REGISTOS DO ESTADO DO OLEO///////////////////////////////////////////////////////////////////
+
     public function insertOilRecords()
     {
-        /*$UserTypes = UserType::all();*/
-        return view('frontoffice.oilRecords'/*,compact('UserTypes')*/);
+        $today = Carbon::now()->format('yy-m-d');
+
+        return view('frontoffice.oilRecords',compact('today'));
     }
+    public function saveOilRecords(Request $request)
+    {
+        $user = Auth::user();
+
+        $auxClientId = Session::get('establismentID');
+
+        $inputs = $request->all();
+        $oil_records= new OilRecord();
+        $oil_records->record_date= $inputs['record_date'];
+        $oil_records->oil_aspect= $inputs['oilAspect'];
+        $oil_records->client_id = $auxClientId;
+        if(isset($inputs['trocaOleo'])==0) $oil_records->changeOil = 0; else $oil_records->changeOil =$inputs['trocaOleo'];
+
+        $oil_records->save();
+
+        return redirect('/frontoffice/documents/Registos');
+    }
+    public function getOilRecordsHistory()
+    {
+        $auxClientId = Session::get('clientImpersonatedId');
+        $months = $this->months;
+
+        $years = OilRecord::query()
+            ->select([
+                DB::raw('YEAR(created_at) as year')
+            ])
+            ->where('client_id', $auxClientId)
+            ->groupBy('year')
+            ->get();
+
+        return view('frontoffice.oilRecordsHistory', compact([ 'years','months']));
+    }
+    public function getHistByMonth(Request $request)
+    {
+        $auxClientId = Session::get('clientImpersonatedId');
+        $date = Carbon::createFromDate($request->get('year'), $request->get('month'));
+        $start_month = $date->copy()->startOfMonth();
+        $end_month = $date->copy()->endOfMonth();
+
+        return OilRecord::query()->select([
+            'id', 'client_id', 'oil_aspect','changeOil', DB::raw('DAY(updated_at) as day')
+        ])
+            ->where('client_id',$auxClientId)
+            ->whereBetween('updated_at', [$start_month, $end_month])
+            ->orderBy('updated_at', 'asc')
+            ->get();
+    }
+    public function printReportOil(Request $request)
+    {
+        $print_data = json_decode($request->get('printReport')[0]);
+        return view('frontoffice.printOilReport')->with(['details' => $print_data[0] , 'data' => $print_data[1]]);
+    }
+
+/////////////////////////REGISTOS DE ENTRADA DE PRODUTO/////////////////////////////////////////////////////////////////////////
+
     public function insertRecords()
     {
-        return view('frontoffice.insertProductConformities');
+        $today = Carbon::now()->format('yy-m-d');
+        return view('frontoffice.insertProductConformities',compact('today'));
     }
     public function saveInsertRecords(Request $request){
         $user = Auth::user();
@@ -68,15 +128,12 @@ class RecordsController extends Controller
     }
     function getInsertRecords()
     {
-
-        return view('frontoffice.insertProductConformities',compact('oil_records'));
-
-        $user = Auth::user();
+        $auxClientId = Session::get('clientImpersonatedId');
         $months = $this->months;
 
         $clientProducts = ProductRecords::query()->select(['id', 'date', 'product','provider','temperature','cleaning','product_status','package','label', DB::raw('DAY(updated_at) as day'),
         ])
-            ->where('client_id', $user->id)
+            ->where('client_id', $auxClientId)
             ->groupBy('id')
             ->get();
 
@@ -84,13 +141,13 @@ class RecordsController extends Controller
             ->select([
                 DB::raw('YEAR(created_at) as year')
             ])
-            ->where('client_id', $user->id)
+            ->where('client_id', $auxClientId)
             ->groupBy('year')
             ->get();
 
-        return view('frontoffice.insertProductRecordsHistory',compact('months','years','clientProducts'));
-
+        return view('frontoffice.insertProductRecordsHistory', compact('clientProducts','years','months'));
     }
+
     function getInsertProductByMonth(Request $request){
 
         $auxClientId = Session::get('establismentID');
@@ -106,21 +163,107 @@ class RecordsController extends Controller
             ->orderBy('updated_at', 'asc')
             ->get();
     }
-    public function saveOilRecords(Request $request)
+    public function printReportProducts(Request $request)
+    {
+        $print_data = json_decode($request->get('printReport')[0]);
+        return view('frontoffice.printProductRecordsReport')->with(['details' => $print_data[0] , 'data' => $print_data[1]]);
+    }
+
+///////////////////////////REGISTOS DE HIGIENE//////////////////////////////////////////////////////////
+
+    public function getHygieneRecords()
+    {
+        $user = Auth::user();
+
+        $sections = ClientSection::where('id_client',$user->client_id)->get();
+
+        $products=Product::all();
+
+        foreach($sections as $section)
+        {
+            $section->equipments = EquipmentSectionClient::where('idClient',$user->client_id)->get();
+            $section->areas = AreaSectionClient::where('idClient',$user->client_id)->get();
+        }
+
+        $today = Carbon::now()->format('Y-m-d');
+
+        $sections = ClientSection::where('id_client',$user->client_id)->get();
+
+
+        return view('frontoffice.hygieneRegister', compact('today','sections','section','products'));
+    }
+    public function saveHygieneRecords(Request $request)
     {
         $user = Auth::user();
 
         $auxClientId = Session::get('establismentID');
 
         $inputs = $request->all();
-        $oil_records= new OilRecord();
-        $oil_records->record_date= $inputs['record_date'];
-        $oil_records->oil_aspect= $inputs['oilAspect'];
-        $oil_records->client_id = $auxClientId;
-        $oil_records->save();
 
-        return redirect('/frontoffice/documents/Registos');
+        $checkboxes = json_decode($inputs['checkBoxes']);
+
+        foreach ($checkboxes as $checkbox)
+        {
+            $recordsHygiene = new HygieneRecords();
+            $recordsHygiene->idClient=$auxClientId;
+            if(isset($checkbox->idArea)) $recordsHygiene->idArea=$checkbox->idArea; else $recordsHygiene->idArea=0;
+            if(isset($checkbox->idEquipment)) $recordsHygiene->idEquipment=$checkbox->idEquipment; else $recordsHygiene->idEquipment=0;
+            $recordsHygiene->idProduct=$checkbox->idProduct;
+
+            $recordsHygiene->designation=$checkbox->designation;
+
+
+            $recordsHygiene->idCleaningFrequency=$checkbox->idCleaningFrequency;
+            $recordsHygiene->checked=1;
+            $recordsHygiene->save();
+        }
     }
+    function getHygieneRecordsHistory()
+    {
+        $auxClientId = Session::get('clientImpersonatedId');
+        $months = $this->months;
+
+        $years = HygieneRecords::query()
+            ->select([
+                DB::raw('YEAR(created_at) as year')
+            ])
+            ->where('idClient', $auxClientId)
+            ->groupBy('year')
+            ->get();
+
+        $cleaningFrequency=CleaningFrequency::query()->select(['id','designation'])
+            ->get();
+
+        return view('frontoffice.hygieneRecordsHistory', compact(['years','months','cleaningFrequency']));
+    }
+    function getHygieneByMonth(Request $request){
+        $auxClientId = Session::get('clientImpersonatedId');
+        $date = Carbon::createFromDate($request->get('year'), $request->get('month'));
+        $start_month = $date->copy()->startOfMonth();
+        $end_month = $date->copy()->endOfMonth();
+        $cleaningFrequency = $request->get('cleaningFrequency');
+
+        $item=HygieneRecords::query()
+            ->where('idClient',$auxClientId)
+            ->where('idCleaningFrequency',$cleaningFrequency)
+            ->whereBetween('updated_at', [$start_month, $end_month])
+            ->select([
+                'id', 'idClient', 'idArea','idEquipment','idProduct','idCleaningFrequency','designation','checked',DB::raw('DAY(created_at) as day'), DB::raw('DAY(updated_at) as day')
+            ])
+            ->orderBy('idArea', 'asc')
+            ->orderBy('idEquipment','asc')
+            ->get();
+
+        return response()->json($item);
+    }
+
+    public function printRecordsHygiene(Request $request)
+    {
+        $print_data = json_decode($request->get('printReport')[0]);
+        return view('frontoffice.printRecordsHygiene')->with(['details' => $print_data[0] , 'data' => $print_data[1]]);
+    }
+
+    ///////////REGISTOS DE TEMPERATURA//////////////////////////////////////////////////////////////////////
 
     public function getTemperatureRecords()
     {
@@ -155,152 +298,6 @@ class RecordsController extends Controller
         $today = Carbon::now()->format('Y-m-d');
 
         return view('frontoffice.temperatureRegister', compact('today', 'clientThermos'));
-    }
-
-    public function getHygieneRecords()
-    {
-        $user = Auth::user();
-
-
-
-        $sections = ClientSection::where('id_client',$user->client_id)->get();
-
-        $products=Product::all();
-
-        foreach($sections as $section)
-        {
-            $section->equipments = EquipmentSectionClient::where('idClient',$user->client_id)->get();
-            $section->areas = AreaSectionClient::where('idClient',$user->client_id)->get();
-        }
-
-        $today = Carbon::now()->format('Y-m-d');
-
-        $sections = ClientSection::where('id_client',$user->client_id)->get();
-
-
-        return view('frontoffice.hygieneRegister', compact('today','sections','section','products'));
-    }
-
-
-    public function saveHygieneRecords(Request $request)
-    {
-        $user = Auth::user();
-
-        $auxClientId = Session::get('establismentID');
-
-        $inputs = $request->all();
-
-        $checkboxes = json_decode($inputs['checkBoxes']);
-
-
-        foreach ($checkboxes as $checkbox)
-        {
-            $recordsHygiene = new HygieneRecords();
-            $recordsHygiene->idClient=$auxClientId;
-            if(isset($checkbox->idArea)) $recordsHygiene->idArea=$checkbox->idArea; else $recordsHygiene->idArea=0;
-            if(isset($checkbox->idEquipment)) $recordsHygiene->idEquipment=$checkbox->idEquipment; else $recordsHygiene->idEquipment=0;
-            $recordsHygiene->idProduct=$checkbox->idProduct;
-
-            $recordsHygiene->designation=$checkbox->designation;
-
-
-            $recordsHygiene->idCleaningFrequency=$checkbox->idCleaningFrequency;
-            $recordsHygiene->checked=1;
-            $recordsHygiene->save();
-        }
-    }
-    function getHygieneRecordsHistory()
-    {
-        $auxClientId = Session::get('clientImpersonatedId');
-        $months = $this->months;
-
-        $years = HygieneRecords::query()
-            ->select([
-                DB::raw('YEAR(created_at) as year')
-            ])
-            ->where('idClient', $auxClientId)
-            ->groupBy('year')
-            ->get();
-
-        $cleaningFrequency=CleaningFrequency::query()->select(['id','designation'])
-            ->get();
-
-//        sfdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
-
-        return view('frontoffice.hygieneRecordsHistory', compact(['years','months','cleaningFrequency']));
-    }
-    function getHygieneByMonth(Request $request){
-        $auxClientId = Session::get('clientImpersonatedId');
-        $date = Carbon::createFromDate($request->get('year'), $request->get('month'));
-        $start_month = $date->copy()->startOfMonth();
-        $end_month = $date->copy()->endOfMonth();
-        $cleaningFrequency = $request->get('cleaningFrequency');
-
-
-
-
-        $item=HygieneRecords::query()
-            ->where('idClient',$auxClientId)
-            ->where('idCleaningFrequency',$cleaningFrequency)
-            ->whereBetween('updated_at', [$start_month, $end_month])
-            ->select([
-            'id', 'idClient', 'idArea','idEquipment','idProduct','idCleaningFrequency','designation','checked',DB::raw('DAY(created_at) as day'), DB::raw('DAY(updated_at) as day')
-        ])
-            ->orderBy('idArea', 'asc')
-            ->orderBy('idEquipment','asc')
-            ->get();
-
-        /*$a['area']=AreaSectionClient::where('id',$a->idArea)->first();
-        $a['equip']=EquipmentSectionClient::where('id',$a->idEquipment)->first();*/
-
-
-
-        return response()->json($item);
-
-
-
-
-
-
-
-        /*return $a;*/
-
-       /* $weekly=HygieneRecords::query()->select([
-            'id', 'idClient', 'idArea','idEquipment','idProduct','idCleaningFrequency','checked', DB::raw('DAY(updated_at) as day')
-        ])
-            ->where('idClient',$auxClientId)
-            ->where('idCleaningFrequency',$cleaningFrequency)
-            ->whereBetween('updated_at', [$start_month, $end_month])
-            ->orderBy('updated_at', 'asc')
-            ->get();
-
-        $biweekly=HygieneRecords::query()->select([
-            'id', 'idClient', 'idArea','idEquipment','idProduct','idCleaningFrequency','checked', DB::raw('DAY(updated_at) as day')
-        ])
-            ->where('idClient',$auxClientId)
-            ->where('idCleaningFrequency',$cleaningFrequency)
-            ->whereBetween('updated_at', [$start_month, $end_month])
-            ->orderBy('updated_at', 'asc')
-            ->get();
-
-        $monthly=HygieneRecords::query()->select([
-            'id', 'idClient', 'idArea','idEquipment','idProduct','idCleaningFrequency','checked', DB::raw('DAY(updated_at) as day')
-        ])
-            ->where('idClient',$auxClientId)
-            ->where('idCleaningFrequency',$cleaningFrequency)
-            ->whereBetween('updated_at', [$start_month, $end_month])
-            ->orderBy('updated_at', 'asc')
-            ->get();*/
-
-        /*$today = Carbon::now()->format('Y-m-d');*/
-
-
-    }
-
-    public function printRecordsHygiene(Request $request)
-    {
-        $print_data = json_decode($request->get('printReport')[0]);
-        return view('frontoffice.printRecordsHygiene')->with(['details' => $print_data[0] , 'data' => $print_data[1]]);
     }
 
     public function getTemperatureRecordsHistory()
@@ -367,41 +364,6 @@ class RecordsController extends Controller
         return $last5reads;
 
     }
-    public function getOilRecordsHistory()
-    {
-        $auxClientId = Session::get('clientImpersonatedId');
-        $months = $this->months;
-
-        $years = OilRecord::query()
-            ->select([
-                DB::raw('YEAR(created_at) as year')
-            ])
-            ->where('client_id', $auxClientId)
-            ->groupBy('year')
-            ->get();
-
-        return view('frontoffice.oilRecordsHistory', compact([ 'years','months']));
-    }
-    public function getHistByMonth(Request $request)
-    {
-        $auxClientId = Session::get('clientImpersonatedId');
-        $date = Carbon::createFromDate($request->get('year'), $request->get('month'));
-        $start_month = $date->copy()->startOfMonth();
-        $end_month = $date->copy()->endOfMonth();
-
-        return OilRecord::query()->select([
-            'id', 'client_id', 'oil_aspect', DB::raw('DAY(updated_at) as day')
-        ])
-            ->where('client_id',$auxClientId)
-           ->whereBetween('updated_at', [$start_month, $end_month])
-            ->orderBy('updated_at', 'asc')
-            ->get();
-    }
-    public function printReportOil(Request $request)
-    {
-        $print_data = json_decode($request->get('printReport')[0]);
-        return view('frontoffice.printOilReport')->with(['details' => $print_data[0] , 'data' => $print_data[1]]);
-    }
 
     public function editThermoTemperature(Request $request)
     {
@@ -438,6 +400,5 @@ class RecordsController extends Controller
             }
         }
         return back();
-
     }
 }
