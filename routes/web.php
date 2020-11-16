@@ -144,6 +144,7 @@ Route::get('/frontoffice/records/temperatures/history/get','RecordsController@ge
 Route::post('/frontoffice/records/temperatures/history/comment','RecordsController@saveComment');
 Route::get('/frontoffice/records/temperatures/history/print','RecordsController@printReport');
 
+
 Route::any('/frontoffice/editthermosvalue','RecordsController@editThermoTemperature');
 
 Route::get('/frontoffice/records/hygiene','RecordsController@getHygieneRecords');
