@@ -257,11 +257,11 @@ h1.title {
  }
 
 #btnAddNewSection{
-  float: right;
-  color: black;
   margin-right: 8%;
+  float: right;
   margin-top: 5px;
   margin-bottom: 5px;
+  display: inline-block;
 }
 
 .btn-del{
@@ -280,11 +280,11 @@ h1.title {
 }
 
 #btnAddSections{
-  color: black;
   font-style: bold;
-  float: right;
-  margin-left: 10px;
-  margin-right: 45px;
+  background-color: var(--main-color);
+  display: inline-block;
+  margin-bottom: 0;
+
 }
 
  /*a tag*/

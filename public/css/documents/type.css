@@ -208,17 +208,23 @@
   background-color:  green;
   font-size: 10px;
   color: #E5E1E6;
-  margin-left: 40%;
-
+  text-align: center;
+  justify-content: center;
+  margin-bottom: 0;
 }
 .btn-nConforme {
   background-color:  red;
   font-size: 10px;
   color: #E5E1E6;
+  text-align: center;
+  justify-content: center;
+  margin-bottom: 0;
 }
 
 .label-insertPro{
   font-size: 12px;
+  display: flex;
+
 }
 .input_insertProd{
   height: 36px;
@@ -232,12 +238,14 @@
 }
 
 .th-insertProd{
-  font-size: 14px;
+  font-size: 12px;
   text-align: center;
   background-color: #ddf0de;
 }
 .td-insertProd{
   background-color: white;
+  justify-content: center;
+  text-align: center;
 }
 
 .btn-conformities{
@@ -281,7 +289,7 @@ caption {
   background-color: var(--light-green);
 }
 .table td{
-  font-size: 18px;
+  font-size: 12px;
 }
 .table td img {
   width: 100px;
@@ -310,6 +318,9 @@ caption {
   display: block;
   margin-bottom: 20px;
   padding: 6px 12px;
+}
+.btn-insert{
+  justify-content: center;
 }
 
 

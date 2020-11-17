@@ -94,7 +94,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td class="td-insertProd">
                         <label class="btn btn-conforme">
                             <input type="radio" class="btn-insert" name="product_status" value="c"> CONFORME
                         </label>
@@ -109,7 +109,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td class="td-insertProd">
                         <label class="btn btn-conforme">
                             <input type="radio" class="btn-insert" name="package" value="c"> CONFORME
                         </label>
@@ -124,7 +124,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td class="td-insertProd">
                         <label class="btn btn-conforme">
                             <input type="radio" class="btn-insert" name="label" value="c"> CONFORME
                         </label>
