@@ -304,7 +304,6 @@ function myFunction() {
       }
   }
 
-
   //teste remover
 
   function removeItem(select, itemid){

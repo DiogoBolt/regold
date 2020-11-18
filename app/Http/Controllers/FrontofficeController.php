@@ -417,7 +417,7 @@ class FrontofficeController extends Controller
     public function productsByCategory($id)
     {
         $user = Auth::user();
-        $products = Product::where('category',$id)->get();
+        $products = Product::where('category',$id)->orderby('name')->get();
 
         foreach($products as $product)
         {

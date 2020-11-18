@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\DB;
 class monthlyFee extends Command
 {
     protected $signature = 'monthlyFee';
-    protected $description = 'o beto é fixe';
+    protected $description = 'o beto';
 
 
     public function __construct()
@@ -34,7 +34,6 @@ class monthlyFee extends Command
         $clients=Customer::where('pack_type','=','sp free')
             ->get();
 
-
         foreach ($clients as $client){
             $order = Order::where('client_id', '=', $client->id)->whereMonth('created_at', \Illuminate\Support\Carbon::now()->subMonth(1)->month)->first();
             if($order===null)
@@ -45,9 +44,9 @@ class monthlyFee extends Command
                     $order->total=19;
                 }elseif ($client->escala_type=='premium')
                 {
-                    $order->total=23;
+                    $order->total=21;
                 }else{
-                    $order->total=29;
+                    $order->total=30;
                 }
                 $order->cart_id=null;
                 $order->totaliva=$order->total*1.23;

@@ -122,24 +122,41 @@ Route::get('/frontoffice/report/punctualData/{id}','PestController@punctualDataS
 Route::get('/frontoffice/verifyCodeDeviceExist/{id}/{code}','PestController@verifyCodeDeviceExist');
 
 //routes Registos
-Route::get('/frontoffice/insertProductConformities', 'RecordsController@insertConformities');
-Route::post('/frontoffice/saveOilRecords', 'RecordsController@saveOilRecords');
-Route::get('/frontoffice/oilRecords','RecordsController@insertOilRecords');
 
+Route::get('/frontoffice/insertProductConformities', 'RecordsController@insertConformities');
+
+Route::get('/frontoffice/records/insertProduct', 'RecordsController@insertRecords');
+Route::post('/frontoffice/records/insertProduct/save', 'RecordsController@saveInsertRecords');
+Route::get('/frontoffice/records/insertProduct/history','RecordsController@getInsertRecords');
+Route::get('/frontoffice/records/insertProduct/history/get','RecordsController@getInsertProductByMonth');
+Route::get('/frontoffice/records/insertProduct/history/print','RecordsController@printReportProducts');
+
+
+Route::get('/frontoffice/records/oil','RecordsController@insertOilRecords');
+Route::post('/frontoffice/records/oil/save', 'RecordsController@saveOilRecords');
 Route::get('/frontoffice/records/oil/history','RecordsController@getOilRecordsHistory');
 Route::get('/frontoffice/records/oil/history/get','RecordsController@getHistByMonth');
 Route::get('/frontoffice/records/oil/history/print','RecordsController@printReportOil');
-
 
 Route::get('/frontoffice/records/temperatures','RecordsController@getTemperatureRecords');
 Route::get('/frontoffice/records/temperatures/history','RecordsController@getTemperatureRecordsHistory');
 Route::get('/frontoffice/records/temperatures/history/get','RecordsController@getHistoryByMonth');
 Route::post('/frontoffice/records/temperatures/history/comment','RecordsController@saveComment');
 Route::get('/frontoffice/records/temperatures/history/print','RecordsController@printReport');
+
+
 Route::any('/frontoffice/editthermosvalue','RecordsController@editThermoTemperature');
 
 Route::get('/frontoffice/records/hygiene','RecordsController@getHygieneRecords');
+
 Route::get('/frontoffice/getlastreads/{id}', 'RecordsController@getLast5Temperatures');
+
+
+Route::get('/frontoffice/records/hygiene','RecordsController@getHygieneRecords');
+Route::post('/frontoffice/records/hygiene/save','RecordsController@saveHygieneRecords');
+Route::get('/frontoffice/records/hygiene/history','RecordsController@getHygieneRecordsHistory');
+Route::get('/frontoffice/records/hygiene/history/get','RecordsController@getHygieneByMonth');
+Route::get('/frontoffice/records/hygiene/history/print','RecordsController@printRecordsHygiene');
 
 //estatisticas route
 Route::get('/frontoffice/statistics','ReportController@reportStatistics');
@@ -209,7 +226,6 @@ Route::group(['middleware' => ['backoffice']], function () {
     Route::post('/products/edit', 'ProductController@editProductPost');
     /*luis*/
     route::get('/billing','ProductController@showBilling');
-
 
     Route::get('/orders', 'ProductController@showOrders');
     Route::get('/processedOrders', 'ProductController@showProcessedOrders');

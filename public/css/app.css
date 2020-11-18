@@ -4149,8 +4149,13 @@ fieldset[disabled] .btn-primary.focus {
 
 .btn-success {
   color: #fff;
-  background-color: #2ab27b;
+  background-color: var(--main-color);
   border-color: #259d6d;
+  justify-content: center;
+  text-align: center;
+  display: inline-block;
+  float: right;
+  margin-right: 20px;
 }
 
 .btn-success:focus,
@@ -14257,4 +14262,9 @@ readers do not read off random characters that represent icons */
 .fab {
   font-family: 'Font Awesome 5 Brands';
 }
-
+img.logoReport{
+  display: flex;
+  width: 200px;
+  margin-top: 10px;
+  margin-left: 80px;
+}

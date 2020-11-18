@@ -8,7 +8,7 @@
 @section('content')
     <div class="container-bar">
         <p class="container-bar_txt">
-            HISTÓRICO DE QUALIDADE DO OLEO
+            HISTÓRICO DE ENTRADA DE PRODUTO
         </p>
         <div class="container-bar_img">
             <img src="/img/haccp_icon.png"/>
@@ -19,15 +19,15 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item" aria-current="page">Home</li>
             <li class="breadcrumb-item " aria-current="page">Documentos Registos</li>
-            <li class="breadcrumb-item active" aria-current="page">Qualidade do óleo</li>
-            <li class="breadcrumb-item active" aria-current="page">Histórico Qualidade do óleo</li>
+            <li class="breadcrumb-item active" aria-current="page">Entrada de Produto</li>
+            <li class="breadcrumb-item active" aria-current="page">Histórico Entrada de Produto</li>
         </ol>
     </nav>
 
     {{-- Go Back Button --}}
-    <a class="back-btn" href="/frontoffice/records/oil">
+    <a class="back-btn" href="/frontoffice/records/insertProduct">
         <span class="back-btn__front"><strong>Voltar</strong></span>
-        <span class="back-btn__back"><strong>Qualidade Óleo</strong></span>
+        <span class="back-btn__back"><strong>Entrada Produto</strong></span>
     </a>
 
     <div class="container">
@@ -79,8 +79,13 @@
                     <thead>
                     <tr>
                         <th>Dia</th>
-                        <th>Aspeto do óleo</th>
-                        <th>Troca de óleo</th>
+                        <th>Produto</th>
+                        <th>Fornecedores</th>
+                        <th>Temperatura</th>
+                        <th>Limpeza</th>
+                        <th>Estado do Produto</th>
+                        <th>Embalagem</th>
+                        <th>Rotulagem</th>
                     </tr>
                     </thead>
                     <tbody id="table-body"></tbody>
@@ -89,10 +94,7 @@
         </div>
     </div>
 
-
-
-
-    <form action="/frontoffice/records/oil/history/print" type="POST" id="print-form">
+    <form action="/frontoffice/records/insertProduct/history/print" type="POST" id="print-form">
         <input type="hidden" name="printReport[]" value="" id="print-items"/>
     </form>
 
@@ -135,7 +137,7 @@
         function submitForm(data) {
             $.ajax({
                 type: 'GET',
-                url: '/frontoffice/records/oil/history/get',
+                url: '/frontoffice/records/insertProduct/history/get',
                 data,
                 success: function (response) {
                     cacheData = [];
@@ -160,17 +162,19 @@
                 tableBody.innerHTML += `
                     <tr>
                         <td>${data.day}</td>
-                        <td>
-                            ${data.oil_aspect}
-                        </td>
-                        <td>${data.changeOil ? 'Sim':'Não'}</td>
+                        <td>${data.product}</td>
+                        <td>${data.provider}</td>
+                        <td>${data.temperature}</td>
+                        <td>${data.cleaning}</td>
+                        <td>${data.product_status}</td>
+                        <td>${data.package}</td>
+                        <td>${data.label}</td>
                     </tr>
                 `;
             });
 
             cacheData.push(response);
         }
-
 
         function printReport() {
             if(cacheData.length > 0) {

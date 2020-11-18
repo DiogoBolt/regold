@@ -5,10 +5,12 @@
     <link href="{{ asset('css/documents/temp-register.css') }}" rel="stylesheet">
 @endsection
 
+<script src="{{ URL::asset('/js/records.js') }}"></script>
+
 @section('content')
     <div class="container-bar">
         <p class="container-bar_txt">
-            HISTÓRICO DE QUALIDADE DO OLEO
+            HISTÓRICO DE HIGIENE
         </p>
         <div class="container-bar_img">
             <img src="/img/haccp_icon.png"/>
@@ -19,15 +21,15 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item" aria-current="page">Home</li>
             <li class="breadcrumb-item " aria-current="page">Documentos Registos</li>
-            <li class="breadcrumb-item active" aria-current="page">Qualidade do óleo</li>
-            <li class="breadcrumb-item active" aria-current="page">Histórico Qualidade do óleo</li>
+            <li class="breadcrumb-item active" aria-current="page">Registos de Higiene</li>
+            <li class="breadcrumb-item active" aria-current="page">Histórico de Higiene</li>
         </ol>
     </nav>
 
     {{-- Go Back Button --}}
-    <a class="back-btn" href="/frontoffice/records/oil">
+    <a class="back-btn" href="/frontoffice/records/hygiene">
         <span class="back-btn__front"><strong>Voltar</strong></span>
-        <span class="back-btn__back"><strong>Qualidade Óleo</strong></span>
+        <span class="back-btn__back"><strong>Registos Higiene</strong></span>
     </a>
 
     <div class="container">
@@ -56,6 +58,17 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="col-sm-4">
+                        Frequência :
+                        <select name="cleaningFrequency" class="form-control" required>
+                            <option value="" disabled selected>Seleccione Frequência</option>
+                            @foreach($cleaningFrequency as $clean)
+                                <option value="{{ $clean->id  }}"{{-- data-type="{{ $thermo->type }}"--}}>
+                                    {{ $clean->designation }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
 
                     <div class="col-sm-4 text-right">
                         <div class="col-xs-6">
@@ -75,12 +88,12 @@
         <div class="col-xs-12">
             <div id="no-results"></div>
             <div id="results-table" class="hidden margin-top table-responsive">
-                <table class="table table-bordered">
+                <table id="myTable" class="table table-bordered">
                     <thead>
                     <tr>
-                        <th>Dia</th>
-                        <th>Aspeto do óleo</th>
-                        <th>Troca de óleo</th>
+                        <th onclick="sortTable(0)">Área/Equipamento<i class="arrow up"></i></th>
+                        <th onclick="sortTable(1)">Dia<i class="arrow down"></i></th>
+                        <th>Limpo</th>
                     </tr>
                     </thead>
                     <tbody id="table-body"></tbody>
@@ -89,10 +102,7 @@
         </div>
     </div>
 
-
-
-
-    <form action="/frontoffice/records/oil/history/print" type="POST" id="print-form">
+    <form action="/frontoffice/records/hygiene/history/print" type="POST" id="print-form">
         <input type="hidden" name="printReport[]" value="" id="print-items"/>
     </form>
 
@@ -135,11 +145,12 @@
         function submitForm(data) {
             $.ajax({
                 type: 'GET',
-                url: '/frontoffice/records/oil/history/get',
+                url: '/frontoffice/records/hygiene/history/get',
                 data,
                 success: function (response) {
                     cacheData = [];
                     if (response.length) {
+                        data.cleaningFrequency = document.getElementsByName('cleaningFrequency')[0].selectedOptions[0].text;
                         cacheData.push(data);
                         buildResponse(response);
                     } else {
@@ -159,19 +170,14 @@
                 /* Weird bug happening, had to send each property separately */
                 tableBody.innerHTML += `
                     <tr>
+                        <td>${data.designation} </td>
                         <td>${data.day}</td>
-                        <td>
-                            ${data.oil_aspect}
-                        </td>
-                        <td>${data.changeOil ? 'Sim':'Não'}</td>
+                        <td>${data.checked ? 'Limpo':'Não Limpo'}</td>
                     </tr>
                 `;
             });
-
             cacheData.push(response);
         }
-
-
         function printReport() {
             if(cacheData.length > 0) {
                 document.getElementById("print-items").value = JSON.stringify(cacheData);

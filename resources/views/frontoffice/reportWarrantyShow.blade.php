@@ -69,7 +69,6 @@
                     <div class="tableContainer">
                         <table class="table" id="reportRules">
                             <tr id="reportRulesTop">
-                                <th class="thBackground">Dispositivo</th>
                                 <th class="thBackground">Nº Dispositivo</th>
                                 <th class="thBackground">Espécie</th>
                                 <th class="thBackground">Isco</th>
@@ -78,7 +77,6 @@
                             <tbody>
                             @foreach($answerDevices as $device)
                                 <tr class="tableRow">
-                                    <td class="tdBackground tdRule"><label class="rule">{{$device->index}}</label></td>
                                     <td class="tdBackground tdRule"><label class="rule">{{$device->number_device}}</label></td>
                                     <td class="tdBackground tdRule"><label class="rule">{{$device->specie}}</label></td>
                                     <td class="tdBackground tdRule"><label class="rule">{{$device->isco}}</label></td>

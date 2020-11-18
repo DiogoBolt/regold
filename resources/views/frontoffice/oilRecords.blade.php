@@ -28,7 +28,7 @@
         <span class="back-btn__back"><strong>Documentos Registos</strong></span>
     </a>
 
-    <form action="/frontoffice/saveOilRecords" method="POST">
+    <form action="/frontoffice/records/oil/save" method="POST">
         {{ csrf_field() }}
         <div class="container">
             <table class="table">
@@ -39,7 +39,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <input class="date" type="date" id="record_date"  name="record_date">
+                        <input class="date" type="date" value={{$today}} id="record_date" name="record_date">
                     </td>
                 </tr>
                 <tr>
@@ -50,28 +50,24 @@
                 <tr>
                     <td>
                         <div class="btn-oilVal">
-                            <div class="btn-group" data-toggle="buttons">
                                 <label class="btn btn-oilRecord">
-                                    <input type="radio" name="oilAspect" value="1"> 1
+                                    <input type="radio" name="oilAspect" value="1" onclick="notShow()"> 1
                                 </label>
                                 <label class="btn btn-oilRecord2">
-                                    <input type="radio" name="oilAspect" value="2"> 2
+                                    <input type="radio" name="oilAspect" value="2" onclick="notShow()"> 2
                                 </label>
                                 <label class="btn btn-oilRecord3">
-                                    <input type="radio" name="oilAspect" value="3"> 3
+                                    <input type="radio" name="oilAspect" value="3" onclick="notShow()"> 3
                                 </label>
                                 <label class="btn btn-oilRecord4">
-                                    <input type="radio" name="oilAspect" value="4"> 4
+                                    <input type="radio" name="oilAspect" value="4" onclick="show()"> 4
                                 </label>
                                 <label class="btn btn-oilRecord5">
-                                    <input type="radio" name="oilAspect" value="5"> 5
+                                    <input type="radio" name="oilAspect" value="5" onclick="show()"> 5
                                 </label>
-
-                            </div>
-                            {{--<input type="radio" class="btn btn-oilRecord2" name="oilAspect" onclick="jQuery(this).toggleClass('active')" id="2" value="2">
-                            <input type="radio" class="btn btn-oilRecord3" name="oilAspect" onclick="jQuery(this).toggleClass('active')" id="3" value="3">
-                            <input type="radio" class="btn btn-oilRecord4" name="oilAspect" onclick="jQuery(this).toggleClass('active')" id="4" value="4">
-                            <input type="radio" class="btn btn-oilRecord5" name="oilAspect" onclick="jQuery(this).toggleClass('active')" id="5" value="5">--}}
+                                <div class="trocarOleo" id="divTrocarOleo" style="display: none">
+                                    <input type="radio" name="trocaOleo" value="1">Troquei o óleo
+                                </div>
                         </div>
                     </td>
                 </tr>
@@ -81,20 +77,14 @@
         </div>
     </form>
 
-
-
-
-
-
-
-
-
-   {{-- <script type="text/javascript">
-    function reply_click($clicked_id)
-    {
-       var x= document.getElementById($clicked_id);
-       x.style.borderColor="red";
-    }
-</script>--}}
-
 @endsection
+
+<script>
+    function show() {
+        document.getElementById('divTrocarOleo').style.display='inline';
+    }
+    function notShow() {
+        document.getElementById('divTrocarOleo').style.display='none';
+    }
+
+</script>
