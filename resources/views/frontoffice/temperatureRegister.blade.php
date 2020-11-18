@@ -76,7 +76,7 @@
                         <div class="register-arc__data">
                             <span>{{$thermo->fridgeType->min_temp}}º/c até {{$thermo->fridgeType->max_temp}}º/c</span>
                             <div class="register-arc__data_temps">
-                                @if(isset($thermo->average))
+                                @if($thermo->average != null)
                                     <div>
                                         <h3 class="temperature normal">{{number_format($thermo->average->morning_temp , 1)}}</h3>
                                         <p>manhã</p>
@@ -115,7 +115,7 @@
                         <div class="register-arc__data">
                             <span>{{$thermo->fridgeType->min_temp}}º/c até {{$thermo->fridgeType->max_temp}}º/c</span>
                             <div class="register-arc__data_temps">
-                                @if(isset($thermo->average))
+                                @if($thermo->average != null)
                                     <div>
                                         <h3 class="temperature normal">{{number_format($thermo->average->morning_temp , 1)}}</h3>
                                         <p>manhã</p>
@@ -156,7 +156,7 @@
                             <div class="register-arc__data">
                                 <span>{{$thermo->fridgeType->min_temp}}º/c até {{$thermo->fridgeType->max_temp}}º/c</span>
                                 <div class="register-arc__data_temps">
-                                    @if(isset($thermo->average))
+                                    @if($thermo->average != null)
                                         <div>
                                             <h3 class="temperature normal" onclick="showEditTemp({{$thermo->id}},'m')" >{{number_format($thermo->average->morning_temp , 1)}}</h3>
                                             <p>manhã</p>
@@ -195,7 +195,7 @@
                             <div class="register-arc__data">
                                 <span>{{$thermo->fridgeType->min_temp}}º/c até {{$thermo->fridgeType->max_temp}}º/c</span>
                                 <div class="register-arc__data_temps">
-                                    @if(isset($thermo->average))
+                                    @if($thermo->average != null)
                                         <div>
                                             <h3 class="temperature normal" onclick="showEditTemp({{$thermo->id}},'m')">{{number_format($thermo->average->morning_temp , 1)}}</h3>
                                             <p>manhã</p>

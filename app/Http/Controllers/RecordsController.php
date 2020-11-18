@@ -74,11 +74,13 @@ class RecordsController extends Controller
 
             $clientthermo->thermo = Thermo::query()->where('imei', $clientthermo->imei)->get()->last();
             $clientthermo->fridgeType = FridgeType::query()->where('id', $clientthermo->type)->first();
-            $clientthermo->average = ThermoAverageTemperature::query()
+
+            $average = ThermoAverageTemperature::query()
                 ->where('client_thermo', $clientthermo->id)
                 ->where('created_at','>',Carbon::now()->startOfDay())
                 ->where('created_at','<',Carbon::now()->endOfDay())
                 ->get()->last();
+            $clientthermo->average = isset($average) ? $average : null;
             if($clientthermo->thermo->signal_power < 6) {
                 $clientthermo->signal_power = 1;
             }
