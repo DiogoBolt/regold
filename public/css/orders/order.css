@@ -109,3 +109,36 @@
     width: 50%;
     float: left;
 }
+.imp_logo{
+    display: flex;
+    width: 200px;
+    margin-top: 10px;
+}
+.lblBold{
+    font-family: Univia Pro;
+    font-weight: bold;
+    font-size: 10px;
+    float: right;
+    margin-top: -20px;
+}
+h1.title {
+    color: #000;
+    font-family: Univia Pro;
+    font-size: 20px;
+    font-weight: normal;
+    line-height: 48px;
+    margin: 0 0 18px;
+    text-shadow: 1px 0 0 #fff;
+    text-align: center;
+}
+@media screen {
+    footer.footer_1 {
+        display: none;
+    }
+}
+@media print {
+    footer.footer_1 {
+        position: fixed;
+        bottom: 0;
+    }
+}

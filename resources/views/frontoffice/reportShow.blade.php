@@ -11,7 +11,7 @@
                     <div class="panel-body table-responsive printall">
 
                         <img class="logoReport" src="{{ URL::to('/') }}/img/navbar/RegolfoodLogin.png" alt="logo">
-
+                        
                         <div id="divBtns">
                             <a class="btn btn-warning" href="/frontoffice/reports">
                                 Voltar
@@ -19,43 +19,43 @@
                             <button class="btn btn-warning" onclick="printReport()">Imprimir</button>
                         </div>
 
-                        <h1 class="title">Relatório</h1>
+{{--                        <h1 class="title">Relatório HACCP</h1>--}}
 
                         <div id="reportInfo">
-                            <div id="divFloatLeft">
+                          <div id="divFloatRigth">
                                 <div>
                                     <label class="lblBold">Estabelecimento: </label>
-                                    <label> {{$report->clientName}} </label>
+                                    <label class="lblBold"> {{$report->clientName}} </label>
                                 </div>
                                 <div >
                                     <label class="lblBold">Auditor: </label>
-                                    <label > {{$report->technicalName}} </label>
+                                    <label class="lblBold"> {{$report->technicalName}} </label>
                                 </div>
                                 <div>
                                     <label class="lblBold"> Número de Visita: </label>
-                                    <label id="visitNumber"> {{$report->numberVisit}} </label>
+                                    <label class="lblBold" id="visitNumber"> {{$report->numberVisit}} </label>
                                 </div>
-                            </div>
-                            
-                            <div id="divFloatRigth">  
+
+                          </div>
+                            <div id="divFloatRigth">
                                 <div>
                                     <label class="lblBold">Data: </label>
-                                    <label id="date"> {{$report->updated_at->toDateString()}} </label>
+                                    <label class="lblBold" id="date"> {{$report->updated_at->toDateString()}} </label>
                                 </div>
                                 <div>
                                     <label class="lblBold">Hora de Início: </label>
-                                    <label>{{$report->created_at->format('H:i')}}</label>
+                                    <label class="lblBold">{{$report->created_at->format('H:i')}}</label>
                                 </div>
                                 <div>
                                     <label class="lblBold">Hora de Fim: </label>
-                                    <label> {{$report->updated_at->format('H:i')}}</label>
+                                    <label class="lblBold"> {{$report->updated_at->format('H:i')}}</label>
                                 </div>
                             </div>
 
-                        </div>
-                    
 
+            </div>
                         @foreach($arraySections as $section)
+{{--                            <h1 class="title">Relatório HACCP</h1>--}}
 
                             <h1 id="sectionTitle" class="title">{{$section->designation}}</h1>
 
@@ -244,7 +244,7 @@
                             </div>
                     </div>
                 </div>
-                  <footer id="footer" style="display:none" >
+                  <footer class="footer_1"id="footer" style="display:none" >
                        <img class="report_footer" src="{{ URL::to('/') }}/img/footer.png" alt="logo">
                   </footer>
             </div>

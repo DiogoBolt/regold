@@ -171,6 +171,7 @@ class FrontofficeController extends Controller
                 ->get(['r.id']);
             $ids = [];
 
+
             foreach($receipts as $receipt)
             {
                 $updated = Receipt::where('id',$receipt->id)->first();
@@ -181,6 +182,7 @@ class FrontofficeController extends Controller
 
             $receipts = Receipt::whereIN('id',$ids)->get();
         }
+
 
         if($type==26)
         {
