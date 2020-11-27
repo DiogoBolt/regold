@@ -11,8 +11,7 @@
                         <img class="imp_logo" src="/img/navbar/logoRegolfood.png"/>
                         <h1 class="title">Registo Qualidade do Óleo</h1>
                     </div>
-<<<<<<< HEAD
-=======
+
                         </div>
                         <div id="divFloatRigth">
                             <div>
@@ -25,9 +24,6 @@
                                     <label class="lblBold">Mês: </label>
                                 </div>
 
-{{--                        <h1 class="title">Registo Qualidade do Óleo</h1>--}}
-
->>>>>>> e36c87b6a24ff5cc5fbf616d65422090d3772f8a
                     <div class="col-xs-12">
                         <div class="margin-top table-responsive">
                             <table class="table table-bordered">
