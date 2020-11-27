@@ -30,20 +30,22 @@
     margin: 0 0 50px;
     text-align: center;
     text-shadow: 1px 1px 2px #082b34;
+     margin-top: -20px;
    }
   
    
-   h1.title { color: #000; font-family: Univia Pro; font-size: 40px; font-weight: normal; line-height: 48px; margin: 0 0 18px; text-shadow: 1px 0 0 #fff; margin-top: 80px;}
+   h1.title { color: #000; font-family: Univia Pro; font-size: 20px; font-weight: normal; line-height: 48px; margin: 0 0 18px; text-shadow: 1px 0 0 #fff;}
    h2.subTitle { color: #000; font-family: Univia Pro; font-size: 30px; font-weight: normal; line-height: 48px; margin: 0 0 18px; text-shadow: 1px 0 0 #fff; text-align: center;}
   
   label{
     color: black;
-    font-size: 20px;
+    font-size: 10px;
   }
   
   .lblBold{ 
     font-family: Univia Pro;
     font-weight: bold;
+    font-size: 10px;
   }
   
   .divReportInfo{
@@ -226,7 +228,7 @@
     width: 80%;
     margin-left: 10%;
     text-align: center;
-    margin-bottom: 200px;
+    margin-bottom: 80px;
   }
   
   #divFloatLeft{
@@ -396,5 +398,14 @@ main {
   font-size: 15px;
   color: black;
 }
-
-  
+@media screen {
+  footer.footer_1 {
+    display: none;
+  }
+}
+@media print {
+  footer.footer_1 {
+    position: fixed;
+    bottom: 0;
+  }
+}

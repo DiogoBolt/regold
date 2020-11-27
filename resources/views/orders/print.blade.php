@@ -9,7 +9,7 @@
                 <div class="panel-body table-responsive">
 
                     <div style="text-align: center; margin-bottom: 20px;">
-                        <img src="/img/navbar/logoindexcolor.png"/>
+                        <img class="imp_logo" src="/img/navbar/logoRegolfood.png"/>
                     </div>
 
                     <div class="form-group">

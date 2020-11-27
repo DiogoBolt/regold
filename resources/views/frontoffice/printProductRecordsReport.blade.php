@@ -8,8 +8,22 @@
             <div class="panel">
                 <div class="panel-body table-responsive printall">
                     <div style="text-align: center; margin-bottom: 20px;">
-                        <img src="/img/navbar/logoindexcolor.png"/>
+                        <img class="imp_logo" src="/img/navbar/logoRegolfood.png"/>
                     </div>
+
+                    <div id="divFloatRigth">
+                        <div>
+                            <label class="lblBold" id="date"> {{$details->year}} </label>
+                            <label class="lblBold">Ano: </label>
+                        </div>
+                        <div id="divFloatRigth">
+                            <div>
+                                <label class="lblBold" id="date"> {{$details->month}} </label>
+                                <label class="lblBold">Mês: </label>
+                            </div>
+                        </div>
+
+                        <h1 class="title">Registo Entrada de Produto</h1>
 
                     <div class="col-xs-12">
                         <div class="margin-top table-responsive">
@@ -46,6 +60,9 @@
                 </div>
             </div>
         </div>
+            <footer class="footer_1"id="footer">
+                <img class="report_footer" src="{{ URL::to('/') }}/img/footer.png" alt="logo">
+            </footer>
     </div>
 </div>
 
