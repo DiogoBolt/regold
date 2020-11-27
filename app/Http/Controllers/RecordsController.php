@@ -3,6 +3,8 @@ namespace App\Http\Controllers;
 
 use App\AreaSectionClient;
 use App\CleaningFrequency;
+use App\ClientInsertProducts;
+use App\ClientProviders;
 use App\ClientSection;
 use App\ClientThermo;
 use App\EquipmentSectionClient;
@@ -56,9 +58,10 @@ class RecordsController extends Controller
         $oil_records= new OilRecord();
         $oil_records->record_date= $inputs['record_date'];
         $oil_records->oil_aspect= $inputs['oilAspect'];
+        $oil_records->equipment_name=$inputs['equipment_name'];
+        $oil_records->equipment_number=$inputs['equipment_number'];
         $oil_records->client_id = $auxClientId;
         if(isset($inputs['trocaOleo'])==0) $oil_records->changeOil = 0; else $oil_records->changeOil =$inputs['trocaOleo'];
-
         $oil_records->save();
 
         return redirect('/frontoffice/documents/Registos');
@@ -86,7 +89,7 @@ class RecordsController extends Controller
         $end_month = $date->copy()->endOfMonth();
 
         return OilRecord::query()->select([
-            'id', 'client_id', 'oil_aspect','changeOil', DB::raw('DAY(updated_at) as day')
+            'id', 'client_id', 'oil_aspect','changeOil','equipment_name','equipment_number', DB::raw('DAY(updated_at) as day')
         ])
             ->where('client_id',$auxClientId)
             ->whereBetween('updated_at', [$start_month, $end_month])
@@ -103,35 +106,69 @@ class RecordsController extends Controller
 
     public function insertRecords()
     {
+        $auxClientId = Session::get('establismentID');
+        $client_insertProducts=ClientInsertProducts::where('client_id', $auxClientId)->get();
+        $client_providers=ClientProviders::where('client_id', $auxClientId)->get();
         $today = Carbon::now()->format('yy-m-d');
-        return view('frontoffice.insertProductConformities',compact('today'));
+        return view('frontoffice.insertProductConformities',compact('today','client_insertProducts','client_providers'));
     }
     public function saveInsertRecords(Request $request){
-        $user = Auth::user();
 
+        $user = Auth::user();
         $auxClientId = Session::get('establismentID');
 
         $inputs = $request->all();
         $product_records= new ProductRecords();
-        $product_records->product= $inputs['product'];
-        $product_records->provider= $inputs['provider'];
+
+        $existProduct=ClientInsertProducts::Where('client_id',$auxClientId)
+            ->where('name',$inputs['product'])
+            ->count();
+
+        if($existProduct==0)
+        {
+            $client_insertProducts= new ClientInsertProducts();
+            $client_insertProducts->client_id=$auxClientId;
+            $client_insertProducts->name=$inputs['product'];
+            $client_insertProducts->save();
+            $product_records->product= $inputs['product'];
+        }else{
+            $product_records->product= $inputs['product'];
+        }
+
+        $existProvider=ClientProviders::Where('client_id',$auxClientId)
+            ->where('name',$inputs['provid'])
+            ->count();
+
+        if($existProvider==0)
+        {
+            $client_providers= new ClientProviders();
+            $client_providers->client_id=$auxClientId;
+            $client_providers->name=$inputs['provid'];
+            $client_providers->save();
+            $product_records->provider= $inputs['provid'];
+        }else{
+            $product_records->provider= $inputs['provid'];
+        }
+
         $product_records->date=$inputs['date'];
         $product_records->temperature= $inputs['temperature'];
         $product_records->cleaning= $inputs['cleaning'];
         $product_records->product_status= $inputs['product_status'];
         $product_records->package= $inputs['package'];
+        $product_records->observations=$inputs['obsTemperature'].''.$inputs['obsClean'].''.$inputs['obsStatus'].''.$inputs['obsLabel'].''.($inputs['obsPackage']);
         $product_records->label= $inputs['label'];
         $product_records->client_id = $auxClientId;
         $product_records->save();
 
-        return redirect('/frontoffice/documents/Registos');
+        return redirect('/frontoffice/records/insertProduct')->with('message','Registo realizado com sucesso!');
     }
+
     function getInsertRecords()
     {
         $auxClientId = Session::get('clientImpersonatedId');
         $months = $this->months;
 
-        $clientProducts = ProductRecords::query()->select(['id', 'date', 'product','provider','temperature','cleaning','product_status','package','label', DB::raw('DAY(updated_at) as day'),
+        $clientProducts = ProductRecords::query()->select(['id', 'date', 'product','provider','temperature','cleaning','product_status','package','label','observations', DB::raw('DAY(updated_at) as day'),
         ])
             ->where('client_id', $auxClientId)
             ->groupBy('id')
@@ -156,7 +193,7 @@ class RecordsController extends Controller
         $end_month = $date->copy()->endOfMonth();
 
         return ProductRecords::query()->select([
-            'id', 'date', 'product','provider','temperature','cleaning','product_status','package','label', DB::raw('DAY(updated_at) as day'),
+            'id', 'date', 'product','provider','temperature','cleaning','product_status','package','label','observations' ,DB::raw('DAY(updated_at) as day'),
         ])
             ->where('client_id',$auxClientId)
             ->whereBetween('updated_at', [$start_month, $end_month])
@@ -209,10 +246,7 @@ class RecordsController extends Controller
             if(isset($checkbox->idArea)) $recordsHygiene->idArea=$checkbox->idArea; else $recordsHygiene->idArea=0;
             if(isset($checkbox->idEquipment)) $recordsHygiene->idEquipment=$checkbox->idEquipment; else $recordsHygiene->idEquipment=0;
             $recordsHygiene->idProduct=$checkbox->idProduct;
-
             $recordsHygiene->designation=$checkbox->designation;
-
-
             $recordsHygiene->idCleaningFrequency=$checkbox->idCleaningFrequency;
             $recordsHygiene->checked=1;
             $recordsHygiene->save();

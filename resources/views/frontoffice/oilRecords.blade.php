@@ -39,7 +39,11 @@
                 </tr>
                 <tr>
                     <td>
-                        <input class="date" type="date" value={{$today}} id="record_date" name="record_date">
+                        <input class="input_insertProd" type="date" value={{$today}} id="record_date" name="record_date">
+                        <label class="label-insertPro" for="equipment_name">Nome Equipamento</label>
+                        <input name="equipment_name" class="input_insertProd"/>
+                        <label class="label-insertPro" for="equipment_number">NºEquipamento</label>
+                        <input  name="equipment_number" class="input_insertProd"/>
                     </td>
                 </tr>
                 <tr>
@@ -65,9 +69,9 @@
                                 <label class="btn btn-oilRecord5">
                                     <input type="radio" name="oilAspect" value="5" onclick="show()"> 5
                                 </label>
-                                <div class="trocarOleo" id="divTrocarOleo" style="display: none">
-                                    <input type="radio" name="trocaOleo" value="1">Troquei o óleo
-                                </div>
+                        </div>
+                        <div class="trocarOleo" id="divTrocarOleo" style="display: none">
+                            <input type="radio" name="trocaOleo" value="1">Troquei o óleo
                         </div>
                     </td>
                 </tr>

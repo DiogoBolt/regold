@@ -38,11 +38,15 @@
                         <th>Data/Hora</th>
                         <th></th>
                     </tr>
+                    <?php $i=0;
+                    ?>
 
                     @foreach($report_pest as $reportPest)
+                        <?php $i++
+                        ?>
                         <tr>
                             <td>
-                                {{$reportPest->id}} Relatório
+                                {{$i}} Relatório
                             </td>
                             <td>{{$reportPest->updated_at}}</td>
                             <td><a href="/frontoffice/reportPestShow/{{$reportPest->id}}">Ver</a></td>
@@ -63,11 +67,15 @@
                             <th>Data/Hora</th>
                             <th></th>
                         </tr>
+                        <?php $i=0;
+                        ?>
 
                             @foreach($report_maintenance as $reportMaintenance)
+                            <?php $i++
+                            ?>
                                 <tr>
                                     <td>
-                                        {{$reportMaintenance->id}} Relatório
+                                        {{$i}} Relatório
                                     </td>
                                     <td>{{$reportMaintenance->updated_at}}</td>
                                     <td><a href="/frontoffice/reportMaintenanceShow/{{$reportMaintenance->id}}">Ver</a></td>
@@ -88,11 +96,15 @@
                         <th>Data/Hora</th>
                         <th></th>
                     </tr>
+                    <?php $i=0;
+                    ?>
 
                     @foreach($report_punctual as $reportPunctual)
+                        <?php $i++
+                        ?>
                         <tr>
                             <td>
-                                {{$reportPunctual->id}} Relatório
+                                {{$i}} Relatório
                             </td>
                             <td>{{$reportPunctual->updated_at}}</td>
                             <td><a href="/frontoffice/reportPunctualShow/{{$reportPunctual->id}}">Ver</a></td>
@@ -113,11 +125,15 @@
                         <th>Data/Hora</th>
                         <th></th>
                     </tr>
+                    <?php $i=0;
+                    ?>
 
                     @foreach($report_warranty as $reportWarranty)
+                        <?php $i++
+                        ?>
                         <tr>
                             <td>
-                                {{$reportWarranty->id}} Relatório
+                                {{$i}} Relatório
                             </td>
                             <td>{{$reportWarranty->updated_at}}</td>
                             <td><a href="/frontoffice/reportWarrantyShow/{{$reportWarranty->id}}">Ver</a></td>
@@ -130,4 +146,3 @@
 
 @endsection
 
-<?php $i=0 ?>

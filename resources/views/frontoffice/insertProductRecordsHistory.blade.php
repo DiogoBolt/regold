@@ -86,6 +86,7 @@
                         <th>Estado do Produto</th>
                         <th>Embalagem</th>
                         <th>Rotulagem</th>
+                        <th>Medidas Corretivas</th>
                     </tr>
                     </thead>
                     <tbody id="table-body"></tbody>
@@ -169,6 +170,7 @@
                         <td>${data.product_status}</td>
                         <td>${data.package}</td>
                         <td>${data.label}</td>
+                        <td>${data.observations}</td>
                     </tr>
                 `;
             });

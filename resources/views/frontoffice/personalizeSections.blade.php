@@ -46,19 +46,19 @@
             <input  type="checkbox" onClick="toggle(this)" /> Selecionar tudo<br/>
             @if($control->personalizeSections==0)
                 @foreach($sections as $section)
-                    <li><input type="checkbox" id="{{$section->name}}1" name="sections[]" value='{"idSection":{{$section->id}},"idClientSection":{{$section->idClientSection}}}' >
+                    <li><input type="checkbox" id="{{$section->name}}1" name="sections[]" value='{"idSection":{{$section->id}},"idClientSection":{{$section->idClientSection}},"activityClientId":{{$section->activityClientId}}}' >
                     <label for="{{$section->name}}1">{{$section->name}}</label></li>
                 @endforeach
             @else
                 @foreach($sections as $section)
                     @if($section->checked)
                         <li>
-                            <input type="checkbox" id="{{$section->name}}1" name="sections[]" value='{"idSection":{{$section->id}},"idClientSection":{{$section->idClientSection}}}' >
+                            <input type="checkbox" id="{{$section->name}}1" name="sections[]" value='{"idSection":{{$section->id}},"idClientSection":{{$section->idClientSection}},"activityClientId":{{$section->activityClientId}}}' >
                             <label for="{{$section->name}}1">{{$section->name}}</label>
                         </li>
                     @else
                         <li>
-                            <input type="checkbox" id="{{$section->name}}1" name="sections[]" value='{"idSection":{{$section->id}},"idClientSection":{{$section->idClientSection}}}'>
+                            <input type="checkbox" id="{{$section->name}}1" name="sections[]" value='{"idSection":{{$section->id}},"idClientSection":{{$section->idClientSection}},"activityClientId":{{$section->activityClientId}}}'>
                             <label for="{{$section->name}}1">{{$section->name}}</label>
                         </li>
                     @endif
@@ -67,7 +67,7 @@
             @if(count($clientSections)>0)
                 @foreach($clientSections as $clientSection)
                     <li>
-                        <input type="checkbox" id="{{$clientSection->designation}}" name="sections[]" value='{"idSection":{{$clientSection->id}},"idClientSection":{{$clientSection->id}}}' >
+                        <input type="checkbox" id="{{$clientSection->designation}}" name="sections[]" value='{"idSection":{{$clientSection->id}},"idClientSection":{{$clientSection->id}},"activityClientId":{{$section->activityClientId}}}' >
                         <label for="{{$clientSection->designation}}">{{$clientSection->designation}}</label>
                     </li>
                 @endforeach

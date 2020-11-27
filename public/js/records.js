@@ -42,3 +42,46 @@ function sortTable(n) {
         }
     }
 }
+
+function showInput(id) {
+    switch (id) {
+        case 2:
+            $("#divTemp").show();
+            break
+        case 4:
+            $("#divClean").show();
+            break
+        case 6:
+            $("#divStatus").show();
+            break
+        case 8:
+            $("#divPackage").show();
+            break
+        case 10:
+            $("#divLabel").show();
+            break
+    }
+
+}
+function dontShowInput(id) {
+    switch (id) {
+        case 1:
+            $("#divTemp").hide();
+            break
+        case 3:
+            $("#divClean").hide();
+            break
+        case 5:
+            $("#divStatus").hide();
+            break
+        case 7:
+            $("#divPackage").hide();
+            break
+        case 9:
+            $("#divLabel").hide();
+            break
+    }
+}
+function aaa() {
+
+}

@@ -214,6 +214,10 @@
     background-color: var(--light-green);
 }
 
+.nc{
+    color: red;
+}
+
 @media (max-width: 480px) {
     .register-container {
         grid-template-columns: repeat(2, minmax(0px, 1fr));

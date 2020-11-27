@@ -79,6 +79,8 @@
                     <thead>
                     <tr>
                         <th>Dia</th>
+                        <th>Nome Equipamento</th>
+                        <th>Nº Equipamento</th>
                         <th>Aspeto do óleo</th>
                         <th>Troca de óleo</th>
                     </tr>
@@ -160,6 +162,8 @@
                 tableBody.innerHTML += `
                     <tr>
                         <td>${data.day}</td>
+                        <td>${data.equipment_name}</td>
+                        <td>${data.equipment_number}</td>
                         <td>
                             ${data.oil_aspect}
                         </td>
@@ -171,13 +175,11 @@
             cacheData.push(response);
         }
 
-
         function printReport() {
             if(cacheData.length > 0) {
                 document.getElementById("print-items").value = JSON.stringify(cacheData);
                 document.getElementById("print-form").submit();
             }
         }
-
     }, false);
 </script>

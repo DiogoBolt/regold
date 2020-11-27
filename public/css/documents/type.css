@@ -199,6 +199,7 @@
 
 #divTrocarOleo{
   display: inline;
+  font-size: 20px;
 }
 
 
@@ -273,7 +274,7 @@
 }
 caption {
   background: #153E35;
-  font-size: 25px;
+  font-size: 20px;
   text-align: center;
   color: #E5E1E6;
 }
@@ -282,7 +283,7 @@ caption {
   background-color: #009579;
   color: #E5E1E6;
   text-align: center;
-  font-size: 18px;
+  font-size: 15px;
 }
 
 .table tr:nth-child(odd) {
@@ -322,6 +323,8 @@ caption {
 .btn-insert{
   justify-content: center;
 }
+
+
 
 
 

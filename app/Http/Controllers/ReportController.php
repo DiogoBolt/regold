@@ -282,7 +282,7 @@ class ReportController extends Controller
                             $rules[$i]->answer=$rulesLastReportAnswers[$indexExistLastReport]->answer;
                         }
                          
-                        $rules[$i]->severityValue=$rulesLastReportAnswers[$indexExistLastReport]->severityAnswer;
+                        $rules[$i]->severityValue=$rulesLastReportAnswers[$indexExistLastReport]->severityValue;
 
                         if($rules[$i]->severityValue==1 || $rules[$i]->severityValue==2 ){
                             $rules[$i]->severityText="Não Crítico";
@@ -331,6 +331,7 @@ class ReportController extends Controller
 
         $clientSections=ClientSection::where('id_client',$auxClientId)
         /*->where('active',1)*/ //luissssssssssss
+            ->where('hygieneSection',0)
         ->select([
             'id',
             'id_section',
@@ -417,8 +418,8 @@ class ReportController extends Controller
                         $change2=true;
                     }
 
-                    if(!($rulesAnswerReport->severityAnswer == $answer->severityValue)){
-                        $rulesAnswerReport->severityAnswer = $answer->severityValue;
+                    if(!($rulesAnswerReport->severityValue == $answer->severityValue)){
+                        $rulesAnswerReport->severityValue = $answer->severityValue;
                         $change3=true;
                     }
         
@@ -471,7 +472,7 @@ class ReportController extends Controller
                         $rulesAnswerReport->idRule=$answer->idRule;
                         $rulesAnswerReport->answer=$answer->resp;
                         $rulesAnswerReport->corrective=$answer->corrective;
-                        $rulesAnswerReport->severityAnswer=$answer->severityValue;
+                        $rulesAnswerReport->severityValue=$answer->severityValue;
                         $rulesAnswerReport->idClientSection=$idSection;
                         $rulesAnswerReport->save();
                     }
@@ -496,7 +497,7 @@ class ReportController extends Controller
                     $rulesAnswerReport->idRule=$answer->idRule;
                     $rulesAnswerReport->answer=$answer->resp;
                     $rulesAnswerReport->corrective=$answer->corrective;
-                    $rulesAnswerReport->severityAnswer=$answer->severityValue;
+                    $rulesAnswerReport->severityValue=$answer->severityValue;
                     $rulesAnswerReport->idClientSection=$idSection;
                     $rulesAnswerReport->save();
                 }

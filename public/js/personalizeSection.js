@@ -89,6 +89,7 @@ function saveSections(){
             section.designation=sections[i].id;
             section.sectionId=values['idSection'];
             section.idClientSection=values['idClientSection'];
+            section.activityClientId=values['activityClientId'];
             allSections.push(section);
         }
     }

@@ -10,7 +10,6 @@
                     <div style="text-align: center; margin-bottom: 20px;">
                         <img src="/img/navbar/logoindexcolor.png"/>
                     </div>
-
                     <div class="col-xs-12">
                         <div class="margin-top table-responsive">
                             <table class="table table-bordered">

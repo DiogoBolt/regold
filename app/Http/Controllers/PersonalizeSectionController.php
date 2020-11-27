@@ -48,12 +48,11 @@ class PersonalizeSectionController extends Controller
     public function getSection(){
         $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Auth::user()->id;
 
-        $activityTypeId=Customer::where('id',$auxClientId)
+        /*$activityTypeId=Customer::where('id',$auxClientId)
         ->select(['activity'])
-        ->pluck('activity')->first();
+        ->pluck('activity')->first();*/
 
-        $sections=Section::where('activityClientId',$activityTypeId)
-        ->get();
+        $sections=Section::all();
 
         $clientSections=ClientSection::where('id_client',$auxClientId)
         ->where('active',1)
@@ -136,6 +135,8 @@ class PersonalizeSectionController extends Controller
         foreach($sections as $section){
             if($section->idClientSection==0){
                 $sectionClient = new ClientSection;
+                if($section->activityClientId==0)
+                    $sectionClient->hygieneSection=1;
                 $sectionClient->id_client=$auxClientId;
                 $sectionClient->id_section=$section->sectionId;
                 $sectionClient->designation=$section->designation;
@@ -244,10 +245,11 @@ class PersonalizeSectionController extends Controller
             }
         }
      
-        $products = Product::select([
-            'id',
-            'name',
-        ])->get();
+        $products = Product::whereNotIn('category',array(6,16))
+        ->select([
+                'id',
+                'name',
+            ])->get();
 
         $cleaningFrequencys = CleanFrequency::select([
             'id',

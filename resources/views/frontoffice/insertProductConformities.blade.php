@@ -5,6 +5,8 @@
     <link href="{{ asset('css/documents/type.css') }}" rel="stylesheet">
 @endsection
 
+<script src="{{ URL::asset('/js/records.js') }}"></script>
+
 
 @section('content')
     <div class="container-bar">
@@ -29,9 +31,15 @@
         <span class="back-btn__back"><strong>Documentos Registos</strong></span>
     </a>
 
-    <form action="/frontoffice/records/insertProduct/save" method="POST">
+    <form id="aaa" action="/frontoffice/records/insertProduct/save" method="POST">
         {{ csrf_field() }}
         <div class="container">
+            @if(session()->has('message'))
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert">x</button>
+                    {{ session()->get('message') }}
+                </div>
+            @endif
             <table class="table">
                 <tr>
                     <th>
@@ -41,11 +49,25 @@
                 <tr>
                     <td>
                         <label class="label-insertPro" for="report_date">DATA</label>
-                        <input type="date" id="date" value="{{$today}}" class="input_insertProd" name="date">
+                        <input type="date" id="date" value="{{$today}}" class="input_insertProd" name="date" required>
+
                         <label class="label-insertPro" for="product_name">PRODUTO</label>
-                        <input type="text" id="product" class="input_insertProd" name="product">
-                        <label class="label-insertPro" for="provider">FORNECEDOR</label>
-                        <input type="text" id="provider" class="input_insertProd" name="provider">
+                            <input list="clientProducts" name="product" class="input_insertProd" required />
+                        <datalist id="clientProducts">
+                            <option value="" disabled>Produto</option>
+                                @foreach($client_insertProducts as $product)
+                                    <option value="{{$product->name}}"></option>
+                                @endforeach
+                        </datalist>
+
+                        <label class="label-insertPro" for="provider_name">FORNECEDOR</label>
+                        <input list="clientProviders" name="provid" class="input_insertProd" required />
+                        <datalist id="clientProviders">
+                            <option value="" disabled>Fornecedor</option>
+                            @foreach($client_providers as $provider)
+                                <option value="{{$provider->name}}"></option>
+                            @endforeach
+                        </datalist>
                     </td>
                 </tr>
                 <tr>
@@ -61,11 +83,14 @@
                 <tr>
                     <td class="td-insertProd">
                         <label class="btn btn-conforme">
-                            <input type="radio" class="btn-insert" name="temperature" value="c"> CONFORME
+                            <input type="radio" id="1" class="btn-insert" name="temperature" value="c" onclick="dontShowInput(1)"> CONFORME
                         </label>
                         <label class="btn btn-nConforme">
-                            <input type="radio" class="btn-insert" name="temperature" value="nc"> NÃO CONFORME
+                            <input type="radio" id="2" class="btn-insert" name="temperature" value="nc" onclick="showInput(2)"> NÃO CONFORME
                         </label>
+                        <div id="divTemp" style="display: none">
+                            Corretiva:<input type="text" id="provider" class="input_insertProd" name="obsTemperature" >
+                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -76,11 +101,14 @@
                 <tr>
                     <td class="td-insertProd">
                         <label class="btn btn-conforme">
-                            <input type="radio" class="btn-insert" name="cleaning" value="c"> CONFORME
+                            <input type="radio" id="3" class="btn-insert" name="cleaning" value="c" onclick="dontShowInput(3)"> CONFORME
                         </label>
                         <label class="btn btn-nConforme">
-                            <input type="radio" class="btn-insert" name="cleaning" value="nc"> NÃO CONFORME
+                            <input type="radio" id="4" class="btn-insert" name="cleaning" value="nc" onclick="showInput(4)"> NÃO CONFORME
                         </label>
+                        <div id="divClean" style="display: none">
+                            Corretiva:<input type="text" id="provider" class="input_insertProd" name="obsClean">
+                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -96,11 +124,14 @@
                 <tr>
                     <td class="td-insertProd">
                         <label class="btn btn-conforme">
-                            <input type="radio" class="btn-insert" name="product_status" value="c"> CONFORME
+                            <input type="radio" id="5" class="btn-insert" name="product_status" value="c" onclick="dontShowInput(5)"> CONFORME
                         </label>
                         <label class="btn btn-nConforme">
-                            <input type="radio" class="btn-insert" name="product_status" value="nc"> NÃO CONFORME
+                            <input type="radio" id="6" class="btn-insert" name="product_status" value="nc" onclick="showInput(6)"> NÃO CONFORME
                         </label>
+                        <div id="divStatus" style="display: none">
+                            Corretiva:<input type="text" id="provider" class="input_insertProd" name="obsStatus">
+                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -111,11 +142,14 @@
                 <tr>
                     <td class="td-insertProd">
                         <label class="btn btn-conforme">
-                            <input type="radio" class="btn-insert" name="package" value="c"> CONFORME
+                            <input type="radio" id="7" class="btn-insert" name="package" value="c" onclick="dontShowInput(7)"> CONFORME
                         </label>
                         <label class="btn btn-nConforme">
-                            <input type="radio" class="btn-insert" name="package" value="nc"> NÃO CONFORME
+                            <input type="radio" id="8" class="btn-insert" name="package" value="nc" onclick="showInput(8)"> NÃO CONFORME
                         </label>
+                        <div id="divPackage" style="display: none">
+                            Corretiva:<input type="text" id="provider" class="input_insertProd" name="obsPackage">
+                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -126,11 +160,14 @@
                 <tr>
                     <td class="td-insertProd">
                         <label class="btn btn-conforme">
-                            <input type="radio" class="btn-insert" name="label" value="c"> CONFORME
+                            <input type="radio" id="8" class="btn-insert" name="label" value="c" onclick="dontShowInput(9)"> CONFORME
                         </label>
                         <label class="btn btn-nConforme">
-                            <input type="radio" class="btn-insert" name="label" value="nc"> NÃO CONFORME
+                            <input type="radio" id="9" class="btn-insert" name="label" value="nc" onclick="showInput(10)"> NÃO CONFORME
                         </label>
+                        <div id="divLabel" style="display: none">
+                            Corretiva:<input type="text" id="provider" class="input_insertProd" name="obsLabel">
+                        </div>
                     </td>
                 </tr>
             </table>
@@ -138,90 +175,7 @@
             <a class="btn-history"  href="/frontoffice/records/insertProduct/history">Histórico</a>
         </div>
     </form>
-
 @endsection
 
 
-{{--
-@section('content')
-    <form  method="POST" id="add-form" action="/frontoffice/records/insertProduct/save">
-        {{ csrf_field() }}
-        <div class="container">
-            <div class="container-docs">
-                <div>
-                    <h4 style="text-align:left ; color:#9ac266"> REGISTOS DE ENTRADA DE PRODUTO</h4>
-                </div>
-                <div>
-                    <label style="text-align:center" for="report_date">DATA</label>
-                    <input type="date" id="date" class="add-form" name="date">
-                </div>
-                <div>
-                    <label style="text-align:center" for="product_name">PRODUTO</label>
-                    <input type="text" id="product" name="product">
 
-                    <label style="text-align:center" for="provider">FORNECEDOR</label>
-                    <input type="text" id="provider" name="provider">
-                    </div>
-                <div>
-                    <div>
-                        <label style="text-align:center">VEÍCULO</label>
-                    </div>
-                    <div>
-                        <label style="text-align:center" for="temperature">TEMPERATURA</label>
-                    </div>
-                    <div>
-                        <input class="radio_prod" type="radio"  name="temperature" value="c"/>
-                        <label class="radio_prod3">CONFORME</label>
-                        <input class="radio_prod" type="radio"  name="temperature" value="nc" />
-                        <label class="radio_prod2">NÃO CONFORME</label>
-                    </div>
-                    <div>
-                        <label style="text-align:center" for="cleaning">LIMPEZA</label>
-                    </div>
-                    <div>
-                        <input class="radio_prod" type="radio" name="cleaning" value="c" >
-                        <label class="radio_prod3" >CONFORME</label>
-                        <input  class="radio_prod" type="radio" name="cleaning" value="nc">
-                        <label class="radio_prod2" >NÃO CONFORME</label>
-                    </div>
-                </div>
-                <div>
-                    <div>
-                        <label style="text-align:center">PRODUTO</label>
-                    </div>
-                    <div>
-                        <label style="text-align:center" for="product_status">ESTADO DO PRODUTO</label>
-                    </div>
-                    <div>
-                        <input class="radio_prod" type="radio" name="product_status" value="c">
-                        <label class="radio_prod3" >CONFORME</label>
-                        <input class="radio_prod" type="radio" name="product_status" value="nc">
-                        <label class="radio_prod2" >NÃO CONFORME</label>
-                    </div>
-                    <div>
-                        <label style="text-align:center" for="packing">EMBALAGEM</label>
-                    </div>
-                    <div>
-                        <input class="radio_prod" type="radio" name="package" value="c">
-                        <label class="radio_prod3" >CONFORME</label>
-                        <input class="radio_prod" type="radio" name="package" value="nc">
-                        <label class="radio_prod2" >NÃO CONFORME</label>
-                    </div>
-                    <div>
-                        <label style="text-align:center" for="labeling">ROTULAGEM</label>
-                    </div>
-                    <div>
-                        <input class="radio_prod" type="radio" name="label" value="c" >
-                        <label class="radio_prod3" >CONFORME</label>
-                        <input class="radio_prod" type="radio" name="label" value="nc" >
-                        <label class="radio_prod2" >NÃO CONFORME</label>
-                    </div>
-                    <div>
-                        <button href="/frontoffice/insertProductConformities" class="btnNEXT"><strong>Validar</strong></button>
-                        <a class="btn-history"  href="/frontoffice/records/insertProduct/history">Histórico</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-@endsection--}}
