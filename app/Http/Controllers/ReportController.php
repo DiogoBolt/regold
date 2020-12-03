@@ -565,7 +565,7 @@ class ReportController extends Controller
         $auxClientId = Session::get('clientImpersonatedId');
         $reports = Report::where('idClient',$auxClientId)
         ->where('concluded',1)
-        ->orderBy('id','desc')
+        ->orderBy('id','asc')
         ->get();
         return view('frontoffice.reportsList',compact('reports'));
     }

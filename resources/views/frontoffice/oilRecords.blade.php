@@ -31,6 +31,12 @@
     <form action="/frontoffice/records/oil/save" method="POST">
         {{ csrf_field() }}
         <div class="container">
+            @if(session()->has('message'))
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert">x</button>
+                    {{ session()->get('message') }}
+                </div>
+            @endif
             <table class="table">
                 <tr>
                     <th>

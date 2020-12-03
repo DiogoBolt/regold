@@ -30,14 +30,20 @@
                                 <thead>
                                 <tr>
                                     <th>Dia</th>
+                                    <th>Nome do Equipamento</th>
+                                    <th>Nº do Equipamento</th>
                                     <th>Aspeto</th>
+                                    <th>Troca de Óleo</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($data as $item)
                                         <tr>
                                             <td>{{ $item->day}}</td>
+                                            <td>{{ $item->equipment_name}}</td>
+                                            <td>{{ $item->equipment_number}}</td>
                                             <td>{{ $item->oil_aspect}}</td>
+                                            <td>{{ $item->changeOil?'Sim':'Não'}}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

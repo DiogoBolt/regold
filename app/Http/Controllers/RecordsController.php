@@ -64,7 +64,7 @@ class RecordsController extends Controller
         if(isset($inputs['trocaOleo'])==0) $oil_records->changeOil = 0; else $oil_records->changeOil =$inputs['trocaOleo'];
         $oil_records->save();
 
-        return redirect('/frontoffice/documents/Registos');
+        return redirect('/frontoffice/records/oil')->with('message','Registo realizado com sucesso!');
     }
     public function getOilRecordsHistory()
     {
