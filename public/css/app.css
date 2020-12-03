@@ -14266,5 +14266,11 @@ img.logoReport{
   display: flex;
   width: 200px;
   margin-top: 10px;
-  margin-left: 80px;
+  margin-left: 10%;
+}
+@media print {
+  img.logoReport {
+    position: absolute;
+  }
+
 }

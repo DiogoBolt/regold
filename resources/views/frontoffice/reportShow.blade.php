@@ -23,6 +23,7 @@
 
                         <div id="reportInfo">
                           <div id="divFloatRigth">
+
                                 <div>
                                     <label class="lblBold">Estabelecimento: </label>
                                     <label class="lblBold"> {{$report->clientName}} </label>
@@ -119,7 +120,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            
+                            <div style="page-break-after:always;"></div>
                             @if($section->showCorrective==1)
                                 <h2 id="titleCorrective" class="subTitle">Medidas Corretivas</h2>
                             @else
@@ -186,9 +187,8 @@
                                     </tbody>
                                 </table>
                             </div>
-
+                                        <div style="page-break-after:always;"></div>
                             <div id="chartBar">
-                                
                                 <h2 id="titleObservations" class="subTitle">Estatísticas</h2>
 
                                 <label>Conforme</label>
@@ -211,6 +211,7 @@
                                         {{$section->nApply}}%
                                     </div>
                                 </div>
+                            </div>
                             </div>
 
                             <hr class="line">
@@ -250,15 +251,14 @@
             </div>
         </div>
     </div>
+{{--<script>--}}
+{{--/*--}}
+{{--window.onload = function () {--}}
 
-<script>
-/*
-window.onload = function () {
+{{--    setTimeout(window.print, 500);--}}
+{{--    setTimeout(function () {--}}
+{{--        window.close();--}}
+{{--    }, 500);--}}
+{{--};*/--}}
 
-    setTimeout(window.print, 500);
-    setTimeout(function () {
-        window.close();
-    }, 500);
-};*/
-
-</script>
+{{--</script>--}}
