@@ -24,4 +24,9 @@ class ClientThermo extends Model
     public static function alias($alias) {
         return (new static)->table . ' as ' . $alias;
     }
+
+    public function thermos()
+    {
+        return $this->hasMany(Thermo::class, 'imei', 'imei');
+    }
 }
