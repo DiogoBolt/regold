@@ -8,8 +8,10 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel">
-                    <div class="panel-body table-responsive printall">
-
+                        <table class="tableContainer">
+                            <thead class="report-header">
+                                <tr>
+                                    <th class="report-header-cell">
                         <img class="logoReport" src="{{ URL::to('/') }}/img/navbar/RegolfoodLogin.png" alt="logo">
                         
                         <div id="divBtns">
@@ -20,10 +22,8 @@
                         </div>
 
 {{--                        <h1 class="title">Relatório HACCP</h1>--}}
-
                         <div id="reportInfo">
                           <div id="divFloatRigth">
-
                                 <div>
                                     <label class="lblBold">Estabelecimento: </label>
                                     <label class="lblBold"> {{$report->clientName}} </label>
@@ -39,6 +39,7 @@
 
                           </div>
                             <div id="divFloatRigth">
+                                    <label class="lblBold">Relatório Segurança Alimentar</label>
                                 <div>
                                     <label class="lblBold">Data: </label>
                                     <label class="lblBold" id="date"> {{$report->updated_at->toDateString()}} </label>
@@ -52,9 +53,14 @@
                                     <label class="lblBold"> {{$report->updated_at->format('H:i')}}</label>
                                 </div>
                             </div>
+                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
 
-
-            </div>
+                <tbody class="report-content">
+                    <tr>
+                        <td class="report-content-cell">
                         @foreach($arraySections as $section)
 {{--                            <h1 class="title">Relatório HACCP</h1>--}}
 
@@ -243,6 +249,7 @@
                                     </div>
                                 </div>
                             </div>
+<<<<<<< HEAD
                     </div>
                 </div>
                     <footer class="footer_1"id="footer" style="display:none" >
@@ -252,3 +259,30 @@
         </div>
     </div>
 </div>
+=======
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot class="report-footer">
+                    <tr>
+                        <td class="report-content-cell">
+                  <footer class="footer_1"id="footer" style="display:none" >
+                       <img class="report_footer" src="{{ URL::to('/') }}/img/footer3.png" alt="logo">
+                  </footer>
+                        </td>
+                    </tr>
+                </tfoot>
+                    </table>
+{{--<script>--}}
+{{--/*--}}
+{{--window.onload = function () {--}}
+
+{{--    setTimeout(window.print, 500);--}}
+{{--    setTimeout(function () {--}}
+{{--        window.close();--}}
+{{--    }, 500);--}}
+{{--};*/--}}
+
+{{--</script>--}}
+>>>>>>> 47f2338156d9822b6db17411d7288f639fbf42d9

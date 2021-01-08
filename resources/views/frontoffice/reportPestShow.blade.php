@@ -10,6 +10,10 @@
             <div class="panel">
                 <div class="panel-body table-responsive printall">
 
+                    <table class="tableContainer">
+                        <thead class="report-header">
+                            <tr>
+                                <th class="report-header-cell">
                         <img class="logoReport" src="{{ URL::to('/') }}/img/navbar/RegolfoodLogin.png" alt="logo">
 
                     <div id="divBtns">
@@ -23,10 +27,8 @@
                         <img src="\img\regolfoodSmall.png" style="width:100px">
                     </div>--}}
 
-                    <h1 class="title">Relatório 1ª Instalação</h1>
-
                     <div id="reportInfo">
-                        <div id="divFloatLeft">
+                        <div id="divFloatRigth">
                             <div>
                                 <label class="lblBold">Estabelecimento: </label>
                                 <label> {{$report_pest->clientName}} </label>
@@ -42,6 +44,7 @@
                         </div>
 
                         <div id="divFloatRigth">
+                            <label class="title">Relatório de Instalação</label>
                             <div>
                                 <label class="lblBold">Data: </label>
                                 <label id="date"> {{$report_pest->updated_at->toDateString()}} </label>
@@ -56,9 +59,10 @@
                             </div>
                         </div>
                     </div>
+
                     <h1 class="title">Ações Desenvolvidas</h1>
                     <div id="reportInfo">
-                           <div id="divFloatLeft">
+                           <div id="divFloatRigth">
                                <div>
                                    <label class="lblBold">Espécie a controlar: </label>
                                    <label> {{$report_pest->specie}}</label>
@@ -72,6 +76,9 @@
                                </div>
                            </div>
                        </div>
+                                </th>
+                            </tr>
+                        </thead>
 
                     <div class="tableContainer">
                         <table class="table" id="reportRules">

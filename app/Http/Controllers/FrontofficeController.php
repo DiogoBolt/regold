@@ -145,6 +145,12 @@ class FrontofficeController extends Controller
 
         $auxClientId = $user->client_id;
 
+        if($type==26)
+        {
+            return redirect('/frontoffice/records/temperatures');
+
+        }
+
         $clients = Customer::where('ownerID',$user->id)
         ->select([
             'id'
@@ -157,10 +163,7 @@ class FrontofficeController extends Controller
             array_push($ids,$client->id);
         }
 
-        //$receipts=Receipt::whereIN('client_id',$ids)->get();
 
-        if($type==3)
-        {
             $receipts = Receipt::from(Receipt::alias('r'))
                 ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
                 ->leftJoin(DocumentSuperType::alias('dst'), 'dt.superType', '=', 'dst.id')
@@ -180,15 +183,9 @@ class FrontofficeController extends Controller
                 array_push($ids,$receipt->id);
             }
 
+
             $receipts = Receipt::whereIN('id',$ids)->get();
-        }
 
-
-        if($type==26)
-        {
-           return redirect('/frontoffice/records/temperatures');
-
-        }
 
         return view('frontoffice.documentsType',compact('receipts','new_product_records','client','type', 'super'));
 

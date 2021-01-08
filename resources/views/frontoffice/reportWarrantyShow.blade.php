@@ -8,6 +8,12 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel">
                 <div class="panel-body table-responsive printall">
+                    <table class="tableContainer">
+                        <thead class="report-header">
+                        <tr>
+                            <th class="report-header-cell">
+
+                                <img class="logoReport" src="{{ URL::to('/') }}/img/navbar/RegolfoodLogin.png" alt="logo">
 
                     <div id="divBtns">
                         <a class="btn btn-warning" href="/frontoffice/pestReports">
@@ -20,10 +26,9 @@
                         <img src="\img\regolfoodSmall.png" style="width:100px">
                     </div>--}}
 
-                    <h1 class="title">Relatório Garantia</h1>
 
                     <div id="reportInfo">
-                        <div id="divFloatLeft">
+                        <div id="divFloatRigth">
                             <div>
                                 <label class="lblBold">Estabelecimento: </label>
                                 <label> {{$report_warranty->clientName}} </label>
@@ -39,6 +44,7 @@
                         </div>
 
                         <div id="divFloatRigth">
+                            <label class="lblBold">Relatório de Garantia</label>
                             <div>
                                 <label class="lblBold">Data: </label>
                                 <label id="date"> {{$report_warranty->updated_at->toDateString()}} </label>
@@ -52,8 +58,14 @@
                                 <label> {{$report_warranty->updated_at->format('H:i')}}</label>
                             </div>
                         </div>
-
                     </div>
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="report-content">
+                        <tr>
+                            <td class="report-content-cell">
                     <h1 class="title">Ações Desenvolvidas</h1>
 
                     <div>
@@ -90,8 +102,21 @@
                             <label> {{$report_warranty->note}}</label>
                         </div>
                     </div>
-                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                        <tfoot class="report-footer">
+                        <tr>
+                            <td class="report-content-cell">
+                                <div>
+                                    <footer class="footer_1" id="footer" >
+                                        <img class="report_footer" src="{{ URL::to('/') }}/img/footer.png" alt="logo">
+                                    </footer>
+                                </div>
+                            </td>
+                        </tr>
+                        </tfoot>
+                    </table>
             </div>
         </div>
     </div>
-</div>
