@@ -22,19 +22,8 @@
     font-size: 12px;
     }
 
-   h1.title { 
-    color: #000;
-    font-family: Univia Pro;
-    font-size: 70px; font-weight: normal; 
-    line-height: 48px;
-    margin: 0 0 50px;
-    text-align: center;
-    text-shadow: 1px 1px 2px #082b34;
-     margin-top: -20px;
-   }
-  
    
-   h1.title { color: #000; font-family: Univia Pro; font-size: 20px; font-weight: normal; line-height: 48px; margin: 0 0 18px; text-shadow: 1px 0 0 #fff;}
+   h1.title { color: #000; font-family: Univia Pro; font-size: 20px; font-weight: normal; line-height: 48px; margin: 0 0 18px; text-shadow: 1px 0 0 #fff; text-align: center;}
    h2.subTitle { color: #000; font-family: Univia Pro; font-size: 30px; font-weight: normal; line-height: 48px; margin: 0 0 18px; text-shadow: 1px 0 0 #fff; text-align: center;}
   
   label{
@@ -143,14 +132,14 @@
     background: white;
   }
   
-  .corrective{
-    width: 100%;
-    padding: 5px;
-    color: black;
-    text-align: left;
-    font-size: 15px;
-    background: #ffffff;
-  }
+  /*.corrective{*/
+  /*  width: 100%;*/
+  /*  padding: 5px;*/
+  /*  color: black;*/
+  /*  text-align: left;*/
+  /*  font-size: 15px;*/
+  /*  background: #ffffff;*/
+  /*}*/
   
   .tdRuleBackground{
     max-width: 200px;
@@ -398,6 +387,14 @@ main {
   font-size: 15px;
   color: black;
 }
+
+
+.imp_logo {
+  display: block;
+  width: 200px;
+  float: left;
+}
+
 @media screen {
   footer.footer_1 {
     display: none;
@@ -408,10 +405,13 @@ main {
     position: fixed;
     bottom: 0;
   }
-  @media print
-  {
-    .page-break  { display:block; page-break-before:always; }
-
+  table.report-container {
+    page-break-after:always;
   }
-
+  thead.report-header{
+    display:table-header-group;
+  }
+  tfoot.report-footer{
+    display:table-footer-group;
+  }
 }

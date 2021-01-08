@@ -1,6 +1,7 @@
 <link type="text/css" rel="stylesheet" href="{{ mix('css/app.css') }}">
 <link href="{{ asset('css/documents/reportPrint.css') }}" rel="stylesheet">
 
+
 <script src="{{ URL::asset('/js/report.js') }}"></script>
 
 <div class="container">
@@ -8,6 +9,10 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel">
                 <div class="panel-body table-responsive printall">
+                <table class="tableContainer">
+                    <thead class="report-header">
+                        <tr>
+                            <th class="report-header-cell">
 
                     <img class="logoReport" src="{{ URL::to('/') }}/img/navbar/RegolfoodLogin.png" alt="logo">
 
@@ -18,14 +23,8 @@
                         <button class="btn btn-warning" onclick="printReport()">Imprimir</button>
                     </div>
 
-                    {{--<div style="text-align: center; margin-bottom: 20px;">
-                        <img src="\img\regolfoodSmall.png" style="width:100px">
-                    </div>--}}
-
-                    <h1 class="title">Relatório Manutenção</h1>
-
-                    <div id="reportInfo">
-                        <div id="divFloatLeft">
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <div id="divFloatRigth">
                             <div>
                                 <label class="lblBold">Estabelecimento: </label>
                                 <label> {{$report_maintenance->clientName}} </label>
@@ -41,6 +40,7 @@
                         </div>
 
                         <div id="divFloatRigth">
+                                <label class="lblBold">Relatório de Manutençao</label>
                             <div>
                                 <label class="lblBold">Data: </label>
                                 <label id="date"> {{$report_maintenance->updated_at->toDateString()}} </label>
@@ -55,10 +55,18 @@
                             </div>
                         </div>
                     </div>
+                            </th>
+                        </tr>
+                    </thead>
 
-                    <h1 class="title">Ações Desenvolvidas</h1>
+                <tbody class="report-content">
+                    <tr>
+                        <td class="report-content-cell">
+
                     <div id="reportInfo">
+                        <h1 class="title">Ações Desenvolvidas</h1>
                         <div id="divFloatLeft">
+
                             <div>
                                 <label>Foram revistos todos os dispositivos. </label>
                             </div>
@@ -96,11 +104,23 @@
                             <label> {{$report_maintenance->note}}</label>
                         </div>
                     </div>
-                </div>
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
             </div>
-            <footer id="footer" style="display:none" >
-                <img class="report_footer" src="{{ URL::to('/') }}/img/footer.png" alt="logo">
-            </footer>
         </div>
     </div>
+</div>
+            <tfoot class="report-footer">
+                <tr>
+                    <td class="report-content-cell">
+                        <div>
+                        <footer class="footer_1" id="footer" >
+                            <img class="report_footer" src="{{ URL::to('/') }}/img/footer.png" alt="logo">
+                        </footer>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
 </div>

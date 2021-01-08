@@ -105,21 +105,26 @@
     font-size: 12px;
 }
 
-.print_details {
-    width: 50%;
+/*.print_details {*/
+/*    width: 50%;*/
+/*    float: left;*/
+/*}*/
+.imp_logo{
+    display: block;
+    width: 200px;
     float: left;
 }
-.imp_logo{
-    display: flex;
-    width: 200px;
-    margin-top: 10px;
-}
 .lblBold{
+    color: #000;
     font-family: Univia Pro;
-    font-weight: bold;
-    font-size: 10px;
+    font-size: 20px;
+    font-weight: normal;
+    line-height: 48px;
+    margin: 0 0 18px;
+    text-shadow: 1px 0 0 #fff;
     float: right;
-    margin-top: -20px;
+    display: block;
+    margin-left: 2px;
 }
 h1.title {
     color: #000;
@@ -129,7 +134,8 @@ h1.title {
     line-height: 48px;
     margin: 0 0 18px;
     text-shadow: 1px 0 0 #fff;
-    text-align: center;
+    float: right;
+    display: block;
 }
 @media screen {
     footer.footer_1 {
@@ -140,5 +146,14 @@ h1.title {
     footer.footer_1 {
         position: fixed;
         bottom: 0;
+    }
+    table.report-container {
+        page-break-after:always;
+    }
+    thead.report-header{
+        display:table-header-group;
+    }
+    tfoot.report-footer{
+        display:table-footer-group;
     }
 }
