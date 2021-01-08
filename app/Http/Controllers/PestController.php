@@ -178,19 +178,19 @@ class PestController extends Controller
     {
         $auxClientId = Session::get('clientImpersonatedId');
         $report_pest = ReportPest::where('idClient',$auxClientId)
-            ->orderBy('id','desc')
+            ->orderBy('id','asc')
             ->get();
 
         $report_maintenance=ReportMaintenance::where('idClient',$auxClientId)
-            ->orderBy('id','desc')
+            ->orderBy('id','asc')
             ->get();
 
         $report_punctual=ReportPunctual::where('idClient',$auxClientId)
-            ->orderBy('id','desc')
+            ->orderBy('id','asc')
             ->get();
 
         $report_warranty=ReportWarranty::where('idClient',$auxClientId)
-            ->orderBy('id','desc')
+            ->orderBy('id','asc')
             ->get();
 
         return view('frontoffice.pestReportList',compact('report_pest','report_maintenance','report_punctual','report_warranty'));

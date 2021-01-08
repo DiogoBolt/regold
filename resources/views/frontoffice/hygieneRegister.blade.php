@@ -30,6 +30,12 @@
     </a>
 
     <div class="container">
+        @if(session()->has('message'))
+            <div class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert">x</button>
+                {{ session()->get('message') }}
+            </div>
+        @endif
         @if($errors->any())
             <h4 class="high">{{$errors->first()}}</h4>
         @endif

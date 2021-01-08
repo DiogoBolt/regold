@@ -28,7 +28,7 @@
         <span class="back-btn__back"><strong>Documentos {{ $super }}</strong></span>
     </a>
 
-    @if($type==3)
+    @if($type==3 or $type == 2 or $type == 24 or $type == 25)
 
     <div class="container">
         <div class="container-docs">

@@ -33,7 +33,7 @@
 
                                 <tbody class="report-content">
                                 <tr>
-                                    <td class="report-content-cell">
+                  <td class="report-content-cell">
                                     <div class="col-xs-12">
                                         <div class="margin-top table-responsive">
                                             <table class="table table-bordered">
@@ -62,6 +62,17 @@
                                         </div>
                                     </td>
                                 </tr>
+                                <tbody>
+                                    @foreach ($data as $item)
+                                        <tr>
+                                            <td>{{ $item->day}}</td>
+                                            <td>{{ $item->equipment_name}}</td>
+                                            <td>{{ $item->equipment_number}}</td>
+                                            <td>{{ $item->oil_aspect}}</td>
+                                            <td>{{ $item->changeOil?'Sim':'Não'}}</td>
+                                        </tr>
+                                    @endforeach
+
                                 </tbody>
                         </table>
                     </div>

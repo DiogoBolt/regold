@@ -64,7 +64,7 @@ class RecordsController extends Controller
         if(isset($inputs['trocaOleo'])==0) $oil_records->changeOil = 0; else $oil_records->changeOil =$inputs['trocaOleo'];
         $oil_records->save();
 
-        return redirect('/frontoffice/documents/Registos');
+        return redirect('/frontoffice/records/oil')->with('message','Registo realizado com sucesso!');
     }
     public function getOilRecordsHistory()
     {
@@ -316,19 +316,23 @@ class RecordsController extends Controller
                 ->where('created_at','<',Carbon::now()->endOfDay())
                 ->get()->last();
             $clientthermo->average = isset($average) ? $average : null;
-            if($clientthermo->thermo->signal_power < 6) {
-                $clientthermo->signal_power = 1;
-            }
-            elseif($clientthermo->thermo->signal_power < 12) {
-                $clientthermo->signal_power = 2;
+            if(isset($clientthermo->thermo))
+            {
+                if($clientthermo->thermo->signal_power < 6) {
+                    $clientthermo->signal_power = 1;
+                }
+                elseif($clientthermo->thermo->signal_power < 12) {
+                    $clientthermo->signal_power = 2;
+                }
+
+                elseif($clientthermo->thermo->signal_power < 22) {
+                    $clientthermo->signal_power = 3;
+                }
+                elseif($clientthermo->thermo->signal_power >= 22) {
+                    $clientthermo->signal_power = 4;
+                }
             }
 
-            elseif($clientthermo->thermo->signal_power < 22) {
-                $clientthermo->signal_power = 3;
-            }
-            elseif($clientthermo->thermo->signal_power >= 22) {
-                $clientthermo->signal_power = 4;
-            }
         }
 
         $today = Carbon::now()->format('Y-m-d');

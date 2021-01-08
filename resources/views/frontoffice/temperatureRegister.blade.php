@@ -62,7 +62,7 @@
 
         <div class="register-container">
             @foreach($clientThermos as $thermo)
-                @if($thermo->thermo->imei != null)
+                @if($thermo->imei != null)
                 @if($thermo->type === 1)
                     <div class="register-arc cooling">
                         <div class="register-arc__info">
