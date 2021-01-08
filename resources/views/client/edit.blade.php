@@ -70,7 +70,7 @@
                                                 @if($cities->id== $client->city)
                                                     <option  selected value="{{$cities->id}}">{{$cities->name}}</option> 
                                                 @else
-                                                    <option  selected value="{{$cities->id}}">{{$cities->name}}</option> 
+                                                    <option  value="{{$cities->id}}">{{$cities->name}}</option>
                                                 @endif
                                             @endforeach 
                                         </select>
@@ -103,12 +103,12 @@
                                 <div class="form-group"> 
                                     Cidade:
                                         <select id="selectCityInvoice" class="form-control" name="cityInvoice" >
-                                            <option disabled selected value="">Selecione a Cidade $cities->id</option>
+                                            <option disabled selected value="">Selecione a Cidade</option>
                                             @foreach($client->allCitiesInvoice as $cities)
-                                                @if($cities->id == $client->cityInvoice)
+                                                @if($cities->id == $client->invoice_city)
                                                     <option  selected value="{{$cities->id}}">{{$cities->name}}</option> 
                                                 @else
-                                                    <option  selected value="{{$cities->id}}">{{$cities->name}}</option> 
+                                                    <option value="{{$cities->id}}">{{$cities->name}}</option>
                                                 @endif
                                             @endforeach   
                                         </select>

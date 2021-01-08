@@ -245,20 +245,10 @@
                             </div>
                     </div>
                 </div>
-                  <footer class="footer_1"id="footer" style="display:none" >
-                       <img class="report_footer" src="{{ URL::to('/') }}/img/footer.png" alt="logo">
-                  </footer>
+                    <footer class="footer_1"id="footer" style="display:none" >
+                        <img class="report_footer" src="{{ URL::to('/') }}/img/footer.png" alt="logo">
+                    </footer>
             </div>
         </div>
     </div>
-{{--<script>--}}
-{{--/*--}}
-{{--window.onload = function () {--}}
-
-{{--    setTimeout(window.print, 500);--}}
-{{--    setTimeout(function () {--}}
-{{--        window.close();--}}
-{{--    }, 500);--}}
-{{--};*/--}}
-
-{{--</script>--}}
+</div>

@@ -52,14 +52,19 @@ a.favoritos{
   text-decoration: underline;
 }
 
-
+.img-categories-disabled{
+  display: inline;
+  max-width: 100%;
+  filter: grayscale(100%);
+  height: auto;
+  margin-right: 5px;
+}
 
 .category-body:hover {
   color: rgb(61 174 43);
   text-decoration: underline;
   filter: none;
 }
-
 
 /*.category-body img {
   width: 80%;
@@ -224,6 +229,12 @@ a.favoritos{
   height: 50px;
   font-size: 20px;
   color:#153E35;
+}
+.category-body-disabled{
+  pointer-events: none;
+  color: #ccc;
+  height: 50px;
+  font-size: 20px;
 }
 
 

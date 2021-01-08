@@ -15,6 +15,7 @@ use App\Product;
 use App\ProductRecords;
 use App\Thermo;
 use App\ThermoAverageTemperature;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -303,6 +304,18 @@ class RecordsController extends Controller
     {
         $user = Auth::user();
 
+        $auxAdminId=Session::get('impersonated');
+
+        if($auxAdminId==null)
+        {
+            $userType=4;
+        }else{
+            $userType=User::where('id',$auxAdminId)
+                ->select(['userType'])
+                ->pluck('userType')->first();
+        }
+
+
         $clientThermos = ClientThermo::query()->where('user_id', $user->id)->get();
 
         foreach ($clientThermos as $clientthermo) {
@@ -333,7 +346,7 @@ class RecordsController extends Controller
 
         $today = Carbon::now()->format('Y-m-d');
 
-        return view('frontoffice.temperatureRegister', compact('today', 'clientThermos'));
+        return view('frontoffice.temperatureRegister', compact('today', 'clientThermos','userType'));
     }
 
     public function getTemperatureRecordsHistory()

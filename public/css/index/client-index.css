@@ -15,6 +15,20 @@
   font-size: 14px;
   text-align: center;
 }
+.disabled{
+  pointer-events: none;
+  color: #ccc;
+  flex: 25%;
+  position: relative;
+  max-width: 25%;
+  padding: 10px 15px;
+  border: 1px solid;
+  border-color: #d3e0e9;
+  text-transform: uppercase;
+  font-size: 14px;
+  text-align: center;
+}
+
 
 /*.box:hover{
   color: #E5E1E6;
@@ -27,6 +41,12 @@
   margin-top: 8px;
   vertical-align: middle;
   width: 100%;
+}
+.disabled img{
+  margin-top: 8px;
+  vertical-align: middle;
+  width: 100%;
+  filter: grayscale(100%);
 }
 
 /*.desc {
@@ -49,6 +69,12 @@
   }
 
   .box {
+    flex: 50%;
+    max-width: 50%;
+  }
+  a.disabled{
+    pointer-events: none;
+    color: #ccc;
     flex: 50%;
     max-width: 50%;
   }

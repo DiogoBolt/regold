@@ -9,10 +9,10 @@
                 <div class="panel-body table-responsive printall">
                     <div style="text-align: center; margin-bottom: 20px;">
                         <img class="imp_logo" src="/img/navbar/logoRegolfood.png"/>
-                        <h1 class="title">Registo Qualidade do Óleo</h1>
+                        <h1 class="title">Registo Qualidade do Óleo ano: </h1>
                     </div>
 
-                        </div>
+
                         <div id="divFloatRigth">
                             <div>
                                 <label class="lblBold" id="date"> {{$details->year}} </label>
@@ -52,12 +52,13 @@
                     </div>
                 </div>
             </div>
+            </div>
         </div>
-            <footer class="footer_1"id="footer">
+        </div>
+            <footer class="footer_1" id="footer">
                 <img class="report_footer" src="{{ URL::to('/') }}/img/footer.png" alt="logo">
             </footer>
-    </div>
-</div>
+        </div>
 
 <script>
         window.onload = function () {

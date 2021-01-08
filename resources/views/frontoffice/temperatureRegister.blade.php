@@ -38,10 +38,12 @@
             <p> {{$today}} </p>
         </div>
 
-        <a class="file-link" id="filter-link" data-toggle="collapse" href="#collapse-thermo" role="button"
-           aria-expanded="false" aria-controls="collapse-thermo">
-            <strong>Novo Termometro</strong>
-        </a>
+            @if($userType!=4)
+                <a class="file-link" id="filter-link" data-toggle="collapse" href="#collapse-thermo" role="button"
+                   aria-expanded="false" aria-controls="collapse-thermo">
+                    <strong>Novo Termometro</strong>
+                </a>
+            @endif
 
         <div class="collapse" id="collapse-thermo">
             <div class="card-body">

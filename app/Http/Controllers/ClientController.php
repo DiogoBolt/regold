@@ -61,7 +61,7 @@ class ClientController extends Controller
     public function home()
     {
         $user = Auth::user();
-        
+
        if(Session::has('establismentID')){
         
             $auxClientId = Session::get('establismentID');
@@ -72,6 +72,10 @@ class ClientController extends Controller
                     'name'
                 ])
             ->get();
+
+            $clientPermission=Customer::where('id',$auxClientId)
+                ->first();
+
             $receiptsHACCP = Receipt::from(Receipt::alias('r'))
                 ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
                 ->leftJoin(DocumentSuperType::alias('dst'), 'dt.superType', '=', 'dst.id')
@@ -109,13 +113,16 @@ class ClientController extends Controller
 
                // Session::put('establismentID',$clients[0]->id);
                 
-                return view('client.home',compact('clients','services','receiptsCont','receiptsCP','receiptsHACCP','receiptsReg'));
+                return view('client.home',compact('clients','services','receiptsCont','receiptsCP','receiptsHACCP','receiptsReg','clientPermission'));
         
         }else if(Session::has('clientImpersonatedId')){
             
             $auxClientId = Session::get('clientImpersonatedId');
-            
+
             Session::forget('establismentID');
+
+           $clientPermission=Customer::where('id',$auxClientId)
+               ->first();
 
             $receiptsHACCP = Receipt::from(Receipt::alias('r'))
                 ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
@@ -154,10 +161,15 @@ class ClientController extends Controller
 
                 Session::put('establismentID',$auxClientId);
 
-            return view('client.home',compact('services','receiptsCont','receiptsCP','receiptsHACCP','receiptsReg'));
+            return view('client.home',compact('services','receiptsCont','receiptsCP','receiptsHACCP','receiptsReg','clientPermission'));
 
         }else {
             Session::forget('establismentID');
+
+           $auxClientId = Session::get('establismentID');
+           $clientPermission=Customer::where('id',$auxClientId)
+               ->first();
+
             $clients = Customer::where('ownerID',$user->id)
             ->select([
                 'id',
@@ -202,7 +214,7 @@ class ClientController extends Controller
 
                 Session::put('establismentID',$clients[0]->id);
 
-            return view('client.home',compact('clients','services','receiptsCont','receiptsCP','receiptsHACCP','receiptsReg'));
+            return view('client.home',compact('clients','services','receiptsCont','receiptsCP','receiptsHACCP','receiptsReg','clientPermission'));
         }
     }
 
@@ -331,7 +343,7 @@ class ClientController extends Controller
           ->from(Customer::alias('c'))
           ->Join(Report::alias('r'), 'r.idClient', '=', 'c.id')
           ->groupBy('r.idClient')
-          ->select(['r.idClient','c.name','r.numberVisit','c.regoldiID','c.city','c.id','c.contract_type','r.created_at'])
+          ->select(['r.idClient','c.name','r.numberVisit','c.regoldiID','c.city','c.id','r.created_at'])
           ->get();
 
       foreach ($clients as $client)
@@ -342,7 +354,7 @@ class ClientController extends Controller
           $abc = Report::from(Report::alias('r'))
               ->leftJoin(Customer::alias('c'),'c.id','=','r.idClient')
               ->where('r.idClient',$client->id)->whereMonth('r.created_at','<=',$nrMonths)
-              ->select(['r.idClient','c.name','r.numberVisit','c.regoldiID','c.city','c.id','c.contract_type','r.created_at'])
+              ->select(['r.idClient','c.name','r.numberVisit','c.regoldiID','c.city','c.id','r.created_at'])
               ->get();
       }
           $scheduledClients=Schedule::from(Schedule::alias('s'))
@@ -417,6 +429,7 @@ class ClientController extends Controller
         ])->get();
 
         return $cities;
+
     }
 
     //funcao para verificar se o email é unico
@@ -595,6 +608,17 @@ class ClientController extends Controller
         if(isset($inputs['n_thermos'])==0) $establisment->n_thermos=null; else $establisment->n_thermos=$inputs['n_thermos'];
 
         //fim packs
+
+        //permissoes
+        if($inputs['packs']=='sp'||$inputs['packs']=='sp free'||$inputs['packs']=='st')
+            $establisment->permission=4;
+        elseif ($inputs['packs']=='s'&&$inputs['serviceType']=='haccp')
+            $establisment->permission=3;
+        elseif ($inputs['packs']=='s'&&$inputs['serviceType']=='cp')
+            $establisment->permission=2;
+        else
+            $establisment->permission=1;
+        //fim de permissoes
 
         $establisment->regoldiID = $inputs['regoldiID'];
         $establisment->transport_note = $inputs['transport_note'];

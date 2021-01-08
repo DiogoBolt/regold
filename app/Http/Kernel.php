@@ -42,6 +42,10 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\redirectClient::class,
         ],
 
+        'permissionClient'=>[
+            \App\Http\Middleware\permissionClient::class,
+        ],
+
         'api' => [
             'throttle:60,1',
             'bindings',

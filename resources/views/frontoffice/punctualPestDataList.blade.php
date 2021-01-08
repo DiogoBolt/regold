@@ -13,13 +13,11 @@
         </div>
     </div>
 
-    <a class="file-link" id="filter-link"  href="/frontoffice/report/punctual" role="button" aria-expanded="false" aria-controls="collapseFilter">
-        <strong>Novo Relatório</strong>
-    </a>
-
-
     <div class="container">
         <div class="container-docs">
+            <a class="file-link" id="filter-link"  href="/frontoffice/report/punctual" role="button" aria-expanded="false" aria-controls="collapseFilter">
+                <strong>Novo Relatório</strong>
+            </a>
             @if(count($punctual_datas) > 0)
                 <table class="table">
                     <caption>Relatórios</caption>

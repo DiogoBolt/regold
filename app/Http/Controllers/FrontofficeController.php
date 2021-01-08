@@ -200,6 +200,9 @@ class FrontofficeController extends Controller
 
         $auxClientId = $user->client_id;
 
+        $clientPermission=Customer::where('id',$auxClientId)
+            ->first();
+
         $auxAdminId=Session::get('impersonated');
 
         $clientActivity = Customer::where('id',$auxClientId)
@@ -240,7 +243,7 @@ class FrontofficeController extends Controller
         
         $types = DocumentType::where('superType', $superId)->get();
 
-        return view('frontoffice.documentsTypes',compact('types','userType','super','showSections','controlCustomizationClient','controlFirstServiceClient'));
+        return view('frontoffice.documentsTypes',compact('types','userType','super','showSections','controlCustomizationClient','controlFirstServiceClient','clientPermission'));
     }
 
     public function products()

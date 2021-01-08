@@ -27,31 +27,59 @@
             @endforeach
 
             @if($super==='Registos')
-                    <a class="category {{ $super }}" href="/frontoffice/records/oil">
-                        <div class="category-body">
-                            <img class="img-categories" src="{{ URL::to('/') }}/img/relatorio.png">
+                @if($clientPermission->permission==1)
+                    <a class="category {{ $super }}" >
+                        <div class="category-body-disabled">
+                            <img class="img-categories-disabled" src="{{ URL::to('/') }}/img/relatorio.png">
                             QUALIDADE DO ÓLEO
                         </div>
                     </a>
-                    <a class="category {{ $super }}" href="/frontoffice/records/hygiene">
-                        <div class="category-body">
-                            <img class="img-categories" src="{{ URL::to('/') }}/img/relatorio.png">
+                    <a class="category {{ $super }}" >
+                        <div class="category-body-disabled">
+                            <img class="img-categories-disabled" src="{{ URL::to('/') }}/img/relatorio.png">
                             REGISTOS DE HIGIENE
                         </div>
                     </a>
-                    <a class="category {{ $super }}" href="/frontoffice/insertProductConformities">
-                    <a class="category {{ $super }}" href="/frontoffice/records/insertProduct">
-                        <div class="category-body">
-                            <img class="img-categories" src="{{ URL::to('/') }}/img/relatorio.png">
+
+                    <a class="category {{ $super }}">
+                        <div class="category-body-disabled">
+                            <img class="img-categories-disabled" src="{{ URL::to('/') }}/img/relatorio.png">
                             ENTRADA DE PRODUTO
                         </div>
                     </a>
-                    <a class="category {{ $super }}" href="/frontoffice/personalizeAreasEquipments">
-                        <div class="category-body">
-                            <img class="img-categories" src="{{ URL::to('/') }}/img/areas_equipamentos.png">
+                    <a class="category {{ $super }}" >
+                        <div class="category-body-disabled">
+                            <img class="img-categories-disabled" src="{{ URL::to('/') }}/img/areas_equipamentos.png">
                             ÁREAS E EQUIPAMENTOS
                         </div>
                     </a>
+                    @else
+                        <a class="category {{ $super }}" href="/frontoffice/records/oil">
+                            <div class="category-body">
+                                <img class="img-categories" src="{{ URL::to('/') }}/img/relatorio.png">
+                                QUALIDADE DO ÓLEO
+                            </div>
+                        </a>
+                        <a class="category {{ $super }}" href="/frontoffice/records/hygiene">
+                            <div class="category-body">
+                                <img class="img-categories" src="{{ URL::to('/') }}/img/relatorio.png">
+                                REGISTOS DE HIGIENE
+                            </div>
+                        </a>
+
+                        <a class="category {{ $super }}" href="/frontoffice/records/insertProduct">
+                            <div class="category-body">
+                                <img class="img-categories" src="{{ URL::to('/') }}/img/relatorio.png">
+                                ENTRADA DE PRODUTO
+                            </div>
+                        </a>
+                        <a class="category {{ $super }}" href="/frontoffice/personalizeAreasEquipments">
+                            <div class="category-body">
+                                <img class="img-categories" src="{{ URL::to('/') }}/img/areas_equipamentos.png">
+                                ÁREAS E EQUIPAMENTOS
+                            </div>
+                        </a>
+                    @endif
             @endif
 
             @if($super === 'HACCP')

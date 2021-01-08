@@ -26,40 +26,30 @@
     @endif
     <section >
                         <div class="container index-box">
-                            {{--<div class="box">--}}
-                            <a class="box" title="Documentos HACCP" href="/frontoffice/documents/HACCP"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/Haccp.png">HACCP</a>
-                            {{--<div class="desc">HACCP</div>--}}
-
+                            @if($clientPermission->permission==1 || $clientPermission->permission== 3)
+                            <a class="disabled" title="Documentos HACCP" href="/frontoffice/documents/HACCP"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/Haccp.png">HACCP</a>
+                            @else
+                                <a class="box" title="Documentos HACCP" href="/frontoffice/documents/HACCP"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/Haccp.png">HACCP</a>
+                            @endif
                             @if($receiptsHACCP) <span class="notification">{{$receiptsHACCP}}</span> @endif
-                            {{--</div>--}}
-
-                                <a class="box" title="Controlo de Pragas" href="/frontoffice/documents/Controlopragas"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/ControloPragas.png">CONTROLO DE PRAGAS</a>
-                                {{--<div class="desc">CONTROLO DE PRAGAS</div>--}}
-                                @if($receiptsCP) <span class="notification">{{$receiptsCP}}</span> @endif
-
+                                @if($clientPermission->permission==1 || $clientPermission->permission==2)
+                                <a class="disabled" title="Controlo de Pragas" href="/frontoffice/documents/Controlopragas"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/ControloPragas.png">CONTROLO DE PRAGAS</a>
+                                @else
+                                    <a class="box" title="Controlo de Pragas" href="/frontoffice/documents/Controlopragas"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/ControloPragas.png">CONTROLO DE PRAGAS</a>
+                                @endif
+                                    @if($receiptsCP) <span class="notification">{{$receiptsCP}}</span> @endif
 
                                 <a class="box" title="Produtos" href="/frontoffice/categories"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/Produtos.png">PRODUTOS</a>
-                                {{--<div class="desc">PRODUTOS</div>--}}
-
 
                                 <a class="box" title="Encomendas" href="/frontoffice/orders">
                                     <img class="img-responsive" src="{{ URL::to('/') }}/img/index/Encomendas.png">ENCOMENDAS
                                 </a>
-                                {{--<div class="desc">ENCOMENDAS</div>--}}
-
-
                                     <a class="box" title="Documentos Registos" href="/frontoffice/documents/Registos"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/Registos.png">REGISTOS</a>
-                                    {{--<div class="desc">REGISTOS</div>--}}
+
                                     @if($receiptsReg) <span class="notification">{{$receiptsReg}}</span> @endif
-
-
                                     <a class="box" title="Documentos Contabilisticos" href="/frontoffice/documents/Contabilistico"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/DocumentosCont.png">DOCUMENTOS CONTABILISTICOS</a>
-                                    {{--<div class="desc">DOCUMENTOS CONTABILISTICOS</div>--}}
                                     @if($receiptsCont) <span class="notification">{{$receiptsCont}}</span> @endif
-
                         </div>
-
-
     </section>
 
 <div class="modal fade" id="myModal" role="dialog">

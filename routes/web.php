@@ -31,11 +31,19 @@ Route::get('/duvidascovid', 'HomeController@duvidascovid')->name('covid');
 
 Auth::routes(['register' => false]);
 
+/*Route::group(['middleware'=>['permissionClient']],function(){
+});*/
+
+
 Route::get('/frontoffice/client/edit/{id}', 'FrontofficeController@editClient');
 Route::get('/frontoffice/client', 'FrontofficeController@showCustomer');
 Route::post('/frontoffice/editclient/', 'FrontofficeController@postEditClient');
 Route::get('/frontoffice/documents/', 'FrontofficeController@documents');
+
+Route::group(['middleware'=>['permissionClient']],function(){
 Route::get('/frontoffice/documents/{type}', 'FrontofficeController@documentsBySuper');
+});
+
 Route::get('/frontoffice/documents/{super}/{type}', 'FrontofficeController@documentsByType');
 Route::get('/frontoffice/produtos/', 'FrontofficeController@products');
 Route::any('/frontoffice/products/addcart/', 'FrontofficeController@addCart');
@@ -60,15 +68,16 @@ Route::get('/frontoffice/firstlogin', 'ClientController@checkFirstLogin');
 Route::post('/frontoffice/changePassword', 'ClientController@changePassword');
 Route::get('/home', 'ClientController@home');
 
+//route to change session var
+Route::post('/client/addSessionVar/{id}','ClientController@addSessionVar');
+Route::post('/client/deleteSessionVar','ClientController@deleteSessionVar');
+
+
 //Thermos
 Route::get('/frontoffice/thermo', 'ThermoController@index');
 Route::post('/thermo/attachthermo', 'ThermoController@attachThermo');
 Route::delete('/thermo/deletethermo', 'ThermoController@deleteThermo');
 Route::get('/thermo/getTemperature/{imei}', 'ThermoController@getTemperature');
-
-//route to change session var
-Route::post('/client/addSessionVar/{id}','ClientController@addSessionVar');
-Route::post('/client/deleteSessionVar','ClientController@deleteSessionVar');
 
 //routes personalize Sections
 Route::get('/frontoffice/personalizeSection','PersonalizeSectionController@getSection');
@@ -77,18 +86,18 @@ Route::get('/frontoffice/personalizeAreasEquipments','PersonalizeSectionControll
 Route::get('/frontoffice/personalizeAreasEquipments/personalizeEachSection/{id}','PersonalizeSectionController@personalizeEachSection');
 Route::post('/frontoffice/personalizeAreasEquipments/personalizeEachSection/save','PersonalizeSectionController@saveEachSection');
 
-
 //routes novo relatorio
-Route::get('/frontoffice/newReport','ReportController@getReportCover');
-Route::get('/frontoffice/newReportRules/{id}','ReportController@getRules');
-Route::get('/frontoffice/newReportSections','ReportController@getClientSection');
-Route::get('/frontoffice/forgetSession','ReportController@forgetSessionVar');
-Route::post('/frontoffice/addSection/{id}','ReportController@addSectionReport');
-Route::post('/frontoffice/saveAnswers','ReportController@saveAnswers');
-Route::post('/frontoffice/saveReport/{visitNumber}','ReportController@saveReport');
-Route::get('/concluedReport','ReportController@concludeReport');
-Route::get('/frontoffice/reports','ReportController@reportList');
-Route::get('/frontoffice/reportShow/{idReport}','ReportController@reportShow');
+Route::get('/frontoffice/newReport', 'ReportController@getReportCover');
+Route::get('/frontoffice/newReportRules/{id}', 'ReportController@getRules');
+Route::get('/frontoffice/newReportSections', 'ReportController@getClientSection');
+Route::get('/frontoffice/forgetSession', 'ReportController@forgetSessionVar');
+Route::post('/frontoffice/addSection/{id}', 'ReportController@addSectionReport');
+Route::post('/frontoffice/saveAnswers', 'ReportController@saveAnswers');
+Route::post('/frontoffice/saveReport/{visitNumber}', 'ReportController@saveReport');
+Route::get('/concluedReport', 'ReportController@concludeReport');
+Route::get('/frontoffice/reports', 'ReportController@reportList');
+Route::get('/frontoffice/reportShow/{idReport}', 'ReportController@reportShow');
+Route::get('/frontoffice/statistics','ReportController@reportStatistics');
 
 //routes Relatorio CONTROLO DE PRAGAS
 Route::get('/frontoffice/firstService','PestController@firstService');
@@ -110,8 +119,8 @@ Route::post('/frontoffice/saveWarranty','PestController@saveWarrantyPest');
 Route::get('frontoffice/reportWarrantyShow/{id}','PestController@reportWarrantyShow');
 Route::get('/frontoffice/deviceWarranty/{id}','PestController@getDeviceWarranty');
 Route::post('/frontoffice/saveDeviceWarranty/{id}','PestController@saveDeviceWarranty');
-
 Route::get('/frontoffice/verifyPin/{id}/{pin}','PestController@verifyPin');
+Route::get('/frontoffice/verifyCodeDeviceExist/{id}/{code}','PestController@verifyCodeDeviceExist');
 
 //relatório pontual de cliente nao criado na plataforma
 Route::get('/frontoffice/reports/punctualList','PestController@getList');
@@ -119,18 +128,13 @@ Route::get('/frontoffice/report/punctual','PestController@punctualData');
 Route::post('/frontoffice/report/savePunctual','PestController@savePunctualData');
 Route::get('/frontoffice/report/punctualData/{id}','PestController@punctualDataShow');
 
-Route::get('/frontoffice/verifyCodeDeviceExist/{id}/{code}','PestController@verifyCodeDeviceExist');
-
 //routes Registos
-
 Route::get('/frontoffice/insertProductConformities', 'RecordsController@insertConformities');
-
 Route::get('/frontoffice/records/insertProduct', 'RecordsController@insertRecords');
 Route::post('/frontoffice/records/insertProduct/save', 'RecordsController@saveInsertRecords');
 Route::get('/frontoffice/records/insertProduct/history','RecordsController@getInsertRecords');
 Route::get('/frontoffice/records/insertProduct/history/get','RecordsController@getInsertProductByMonth');
 Route::get('/frontoffice/records/insertProduct/history/print','RecordsController@printReportProducts');
-
 
 Route::get('/frontoffice/records/oil','RecordsController@insertOilRecords');
 Route::post('/frontoffice/records/oil/save', 'RecordsController@saveOilRecords');
@@ -143,23 +147,15 @@ Route::get('/frontoffice/records/temperatures/history','RecordsController@getTem
 Route::get('/frontoffice/records/temperatures/history/get','RecordsController@getHistoryByMonth');
 Route::post('/frontoffice/records/temperatures/history/comment','RecordsController@saveComment');
 Route::get('/frontoffice/records/temperatures/history/print','RecordsController@printReport');
-
-
 Route::any('/frontoffice/editthermosvalue','RecordsController@editThermoTemperature');
-
 Route::get('/frontoffice/records/hygiene','RecordsController@getHygieneRecords');
-
 Route::get('/frontoffice/getlastreads/{id}', 'RecordsController@getLast5Temperatures');
-
 
 Route::get('/frontoffice/records/hygiene','RecordsController@getHygieneRecords');
 Route::post('/frontoffice/records/hygiene/save','RecordsController@saveHygieneRecords');
 Route::get('/frontoffice/records/hygiene/history','RecordsController@getHygieneRecordsHistory');
 Route::get('/frontoffice/records/hygiene/history/get','RecordsController@getHygieneByMonth');
 Route::get('/frontoffice/records/hygiene/history/print','RecordsController@printRecordsHygiene');
-
-//estatisticas route
-Route::get('/frontoffice/statistics','ReportController@reportStatistics');
 
 
 Route::group(['middleware' => ['backoffice']], function () {
@@ -195,7 +191,6 @@ Route::group(['middleware' => ['backoffice']], function () {
     Route::get('/users/getCities/{id}','ClientController@getCitiesByDistrict');
     Route::get('/users/verifyEmailExist/{email}','ClientController@verifyEmailExist');
     Route::get('/users/getParish/{postalCode}','ClientController@getParishbyPostalCode');
-
 
     Route::get('/groups', 'ClientController@groups');
     Route::get('/groups/new', 'ClientController@newGroup');
