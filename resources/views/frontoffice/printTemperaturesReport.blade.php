@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel">
-                <table class="report-container">
+                <table class="report-container" width="600px">
                     <thead class="report-header">
                         <tr>
                             <th class="report-header-cell">
@@ -25,15 +25,15 @@
                                         </div>
                                     </div>
                                 <h1 class="title">Registo de Temperatura</h1>
-                            </div>
+                                </div>
                             </th>
                         </tr>
                     </thead>
 
-                    <div class="col-xs-12">
-                            <h2>{{ $details->type . ' ( imei : ' . $details->imei . ' )' }}</h2>
-                            <h3 style="color: red !important;">Período : {{ $details->month . '/' . $details->year }}</h3>
-                    </div>
+{{--                    <div class="col-xs-12">--}}
+{{--                            <h2>{{ $details->type . ' ( imei : ' . $details->imei . ' )' }}</h2>--}}
+{{--                            <h3 style="color: red !important;">Período : {{ $details->month . '/' . $details->year }}</h3>--}}
+{{--                    </div>--}}
                 <tbody class="report-content">
                     <tr>
                         <td class="report-content-cell">
@@ -66,20 +66,20 @@
                 </td>
             </tr>
         </tbody>
-    </table>
-            </div>
-        </div>
-    </div>
-</div>
     <tfoot class="report-footer">
         <tr>
             <td class="report-content-cell">
                 <footer class="footer_1"id="footer">
-                    <img class="report_footer" src="{{ URL::to('/') }}/img/footer.png" alt="logo">
+                    <img class="report_footer" src="{{ URL::to('/') }}/img/footer3.png" alt="logo">
                 </footer>
             </td>
         </tr>
     </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 

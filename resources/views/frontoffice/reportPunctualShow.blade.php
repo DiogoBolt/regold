@@ -8,7 +8,10 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel">
-                <div class="panel-body table-responsive printall">
+                <table class="tableContainer">
+                    <thead class="report-header">
+                        <tr>
+                            <th class="report-header-cell">
 
                     <img class="logoReport" src="{{ URL::to('/') }}/img/navbar/RegolfoodLogin.png" alt="logo">
 
@@ -23,10 +26,9 @@
                         <img src="\img\regolfoodSmall.png" style="width:100px">
                     </div>--}}
 
-                    <h1 class="title">Relatório Pontual</h1>
 
                     <div id="reportInfo">
-                        <div id="divFloatLeft">
+                        <div id="divFloatRigth">
                             <div>
                                 <label class="lblBold">Estabelecimento: </label>
                                 <label> {{$report_punctual->clientName}} </label>
@@ -42,6 +44,7 @@
                         </div>
 
                         <div id="divFloatRigth">
+                            <label class="lblBold">Relatório Pontual </label>
                             <div>
                                 <label class="lblBold">Data: </label>
                                 <label id="date"> {{$report_punctual->updated_at->toDateString()}} </label>
@@ -56,6 +59,13 @@
                             </div>
                         </div>
                     </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="report-content">
+                        <tr>
+                            <td class="report-content-cell">
+
                     <h1 class="title">Ações Desenvolvidas</h1>
                     <div id="reportInfo">
                         <div id="divFloatLeft">
@@ -78,12 +88,20 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot class="report-footer">
+                    <tr>
+                        <td class="report-content-cell">
+                            <footer class="footer_1"id="footer" style="display:none" >
+                                <img class="report_footer" src="{{ URL::to('/') }}/img/footer3.png" alt="logo">
+                            </footer>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
             </div>
-            <footer id="footer" style="display:none" >
-                <img class="report_footer" src="{{ URL::to('/') }}/img/footer.png" alt="logo">
-            </footer>
         </div>
     </div>
 </div>

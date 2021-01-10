@@ -11,7 +11,7 @@
                     <tr>
                         <th class="report-header-cell">
                             <div style="text-align: center; margin-bottom: 20px;">
-                                <img class="imp_logo" src="/img/navbar/logoRegolfood.png"/>
+                                <img class="imp_logo" src="/img/navbar/RegolfoodLogin.png"/>
                                     <div id="divFloatRigth">
                                         <div>
                                             <label class="lblBold" id="date"> {{$details->year}} </label>
@@ -67,20 +67,20 @@
                             </td>
                         </tr>
                     </tbody>
+    <tfoot class="report-footer">
+        <tr>
+            <td class="report-content-cell">
+                <footer class="footer_1"id="footer">
+                    <img class="report_footer" src="{{ URL::to('/') }}/img/footer3.png" alt="logo">
+                </footer>
+            </td>
+        </tr>
+    </tfoot>
                 </table>
             </div>
         </div>
     </div>
 </div>
-    <tfoot class="report-footer">
-        <tr>
-            <td class="report-content-cell">
-                <footer class="footer_1"id="footer">
-                    <img class="report_footer" src="{{ URL::to('/') }}/img/footer.png" alt="logo">
-                </footer>
-            </td>
-        </tr>
-    </tfoot>
 
 <script>
         window.onload = function () {

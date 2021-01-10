@@ -8,7 +8,6 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel">
-                <div class="panel-body table-responsive printall">
                 <table class="tableContainer">
                     <thead class="report-header">
                         <tr>
@@ -107,20 +106,19 @@
                         </td>
                     </tr>
                 </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
             <tfoot class="report-footer">
                 <tr>
                     <td class="report-content-cell">
                         <div>
                         <footer class="footer_1" id="footer" >
-                            <img class="report_footer" src="{{ URL::to('/') }}/img/footer.png" alt="logo">
+                            <img class="report_footer" src="{{ URL::to('/') }}/img/footer3.png" alt="logo">
                         </footer>
                         </div>
                     </td>
                 </tr>
             </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>

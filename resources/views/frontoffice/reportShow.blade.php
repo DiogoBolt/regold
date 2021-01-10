@@ -249,18 +249,8 @@
                                     </div>
                                 </div>
                             </div>
-<<<<<<< HEAD
                     </div>
-                </div>
-                    <footer class="footer_1"id="footer" style="display:none" >
-                        <img class="report_footer" src="{{ URL::to('/') }}/img/footer.png" alt="logo">
-                    </footer>
-            </div>
-        </div>
-    </div>
-</div>
-=======
-                                </div>
+
                         </td>
                     </tr>
                 </tbody>
@@ -274,6 +264,10 @@
                     </tr>
                 </tfoot>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
 {{--<script>--}}
 {{--/*--}}
 {{--window.onload = function () {--}}
@@ -285,4 +279,3 @@
 {{--};*/--}}
 
 {{--</script>--}}
->>>>>>> 47f2338156d9822b6db17411d7288f639fbf42d9

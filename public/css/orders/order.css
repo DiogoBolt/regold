@@ -126,6 +126,10 @@
     display: block;
     margin-left: 2px;
 }
+.table.report-container{
+    display: inline-block;
+    width: auto;
+}
 h1.title {
     color: #000;
     font-family: Univia Pro;
@@ -147,7 +151,7 @@ h1.title {
         position: fixed;
         bottom: 0;
     }
-    table.report-container {
+    .table.report-container {
         page-break-after:always;
     }
     thead.report-header{

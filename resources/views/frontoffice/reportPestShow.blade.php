@@ -1,15 +1,12 @@
 <!-- Custom CSS -->
 <link type="text/css" rel="stylesheet" href="{{ mix('css/app.css') }}">
 <link href="{{ asset('css/documents/reportPrint.css') }}" rel="stylesheet">
-
 <script src="{{ URL::asset('/js/report.js') }}"></script>
 
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel">
-                <div class="panel-body table-responsive printall">
-
                     <table class="tableContainer">
                         <thead class="report-header">
                             <tr>
@@ -44,7 +41,7 @@
                         </div>
 
                         <div id="divFloatRigth">
-                            <label class="title">Relatório de Instalação</label>
+                                <label class="title">Relatório de Instalação</label>
                             <div>
                                 <label class="lblBold">Data: </label>
                                 <label id="date"> {{$report_pest->updated_at->toDateString()}} </label>
@@ -59,10 +56,16 @@
                             </div>
                         </div>
                     </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="report-content">
+                            <tr>
+                                <td class="report-content-cell">
 
-                    <h1 class="title">Ações Desenvolvidas</h1>
+                        <h1 class="title">Ações Desenvolvidas</h1>
                     <div id="reportInfo">
-                           <div id="divFloatRigth">
+                           <div id="divFloatLeft">
                                <div>
                                    <label class="lblBold">Espécie a controlar: </label>
                                    <label> {{$report_pest->specie}}</label>
@@ -76,9 +79,6 @@
                                </div>
                            </div>
                        </div>
-                                </th>
-                            </tr>
-                        </thead>
 
                     <div class="tableContainer">
                         <table class="table" id="reportRules">
@@ -102,13 +102,23 @@
                             <label> {{$report_pest->note}}</label>
                         </div>
                     </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                            <tfoot class="report-footer">
+                                <tr>
+                                    <td class="report-content-cell">
+                                        <footer class="footer_1"id="footer" style="display:none" >
+                                            <img class="report_footer" src="{{ URL::to('/') }}/img/footer3.png" alt="logo">
+                                        </footer>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                    </table>
                 </div>
-                <footer id="footer" style="display: none" >
-                    <img class="report_footer" src="{{ URL::to('/') }}/img/footer.png" alt="logo">
-                </footer>
             </div>
         </div>
     </div>
-</div>
+
 
 

@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel">
-                <table class="report-container">
+                <table class="report-container" width="600px">
                     <thead class="report-header">
                         <tr>
                             <th class="report-header-cell">
@@ -24,7 +24,7 @@
                                                 <label class="lblBold">Mês: </label>
                                             </div>
                                         </div>
-                                    <h1 class="title">Registo de Higiene</h1>
+                                    <h1 class="title">Registo de Higiene </h1>
                                 </div>
                             </th>
                         </tr>
@@ -58,13 +58,8 @@
                             </td>
                         </tr>
                     </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
 
-        <tfoot class="report-footer">
+            <tfoot class="report-footer">
         <tr>
             <td class="report-content-cell">
                 <div>
@@ -74,7 +69,12 @@
                 </div>
             </td>
         </tr>
-        </tfoot>
+            </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
         window.onload = function () {
             setTimeout(window.print, 500);
