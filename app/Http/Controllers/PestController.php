@@ -176,7 +176,9 @@ class PestController extends Controller
     }
     public function  pestReportList()
     {
-        $auxClientId = Session::get('clientImpersonatedId');
+
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Auth::user()->client_id;
+
         $report_pest = ReportPest::where('idClient',$auxClientId)
             ->orderBy('id','asc')
             ->get();
@@ -198,7 +200,7 @@ class PestController extends Controller
 
     public function reportPestShow($id)
     {
-        $auxClientId = Session::get('clientImpersonatedId');
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Auth::user()->client_id;
 
         $report_pest = ReportPest::where('id',$id)
             ->where('idClient',$auxClientId)->first();
@@ -377,7 +379,7 @@ class PestController extends Controller
 
     public function reportMaintenanceShow($id)
     {
-        $auxClientId = Session::get('clientImpersonatedId');
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Auth::user()->client_id;
 
         $report_maintenance = ReportMaintenance::where('id',$id)
             ->where('idClient',$auxClientId)->first();
@@ -463,7 +465,7 @@ class PestController extends Controller
 
     public function reportPunctualShow($idReport)
     {
-        $auxClientId = Session::get('clientImpersonatedId');
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Auth::user()->client_id;
 
         $report_punctual = ReportPunctual::where('id',$idReport)
             ->where('idClient',$auxClientId)->first();
@@ -589,7 +591,7 @@ class PestController extends Controller
 
     public function reportWarrantyShow($id)
     {
-        $auxClientId = Session::get('clientImpersonatedId');
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Auth::user()->client_id;
 
         $report_warranty = ReportWarranty::where('id',$id)
             ->where('idClient',$auxClientId)->first();

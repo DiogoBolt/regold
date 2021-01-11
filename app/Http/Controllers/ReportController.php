@@ -562,7 +562,7 @@ class ReportController extends Controller
     }
 
     public function reportList(){
-        $auxClientId = Session::get('clientImpersonatedId');
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Auth::user()->client_id;
         $reports = Report::where('idClient',$auxClientId)
         ->where('concluded',1)
         ->orderBy('id','asc')
@@ -571,7 +571,7 @@ class ReportController extends Controller
     }
 
     public function reportShow($idReport){
-        $auxClientId = Session::get('clientImpersonatedId');
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Auth::user()->client_id;
 
         $report = Report::where('id',$idReport)
         ->where('idClient',$auxClientId)->first();
