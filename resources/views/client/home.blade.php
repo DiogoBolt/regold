@@ -26,13 +26,13 @@
     @endif
     <section >
                         <div class="container index-box">
-                            @if($clientPermission->permission==1 || $clientPermission->permission== 3)
+                            @if($clientPermission->permission==1 || $clientPermission->permission== 2)
                             <a class="disabled" title="Documentos HACCP" href="/frontoffice/documents/HACCP"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/Haccp.png">HACCP</a>
                             @else
                                 <a class="box" title="Documentos HACCP" href="/frontoffice/documents/HACCP"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/Haccp.png">HACCP</a>
                             @endif
                             @if($receiptsHACCP) <span class="notification">{{$receiptsHACCP}}</span> @endif
-                                @if($clientPermission->permission==1 || $clientPermission->permission==2)
+                                @if($clientPermission->permission==1 || $clientPermission->permission==3)
                                 <a class="disabled" title="Controlo de Pragas" href="/frontoffice/documents/Controlopragas"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/ControloPragas.png">CONTROLO DE PRAGAS</a>
                                 @else
                                     <a class="box" title="Controlo de Pragas" href="/frontoffice/documents/Controlopragas"><img class="img-responsive" src="{{ URL::to('/') }}/img/index/ControloPragas.png">CONTROLO DE PRAGAS</a>

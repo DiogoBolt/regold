@@ -134,13 +134,22 @@ class PersonalizeSectionController extends Controller
 
         foreach($sections as $section){
             if($section->idClientSection==0){
-                $sectionClient = new ClientSection;
-                if($section->activityClientId==0)
+                if($section->activityClientId==1)
+                {
+                    $sectionClient = new ClientSection;
+                    $sectionClient->id_client=$auxClientId;
+                    $sectionClient->id_section=$section->sectionId;
+                    $sectionClient->hygieneSection=0;
+                    $sectionClient->designation=$section->designation;
+                    $sectionClient->save();
+                }else{
+                    $sectionClient = new ClientSection;
+                    $sectionClient->id_client=$auxClientId;
+                    $sectionClient->id_section=$section->sectionId;
                     $sectionClient->hygieneSection=1;
-                $sectionClient->id_client=$auxClientId;
-                $sectionClient->id_section=$section->sectionId;
-                $sectionClient->designation=$section->designation;
-                $sectionClient->save();
+                    $sectionClient->designation=$section->designation;
+                    $sectionClient->save();
+                }
             }
         }
 

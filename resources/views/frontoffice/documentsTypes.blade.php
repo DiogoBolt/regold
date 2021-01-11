@@ -73,12 +73,14 @@
                                 ENTRADA DE PRODUTO
                             </div>
                         </a>
+                        @if($userType!=4)
                         <a class="category {{ $super }}" href="/frontoffice/personalizeAreasEquipments">
                             <div class="category-body">
                                 <img class="img-categories" src="{{ URL::to('/') }}/img/areas_equipamentos.png">
                                 ÁREAS E EQUIPAMENTOS
                             </div>
                         </a>
+                        @endif
                     @endif
             @endif
 
@@ -110,6 +112,7 @@
                                     <img class="img-categories" src="{{ URL::to('/') }}/img/personalizar.png">
                                     PERSONALIZAR SECÇÕES
                                 </div>
+                            </a>
                         @else
                             <a class="category {{ $super }}" href="/frontoffice/personalizeSection" style="display:none">
                                 <div class="category-body">
@@ -119,12 +122,14 @@
                             </a>
                         @endif
                 @endif
+                        @if($userType!=4)
                                 <a class="category {{ $super }}" href="/frontoffice/personalizeAreasEquipments">
                                     <div class="category-body">
                                         <img class="img-categories" src="{{ URL::to('/') }}/img/areas_equipamentos.png">
                                         ÁREAS E EQUIPAMENTOS
                                     </div>
                                 </a>
+                        @endif
 
                                 <a class="category {{ $super }}" href="/frontoffice/statistics">
                                     <div class="category-body">

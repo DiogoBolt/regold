@@ -55,6 +55,7 @@ function showModal(idModal){
         var value = {
             "idSection" : sectionValue,
             "idClientSection" : 0,
+            "activityClientId":0,
             };
     
         input.type="checkbox";
@@ -82,6 +83,8 @@ function saveSections(){
     var sectionSize=sections.length;
 
 
+
+
     for(var i=0; i<sectionSize;i++){
         if(sections[i].checked){
             var values = JSON.parse(sections[i].value);
@@ -94,6 +97,9 @@ function saveSections(){
         }
     }
     var sectionsJson = JSON.stringify(allSections);
+
+
+
 
     $.ajaxSetup({
         headers: {
