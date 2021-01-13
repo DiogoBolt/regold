@@ -45,7 +45,8 @@ class FrontofficeController extends Controller
     public function showCustomer()
     {
         $user = Auth::user();
-        $client = Customer::where('id',$user->userTypeID)
+
+        $client = Customer::where('id',$user->client_id)
         ->first();
 
         return view('frontoffice.show',compact('client'));
