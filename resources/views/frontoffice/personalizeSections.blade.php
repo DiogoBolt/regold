@@ -53,7 +53,7 @@
                 @foreach($sections as $section)
                     @if($section->checked)
                         <li>
-                            <input type="checkbox" id="{{$section->name}}1" name="sections[]" value='{"idSection":{{$section->id}},"idClientSection":{{$section->idClientSection}},"activityClientId":{{$section->activityClientId}}}' >
+                            <input checked type="checkbox" id="{{$section->name}}1" name="sections[]" value='{"idSection":{{$section->id}},"idClientSection":{{$section->idClientSection}},"activityClientId":{{$section->activityClientId}}}' >
                             <label for="{{$section->name}}1">{{$section->name}}</label>
                         </li>
                     @else
@@ -67,8 +67,14 @@
             @if(count($clientSections)>0)
                 @foreach($clientSections as $clientSection)
                     <li>
-                        <input type="checkbox" id="{{$clientSection->designation}}" name="sections[]" value='{"idSection":{{$clientSection->id}},"idClientSection":{{$clientSection->id}},"activityClientId":{{$section->activityClientId}}}' >
+                        @if($clientSection->active==1)
+                        <input checked type="checkbox" id="{{$clientSection->designation}}" name="sections[]" value='{"idSection":{{$clientSection->id}},"idClientSection":{{$clientSection->id}},"activityClientId":{{$section->activityClientId}}}' >
                         <label for="{{$clientSection->designation}}">{{$clientSection->designation}}</label>
+                        @else
+                            <input checked type="checkbox" id="{{$clientSection->designation}}" name="sections[]" value='{"idSection":{{$clientSection->id}},"idClientSection":{{$clientSection->id}},"activityClientId":{{$section->activityClientId}}}' >
+                            <label for="{{$clientSection->designation}}">{{$clientSection->designation}}</label>
+                        @endif
+
                     </li>
                 @endforeach
             @endif

@@ -242,7 +242,11 @@
                 @if(count($reportSectionObs)>0)
                     @foreach($reportSectionObs as $reportSectionOb)
                         <tr class="tableRow">
-                            <th id="correctiveRulesIndex" class="index" value="{{$reportSectionOb->idRule}}">{{$reportSectionOb->index}}</th>
+                            @if($reportSectionOb->idRule==0)
+                            <th id="correctiveRulesIndex" class="index" value="{{$reportSectionOb->idRule}}">Geral</th>
+                            @else
+                                <th id="correctiveRulesIndex" class="index" value="{{$reportSectionOb->idRule}}">{{$reportSectionOb->index}}</th>
+                            @endif
                             <td class="tdRuleBackground">
                                 <textarea class="corrective" value="{{$reportSectionOb->observation}}">{{$reportSectionOb->observation}}</textarea>
                                 <input type="hidden" id="idObs" value="{{$reportSectionOb->id}}" />
@@ -260,8 +264,8 @@
     <div id="addObs">
         <label>Nova Observação</label>
         <br/>
-        <select id="indexObs" onchange="verifySelected(this)" > 
-            <option value="" disabled selected>Regra</option>
+        <select id="indexObs" onchange="verifySelected(this)" >
+            <option value="Geral">Geral</option>
             @foreach($rules as $rule)
                 <option value="{{$rule->id}}">{{$rule->index}}</option>
             @endforeach

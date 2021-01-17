@@ -904,7 +904,10 @@ class ClientController extends Controller
     private function getParishNameByPostalCode($postalCode){
 
         $parishName=PostalCodes::where('postal_code',$postalCode)->first();
-    
+
+        if($parishName==null)
+            return $parishName='Localidade não encontrada';
+        else
         return $parishName->name;
     }
 

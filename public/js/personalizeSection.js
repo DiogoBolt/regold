@@ -82,9 +82,6 @@ function saveSections(){
     var sections=document.getElementsByName('sections[]');
     var sectionSize=sections.length;
 
-
-
-
     for(var i=0; i<sectionSize;i++){
         if(sections[i].checked){
             var values = JSON.parse(sections[i].value);
@@ -97,9 +94,6 @@ function saveSections(){
         }
     }
     var sectionsJson = JSON.stringify(allSections);
-
-
-
 
     $.ajaxSetup({
         headers: {
