@@ -616,15 +616,17 @@ class ClientController extends Controller
             $establisment->permission=3;
         elseif ($inputs['packs']=='s'&&$inputs['serviceType']=='cp')
             $establisment->permission=2;
-        else
+        elseif($inputs['packs']=='t')
             $establisment->permission=1;
+        else
+            $establisment->permission=4;
         //fim de permissoes
 
         $establisment->regoldiID = $inputs['regoldiID'];
         $establisment->transport_note = $inputs['transport_note'];
         $establisment->save();
-        $user->client_id = $establisment->id;
-        $user->save();
+        /*$user->client_id = $establisment->id;
+        $user->save();*/
 
         $qtd = Section::where('activityClientId',$establisment->activity)->count();
 

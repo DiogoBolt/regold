@@ -196,7 +196,7 @@ class FrontofficeController extends Controller
     {
         $user = Auth::user();
 
-        $auxClientId = $user->client_id;
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Auth::user()->client_id;
 
         $clientPermission=Customer::where('id',$auxClientId)
             ->first();
