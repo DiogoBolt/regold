@@ -62,7 +62,7 @@
   
   input[type=radio] + label.conforme{
     width: 30px;
-    background: rgb(0, 255, 0,0.5) !important;
+    background: white;
     
   }
   input[type=radio]:checked + label.conforme{
@@ -72,7 +72,7 @@
   
   input[type=radio] + label.naoConforme{
     width: 30px;
-    background: rgb(255,0, 0,0.5) !important;
+    background: white;
   }
   input[type=radio]:checked + label.naoConforme{
     width: 30px;
@@ -81,7 +81,7 @@
   
   input[type=radio] + label.naoAplicavel{
     width: 30px;
-    background: rgb(255, 255, 0,0.5) !important;
+    background: white;
   }
   input[type=radio]:checked + label.naoAplicavel{
     width: 30px;

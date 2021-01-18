@@ -52,7 +52,7 @@ input[type=radio] + label{
 }
 
 input[type=radio] + label.conforme{
-  background: rgb(0, 255, 0,0.5);
+  background: white;
   
 }
 input[type=radio]:checked + label.conforme{
@@ -60,14 +60,14 @@ input[type=radio]:checked + label.conforme{
 }
 
 input[type=radio] + label.naoConforme{
-  background: rgb(255,0, 0,0.5);
+  background: white;
 }
 input[type=radio]:checked + label.naoConforme{
   background: rgb(255, 0, 0, 1);
 }
 
 input[type=radio] + label.naoAplicavel{
-  background: rgb(255, 255, 0,0.5);
+  background: white;
 }
 input[type=radio]:checked + label.naoAplicavel{
   background: rgb(153, 122, 0);
