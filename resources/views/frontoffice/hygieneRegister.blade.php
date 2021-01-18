@@ -58,6 +58,7 @@
                     <thead>
                     <tr>
                         <th>Área</th>
+                        <th>Secção</th>
                         <th>Produto</th>
                         <th><input onClick="checkBoxes(this)" type="Checkbox"> Selecionar tudo</th>
                     </tr>
@@ -66,6 +67,12 @@
                         @if($item->idCleaningFrequency==1)
                             <tbody>
                             <td>{{$item->designation}}</td>
+                            <td>@foreach($clientSections as $clientSection)
+                                    @if($item->idSection==$clientSection->id)
+                                        {{$clientSection->designation}}
+                                    @endif
+                                @endforeach
+                            </td>
                             <td>@foreach($products as $product)
                                     @if($item->idProduct==$product->id)
                                         <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
@@ -80,6 +87,7 @@
                     <thead>
                     <tr>
                         <th>Equipamento</th>
+                        <th>Secção</th>
                         <th>Produto</th>
                         <th><input onClick="checkBoxes(this)" type="checkbox" > Selecionar tudo</th>
                     </tr>
@@ -88,6 +96,12 @@
                         @if($item->idCleaningFrequency==1)
                             <tbody>
                             <td>{{$item->designation}}</td>
+                            <td>@foreach($clientSections as $clientSection)
+                                    @if($item->idSection==$clientSection->id)
+                                        {{$clientSection->designation}}
+                                    @endif
+                                @endforeach
+                            </td>
                             <td>@foreach($products as $product)
                                     @if($item->idProduct==$product->id)
                                         <a href="/frontoffice/product/{{$product->id}}">{{$item->idProduct}}{{$product->name}}</a>
@@ -107,6 +121,7 @@
                     <thead>
                     <tr>
                         <th>Área</th>
+                        <th>Secção</th>
                         <th>Produto</th>
                         <th><input  onClick="checkBoxes(this)" type="checkbox" > Selecionar tudo</th>
                     </tr>
@@ -115,6 +130,12 @@
                         @if($item->idCleaningFrequency==2)
                             <tbody>
                             <td>{{$item->designation}}</td>
+                            <td>@foreach($clientSections as $clientSection)
+                                    @if($item->idSection==$clientSection->id)
+                                        {{$clientSection->designation}}
+                                    @endif
+                                @endforeach
+                            </td>
                             <td>@foreach($products as $product)
                                     @if($item->idProduct==$product->id)
                                         <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
@@ -130,6 +151,7 @@
                     <thead>
                     <tr>
                         <th>Equipamento</th>
+                        <th>Secção</th>
                         <th>Produto</th>
                         <th><input  onClick="checkBoxes(this)" type="checkbox"> Selecionar tudo</th>
                     </tr>
@@ -138,6 +160,12 @@
                         @if($item->idCleaningFrequency==2)
                             <tbody>
                             <td>{{$item->designation}}</td>
+                            <td>@foreach($clientSections as $clientSection)
+                                    @if($item->idSection==$clientSection->id)
+                                        {{$clientSection->designation}}
+                                    @endif
+                                @endforeach
+                            </td>
                             <td>@foreach($products as $product)
                                     @if($item->idProduct==$product->id)
                                         <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
@@ -155,6 +183,7 @@
                     <thead>
                     <tr>
                         <th>Área</th>
+                        <th>Secção</th>
                         <th>Produto</th>
                         <th><input onClick="checkBoxes(this)" type="checkbox" > Selecionar tudo</th>
                     </tr>
@@ -163,6 +192,12 @@
                         @if($item->idCleaningFrequency==3)
                             <tbody>
                             <td>{{$item->designation}}</td>
+                            <td>@foreach($clientSections as $clientSection)
+                                    @if($item->idSection==$clientSection->id)
+                                        {{$clientSection->designation}}
+                                    @endif
+                                @endforeach
+                            </td>
                             <td>@foreach($products as $product)
                                     @if($item->idProduct==$product->id)
                                         <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
@@ -178,6 +213,7 @@
                     <thead>
                     <tr>
                         <th>Equipamento</th>
+                        <th>Secção</th>
                         <th>Produto</th>
                         <th><input  onClick="checkBoxes(this)" type="checkbox" > Selecionar tudo</th>
                     </tr>
@@ -186,6 +222,12 @@
                         @if($item->idCleaningFrequency==3)
                             <tbody>
                             <td>{{$item->designation}}</td>
+                            <td>@foreach($clientSections as $clientSection)
+                                    @if($item->idSection==$clientSection->id)
+                                        {{$clientSection->designation}}
+                                    @endif
+                                @endforeach
+                            </td>
                             <td>@foreach($products as $product)
                                     @if($item->idProduct==$product->id)
                                         <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
@@ -203,6 +245,7 @@
                     <thead>
                     <tr>
                         <th>Área</th>
+                        <th>Secção</th>
                         <th>Produto</th>
                         <th><input  onClick="checkBoxes(this)" type="checkbox"> Selecionar tudo</th>
                     </tr>
@@ -211,6 +254,12 @@
                         @if($item->idCleaningFrequency==4)
                             <tbody>
                             <td>{{$item->designation}}</td>
+                            <td>@foreach($clientSections as $clientSection)
+                                    @if($item->idSection==$clientSection->id)
+                                        {{$clientSection->designation}}
+                                    @endif
+                                @endforeach
+                            </td>
                             <td>@foreach($products as $product)
                                     @if($item->idProduct==$product->id)
                                         <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
@@ -226,6 +275,7 @@
                     <thead>
                     <tr>
                         <th>Equipamento</th>
+                        <th>Secção</th>
                         <th>Produto</th>
                         <th><input  onClick="checkBoxes(this)" type="checkbox" > Selecionar tudo</th>
                     </tr>
@@ -234,6 +284,12 @@
                         @if($item->idCleaningFrequency==4)
                             <tbody>
                             <td>{{$item->designation}}</td>
+                            <td>@foreach($clientSections as $clientSection)
+                                    @if($item->idSection==$clientSection->id)
+                                        {{$clientSection->designation}}
+                                    @endif
+                                @endforeach
+                            </td>
                             <td>@foreach($products as $product)
                                     @if($item->idProduct==$product->id)
                                         <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>

@@ -55,6 +55,7 @@ function showModal(idModal){
         var value = {
             "idSection" : sectionValue,
             "idClientSection" : 0,
+            "activityClientId":0,
             };
     
         input.type="checkbox";
@@ -80,7 +81,6 @@ function saveSections(){
     var allSections=[];
     var sections=document.getElementsByName('sections[]');
     var sectionSize=sections.length;
-
 
     for(var i=0; i<sectionSize;i++){
         if(sections[i].checked){

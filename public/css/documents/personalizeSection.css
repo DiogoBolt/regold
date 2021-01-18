@@ -123,11 +123,9 @@
 
 /***************select*****************/
 .divSection {
-  width: 55%;
   font-size: 15px;
   text-align: center;
-  margin-top: 2%;
-  margin-left: 22.5%;
+  margin-top: 5%;
 }
 
 ul.ks-cboxtags {

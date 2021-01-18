@@ -60,6 +60,7 @@ class PersonalizeSectionController extends Controller
             'id',
             'id_section',
             'designation',
+            'active'
         ])->get();
 
         $control = ControlCustomizationClients::where('idClient',$auxClientId)->first();
@@ -94,6 +95,7 @@ class PersonalizeSectionController extends Controller
         {
             $section->idClientSection = ClientSection::where('id_client',$auxClientId)->where('id_section',$section->id)->first() ? ClientSection::where('id_client',$auxClientId)->where('id_section',$section->id)->first()->id : 0;
         }
+
         return view('frontoffice.personalizeSections',compact('sections','clientSections','control'));
     }
 
@@ -104,8 +106,8 @@ class PersonalizeSectionController extends Controller
         $auxClientId = Session::get('clientImpersonatedId');
 
         $sectionsClient = ClientSection::where('id_client',$auxClientId)
-        ->where('active',1)
-        ->select(['id',])
+        /*->where('active',1)*/
+        ->select(['id','active'])
         ->get();
 
         $indexs=[];
@@ -134,13 +136,28 @@ class PersonalizeSectionController extends Controller
 
         foreach($sections as $section){
             if($section->idClientSection==0){
-                $sectionClient = new ClientSection;
-                if($section->activityClientId==0)
+                if($section->activityClientId==1)
+                {
+                    $sectionClient = new ClientSection;
+                    $sectionClient->id_client=$auxClientId;
+                    $sectionClient->id_section=$section->sectionId;
+                    $sectionClient->hygieneSection=0;
+                    $sectionClient->designation=$section->designation;
+                    $sectionClient->active=1;
+                    $sectionClient->save();
+                }else{
+                    $sectionClient = new ClientSection;
+                    $sectionClient->id_client=$auxClientId;
+                    $sectionClient->id_section=$section->sectionId;
                     $sectionClient->hygieneSection=1;
-                $sectionClient->id_client=$auxClientId;
-                $sectionClient->id_section=$section->sectionId;
-                $sectionClient->designation=$section->designation;
-                $sectionClient->save();
+                    $sectionClient->designation=$section->designation;
+                    $sectionClient->active=1;
+                    $sectionClient->save();
+                }
+            }else{
+                $clientSectionChange= ClientSection::where('id_section',$section->sectionId)->where('id_client',$auxClientId)->first();
+                $clientSectionChange->active=1;
+                $clientSectionChange->save();
             }
         }
 
@@ -155,7 +172,7 @@ class PersonalizeSectionController extends Controller
         $auxClientId = Session::get('clientImpersonatedId');
 
         $clientSections=ClientSection::where('id_client',$auxClientId)
-        /*->where('active',1)*/ //luiiiiiiiiiiiiisssssssssss
+        ->where('active',1)
         ->select([
             'id',
             'id_section',
@@ -187,7 +204,8 @@ class PersonalizeSectionController extends Controller
         ->where('active',1)
         ->get();
 
-        $equipmentsSectionClient=EquipmentSectionClient::where('idSection', $clientSection->id)->get();
+        $equipmentsSectionClient=EquipmentSectionClient::where('idSection', $clientSection->id)
+            ->where('active',1)->get();
         
         $indexAreas=[];
         $indexEquipments=[];
@@ -314,6 +332,7 @@ class PersonalizeSectionController extends Controller
         }
 
         $equipmentsSectionClient = EquipmentSectionClient::where('idClient', $auxClientId)
+            ->where('idSection',$idSection)
         ->select(['id',])
         ->get();
 
@@ -333,7 +352,7 @@ class PersonalizeSectionController extends Controller
         }
         
         foreach($indexsEquipment as $indexEquipment){
-            $equipmentsSectionClient= EquipmentSectionClient::where('id',$indexsEquipment)->first();
+            $equipmentsSectionClient= EquipmentSectionClient::where('id',$indexEquipment)->first();
             $equipmentsSectionClient->active=0;
             $equipmentsSectionClient->save();
 
@@ -347,13 +366,13 @@ class PersonalizeSectionController extends Controller
                 $EquipmentSectionClient->designation=$equipment->designation;
                 $EquipmentSectionClient->idCleaningFrequency=$equipment->idCleaningFrequency;
                 $EquipmentSectionClient->idProduct=$equipment->idProduct;
-                $equipmentsSectionClient->active=1;
+                $EquipmentSectionClient->active=1;
                 $EquipmentSectionClient->save();
             }else{
                 $EquipmentSectionClient =EquipmentSectionClient::where('id',$equipment->idAreaSectionClient)->first();;
                 $EquipmentSectionClient->idCleaningFrequency=$equipment->idCleaningFrequency;
                 $EquipmentSectionClient->idProduct=$equipment->idProduct;
-                $equipmentsSectionClient->active=1;
+                $EquipmentSectionClient->active=1;
                 $EquipmentSectionClient->save();
             }
         }

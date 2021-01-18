@@ -45,7 +45,7 @@ class RecordsController extends Controller
 
     public function insertOilRecords()
     {
-        $today = Carbon::now()->format('yy-m-d');
+        $today = Carbon::now()->format('Y-m-d');
 
         return view('frontoffice.oilRecords',compact('today'));
     }
@@ -53,7 +53,7 @@ class RecordsController extends Controller
     {
         $user = Auth::user();
 
-        $auxClientId = Session::get('establismentID');
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Auth::user()->client_id;
 
         $inputs = $request->all();
         $oil_records= new OilRecord();
@@ -69,7 +69,8 @@ class RecordsController extends Controller
     }
     public function getOilRecordsHistory()
     {
-        $auxClientId = Session::get('clientImpersonatedId');
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Auth::user()->client_id;
+
         $months = $this->months;
 
         $years = OilRecord::query()
@@ -84,7 +85,7 @@ class RecordsController extends Controller
     }
     public function getHistByMonth(Request $request)
     {
-        $auxClientId = Session::get('clientImpersonatedId');
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Auth::user()->client_id;
         $date = Carbon::createFromDate($request->get('year'), $request->get('month'));
         $start_month = $date->copy()->startOfMonth();
         $end_month = $date->copy()->endOfMonth();
@@ -107,16 +108,16 @@ class RecordsController extends Controller
 
     public function insertRecords()
     {
-        $auxClientId = Session::get('establismentID');
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Auth::user()->client_id;
         $client_insertProducts=ClientInsertProducts::where('client_id', $auxClientId)->get();
         $client_providers=ClientProviders::where('client_id', $auxClientId)->get();
-        $today = Carbon::now()->format('yy-m-d');
+        $today = Carbon::now()->format('Y-m-d');
         return view('frontoffice.insertProductConformities',compact('today','client_insertProducts','client_providers'));
     }
     public function saveInsertRecords(Request $request){
 
         $user = Auth::user();
-        $auxClientId = Session::get('establismentID');
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Auth::user()->client_id;
 
         $inputs = $request->all();
         $product_records= new ProductRecords();
@@ -166,7 +167,7 @@ class RecordsController extends Controller
 
     function getInsertRecords()
     {
-        $auxClientId = Session::get('clientImpersonatedId');
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Auth::user()->client_id;
         $months = $this->months;
 
         $clientProducts = ProductRecords::query()->select(['id', 'date', 'product','provider','temperature','cleaning','product_status','package','label','observations', DB::raw('DAY(updated_at) as day'),
@@ -188,7 +189,7 @@ class RecordsController extends Controller
 
     function getInsertProductByMonth(Request $request){
 
-        $auxClientId = Session::get('establismentID');
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Auth::user()->client_id;
         $date = Carbon::createFromDate($request->get('year'), $request->get('month'));
         $start_month = $date->copy()->startOfMonth();
         $end_month = $date->copy()->endOfMonth();
@@ -217,24 +218,25 @@ class RecordsController extends Controller
 
         $products=Product::all();
 
+        $clientSections=ClientSection::all();
+
         foreach($sections as $section)
         {
-            $section->equipments = EquipmentSectionClient::where('idClient',$user->client_id)->get();
-            $section->areas = AreaSectionClient::where('idClient',$user->client_id)->get();
+            $section->equipments = EquipmentSectionClient::where('idClient',$user->client_id)->where('active',1)->get();
+            $section->areas = AreaSectionClient::where('idClient',$user->client_id)->where('active',1)->get();
         }
 
         $today = Carbon::now()->format('Y-m-d');
 
         $sections = ClientSection::where('id_client',$user->client_id)->get();
 
-
-        return view('frontoffice.hygieneRegister', compact('today','sections','section','products'));
+        return view('frontoffice.hygieneRegister', compact('today','clientSections','sections','section','products'));
     }
     public function saveHygieneRecords(Request $request)
     {
         $user = Auth::user();
 
-        $auxClientId = Session::get('establismentID');
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Auth::user()->client_id;
 
         $inputs = $request->all();
 
@@ -255,7 +257,7 @@ class RecordsController extends Controller
     }
     function getHygieneRecordsHistory()
     {
-        $auxClientId = Session::get('clientImpersonatedId');
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Auth::user()->client_id;
         $months = $this->months;
 
         $years = HygieneRecords::query()
@@ -272,7 +274,7 @@ class RecordsController extends Controller
         return view('frontoffice.hygieneRecordsHistory', compact(['years','months','cleaningFrequency']));
     }
     function getHygieneByMonth(Request $request){
-        $auxClientId = Session::get('clientImpersonatedId');
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Auth::user()->client_id;
         $date = Carbon::createFromDate($request->get('year'), $request->get('month'));
         $start_month = $date->copy()->startOfMonth();
         $end_month = $date->copy()->endOfMonth();
@@ -315,7 +317,6 @@ class RecordsController extends Controller
                 ->pluck('userType')->first();
         }
 
-
         $clientThermos = ClientThermo::query()->where('user_id', $user->id)->get();
 
         foreach ($clientThermos as $clientthermo) {
@@ -345,7 +346,6 @@ class RecordsController extends Controller
                     $clientthermo->signal_power = 4;
                 }
             }
-
         }
 
         $today = Carbon::now()->format('Y-m-d');
@@ -415,7 +415,6 @@ class RecordsController extends Controller
         $last5reads = Thermo::where('imei',$imei)->orderBy('id','DESC')->get()->take(5);
 
         return $last5reads;
-
     }
 
     public function editThermoTemperature(Request $request)

@@ -145,7 +145,7 @@ class ReportController extends Controller
             $section = new ClientSection;
             $section->id = 0;
             $section->id_section= 0;
-            $section->designation= "PRÉ-REQUISITOS GERAIS DO ESTABELECIMENTO";
+            $section->designation= "PRÉ-REQUISITOS GERAIS";
         }else{
             $section=ClientSection::where('id',$id)
             ->select(['id','id_section','designation'])
@@ -330,7 +330,7 @@ class ReportController extends Controller
         $auxClientId = Session::get('clientImpersonatedId');
 
         $clientSections=ClientSection::where('id_client',$auxClientId)
-        /*->where('active',1)*/ //luissssssssssss
+        ->where('active',1)
             ->where('hygieneSection',0)
         ->select([
             'id',
@@ -341,7 +341,7 @@ class ReportController extends Controller
         $geralClientSection=New ClientSection;
         $geralClientSection->id=0;
         $geralClientSection->id_section=0;
-        $geralClientSection->designation="PRÉ-REQUISITOS GERAIS DO ESTABELECIMENTO";
+        $geralClientSection->designation="PRÉ-REQUISITOS GERAIS";
         
         $clientSections->prepend($geralClientSection);
 
@@ -562,7 +562,7 @@ class ReportController extends Controller
     }
 
     public function reportList(){
-        $auxClientId = Session::get('clientImpersonatedId');
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Auth::user()->client_id;
         $reports = Report::where('idClient',$auxClientId)
         ->where('concluded',1)
         ->orderBy('id','asc')
@@ -571,7 +571,7 @@ class ReportController extends Controller
     }
 
     public function reportShow($idReport){
-        $auxClientId = Session::get('clientImpersonatedId');
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Auth::user()->client_id;
 
         $report = Report::where('id',$idReport)
         ->where('idClient',$auxClientId)->first();
@@ -627,7 +627,7 @@ class ReportController extends Controller
         $geralClientSection=New ClientSection;
         $geralClientSection->id=0;
         $geralClientSection->id_section=0;
-        $geralClientSection->designation="PRÉ-REQUISITOS GERAIS DO ESTABELECIMENTO";
+        $geralClientSection->designation="PRÉ-REQUISITOS GERAIS";
 
         array_unshift($arraySections,$geralClientSection);
 

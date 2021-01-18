@@ -116,6 +116,7 @@ class ClientController extends Controller
                 return view('client.home',compact('clients','services','receiptsCont','receiptsCP','receiptsHACCP','receiptsReg','clientPermission'));
         
         }else if(Session::has('clientImpersonatedId')){
+
             
             $auxClientId = Session::get('clientImpersonatedId');
 
@@ -166,8 +167,7 @@ class ClientController extends Controller
         }else {
             Session::forget('establismentID');
 
-           $auxClientId = Session::get('establismentID');
-           $clientPermission=Customer::where('id',$auxClientId)
+           $clientPermission=Customer::where('id',$user->client_id)
                ->first();
 
             $clients = Customer::where('ownerID',$user->id)
@@ -904,7 +904,10 @@ class ClientController extends Controller
     private function getParishNameByPostalCode($postalCode){
 
         $parishName=PostalCodes::where('postal_code',$postalCode)->first();
-    
+
+        if($parishName==null)
+            return $parishName='Localidade não encontrada';
+        else
         return $parishName->name;
     }
 
