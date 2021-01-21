@@ -28,7 +28,7 @@
         <span class="back-btn__back"><strong>Documentos {{ $super }}</strong></span>
     </a>
 
-    @if($type==3 or $type == 2 or $type == 24 or $type == 25)
+    @if($type==3 or $type == 2 or $type == 24 or $type == 25 or $type == 15 or $type == 16 or $type == 18 or $type == 19 or $type == 20 or $type == 21 or $type == 26)
 
     <div class="container">
         <div class="container-docs">
@@ -52,43 +52,6 @@
         </div>
     </div>
     @endif
-
-
-    @if($type==29)
-        <form action="/frontoffice/documents/{{$super}}/{{$type}}" method="GET" id="add-form">
-
-            <div class="container">
-                <div class="container-docs">
-                    <div>
-                        <h4 style="text-align:left ; color:#9ac266"> REGISTOS DE ENTRADA DE PRODUTO</h4>
-                        <label style="text-align:center" for ="report_date">DATA</label>
-                        <input type="date" id="report_date" class="add-form" name="report_date">
-                    </div>
-                    <div>
-                        <label style="text-align:center" for="product_name">PRODUTO</label>
-                        <select class="form-control" id="product_name" name="product_name">
-                            <option value="" selected disabled>Seleccione produto</option>
-                            <option value="Fiambre">Fiambre</option>
-                            <option value="Queijo">Queijo</option>
-                            <option value="Leite">Leite</option>
-                        </select>
-
-                        <label style="text-align:center" for="provider">FORNECEDOR</label>
-                        <select class="form-control" id="provider" name="provider">
-                            <option value="" selected disabled>Seleccione fornecedor</option>
-                            <option value="Rei das carnes">REI DAS CARNES</option>
-                            <option value="Rei das carnes222">REI DAS CARNES222</option>
-                            <option value="Rei das carnes333">REI DAS CARNES333</option>
-                        </select>
-                        <div>
-                            <a href="/frontoffice/insertProductConformities" class="btnNEXT"><strong>Seguinte</strong></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-    @endif
-
 @endsection
 {{--<script type="text/javascript">
     function reply_click($clicked_id)

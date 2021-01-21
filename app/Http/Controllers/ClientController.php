@@ -625,8 +625,11 @@ class ClientController extends Controller
         $establisment->regoldiID = $inputs['regoldiID'];
         $establisment->transport_note = $inputs['transport_note'];
         $establisment->save();
-        $user->client_id = $establisment->id;
-        $user->save();
+
+        if( $inputs['verifyHaveRegister']=='nao'){
+            $user->client_id = $establisment->id;
+            $user->save();
+        }
 
         $qtd = Section::where('activityClientId',$establisment->activity)->count();
 

@@ -74,7 +74,6 @@
                             <input checked type="checkbox" id="{{$clientSection->designation}}" name="sections[]" value='{"idSection":{{$clientSection->id}},"idClientSection":{{$clientSection->id}},"activityClientId":{{$section->activityClientId}}}' >
                             <label for="{{$clientSection->designation}}">{{$clientSection->designation}}</label>
                         @endif
-
                     </li>
                 @endforeach
             @endif
@@ -95,12 +94,12 @@
                 <div class="modal-body">
                     <div id="allNewsSections">
                         <div class="news" id="oneNew">
-                            <select class="form-control" id="selectSection" >
+                            {{--<select class="form-control" id="selectSection" >
                                 <option value="" selected disabled>Secção</option>
                                     @foreach($sections as $section)
                                         <option  class="form-control" value="{{$section->id}}">{{$section->name}}</option>
                                     @endforeach
-                            </select>
+                            </select>--}}
                             <input type="text" id="idDesignation" name="designation" placeholder="Designação">
                             <i class="fa fa-trash fa-lg" style="display:none" onclick="deleteNewSection(parentNode)"></i>
                         </div>

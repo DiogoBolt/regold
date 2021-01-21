@@ -135,6 +135,7 @@ class PersonalizeSectionController extends Controller
         }
 
         foreach($sections as $section){
+
             if($section->idClientSection==0){
                 if($section->activityClientId==1)
                 {
@@ -155,12 +156,14 @@ class PersonalizeSectionController extends Controller
                     $sectionClient->save();
                 }
             }else{
-                $clientSectionChange= ClientSection::where('id_section',$section->sectionId)->where('id_client',$auxClientId)->first();
-                $clientSectionChange->active=1;
-                $clientSectionChange->save();
+                $clientSectionChange= ClientSection::where('id_section',$section->sectionId)->where('id_client',$auxClientId)->where('active',0)->first();
+                if($clientSectionChange!=null){
+                    $clientSectionChange->active=1;
+                    $clientSectionChange->save();
+                }
+
             }
         }
-
         $control= ControlCustomizationClients::where('idClient',$auxClientId)->first();
         $control->personalizeSections=1;
         $control->save();

@@ -81,7 +81,7 @@
                             <b> Id Regoldi:</b> {{$client->regoldiID}}
                         </div>
                         <div class="form-group">
-                            <b> Valor Contrato:</b> {{$client->contract_value}}
+                            <b> Valor Contrato(Mensal):</b> {{$client->contract_value}}
                         </div>
                         <div class="form-group">
                             <b> Nota Transporte:</b> {{$client->transport_note}}

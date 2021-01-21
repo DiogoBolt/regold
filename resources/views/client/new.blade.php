@@ -214,7 +214,7 @@
                             </div>
 
                             <div class="form-group" id="divContract_value" style="display: none">
-                                Valor Contrato: <input type="number" step="0.01" placeholder="Valor de Contrato" min=0 class="form-control" name="value">
+                                Valor Contrato(Mensal): <input type="number" step="0.01" placeholder="Valor de Contrato" min=0 class="form-control" name="value">
                             </div>
 
                             <div class="form-group">

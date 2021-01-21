@@ -34,7 +34,22 @@
                     <div class="panel-body">
 
                         <div class="col-sm-6">
-                            <img class="img-responsive edit-img" src="/img/navbar/logoindexcolor.png"/>
+                            <img class="img-responsive edit-img" src="{{ URL::to('/') }}/img/navbar/logoRegolfood.png"/>
+
+                            <form action="/frontoffice/client/save"  method="post" enctype="multipart/form-data">
+                                {{ csrf_field() }}
+                                <input value="{{$client->id}}" style="display:none" name="id">
+                                <div class="form-group">
+                                    Nova Password: <input class="form-control" value="{{$client->password}}" type="password" name="password">
+                                </div>
+                                <div class="form-group">
+                                    Novo Pin: <input class="form-control" value="{{$client->pin}}" type="password" name="pin">
+                                </div>
+                                <div>
+                                    <button class="btn btn-Val" >Editar</button>
+                                </div>
+                            </form>
+
                         </div>
 
                         <div class="col-sm-6">
@@ -52,9 +67,6 @@
                                 <b> Email Contacto:</b> {{$client->email}}
                             </div>
                             <div class="form-group">
-                                <b>Actividade:</b> {{$client->activity}}
-                            </div>
-                            <div class="form-group">
                                 <b> Telefone:</b> {{$client->telephone}}
                             </div>
                             <div class="form-group">
@@ -66,6 +78,7 @@
                             <div class="form-group">
                                 <b> NIB:</b> {{$client->nib}}
                             </div>
+
                         </div>
 
                     </div>

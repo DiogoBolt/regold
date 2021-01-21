@@ -37,6 +37,7 @@ Auth::routes(['register' => false]);
 
 Route::get('/frontoffice/client/edit/{id}', 'FrontofficeController@editClient');
 Route::get('/frontoffice/client', 'FrontofficeController@showCustomer');
+Route::post('/frontoffice/client/save','FrontofficeController@saveEditClient');
 Route::post('/frontoffice/editclient/', 'FrontofficeController@postEditClient');
 Route::get('/frontoffice/documents/', 'FrontofficeController@documents');
 

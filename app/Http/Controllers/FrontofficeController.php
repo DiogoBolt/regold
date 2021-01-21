@@ -51,12 +51,36 @@ class FrontofficeController extends Controller
 
         return view('frontoffice.show',compact('client'));
     }
+    public function saveEditClient(Request $request)
+    {
+        $inputs=$request->all();
+
+        $client = Customer::where('id',$inputs['id'])->first();
+        $user = User::where('id',$client->ownerID)->first();
+
+        $options = [
+            'cost' => 10
+        ];
+        if($inputs['password']!=""){
+            $user->password = password_hash($inputs['password'], PASSWORD_BCRYPT, $options);
+            $user->save();
+        }
+        if($inputs['pin']!=""){
+            $user->pin=password_hash($inputs['pin'], PASSWORD_BCRYPT, $options);
+            $user->save();
+        }
+        $client->save();
+
+        return view('frontoffice.show',compact('client'));
+
+    }
 
     public function editClient($id)
     {
         $client = Customer::where('id',$id)->first();
         return view('frontoffice.edit',compact('client'));
     }
+
 
     public function postEditClient(Request $request)
     {
@@ -175,7 +199,6 @@ class FrontofficeController extends Controller
                 ->get(['r.id']);
             $ids = [];
 
-
             foreach($receipts as $receipt)
             {
                 $updated = Receipt::where('id',$receipt->id)->first();
@@ -183,7 +206,6 @@ class FrontofficeController extends Controller
                 $updated->save();
                 array_push($ids,$receipt->id);
             }
-
 
             $receipts = Receipt::whereIN('id',$ids)->get();
 

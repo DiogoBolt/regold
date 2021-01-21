@@ -239,14 +239,9 @@ class PestController extends Controller
     {
         $auxClientId = Session::get('clientImpersonatedId');
 
-
-
         $client=Customer::where('id',$auxClientId)
             ->select(['ownerID'])
             ->first();
-
-
-
 
         $devices=Devices::where('idClient',$auxClientId)->get();
         $count=0;

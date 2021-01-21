@@ -214,21 +214,34 @@ class RecordsController extends Controller
     {
         $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Auth::user()->client_id;
 
-        $sections = ClientSection::where('id_client',$auxClientId)->get();
+        $sections = ClientSection::where('id_client',$auxClientId)->where('active',1)->select(['id'])->get();
 
         $products=Product::all();
 
-        $clientSections=ClientSection::all();
+        $clientSections=ClientSection::where('active',1)->get();
 
         foreach($sections as $section)
         {
-            $section->equipments = EquipmentSectionClient::where('idClient',$auxClientId)->where('active',1)->get();
-            $section->areas = AreaSectionClient::where('idClient',$auxClientId)->where('active',1)->get();
+            $section->equipments = EquipmentSectionClient::from(EquipmentSectionClient::alias('esc'))
+                ->leftJoin(ClientSection::alias('cs'),'cs.id','=','esc.idSection')
+                ->where('cs.active',1)
+                ->where('esc.idClient',$auxClientId)
+                ->where('esc.active',1)
+                ->orderBy('esc.idSection')
+                ->select('esc.designation','esc.id','esc.idSection','esc.idProduct','esc.idCleaningFrequency')
+                ->get();
+
+            $section->areas = AreaSectionClient::from(AreaSectionClient::alias('asc'))
+                ->leftJoin(ClientSection::alias('cs'),'cs.id','=','asc.idSection')
+                ->where('cs.active',1)
+                ->where('asc.idClient',$auxClientId)
+                ->where('asc.active',1)
+                ->orderBy('asc.idSection')
+                ->select('asc.designation','asc.id','asc.idSection','asc.idProduct','asc.idCleaningFrequency')
+                ->get();
         }
 
         $today = Carbon::now()->format('Y-m-d');
-
-        $sections = ClientSection::where('id_client',$auxClientId)->get();
 
         return view('frontoffice.hygieneRegister', compact('today','clientSections','sections','section','products'));
     }
