@@ -11,6 +11,7 @@ use App\Order;
 use App\Product;
 use App\Thermo;
 use App\ThermoAverageTemperature;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -33,26 +34,19 @@ class createPrices extends Command
      */
     public function handle()
     {
-        $clients = Customer::all();
-        $products = Product::all();
+       $thermos = ClientThermo::all();
 
-        foreach($clients as $client)
-        {
-            foreach($products as $product)
-            {
-                $pvp = ClientProduct::where('client_id',$client->id)->where('product_id',$product->id)->first();
+       foreach($thermos as $thermo)
+       {
+           $user = User::where('id',$thermo->user_id)->first();
+if(isset($user))
+{
+    $thermo->user_id = $user->client_id;
+    $thermo->save();
+    $this->line($user->id);
+}
 
-                if(!isset($pvp))
-                {
-                    $newpvp = new ClientProduct;
-                    $newpvp->client_id = $client->id;
-                    $newpvp->product_id = $product->id;
-                    $newpvp->pvp = 1;
-                    $newpvp->save();
-                }
-
-            }
-        }
+       }
 
     }
 }

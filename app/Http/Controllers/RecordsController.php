@@ -317,7 +317,7 @@ class RecordsController extends Controller
         }
 
 
-        $clientThermos = ClientThermo::query()->where('user_id', $user->id)->get();
+        $clientThermos = ClientThermo::query()->where('user_id', Session::get('establismentID'))->get();
 
         foreach ($clientThermos as $clientthermo) {
 
@@ -360,7 +360,7 @@ class RecordsController extends Controller
         $months = $this->months;
 
         $clientThermos = ClientThermo::query()->select(['id', 'type', 'imei','number'])
-            ->where('user_id', $user->id)
+            ->where('user_id', Session::get('establismentID'))
             ->groupBy('id')
             ->get();
 
@@ -368,7 +368,7 @@ class RecordsController extends Controller
             ->select([
                 DB::raw('YEAR(created_at) as year')
             ])
-            ->where('user_id', $user->id)
+            ->where('user_id', Session::get('establismentID'))
             ->groupBy('year')
             ->get();
 
@@ -385,7 +385,7 @@ class RecordsController extends Controller
         return ThermoAverageTemperature::query()->select([
             'id', 'morning_temp', 'afternoon_temp', DB::raw('DAY(updated_at) as day'), 'observations'
         ])
-            ->where('imei', '=', $imei)
+            ->where('client_thermo', '=', $imei)
             ->whereBetween('updated_at', [$start_month, $end_month])
             ->orderBy('updated_at', 'asc')
             ->get();

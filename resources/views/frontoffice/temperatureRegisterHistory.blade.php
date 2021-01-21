@@ -67,7 +67,7 @@
                         <select name="imei" class="form-control" required>
                             <option value="" disabled selected>Seleccione Tipo</option>
                             @foreach($clientThermos as $thermo)
-                                <option value="{{ $thermo->imei  }}" data-type="{{ $thermo->type }}">
+                                <option value="{{ $thermo->id  }}" data-type="{{ $thermo->type }}">
                                     {{ $thermo->number }} | {{ $thermo->type === 1 ? 'Refrigeração' : 'Congelação' }}
                                 </option>
                             @endforeach
