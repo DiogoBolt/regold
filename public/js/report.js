@@ -99,13 +99,11 @@ function addObsList(){
     var iptObs = document.getElementById('iptObs').value;
 
     console.log(index + " - " + iptObs);
-    if(index==0 && iptObs==""){
+    if(iptObs==""){
         document.getElementById('indexObs').style.border="1px solid red";
         document.getElementById('iptObs').style.borderBottom="1px solid red";
     }else{
-        if(index==0){
-            document.getElementById('indexObs').style.borderBottom="1px solid red";
-        }else if(iptObs==""){
+        if(iptObs==""){
             document.getElementById('iptObs').style.borderBottom="1px solid red";
         }else{
             var tr= document.createElement('tr');
@@ -115,6 +113,9 @@ function addObsList(){
             thIndex.id="correctiveRulesIndex";
             thIndex.setAttribute('value',idRule);
             thIndex.className="index";
+            if(index==0)
+                thIndex.innerHTML="Geral";
+            else
             thIndex.innerHTML=index;
 
             var tdObs=document.createElement('td');

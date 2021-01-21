@@ -616,8 +616,10 @@ class ClientController extends Controller
             $establisment->permission=3;
         elseif ($inputs['packs']=='s'&&$inputs['serviceType']=='cp')
             $establisment->permission=2;
-        else
+        elseif($inputs['packs']=='t')
             $establisment->permission=1;
+        else
+            $establisment->permission=4;
         //fim de permissoes
 
         $establisment->regoldiID = $inputs['regoldiID'];
@@ -904,7 +906,10 @@ class ClientController extends Controller
     private function getParishNameByPostalCode($postalCode){
 
         $parishName=PostalCodes::where('postal_code',$postalCode)->first();
-    
+
+        if($parishName==null)
+            return $parishName='Localidade não encontrada';
+        else
         return $parishName->name;
     }
 

@@ -11,7 +11,7 @@
                     <tr>
                         <th class="report-header-cell">
                             <div style="text-align: center; margin-bottom: 20px;">
-                                <img class="imp_logo" src="/img/navbar/RegolfoodLogin.png"/>
+                                <img class="imp_logo" src="/img/navbar/logoRegolfood.png"/>
                                     <div id="divFloatRigth">
                                         <div>
                                             <label class="lblBold" id="date"> {{$details->year}} </label>

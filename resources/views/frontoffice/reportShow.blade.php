@@ -12,7 +12,7 @@
                             <thead class="report-header">
                                 <tr>
                                     <th class="report-header-cell">
-                        <img class="logoReport" src="{{ URL::to('/') }}/img/navbar/RegolfoodLogin.png" alt="logo">
+                        <img class="logoReport" src="{{ URL::to('/') }}/img/navbar/logoRegolfood.png" alt="logo">
                         
                         <div id="divBtns">
                             <a class="btn btn-warning" href="/frontoffice/reports">
@@ -111,7 +111,7 @@
                                                             <label class="naoAplicavel"></label>
                                                         @endif
                                                     </td>
-                                                    <td> 
+                                                    <td> @if($rule->answer== 'nc')
                                                         <div class="divSeverity">
                                                             <div class="range-slider">
                                                                 <input class="range-slider__range" type="range" value="{{$rule->severityAnswer}}" min="1" max="5" disabled>
@@ -119,6 +119,8 @@
                                                             <label class="lblRangeValue">{{$rule->severityAnswer}}</label>
                                                         </div>
                                                         <label class="lblSeverityStatus">{{$rule->severityText}}</label>
+                                                        @else
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @endif
@@ -181,7 +183,11 @@
                                             @foreach($reportSectionObs as $reportSectionOb)
                                                 @if($section->id==$reportSectionOb->idClientSection)
                                                     <tr class="tableRow">
-                                                        <th class="index">{{$reportSectionOb->index}}</th>
+                                                        @if($reportSectionOb->index==0)
+                                                        <th class="index">Geral</th>
+                                                        @else
+                                                            <th class="index">{{$reportSectionOb->index}}</th>
+                                                        @endif
                                                         <td class="tdRuleBackground">
                                                             <label class="corrective">{{$reportSectionOb->observation}}</label>
                                                             <input type="hidden" id="idObs" value="{{$reportSectionOb->id}}" />

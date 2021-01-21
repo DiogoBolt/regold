@@ -4151,10 +4151,14 @@ fieldset[disabled] .btn-primary.focus {
   background-color: var(--main-color);
   border-color: #259d6d;
   justify-content: center;
-  text-align: center;
-  display: inline-block;
-  float: right;
-  margin-right: 20px;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 .btn-success:focus,

@@ -212,24 +212,25 @@ class RecordsController extends Controller
 
     public function getHygieneRecords()
     {
-        $user = Auth::user();
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Auth::user()->client_id;
 
-        $sections = ClientSection::where('id_client',$user->client_id)->get();
+        $sections = ClientSection::where('id_client',$auxClientId)->get();
 
         $products=Product::all();
 
+        $clientSections=ClientSection::all();
+
         foreach($sections as $section)
         {
-            $section->equipments = EquipmentSectionClient::where('idClient',$user->client_id)->get();
-            $section->areas = AreaSectionClient::where('idClient',$user->client_id)->get();
+            $section->equipments = EquipmentSectionClient::where('idClient',$auxClientId)->where('active',1)->get();
+            $section->areas = AreaSectionClient::where('idClient',$auxClientId)->where('active',1)->get();
         }
 
         $today = Carbon::now()->format('Y-m-d');
 
-        $sections = ClientSection::where('id_client',$user->client_id)->get();
+        $sections = ClientSection::where('id_client',$auxClientId)->get();
 
-
-        return view('frontoffice.hygieneRegister', compact('today','sections','section','products'));
+        return view('frontoffice.hygieneRegister', compact('today','clientSections','sections','section','products'));
     }
     public function saveHygieneRecords(Request $request)
     {
@@ -346,7 +347,6 @@ class RecordsController extends Controller
                     $clientthermo->signal_power = 4;
                 }
             }
-
         }
 
         $today = Carbon::now()->format('Y-m-d');
@@ -416,7 +416,6 @@ class RecordsController extends Controller
         $last5reads = Thermo::where('imei',$imei)->orderBy('id','DESC')->get()->take(5);
 
         return $last5reads;
-
     }
 
     public function editThermoTemperature(Request $request)
