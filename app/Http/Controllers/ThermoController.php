@@ -10,6 +10,7 @@ use App\Thermo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 
 class ThermoController extends Controller
@@ -50,7 +51,7 @@ class ThermoController extends Controller
         $inputs = $request->all();
 
         $newthermo = new ClientTHermo;
-        $newthermo->user_id = $user->id;
+        $newthermo->user_id = Session::get('establismentID');
         $newthermo->imei = $inputs['imei'];
         $newthermo->type = $inputs['type'];
         $newthermo->number = $inputs['number'];
@@ -78,51 +79,6 @@ class ThermoController extends Controller
         $temperature = Thermo::where('imei',$imei)->get()->last()->temperature;
 
         return $temperature;
-    }
-
-
-    public function fridgeTypes()
-    {
-        $types = FridgeType::all();
-
-        return view('frontoffice.fridge_types',compact('types'));
-    }
-
-    public function newFridgeType()
-    {
-        return view('fridges.new_fridge_type');
-    }
-
-    public function editFridgeType($id)
-    {
-        $fridge = FridgeType::where('id',$id)->first();
-
-        return view('frontoffice.edit_fridge_type',compact('fridge'));
-    }
-
-    public function updateFridgeType(Request $request)
-    {
-
-    }
-
-    public function fridge()
-    {
-        $fridges = Fridge::all();
-
-        return view('frontoffice.fridges',compact('fridges'));
-
-        
-    }
-
-    public function newFridge()
-    {
-        return view('frontoffice.new_fridge');
-    }
-
-    public function editFridge($id)
-    {
-        $fridge = Fridge::where('id',$id)->first();
-        return view('frontoffice.edit_fridge',compact('fridge'));
     }
 
 
