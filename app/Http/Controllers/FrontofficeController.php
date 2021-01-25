@@ -44,9 +44,9 @@ class FrontofficeController extends Controller
 
     public function showCustomer()
     {
-        $user = Auth::user();
+        $user=Session::get('establismentID');
 
-        $client = Customer::where('id',$user->client_id)
+        $client = Customer::where('id',$user)
         ->first();
 
         return view('frontoffice.show',compact('client'));
@@ -104,6 +104,7 @@ class FrontofficeController extends Controller
     public function documents()
     {
         $user = Auth::user();
+
         $types = DocumentType::all();
 
         $clients = Customer::where('ownerID',$user->id)
@@ -168,7 +169,7 @@ class FrontofficeController extends Controller
     {
         $user = Auth::user();
 
-        $auxClientId = $user->client_id;
+        $auxClientId = Session::get('establismentID');
 
         if($type==26)
         {
@@ -176,7 +177,7 @@ class FrontofficeController extends Controller
 
         }
 
-        $clients = Customer::where('ownerID',$user->id)
+        $clients = Customer::where('id',$auxClientId)
         ->select([
             'id'
             ,])
@@ -216,9 +217,8 @@ class FrontofficeController extends Controller
 
     public function documentsBySuper($super)
     {
-        $user = Auth::user();
 
-        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Auth::user()->client_id;
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Session::get('establismentID');
 
         $clientPermission=Customer::where('id',$auxClientId)
             ->first();
@@ -293,12 +293,8 @@ class FrontofficeController extends Controller
     {
         $inputs = $request->all();
 
-        $user = Auth::user();
+        $auxClientId = Session::get('establismentID');
 
-        $auxClientId = $user->client_id;
-
-
-        
         $cart = Cart::where('client_id',$auxClientId)->where('processed',0)->first();
 
         if(!isset($cart))
@@ -376,7 +372,7 @@ class FrontofficeController extends Controller
     public function cartValue()
     {
         $user = Auth::user();
-        $auxClientId = $user->client_id;
+        $auxClientId = Session::get('establismentID');
         $cart = Cart::where('client_id',$auxClientId)->where('processed',0)->first();
 
         if(!isset($cart))
@@ -401,7 +397,7 @@ class FrontofficeController extends Controller
     public function orders()
     {
         $user = Auth::user();
-        $auxClientId = $user->client_id;
+        $auxClientId = Session::get('establismentID');
 
         $orders = Order::where('client_id',$auxClientId)->orderBy('id','DESC')->get();
 
@@ -412,14 +408,12 @@ class FrontofficeController extends Controller
     {
         $user = Auth::user();
 
-        $order = Order::where('id',$id)->where('client_id',$user->client_id)->first();
-
-
+        $order = Order::where('id',$id)->where('client_id',Session::get('establismentID'))->first();
 
         if(!isset($order))
         return back();
 
-       $cart = Cart::where('client_id',$user->client_id)->where('id',$order->cart_id)->first();
+       $cart = Cart::where('client_id',Session::get('establismentID'))->where('id',$order->cart_id)->first();
 
         if(isset($cart))
         {
@@ -446,7 +440,7 @@ class FrontofficeController extends Controller
 
         foreach($products as $product)
         {
-            $pvp = ClientProduct::where('client_id',$user->client_id)->where('product_id',$product->id)->first();
+            $pvp = ClientProduct::where('client_id',Session::get('establismentID'))->where('product_id',$product->id)->first();
 
             if(isset($pvp))
             {
@@ -463,10 +457,10 @@ class FrontofficeController extends Controller
     public function productById($id)
     {
         $user = Auth::user();
-        $pvp = ClientProduct::where('client_id',$user->client_id)->where('product_id',$id)->first()->pvp;
+        $pvp = ClientProduct::where('client_id',Session::get('establismentID'))->where('product_id',$id)->first()->pvp;
 
         $product = Product::where('id', $id)->first();
-        $isFavourite = Favorite::where('product_id', $id)->where('user_id', $user->id)->first();
+        $isFavourite = Favorite::where('product_id', $id)->where('user_id', Session::get('establismentID'))->first();
 
         return view('frontoffice.product',compact('product', 'isFavourite','pvp'));
     }
@@ -492,7 +486,7 @@ class FrontofficeController extends Controller
         $user = Auth::user();
         $inputs = $request->all();
         
-        $auxClientId = $user->client_id;
+        $auxClientId = Session::get('establismentID');
         
         $order_line = OrderLine::where('id',$inputs['id'])->first();
 
@@ -541,7 +535,7 @@ class FrontofficeController extends Controller
 
         $user = Auth::user();
 
-        $auxClientId = $user->client_id;
+        $auxClientId = Session::get('establismentID');
 
         $client = Customer::where('id',$auxClientId)->first();
         $cart = Cart::where('client_id',$auxClientId)->where('processed',0)->first();
@@ -597,9 +591,9 @@ class FrontofficeController extends Controller
                     $message = new Message();
                     $day = Date('d');
                     if ($day < 16) {
-                        $message->text = "O pagamento da compra nº" . $order->id . " será efetuado no dia 15 do próximo mês";
+                        $message->text = "O pagamento da compra nº" . $order->id . " do estabelecimento " . $client->name . " será efetuado no dia 15 do próximo mês";
                     } else {
-                        $message->text = "O pagamento da compra nº" . $order->id . " será efetuado no dia 30 do próximo mês";
+                        $message->text = "O pagamento da compra nº" . $order->id . " do estabelecimento " . $client->name . " será efetuado no dia 30 do próximo mês";
                     }
                     $message->sender_id = 1;
                     $message->receiver_id = $user->id;
@@ -634,7 +628,7 @@ class FrontofficeController extends Controller
     {
         $user = Auth::user();
 
-        $auxClientId = $user->client_id;
+        $auxClientId = Session::get('establismentID');
 
         $client = Customer::where('id',$auxClientId)->first();
 
@@ -704,7 +698,7 @@ class FrontofficeController extends Controller
     {
         $user = Auth::user();
 
-        $auxClientId = $user->client_id;
+        $auxClientId = Session::get('establismentID');
 
         $orders = Order::where('client_id',$auxClientId)->where('id','!=',$order->id)->where('processed',1)
         ->where('created_at','>=',Carbon::now()->startOfMonth())->count();
@@ -721,7 +715,7 @@ class FrontofficeController extends Controller
     {
         $user = Auth::user();
 
-        $auxClientId =$user->client_id;
+        $auxClientId =Session::get('establismentID');
 
         $orderlines = OrderLine::where('cart_id',$cart->id)->get();
         $client = Customer::where('id',$auxClientId)->first();
@@ -796,7 +790,7 @@ class FrontofficeController extends Controller
     private function processMainOrder($cart,$order)
     {
         $user = Auth::user();
-        $auxClientId = $user->client_id;
+        $auxClientId = Session::get('establismentID');
 
         $orderlines = OrderLine::where('cart_id',$cart->id)->get();
         $client = Customer::where('id',$auxClientId)->first();

@@ -19,7 +19,7 @@ class permissionClient
      */
     public function handle($request, Closure $next)
     {
-        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Auth::user()->client_id;
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Session::get('establismentID');
 
         $clientPermission=Customer::where('id',$auxClientId)
         ->first();

@@ -6,16 +6,17 @@ use App\Favorite;
 use App\Product;
 use Illuminate\Http\Request;
 use Auth;
+use Illuminate\Support\Facades\Session;
 
 class FavoriteController extends Controller
 {
     public function getFavorites()
     {
-        $user = Auth::user();
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Session::get('establismentID');
         $favourites = Favorite::from(Favorite::alias('fav'))
         ->leftJoin(Product::alias('p'), 'p.id', '=', 'fav.product_id')
         ->select(['p.name', 'p.id', 'p.file' ])
-        ->where('fav.user_id', '=', $user->id)
+        ->where('fav.user_id', '=', $auxClientId)
         ->get();
 
         return view('frontoffice/favourites', compact('favourites'));
@@ -23,9 +24,9 @@ class FavoriteController extends Controller
 
     public function addFavorite($productId)
     {
-        $user = Auth::user();
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Session::get('establismentID');
         $favourite = new Favorite;
-        $favourite->user_id = $user->id;
+        $favourite->user_id = $auxClientId;
         $favourite->product_id = $productId;
         $favourite->save();
 
@@ -34,10 +35,10 @@ class FavoriteController extends Controller
 
     public function deleteFavorite($productId) 
     {
-        $user = Auth::user();
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Session::get('establismentID');
 
         $favourite = Favorite::where('product_id', '=', $productId)
-        ->where('user_id', '=', $user->id)
+        ->where('user_id', '=', $auxClientId)
         ->first();
 
         $favourite->delete();

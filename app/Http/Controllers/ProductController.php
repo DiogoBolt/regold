@@ -539,7 +539,7 @@ class ProductController extends Controller
 
         $message->sender_id = $user->id;
         $message->receiver_id = $clientUser->ownerID;
-        $message->text = "A sua encomenda nº" . $order->id . " foi processada. Obrigado.";
+        $message->text = "A sua encomenda nº" . $order->id ." do estabelecimento " . $clientUser->name . " foi processada. Obrigado.";
         $message->viewed = 0;
 
         $message->save();
@@ -580,14 +580,14 @@ class ProductController extends Controller
 
         $clientUser = Customer::where('id', $order->client_id)
             ->select([
-                'ownerID'
+                'ownerID','id','name'
             ])->first();
 
         $message = new Message();
 
         $message->sender_id = $user->id;
         $message->receiver_id = $clientUser->ownerID;
-        $message->text = "Pagamento da Encomenda nº" . $order->id . " recebida pelo vendedor " . $user->name . ". Obrigado.";
+        $message->text = "Pagamento da Encomenda nº" . $order->id ." do estabelecimento " . $clientUser->name . " recebida pelo vendedor " . $user->name . ". Obrigado.";
         $message->viewed = 0;
 
         $message->save();
@@ -865,14 +865,14 @@ class ProductController extends Controller
         }
         $clientUser = Customer::where('id', $order->client_id)
             ->select([
-                'ownerID'
+                'ownerID','id','name'
             ])->first();
 
         $message = new Message;
 
         $message->sender_id = $user->id;
         $message->receiver_id = $clientUser->ownerID;
-        $message->text = "Foi adicionado o recibo à sua encomenda nº" . $order->id . " . Obrigado.";
+        $message->text = "Foi adicionado o recibo à sua encomenda nº" . $order->id . " do estabelecimento " . $clientUser->name . " . Obrigado.";
         $message->viewed = 0;
 
         $message->save();

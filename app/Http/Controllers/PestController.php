@@ -177,7 +177,7 @@ class PestController extends Controller
     public function  pestReportList()
     {
 
-        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Auth::user()->client_id;
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Session::get('establismentID');
 
         $report_pest = ReportPest::where('idClient',$auxClientId)
             ->orderBy('id','asc')
@@ -200,7 +200,7 @@ class PestController extends Controller
 
     public function reportPestShow($id)
     {
-        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Auth::user()->client_id;
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Session::get('establismentID');
 
         $report_pest = ReportPest::where('id',$id)
             ->where('idClient',$auxClientId)->first();
@@ -364,17 +364,17 @@ class PestController extends Controller
         $control->controlMain=1;
         $control->save();
 
-        if($answer_device->status=='em falta')
+       /* if($answer_device->status=='em falta')
         {
             $answer_device=Devices::where('id','=', $id)->delete();
-        }
+        }*/
 
         return redirect('/frontoffice/maintenance');
     }
 
     public function reportMaintenanceShow($id)
     {
-        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Auth::user()->client_id;
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Session::get('establismentID');
 
         $report_maintenance = ReportMaintenance::where('id',$id)
             ->where('idClient',$auxClientId)->first();
@@ -460,7 +460,7 @@ class PestController extends Controller
 
     public function reportPunctualShow($idReport)
     {
-        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Auth::user()->client_id;
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Session::get('establismentID');
 
         $report_punctual = ReportPunctual::where('id',$idReport)
             ->where('idClient',$auxClientId)->first();
@@ -586,7 +586,7 @@ class PestController extends Controller
 
     public function reportWarrantyShow($id)
     {
-        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Auth::user()->client_id;
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Session::get('establismentID');
 
         $report_warranty = ReportWarranty::where('id',$id)
             ->where('idClient',$auxClientId)->first();
@@ -650,10 +650,10 @@ class PestController extends Controller
         $answer_device->id_device=$id;
         $answer_device->save();
 
-        if($answer_device->status=='em falta')
+      /*  if($answer_device->status=='em falta')
         {
             $answer_device=Devices::where('id','=', $id)->delete();
-        }
+        }*/
 
         $control= Devices::where('id',$id)->first();
         $control->controlWarranty=1;

@@ -69,13 +69,13 @@
                                         Clientes 
                                     </a>
                                 </li>
-                            @if(Auth::user()->userType==2)
+                            {{--@if(Auth::user()->userType==2)
                                 <li>
                                     <a href="/schedule">
                                         Agenda
                                     </a>
                                 </li>
-                            @endif
+                            @endif--}}
 
                             @if(Auth::user()->userType == 5)
                             {{--<li class="dropdown">
