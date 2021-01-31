@@ -24,7 +24,7 @@
         <span class="back-btn__back"><strong>Documentos Controlo Pragas</strong></span>
     </a>
 
-    <h1 class="title">Dispositivo {{$devices->number_device}}</h1>
+    <h1 class="title">Dispositivo {{$devices->number_device}}-{{$devices->type_device}}</h1>
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
@@ -47,10 +47,6 @@
                                 <input type="radio" name="device_status" id="picado" value="picado">
                                 <label for="consumido">Consumido</label>
                                 <input type="radio" name="device_status" id="consumido" value="consumido">
-                                <label for="em falta">Em falta</label>
-                                <input type="radio" name="device_status" id="em falta" value="em falta">
-                                <label for="inacessivel">Inacessivel</label>
-                                <input type="radio" name="device_status" id="inacessivel" value="inacessivel">
                                 <label for="deteriorado">Deteriorado</label>
                                 <input type="radio" name="device_status" id="deteriorado" value="deteriorado">
                             </div>

@@ -52,7 +52,7 @@
                                         </a>
                                     </div>
                                     <div>
-                                        Dispositivo {{$device->number_device}}
+                                        Disp. {{$device->type_device}}-{{$device->number_device}}
                                     </div>
                                 </div>
                             @endforeach

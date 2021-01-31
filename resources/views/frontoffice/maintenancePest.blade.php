@@ -32,7 +32,6 @@
                     <div class="panel-body">
                         <form id="form" action="/frontoffice/saveMaintenance" method="post">
                             {{ csrf_field() }}
-
                             @foreach($devices as $device)
                                 @if($device->controlMain==null)
                                 <div class="file">
@@ -42,20 +41,31 @@
                                         </a>
                                     </div>
                                     <div >
-                                        Dispositivo {{$device->number_device}}
+                                        Disp. {{$device->number_device}}-{{$device->type_device}}
                                     </div>
                                 </div>
-                                @else
+                                @elseif($device->controlMain==1)
                                 <div class="file">
                                     <div>
                                         <a>
-                                            <img class="img-responsive" src="{{ URL::to('/') }}/img/reportPestRed.png">
+                                            <img class="devicePersonalized" src="{{ URL::to('/') }}/img/reportPest.png">
                                         </a>
                                     </div>
-                                    <div style="color: red">
-                                        Dispositivo {{$device->number_device}}
+                                    <div>
+                                        Disp. {{$device->number_device}}-{{$device->type_device}}
                                     </div>
                                 </div>
+                                @else
+                                    <div class="file">
+                                        <div>
+                                            <a type="button" >
+                                                <img class="devicePersonalized" src="{{ URL::to('/') }}/img/reportPest.png">
+                                            </a>
+                                        </div>
+                                        <div >
+                                            Disp. {{$device->number_device}}-{{$device->type_device}}
+                                        </div>
+                                    </div>
                                 @endif
                             @endforeach
 
@@ -145,18 +155,21 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">x</button>
-                    <h4 class="modal-title" >Dispositivo {{$device->number_device}}</h4>
+                    <h4 class="modal-title" >Dispositivo {{$device->number_device}}-{{$device->type_device}}</h4>
                 </div>
                 <div class="modal-body">
                     <div class="codes" id="oneCode">
                         <div class="form-group">
                             Insira o código do dispositivo para aceder:
                             <input class="form-control" placeholder="Código do Dispositivo" id="{{$device->id}}">
-                            <label class="labelError" id="error" style="display: none">Código Errado!</label>
+                            <label class="labelError" id="error2" style="display: none">Código Errado!</label>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <a class="btn_delete" data-item="{{ $device->id }}" href="/frontoffice/replaceDevice/{{ $device->id }}/{{$idReport}}">
+                        Substituir
+                    </a>
                     <button id="{{$device->id}}" class="btn modal-del" onclick="verifyCodeDeviceExist(this.id)">
                         <strong>Confirmar</strong>
                     </button>
@@ -168,6 +181,35 @@
         </div>
     </div>
     @endforeach
+
+    {{--<div class="modal fade" id="deleteModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">x</button>
+                    <h4 class="modal-title">Deseja instalar novo dispositivo ou justificar a não instalação?</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <a href="/frontoffice/newDevice" class="btn btn-add"><strong>Novo Dispositivo</strong></a>
+                        </div>
+                        <div class="col-sm-6">
+                            <input class="form-control" placeholder="" name="" >
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    --}}{{--<button type="button" class="btn modal-del" id="delete-device">
+                        <strong>Apagar</strong>
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <strong>Cancelar</strong>
+                    </button>--}}{{--
+                </div>
+            </div>
+        </div>
+    </div>--}}
 @endsection
 
 <script>
@@ -190,13 +232,10 @@
                 if(data==0) {
                     location.replace("/frontoffice/deviceMaintenance"+'/'+id);
                 }else {
-                    document.getElementById("cod_device").style.border="1px solid #ff0000";
-                    document.getElementById("error").style.display="inline"
+                    document.getElementById("error2").style.display="inline";
                 }
             }
-        })/*.then(
-            window.location.replace('/frontoffice/maintenance')
-        );*/
+        })
     }
 </script>
 

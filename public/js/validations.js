@@ -189,9 +189,8 @@ function packType(type) {
             $("#divHaccp").hide();
             $("#divCp").hide();
             $("#divContract_value").hide();
-            $("#divPayment").hide();
+            $("#divPayment").show();
             $("#divEscalao").show();
-            $("#divNib").show();
             $("#divThermos").hide();
             break;
         case 'st':

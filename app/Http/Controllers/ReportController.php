@@ -58,7 +58,7 @@ class ReportController extends Controller
         $auxTechnical = Session::get('impersonated');
 
         Session::forget('sectionsReport');
-        Session::forget('reportId');
+        /*Session::forget('reportId');*/
         Session::forget('lastReportId');
 
         $lastReport=Report::where('idClient',$auxClientId)
@@ -90,7 +90,8 @@ class ReportController extends Controller
             $sectionReportIds=RulesAnswerReport::where('idReport',$report->id)
             ->select(['idClientSection',])->groupBy('idClientSection')->get();
 
-            Session::put('reportId',$report->id);
+            /*Session::put('reportId',$report->id);*/
+            $idReport=$report->id;
 
             if(count($sectionReportIds)>0){
                 $arraySec=[];
@@ -100,6 +101,7 @@ class ReportController extends Controller
                 Session::put('sectionsReport',$arraySec);
             }
         }else{
+            $idReport=0;
 
             $establishName=Customer::where('id',$auxClientId)
             ->select(['name','activity'])
@@ -125,10 +127,10 @@ class ReportController extends Controller
         }
         $date=Carbon::now()->toDateString();
 
-        return view('frontoffice.newReportCover',compact('technicalInfo','visitNumber','establishName','date'));
+        return view('frontoffice.newReportCover',compact('technicalInfo','visitNumber','establishName','date','idReport'));
     }
 
-    public function getRules($id){
+    public function getRules($reportId,$id){
 
         $auxClientId = Session::get('clientImpersonatedId');
 
@@ -164,7 +166,7 @@ class ReportController extends Controller
             }
         }
 
-        $idReport= Session::get('reportId');
+        $idReport= $reportId;
         $showTableCorrective=0;
 
         if($answered){
@@ -322,17 +324,18 @@ class ReportController extends Controller
             }
         }
         //dd($showColumnRecidivist);
-        return view('frontoffice.newReportRules',compact('rules','x','section','showTableCorrective','reportSectionObs','showColumnRecidivist'));
+        return view('frontoffice.newReportRules',compact('rules','x','section','showTableCorrective','reportSectionObs','showColumnRecidivist','idReport'));
     }
 
-    public function getClientSection(){
+    public function getClientSection($id){
 
         $auxClientId = Session::get('clientImpersonatedId');
+        $idReport=$id;
 
         $clientSections=ClientSection::where('id_client',$auxClientId)
         ->where('active',1)
             ->where('hygieneSection',0)
-        ->select([
+            ->select([
             'id',
             'id_section',
             'designation',
@@ -361,7 +364,7 @@ class ReportController extends Controller
                 }
             }
         }
-        return view('frontoffice.newReportSections',compact('clientSections'));
+        return view('frontoffice.newReportSections',compact('clientSections','idReport'));
     }
 
     public function forgetSessionVar(){
@@ -384,15 +387,14 @@ class ReportController extends Controller
         }
     }
 
-    public function saveAnswers(Request $request){
-
+    public function saveAnswers($id,Request $request){
 
         $inputs = $request->all();
         $answers = json_decode($inputs['answers']);
         $obs = json_decode($inputs['obs']);
         $idSection = json_decode($inputs['idSection']);
 
-        $idReport = Session::get('reportId');
+        $idReport = $id;
         $arrayAuxSection=Session::get('sectionsReport');
 
         if($arrayAuxSection != null){
@@ -518,8 +520,8 @@ class ReportController extends Controller
         $this->addSectionReport($idSection);
     }
 
-    public function saveReport($visitNumber){
-        if(Session::get('reportId') == null){
+    public function saveReport($visitNumber,$id){
+        if($id == 0){
             $auxClientId = Session::get('clientImpersonatedId');
             $auxTechnical = Session::get('impersonated');
     
@@ -532,13 +534,18 @@ class ReportController extends Controller
             $report->id_tecnichal=$technicalInfo->userTypeID;
             $report->numberVisit=$visitNumber;
             $report->save();
-            Session::put('reportId',$report->id);
+            /*Session::put('reportId',$report->id);*/
+            $idReport=$report->id;
+        }else{
+            $idReport=$id;
         }
+
+        return $idReport;
     }
 
-    public function concludeReport(){
+    public function concludeReport($id){
         
-        $idReport= Session::get('reportId');
+        $idReport= $id;
         $auxClientId = Session::get('clientImpersonatedId');
 
         $report = Report::where('id',$idReport)
@@ -556,7 +563,7 @@ class ReportController extends Controller
         }
 
         Session::forget('sectionsReport');
-        Session::forget('reportId');
+       /* Session::forget('reportId');*/
         
         return redirect('/frontoffice/documents/HACCP');
     }

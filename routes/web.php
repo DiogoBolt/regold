@@ -89,13 +89,13 @@ Route::post('/frontoffice/personalizeAreasEquipments/personalizeEachSection/save
 
 //routes novo relatorio
 Route::get('/frontoffice/newReport', 'ReportController@getReportCover');
-Route::get('/frontoffice/newReportRules/{id}', 'ReportController@getRules');
-Route::get('/frontoffice/newReportSections', 'ReportController@getClientSection');
+Route::get('/frontoffice/newReportRules/{idReport}/{id}', 'ReportController@getRules');
+Route::get('/frontoffice/newReportSections/{id}', 'ReportController@getClientSection');
 Route::get('/frontoffice/forgetSession', 'ReportController@forgetSessionVar');
 Route::post('/frontoffice/addSection/{id}', 'ReportController@addSectionReport');
-Route::post('/frontoffice/saveAnswers', 'ReportController@saveAnswers');
-Route::post('/frontoffice/saveReport/{visitNumber}', 'ReportController@saveReport');
-Route::get('/concluedReport', 'ReportController@concludeReport');
+Route::post('/frontoffice/saveAnswers/{id}', 'ReportController@saveAnswers');
+Route::post('/frontoffice/saveReport/{visitNumber}/{id}', 'ReportController@saveReport');
+Route::get('/concluedReport/{id}', 'ReportController@concludeReport');
 Route::get('/frontoffice/reports', 'ReportController@reportList');
 Route::get('/frontoffice/reportShow/{idReport}', 'ReportController@reportShow');
 Route::get('/frontoffice/statistics','ReportController@reportStatistics');
@@ -122,6 +122,8 @@ Route::get('/frontoffice/deviceWarranty/{id}','PestController@getDeviceWarranty'
 Route::post('/frontoffice/saveDeviceWarranty/{id}','PestController@saveDeviceWarranty');
 Route::get('/frontoffice/verifyPin/{id}/{pin}','PestController@verifyPin');
 Route::get('/frontoffice/verifyCodeDeviceExist/{id}/{code}','PestController@verifyCodeDeviceExist');
+Route::get('/frontoffice/replaceDevice/{id}/{idR}','PestController@replaceDevice');
+Route::post('/frontoffice/replaceDevice/save/{id}/{idR}','PestController@saveReason');
 
 //relatório pontual de cliente nao criado na plataforma
 Route::get('/frontoffice/reports/punctualList','PestController@getList');

@@ -21,6 +21,7 @@ use App\ReportPest;
 use App\OrderLine;
 use App\Product;
 use App\Receipt;
+use App\ReportPestObs;
 use App\ReportPunctual;
 use App\ReportPunctualData;
 use App\ReportWarranty;
@@ -47,6 +48,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use phpDocumentor\Reflection\DocBlock\Tags\See;
 use function Sodium\compare;
 
 
@@ -66,8 +68,8 @@ class PestController extends Controller
     {
         $auxClientId = Session::get('clientImpersonatedId');
 
-        $report_pest = Report::where('idClient',$auxClientId)
-            ->first();
+        Session::forget('reportIdPest');
+        Session::forget('reportIdWarranty');
 
         $client=Customer::where('id',$auxClientId)
             ->select(['ownerID'])
@@ -75,15 +77,7 @@ class PestController extends Controller
 
         $devices=Devices::where('idClient',$auxClientId)->get();
 
-        $count=0;
-
-        foreach ($devices as $device)
-        {
-            $count++;
-            $device->index=$count;
-        }
-
-        return view('frontoffice.firstService',compact('devices','client','report_pest'));
+        return view('frontoffice.firstService',compact('devices','client'));
     }
 
     public function savefirstService(Request $request)
@@ -139,41 +133,172 @@ class PestController extends Controller
     {
         $auxClientId = Session::get('clientImpersonatedId');
         $control= ControlCustomizationClients::where('idClient',$auxClientId)->first();
+        $idReportMain=Session::get('reportIdPest');
+        $idReportWarranty=Session::get('reportIdWarranty');
 
-        return view('frontoffice.newDevice',compact('control'));
+        return view('frontoffice.newDevice',compact('control','idReportWarranty','idReportMain'));
     }
 
     public function addDevice(Request $request)
     {
         $inputs=$request->all();
+        $idReportMain=Session::get('reportIdPest');
+        $idReportWarranty=Session::get('reportIdWarranty');
 
         $auxClientId = Session::get('clientImpersonatedId');
-        $auxTechnical = Session::get('impersonated');
-
-        $technicalInfo = User::where('id',$auxTechnical)
-            ->select(['id','name','userTypeID'])
-            ->first();
-
-        $device=new Devices();
-        $device->number_device=$inputs['num_device'];
-        $device->cod_device=$inputs['cod_device'];
-        $device->specie=$inputs['type_specie'];
-        $device->isco=$inputs['type_isco'];
-        $device->idClient=$auxClientId;
-        $device->id_tecnichal=$technicalInfo->userTypeID;
-        $device->save();
 
         $control= ControlCustomizationClients::where('idClient',$auxClientId)->first();
 
         if($control->firstServicePest==0)
         {
-            return redirect('/frontoffice/firstService');
-        }else
-        {
-            return redirect('/frontoffice/maintenance');
-        }
+            $device= new Devices();
+            $device->number_device=$inputs['num_device'];
+            $device->cod_device=$inputs['cod_device'];
+            $device->type_device=$inputs['type_device'];
+            $device->specie=$inputs['type_specie'];
+            $device->isco=$inputs['type_isco'];
+            $device->idClient=$auxClientId;
+            $device->active=1;
+            $device->save();
 
+            return redirect('/frontoffice/firstService');
+        }elseif(isset($idReportMain))
+        {
+            $device= new Devices();
+            $device->number_device=$inputs['num_device'];
+            $device->cod_device=$inputs['cod_device'];
+            $device->type_device=$inputs['type_device'];
+            $device->specie=$inputs['type_specie'];
+            $device->isco=$inputs['type_isco'];
+            $device->idClient=$auxClientId;
+            $device->active=1;
+            $device->save();
+
+            $answer_device=new AnswerDeviceMain();
+            $answer_device->idReportMain=$idReportMain;
+            $answer_device->id_device=$device->id;
+            $answer_device->save();
+
+            return redirect('/frontoffice/maintenance');
+        }else{
+            $device= new Devices();
+            $device->number_device=$inputs['num_device'];
+            $device->cod_device=$inputs['cod_device'];
+            $device->type_device=$inputs['type_device'];
+            $device->specie=$inputs['type_specie'];
+            $device->isco=$inputs['type_isco'];
+            $device->idClient=$auxClientId;
+            $device->active=1;
+            $device->save();
+
+            $answer_device=new AnswerDeviceWarranty();
+            $answer_device->idReportMain=$idReportWarranty;
+            $answer_device->id_device=$device->id;
+            $answer_device->save();
+
+            return redirect('/frontoffice/warranty');
+        }
     }
+
+    public function replaceDevice($id,$idR){
+        $auxClientId = Session::get('clientImpersonatedId');
+        $control= ControlCustomizationClients::where('idClient',$auxClientId)->first();
+        $idReport=$idR;
+        $idReportMain=Session::get('reportIdPest');
+        $idReportWarranty=Session::get('reportIdWarranty');
+
+        $device = Devices::where('id',$id)
+            ->select(['id','number_device','cod_device','specie','isco','type_device'])
+            ->first();
+
+        return view('frontoffice.replaceDevice',compact('control','device','idReport','idReportWarranty','idReportMain'));
+    }
+    public function saveReason(Request $request,$id,$idR)
+    {
+        $inputs = $request->all();
+
+        $auxClientId = Session::get('clientImpersonatedId');
+        $idReport=Session::get('reportIdPest');
+        $idReportWarranty=Session::get('reportIdWarranty');
+
+        if($idR!=0){
+            if($inputs['new_device']=='sim'){
+                $device=new Devices();
+                $device->number_device=$inputs['num_device'];
+                $device->cod_device=$inputs['cod_device'];
+                $device->type_device=$inputs['type_device'];
+                $device->specie=$inputs['type_specie'];
+                $device->isco=$inputs['type_isco'];
+                $device->idClient=$auxClientId;
+                $device->controlMain=2;
+                $device->active=1;
+                $device->save();
+                $answer_device=new AnswerDeviceMain();
+                $answer_device->idReportMain=$idReport;
+                $answer_device->id_device=$device->id;
+                $answer_device->save();
+            }else{
+                $obs= new ReportPestObs();
+                $obs->observation=$inputs['reason'];
+                $obs->idReportMain=$idReport;
+                $obs->idClient=$auxClientId;
+                $obs->id_device=$id;
+                $obs->save();
+            }
+
+            $answer_device=new AnswerDeviceMain();
+            $answer_device->status='em falta';
+            $answer_device->idReportMain=$idReport;
+            $answer_device->id_device=$id;
+            $answer_device->save();
+
+            $controlD= Devices::where('id',$id)->first();
+            $controlD->controlMain=1;
+            $controlD->active=0;
+            $controlD->save();
+
+            return redirect('/frontoffice/maintenance');
+        }else{
+            if($inputs['new_device']=='sim'){
+                $device=new Devices();
+                $device->number_device=$inputs['num_device'];
+                $device->cod_device=$inputs['cod_device'];
+                $device->type_device=$inputs['type_device'];
+                $device->specie=$inputs['type_specie'];
+                $device->isco=$inputs['type_isco'];
+                $device->idClient=$auxClientId;
+                $device->idReportWarranty=$idReportWarranty;
+                $device->controlWarranty=2;
+                $device->active=1;
+                $device->save();
+                $answer_device=new AnswerDeviceWarranty();
+                $answer_device->idReportWarranty=$idReportWarranty;
+                $answer_device->id_device=$device->id;
+                $answer_device->save();
+            }else{
+                $obs= new ReportPestObs();
+                $obs->observation=$inputs['reason'];
+                $obs->idReportWarranty=$idReportWarranty;
+                $obs->idClient=$auxClientId;
+                $obs->id_device=$id;
+                $obs->save();
+            }
+
+            $answer_device=new AnswerDeviceWarranty();
+            $answer_device->status='em falta';
+            $answer_device->idReportWarranty=$idReportWarranty;
+            $answer_device->id_device=$id;
+            $answer_device->save();
+
+            $controlD= Devices::where('id',$id)->first();
+            $controlD->controlWarranty=1;
+            $controlD->active=0;
+            $controlD->save();
+
+            return redirect('/frontoffice/warranty');
+        }
+    }
+
     public function  pestReportList()
     {
 
@@ -184,6 +309,7 @@ class PestController extends Controller
             ->get();
 
         $report_maintenance=ReportMaintenance::where('idClient',$auxClientId)
+            ->where('concluded',1)
             ->orderBy('id','asc')
             ->get();
 
@@ -192,6 +318,7 @@ class PestController extends Controller
             ->get();
 
         $report_warranty=ReportWarranty::where('idClient',$auxClientId)
+            ->where('concluded',1)
             ->orderBy('id','asc')
             ->get();
 
@@ -215,11 +342,6 @@ class PestController extends Controller
             ->pluck('name')
             ->first();
 
-        User::where('userTypeID',$report_pest->id_tecnichal)
-            ->where('userType',3)
-            ->select(['id','name','userTypeID'])
-            ->first();
-
         $devices=Devices::where('idClient',$auxClientId)
             ->where('idReportPest','=',$id)
             ->get();
@@ -238,39 +360,44 @@ class PestController extends Controller
     public function maintenancePest()
     {
         $auxClientId = Session::get('clientImpersonatedId');
+        $auxTechnical = Session::get('impersonated');
+        Session::forget('reportIdPest');
+        Session::forget('reportIdWarranty');
+        Session::forget('lastReportIdPest');
+
+        $lastReport=ReportMaintenance::where('idClient',$auxClientId)
+            ->where('concluded',1)
+            ->select(['id'])
+            ->orderBy('id','desc')
+            ->pluck('id')
+            ->first();
+
+        Session::put('lastReportId',$lastReport);
+
+        $report = ReportMaintenance::where('idClient',$auxClientId)
+            ->where('concluded',0)
+            ->orderBy('id','desc')
+            ->first();
+
+        if(isset($report))
+        {
+            $client=Customer::where('id',$auxClientId)
+                ->select(['ownerID'])
+                ->first();
+
+            Session::put('reportIdPest',$report->id);
+        }else{
 
         $client=Customer::where('id',$auxClientId)
             ->select(['ownerID'])
             ->first();
-
-        $devices=Devices::where('idClient',$auxClientId)->get();
-        $count=0;
-
-        /*$abc=Devices::where('idClient',$auxClientId)
-            ->where('status','!=',null)
-            ->get();*/
-
-        foreach ($devices as $device)
-        {
-            $count++;
-            $device->index=$count;
-        }
-
-        return view ('frontoffice.maintenancePest',compact('devices','client'));
-    }
-
-    public function saveMaintenance(Request $request)
-    {
-        $inputs = $request->all();
-
-        $auxClientId = Session::get('clientImpersonatedId');
-        $auxTechnical = Session::get('impersonated');
 
         $technicalInfo = User::where('id',$auxTechnical)
             ->select(['id','name','userTypeID'])
             ->first();
 
         $countVisits= ReportMaintenance::where('idClient',$auxClientId)
+            ->where('concluded',1)
             ->orderBy('id', 'desc')
             ->first();
 
@@ -283,8 +410,32 @@ class PestController extends Controller
                 $visitNumber=$countVisits->numberVisit+1;
             }
         }
+            $report_MaintenancePest=new ReportMaintenance();
+            $report_MaintenancePest->idClient=$auxClientId;
+            $report_MaintenancePest->numberVisit=$visitNumber;
+            $report_MaintenancePest->id_tecnichal=$technicalInfo->userTypeID;
+            $report_MaintenancePest->concluded=0;
+            $report_MaintenancePest->save();
+            Session::put('reportIdPest',$report_MaintenancePest->id);
+        }
+        $idReport=Session::get('reportIdPest');
 
-        $report_MaintenancePest=new ReportMaintenance();
+        $devices=Devices::where('idClient',$auxClientId)
+            ->where('active',1)
+            ->get();
+
+        return view ('frontoffice.maintenancePest',compact('devices','client','idReport'));
+    }
+
+    public function saveMaintenance(Request $request)
+    {
+        $inputs = $request->all();
+
+        $auxClientId = Session::get('clientImpersonatedId');
+        $idReport=Session::get('reportIdPest');
+
+        $report_MaintenancePest=ReportMaintenance::where('id',$idReport)->where('concluded',0)->first();
+
         $report_MaintenancePest->pest_presence=$inputs['pest_presence'];
         if($inputs['pest_presence']=='sim')
         {
@@ -296,27 +447,28 @@ class PestController extends Controller
             $report_MaintenancePest->sub_active=null;
         }
         $report_MaintenancePest->note=$inputs['note'];
-        $report_MaintenancePest->idClient=$auxClientId;
-        $report_MaintenancePest->numberVisit=$visitNumber;
-        $report_MaintenancePest->id_tecnichal=$technicalInfo->userTypeID;
+        $report_MaintenancePest->concluded=1;
         $report_MaintenancePest->save();
 
-        $answerDevices= AnswerDeviceMain::where('idClient',$auxClientId)
-            ->where('idReportMain','=',0)
+        $devices=Devices::where('idClient',$auxClientId)
             ->get();
 
-        foreach ($answerDevices as $answerDevice)
-        {
-            $answerDevice->idReportMain=$report_MaintenancePest->id;
-            $answerDevice->save();
-        }
-
-        $devices=Devices::where('idClient',$auxClientId)->get();
         foreach ($devices as $device)
         {
             $device->controlMain=null;
             $device->save();
         }
+        $devicesNews=Devices::where('idClient',$auxClientId)
+            ->where('idReportPest',0)
+            ->where('active',1)
+            ->where('idReportMain',0)
+            ->get();
+        foreach ($devicesNews as $devicesNew)
+        {
+            $devicesNew->idReportMain=$report_MaintenancePest->id;
+            $devicesNew->save();
+        }
+        Session::forget('reportIdPest');
 
         return redirect('/frontoffice/documents/Controlopragas');
     }
@@ -325,49 +477,26 @@ class PestController extends Controller
     {
         $auxClientId = Session::get('clientImpersonatedId');
 
-
         $devices = Devices::where('id',$id)
             ->where('idClient',$auxClientId)->first();
-
-        /*$count=0;
-
-        foreach ($devices as $device)
-        {
-            $count++;
-            $device->index=$count;
-        }*/
 
         return view ('frontoffice.deviceMaintenance',compact('devices'));
     }
 
     public function saveDeviceMaintenance(Request $request, $id)
     {
-        $auxClientId = Session::get('clientImpersonatedId');
-
-        $device = Devices::where('id',$id)
-            ->select(['number_device','cod_device','specie','isco'])
-            ->first();
+        $idReport=Session::get('reportIdPest');
 
         $inputs = $request->all();
-
         $answer_device=new AnswerDeviceMain();
         $answer_device->status=$inputs['device_status'];
-        $answer_device->idClient=$auxClientId;
-        $answer_device->number_device=$device->number_device;
-        $answer_device->cod_device=$device->cod_device;
-        $answer_device->specie=$device->specie;
-        $answer_device->isco=$device->isco;
         $answer_device->id_device=$id;
+        $answer_device->idReportMain=$idReport;
         $answer_device->save();
 
         $control= Devices::where('id',$id)->first();
         $control->controlMain=1;
         $control->save();
-
-       /* if($answer_device->status=='em falta')
-        {
-            $answer_device=Devices::where('id','=', $id)->delete();
-        }*/
 
         return redirect('/frontoffice/maintenance');
     }
@@ -389,24 +518,23 @@ class PestController extends Controller
             ->pluck('name')
             ->first();
 
-        User::where('userTypeID',$report_maintenance->id_tecnichal)
-            ->where('userType',3)
-            ->select(['id','name','userTypeID'])
-            ->first();
-
-        $answerDevices=AnswerDeviceMain::where('idClient',$auxClientId)
-            ->where('idReportMain','=',$id)
+        $answerDevices=AnswerDeviceMain::from(AnswerDeviceMain::alias('adm'))
+            ->leftJoin(Devices::alias('d'),'adm.id_device','=','d.id')
+            ->where('d.idClient',$auxClientId)
+            ->where('adm.idReportMain','=',$id)
+            ->where('adm.status','!=',null)
+            ->select(['d.number_device','d.cod_device','d.specie','d.isco','d.type_device','adm.status'])
             ->get();
 
-        $count=0;
+            $newDevices=AnswerDeviceMain::from(AnswerDeviceMain::alias('adm'))
+                ->leftJoin(Devices::alias('d'),'adm.id_device','=','d.id')
+                ->where('adm.status',null)
+                ->where('adm.idReportMain',$id)
+                ->get();
 
-        foreach ($answerDevices as $device)
-        {
-            $count++;
-            $device->index=$count;
-        }
+        $obs=ReportPestObs::where('idReportMain',$id)->get();
 
-        return view('frontoffice.reportMaintenanceShow',compact('report_maintenance','id','answerDevices','device'));
+        return view('frontoffice.reportMaintenanceShow',compact('report_maintenance','obs','id','answerDevices','device','newDevices'));
     }
 
     public function punctualPest()
@@ -497,57 +625,89 @@ class PestController extends Controller
           return 0;
     }
 
-    /*public function verifyCodeDeviceExist()*/
-
     public function warrantyPest()
     {
         $auxClientId = Session::get('clientImpersonatedId');
+        $auxTechnical = Session::get('impersonated');
+        Session::forget('reportIdWarranty');
+        Session::forget('lastReportIdWarranty');
+        Session::forget('reportIdPest');
 
-        $devices=Devices::where('idClient',$auxClientId)->get();
-        $count=0;
-
-        /*$abc=Devices::where('idClient',$auxClientId)
-            ->where('status','!=',null)
-            ->get();*/
-        $client=Customer::where('id',$auxClientId)
-            ->select(['ownerID'])
+        $lastReport=ReportWarranty::where('idClient',$auxClientId)
+            ->where('concluded',1)
+            ->select(['id'])
+            ->orderBy('id','desc')
+            ->pluck('id')
             ->first();
 
-        foreach ($devices as $device)
+        Session::put('lastReportIdPest',$lastReport);
+
+        $report = ReportWarranty::where('idClient',$auxClientId)
+            ->where('concluded',0)
+            ->orderBy('id','desc')
+            ->first();
+
+        if(isset($report))
         {
-            $count++;
-            $device->index=$count;
+            $client=Customer::where('id',$auxClientId)
+                ->select(['ownerID'])
+                ->first();
+
+            Session::put('reportIdWarranty',$report->id);
+        }else{
+
+            $client=Customer::where('id',$auxClientId)
+                ->select(['ownerID'])
+                ->first();
+
+            $technicalInfo = User::where('id',$auxTechnical)
+                ->select(['id','name','userTypeID'])
+                ->first();
+
+            $countVisits= ReportWarranty::where('idClient',$auxClientId)
+                ->where('concluded',1)
+                ->orderBy('id', 'desc')
+                ->first();
+
+            if(!isset($countVisits)){
+                $visitNumber=1;
+            }else{
+                if( Carbon::now()->year > $countVisits->created_at->year){
+                    $visitNumber=1;
+                }else{
+                    $visitNumber=$countVisits->numberVisit+1;
+                }
+            }
+            $report_WarrantyPest=new ReportWarranty();
+            $report_WarrantyPest->idClient=$auxClientId;
+            $report_WarrantyPest->numberVisit=$visitNumber;
+            $report_WarrantyPest->id_tecnichal=$technicalInfo->userTypeID;
+            $report_WarrantyPest->concluded=0;
+            $report_WarrantyPest->save();
+            Session::put('reportIdWarranty',$report_WarrantyPest->id);
         }
 
-        return view ('frontoffice.warrantyPest',compact('devices','client'));
+        $idReport=Session::get('reportIdWarranty');
+
+        $devices=Devices::where('idClient',$auxClientId)
+            ->where('active',1)
+            ->get();
+
+
+        return view ('frontoffice.warrantyPest',compact('devices','client','idReport'));
     }
     
     public function saveWarrantyPest(Request $request)
     {
+
         $inputs = $request->all();
 
         $auxClientId = Session::get('clientImpersonatedId');
-        $auxTechnical = Session::get('impersonated');
 
-        $technicalInfo = User::where('id',$auxTechnical)
-            ->select(['id','name','userTypeID'])
-            ->first();
+        $idReport=Session::get('reportIdWarranty');
 
-        $countVisits= ReportWarranty::where('idClient',$auxClientId)
-            ->orderBy('id', 'desc')
-            ->first();
+        $report_WarrantyPest=ReportWarranty::where('id',$idReport)->where('concluded',0)->first();
 
-        if(!isset($countVisits)){
-            $visitNumber=1;
-        }else{
-            if( Carbon::now()->year > $countVisits->created_at->year){
-                $visitNumber=1;
-            }else{
-                $visitNumber=$countVisits->numberVisit+1;
-            }
-        }
-
-        $report_WarrantyPest=new ReportWarranty();
         $report_WarrantyPest->pest_presence=$inputs['pest_presence'];
         if($inputs['pest_presence']=='sim')
         {
@@ -559,27 +719,30 @@ class PestController extends Controller
             $report_WarrantyPest->sub_active=null;
         }
         $report_WarrantyPest->note=$inputs['note'];
-        $report_WarrantyPest->idClient=$auxClientId;
-        $report_WarrantyPest->numberVisit=$visitNumber;
-        $report_WarrantyPest->id_tecnichal=$technicalInfo->userTypeID;
+        $report_WarrantyPest->concluded=1;
+
         $report_WarrantyPest->save();
 
-        $answerDevices= AnswerDeviceWarranty::where('idClient',$auxClientId)
-            ->where('idReportWarranty','=',0)
+
+        $devices=Devices::where('idClient',$auxClientId)
             ->get();
 
-        foreach ($answerDevices as $answerDevice)
-        {
-            $answerDevice->idReportWarranty=$report_WarrantyPest->id;
-            $answerDevice->save();
-        }
-
-        $devices=Devices::where('idClient',$auxClientId)->get();
         foreach ($devices as $device)
         {
             $device->controlWarranty=null;
             $device->save();
         }
+        $devicesNews=Devices::where('idClient',$auxClientId)
+            ->where('idReportPest',0)
+            ->where('active',1)
+            ->where('idReportWarranty',0)
+            ->get();
+        foreach ($devicesNews as $devicesNew)
+        {
+            $devicesNew->idReportMain=$idReport;
+            $devicesNew->save();
+        }
+        Session::forget('reportIdWarranty');
 
         return redirect('/frontoffice/documents/Controlopragas');
     }
@@ -601,24 +764,23 @@ class PestController extends Controller
             ->pluck('name')
             ->first();
 
-        User::where('userTypeID',$report_warranty->id_tecnichal)
-            ->where('userType',3)
-            ->select(['id','name','userTypeID'])
-            ->first();
-
-        $answerDevices=AnswerDeviceWarranty::where('idClient',$auxClientId)
-            ->where('idReportWarranty','=',$id)
+        $answerDevices=AnswerDeviceWarranty::from(AnswerDeviceWarranty::alias('adw'))
+            ->leftJoin(Devices::alias('d'),'adw.id_device','=','d.id')
+            ->where('d.idClient',$auxClientId)
+            ->where('adw.status','!=',null)
+            ->where('adw.idReportWarranty','=',$id)
+            ->select(['d.number_device','d.cod_device','d.type_device','d.specie','d.isco','d.type_device','adw.status'])
             ->get();
 
-        $count=0;
+        $newDevices=AnswerDeviceWarranty::from(AnswerDeviceWarranty::alias('adw'))
+            ->leftJoin(Devices::alias('d'),'adw.id_device','=','d.id')
+            ->where('adw.status',null)
+            ->where('adw.idReportWarranty',$id)
+            ->get();
 
-        foreach ($answerDevices as $device)
-        {
-            $count++;
-            $device->index=$count;
-        }
+        $obs=ReportPestObs::where('idReportWarranty',$id)->get();
 
-        return view('frontoffice.reportWarrantyShow',compact('report_warranty','id','answerDevices','device'));
+        return view('frontoffice.reportWarrantyShow',compact('report_warranty','id','answerDevices','device','newDevices','obs'));
     }
     public function getDeviceWarranty($id)
     {
@@ -632,28 +794,16 @@ class PestController extends Controller
 
     public function saveDeviceWarranty(Request $request, $id)
     {
-        $auxClientId = Session::get('clientImpersonatedId');
 
-        $device = Devices::where('id',$id)
-            ->select(['number_device','cod_device','specie','isco'])
-            ->first();
+        $idReport=Session::get('reportIdWarranty');
 
         $inputs = $request->all();
 
         $answer_device=new AnswerDeviceWarranty();
         $answer_device->status=$inputs['device_status'];
-        $answer_device->idClient=$auxClientId;
-        $answer_device->number_device=$device->number_device;
-        $answer_device->cod_device=$device->cod_device;
-        $answer_device->specie=$device->specie;
-        $answer_device->isco=$device->isco;
+        $answer_device->idReportWarranty=$idReport;
         $answer_device->id_device=$id;
         $answer_device->save();
-
-      /*  if($answer_device->status=='em falta')
-        {
-            $answer_device=Devices::where('id','=', $id)->delete();
-        }*/
 
         $control= Devices::where('id',$id)->first();
         $control->controlWarranty=1;
@@ -676,8 +826,6 @@ class PestController extends Controller
     {
         $inputs = $request->all();
 
-        $auxTechnical = Session::get('impersonated');
-
         $punctual_data=new ReportPunctualData();
         $punctual_data->name=$inputs['name'];
         $punctual_data->address=$inputs['address'];
@@ -687,11 +835,9 @@ class PestController extends Controller
         $punctual_data->note=$inputs['note'];
         $punctual_data->sub_active=$inputs['subs_active'];
         $punctual_data->action=$inputs['action'];
-        /*$punctual_data->id_tecnichal=$technicalInfo->userTypeID;*/
         $punctual_data->save();
 
         return redirect('/frontoffice/reports/punctualList');
-
     }
     public function punctualDataShow($id)
     {

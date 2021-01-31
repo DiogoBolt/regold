@@ -288,6 +288,7 @@ class PersonalizeSectionController extends Controller
         $equipments = json_decode($inputs['equipments']);
         $idSection = json_decode($inputs['idSection']);
 
+
         $auxClientId = Session::get('clientImpersonatedId');
 
         $areasSectionClient = AreaSectionClient::where('idClient', $auxClientId)

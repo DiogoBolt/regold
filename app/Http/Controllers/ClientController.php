@@ -565,19 +565,16 @@ class ClientController extends Controller
                     $establisment->contract_value = 30.90;
                     $establisment->haccp_visits = 2;
                     $establisment->cp_visits = 1;
-                    $establisment->payment_method='Debito Direto';
                     break;
                 case 'premium':
                     $establisment->contract_value = 40.90;
                     $establisment->haccp_visits = 3;
                     $establisment->cp_visits = 2;
-                    $establisment->payment_method='Debito Direto';
                     break;
                 case 'gold':
                     $establisment->contract_value = 50.90;
                     $establisment->haccp_visits = 4;
                     $establisment->cp_visits = 3;
-                    $establisment->payment_method='Debito Direto';
                     break;
             }
         }else{
@@ -587,19 +584,16 @@ class ClientController extends Controller
                     $establisment->contract_value = 29.90;
                     $establisment->haccp_visits = 2;
                     $establisment->cp_visits = 1;
-                    $establisment->payment_method='Debito Direto';
                     break;
                 case 'premium':
                     $establisment->contract_value = 39.90;
                     $establisment->haccp_visits = 3;
                     $establisment->cp_visits = 2;
-                    $establisment->payment_method='Debito Direto';
                     break;
                 case 'gold':
                     $establisment->contract_value = 49.90;
                     $establisment->haccp_visits = 4;
                     $establisment->cp_visits = 3;
-                    $establisment->payment_method='Debito Direto';
                     break;
             }
 
@@ -1084,6 +1078,7 @@ class ClientController extends Controller
 
         $type->name = $inputs['name'];
         $type->superType = $inputs['type'];
+        $type->url_image='/img/manual.png';
 
         $type->save();
 

@@ -150,6 +150,7 @@ class SalesmanController extends Controller
 
         $user->name = $inputs['name'];
         $user->email = $inputs['email'];
+        $user->userType=5;
         $user->password = bcrypt($inputs['password']);
         $user->save();
        return redirect()->to('/salesman'); 

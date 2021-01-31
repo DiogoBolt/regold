@@ -39,6 +39,7 @@
     
     <h1 class="title">Auditoria de Segurança Alimentar</h1>
 
+
     <div class="divReportInfo">
         <div>
             <label class="lblBold">Estabelecimento: </label>
@@ -65,7 +66,7 @@
             <label id="visitNumber"> {{$visitNumber}} </label>
         </div>
 
-        <button class="btn-del" onclick="continueReport()">Próximo</button>
+        <button class="btn-del" onclick="continueReport({{$idReport}})">Próximo</button>
 
     </div>
     
