@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <title>Regoldi</title>
+    <title>Regolfood</title>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -126,6 +126,11 @@
                             <li>
                                 <a href="/historyOrders">
                                     Historico Encomendas
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/possiblecustomers/">
+                                    + Clientes
                                 </a>
                             </li>
                             <li class="dropdown">

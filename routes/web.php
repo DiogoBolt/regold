@@ -163,6 +163,19 @@ Route::get('/frontoffice/records/hygiene/history/print','RecordsController@print
 
 Route::group(['middleware' => ['backoffice']], function () {
 
+
+    //Possible Customers
+
+    Route::get('/possiblecustomers', 'PossibleCustomersController@getPossibleCustomersBySales');
+    Route::get('/possiblecustomers/new', 'PossibleCustomersController@addPossibleCustomer');
+    Route::get('/possiblecustomers/edit/{id}', 'PossibleCustomersController@editPossibleCustomer');
+    Route::post('/possiblecustomers/edit/{id}', 'PossibleCustomersController@editPossibleCustomerPost');
+    Route::post('/possiblecustomers/newPossibleCustomer', 'PossibleCustomersController@addPossibleCustomerPost');
+    Route::get('/possiblecustomers/deletecustomer/{id}', 'PossibleCustomersController@deletePossibleCustomer');
+
+
+    /////
+
     Route::get('/salesman', 'SalesmanController@index');
     Route::get('/salesman/{id}', 'SalesmanController@salesman');
     Route::get('/newsalesman', 'SalesmanController@newSales');

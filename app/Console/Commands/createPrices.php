@@ -34,21 +34,21 @@ class createPrices extends Command
      */
     public function handle()
     {
-       $thermos = ClientThermo::all();
+        $products = Product::all();
 
-       foreach($thermos as $thermo)
-       {
-           $user = User::where('id',$thermo->user_id)->first();
-if(isset($user))
-{
-    $thermo->user_id = $user->client_id;
-    $thermo->save();
-    $this->line($user->id);
-}
+        foreach ($products as $product)
+        {
+            $product->price1 = str_replace([','],['.'],$product->price1);
+            $product->price2 = str_replace([','],['.'],$product->price2);
+            $product->price3 = str_replace([','],['.'],$product->price3);
+            $product->price4 = str_replace([','],['.'],$product->price4);
+            $product->price5 = str_replace([','],['.'],$product->price5);
 
-       }
+            $product->save();
+        }
 
     }
+
 }
 
 
