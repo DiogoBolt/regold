@@ -25,7 +25,7 @@ class PossibleCustomersController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->userTypeID == 5) {
+        if ($user->userType == 5) {
             $possibleCustomers = PossibleCustomer::all();
         } else {
             $possibleCustomers = PossibleCustomer::where('sales_id', $user->id)->get();
