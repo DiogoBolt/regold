@@ -149,7 +149,7 @@
                                     <tbody>
                                         @if($section->showCorrective == 1)
                                             @foreach($reportsAnswers as $rule)
-                                                @if($rule->corrective!=null && $section->id==$rule->idClientSection)
+                                                @if($rule->answer=='nc' && $section->id==$rule->idClientSection)
                                                     <tr class="tableRow" style="display:table-row">
                                                         <th class="index" >{{$rule->index}}</th>
                                                         <td class="tdRuleBackground"><label class="rule">{{$rule->rule}}</label></td>

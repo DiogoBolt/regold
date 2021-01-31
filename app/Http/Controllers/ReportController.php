@@ -648,7 +648,7 @@ class ReportController extends Controller
             $existObs=false;
             foreach($reportsAnswers as $reportsAnswer){
                 if($section->id == $reportsAnswer->idClientSection){
-                    if($reportsAnswer->corrective != null){
+                    if($reportsAnswer->answer == 'nc'){
                         $existCorrective=true;
                         break;
                     }
