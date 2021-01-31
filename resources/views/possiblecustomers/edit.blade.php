@@ -26,6 +26,15 @@
                                     Nome:<input class="form-control" placeholder="Nome" id='ownerName'  value="{{$possiblecustomer->name}}" name="name">
                                 </div>
                                 <div class="form-group">
+                                    Nome Proprietario:<input class="form-control" placeholder="Nome" id='ownerName'  value="{{$possiblecustomer->nome_cliente}}" name="nome_cliente">
+                                </div>
+                                <div class="form-group">
+                                    Email:<input class="form-control" placeholder="Nome" id='ownerName' value="{{$possiblecustomer->email}}" name="email">
+                                </div>
+                                <div class="form-group">
+                                    Contacto:<input class="form-control" placeholder="Nome" id='ownerName' value="{{$possiblecustomer->contacto}}" name="contacto">
+                                </div>
+                                <div class="form-group">
                                     Morada: <input class="form-control" value="{{$possiblecustomer->address}}" name="address" required>
                                 </div>
                                 <div class="form-group">

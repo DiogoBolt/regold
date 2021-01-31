@@ -47,6 +47,9 @@ class PossibleCustomersController extends Controller
 
         $newpossiblecustomer->sales_id = $user->id;
         $newpossiblecustomer->name = $inputs['name'];
+        $newpossiblecustomer->nome_cliente = $inputs['nome_cliente'];
+        $newpossiblecustomer->email = $inputs['email'];
+        $newpossiblecustomer->contacto = $inputs['contacto'];
         $newpossiblecustomer->address = $inputs['address'];
         $newpossiblecustomer->contract_end = $inputs['contract_end'];
         $newpossiblecustomer->current_contract = $inputs['current_contract'];
@@ -70,6 +73,9 @@ class PossibleCustomersController extends Controller
         $possiblecustomer = PossibleCustomer::where('id',$id)->first();
 
         $possiblecustomer->name = $inputs['name'];
+        $possiblecustomer->nome_cliente = $inputs['nome_cliente'];
+        $possiblecustomer->email = $inputs['email'];
+        $possiblecustomer->contacto = $inputs['contacto'];
         $possiblecustomer->address = $inputs['address'];
         $possiblecustomer->contract_end = $inputs['contract_end'];
         $possiblecustomer->current_contract = $inputs['current_contract'];

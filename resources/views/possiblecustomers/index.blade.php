@@ -21,6 +21,9 @@
                             <tr>
                                 <th>Id</th>
                                 <th>Nome</th>
+                                <th>Nome Cliente</th>
+                                <th>Email</th>
+                                <th>Contacto</th>
                                 <th>Morada</th>
                                 <th>Contrato Atual</th>
                                 <th>Final Contrato</th>
@@ -32,6 +35,9 @@
                                     <tr>
                                         <td><a href="/possiblecustomers/edit/{{$client->id}}">{{$client->id}}</a></td>
                                         <td><a href="/possiblecustomers/edit/{{$client->id}}">{{$client->name}}</a></td>
+                                        <td>{{$client->nome_cliente}}</td>
+                                        <td>{{$client->email}}</td>
+                                        <td>{{$client->contacto}}</td>
                                         <td>{{$client->address}}</td>
                                         <td>{{$client->current_contract}}</td>
                                         <td>{{date('y-m-d',strtotime($client->contract_end))}}</td>

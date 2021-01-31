@@ -23,7 +23,16 @@
 
                         <div class="col-sm-6">
                             <div class="form-group">
-                                Nome:<input class="form-control" placeholder="Nome" id='ownerName'  name="name">
+                                Nome Empresa:<input class="form-control" placeholder="Nome" id='ownerName'  name="name">
+                            </div>
+                            <div class="form-group">
+                                Nome Proprietario:<input class="form-control" placeholder="Nome" id='ownerName'  name="nome_cliente">
+                            </div>
+                            <div class="form-group">
+                                Email:<input class="form-control" placeholder="Nome" id='ownerName'  name="email">
+                            </div>
+                            <div class="form-group">
+                                Contacto:<input class="form-control" placeholder="Nome" id='ownerName'  name="contacto">
                             </div>
                             <div class="form-group">
                                 Morada: <input class="form-control" name="address" required>
