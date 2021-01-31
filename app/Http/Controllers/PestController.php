@@ -180,7 +180,8 @@ class PestController extends Controller
             $answer_device->save();
 
             return redirect('/frontoffice/maintenance');
-        }else{
+        }else
+        {
             $device= new Devices();
             $device->number_device=$inputs['num_device'];
             $device->cod_device=$inputs['cod_device'];
@@ -192,7 +193,7 @@ class PestController extends Controller
             $device->save();
 
             $answer_device=new AnswerDeviceWarranty();
-            $answer_device->idReportMain=$idReportWarranty;
+            $answer_device->idReportWarranty=$idReportWarranty;
             $answer_device->id_device=$device->id;
             $answer_device->save();
 
