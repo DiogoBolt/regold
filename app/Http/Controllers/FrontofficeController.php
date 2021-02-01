@@ -200,6 +200,7 @@ class FrontofficeController extends Controller
                 ->get(['r.id']);
             $ids = [];
 
+
             foreach($receipts as $receipt)
             {
                 $updated = Receipt::where('id',$receipt->id)->first();

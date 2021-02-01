@@ -199,8 +199,10 @@ Route::group(['middleware' => ['backoffice']], function () {
     Route::post('/clients/edit', 'ClientController@editCustomerPost');
     Route::get('/clients/group/{id}', 'ClientController@clientsByGroup');
     Route::post('/clients/addreceipt', 'ClientController@addReceipt');
+    Route::get('/clients/deletereceipt/{id}','ClientController@deleteReceipt');
     Route::get('/clients/impersonate/{id}', 'ClientController@impersonateClient');
     Route::get('/clients/editPrices/{id}', 'ClientController@editClientPrices');
+    Route::get('/clients/documents/{id}', 'ClientController@getDocuments');
     Route::post('/editpricepvp/', 'ClientController@editClientPvp');
     Route::get('/impersonate/leaveuser', 'ClientController@leaveUser');
     //pedro                             

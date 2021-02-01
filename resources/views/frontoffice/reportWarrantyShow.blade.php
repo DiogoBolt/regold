@@ -12,7 +12,7 @@
                         <tr>
                             <th class="report-header-cell">
 
-                                <img class="logoReport" src="{{ URL::to('/') }}/img/navbar/RegolfoodLogin.png" alt="logo">
+                                <img class="logoReport" src="{{ URL::to('/') }}/img/navbar/logoRegolfood.png" alt="logo">
 
                     <div id="divBtns">
                         <a class="btn btn-warning" href="/frontoffice/pestReports">
@@ -20,11 +20,6 @@
                         </a>
                         <button class="btn btn-warning" onclick="printReport()">Imprimir</button>
                     </div>
-
-                    {{--<div style="text-align: center; margin-bottom: 20px;">
-                        <img src="\img\regolfoodSmall.png" style="width:100px">
-                    </div>--}}
-
 
                     <div id="reportInfo">
                         <div id="divFloatRigth">

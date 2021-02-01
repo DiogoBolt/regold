@@ -24,6 +24,9 @@
                         <button class="btn">
                             <a href="/clients/editPrices/{{$client->id}}" style="color: #fff;">Editar Preços</a>
                         </button>
+                        <button class="btn">
+                            <a href="/clients/documents/{{$client->id}}" style="color: #fff;">Documentos</a>
+                        </button>
                     </div>
                     <br/>
                     <div class="col-sm-6">
