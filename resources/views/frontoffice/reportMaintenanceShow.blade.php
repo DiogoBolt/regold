@@ -39,7 +39,7 @@
                         </div>
 
                         <div id="divFloatRigth">
-                                <label class="lblBold">Relatório de Manutençao</label>
+                                <label class="lblBold">Relatório de Manutenção</label>
                             <div>
                                 <label class="lblBold">Data: </label>
                                 <label id="date"> {{$report_maintenance->updated_at->toDateString()}} </label>

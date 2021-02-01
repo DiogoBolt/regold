@@ -290,7 +290,7 @@ hr.line{
   -webkit-appearance: none;
   width: 100%;
   height: 10px;
-  border-radius: 5px;
+  border-radius: px;
   background: #d7dcdf;
   background: linear-gradient(to right, green 0%, yellow 50%, red 100%);
   outline: none;
@@ -299,8 +299,8 @@ hr.line{
 }
 .range-slider__range::-webkit-slider-thumb {
   appearance: none;
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   background: #2c3e50;
   cursor: pointer;

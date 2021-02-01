@@ -158,7 +158,19 @@
                         <div class="news" id="oneNew">
                             <input type="text" id="idDesignation" name="designation" placeholder="Designação">
             
-                            <select id="product">
+                            <select id="productArea1">
+                                <option value="" disabled selected>Produto</option>
+                                @foreach($products as $product)
+                                    <option value="{{$product->id}}">{{$product->name}}</option>
+                                @endforeach
+                            </select>
+                            <select id="productArea2">
+                                <option value="" disabled selected>Produto</option>
+                                @foreach($products as $product)
+                                    <option value="{{$product->id}}">{{$product->name}}</option>
+                                @endforeach
+                            </select>
+                            <select id="productArea3">
                                 <option value="" disabled selected>Produto</option>
                                 @foreach($products as $product)
                                     <option value="{{$product->id}}">{{$product->name}}</option>
@@ -210,6 +222,24 @@
                     @foreach($products as $product)
 
                             <option value="{{$product->id}}">{{$product->name}}</option>
+                    @endforeach
+                </select>
+            </td>
+            <td>
+                <select id="product">
+                    <option value="" disabled>Produto</option>
+                    @foreach($products as $product)
+
+                        <option value="{{$product->id}}">{{$product->name}}</option>
+                    @endforeach
+                </select>
+            </td>
+            <td>
+                <select id="product">
+                    <option value="" disabled>Produto</option>
+                    @foreach($products as $product)
+
+                        <option value="{{$product->id}}">{{$product->name}}</option>
                     @endforeach
                 </select>
             </td>

@@ -323,10 +323,11 @@ a.aWasPersonalized, a.aWasPersonalized:hover{
   text-decoration:none;
   color:black;
 }
-
-.teste {
+product_12{
+  float:right;
+  display: inline-flex;
+  text-align: left;
 }
-
 
 
 
