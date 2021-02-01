@@ -34,7 +34,7 @@
                 <table class="table">
                     <caption>Relatórios</caption>
                     <tr>
-                        <th>Nº Relatório</th>
+                        <th>Nº</th>
                         <th>Data/Hora</th>
                         <th></th>
                     </tr>
@@ -46,7 +46,7 @@
                         ?>
                         <tr>
                             <td>
-                                {{$i}} Relatório
+                                {{$i}}
                             </td>
                             <td>{{$report->updated_at}}</td>
                             <td><a href="/frontoffice/reportShow/{{$report->id}}">Ver</a></td>

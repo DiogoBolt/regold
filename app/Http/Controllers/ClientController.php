@@ -225,7 +225,7 @@ class ClientController extends Controller
 
         $client = Customer::where('id',$auxClientId)->first();
 
-        $messages = Message::where('receiver_id',$user->id)->where('viewed',0)->count();
+        $messages = Message::where('receiver_id',$auxClientId)->where('viewed',0)->count();
 
         return $messages;
     }
@@ -565,19 +565,16 @@ class ClientController extends Controller
                     $establisment->contract_value = 30.90;
                     $establisment->haccp_visits = 2;
                     $establisment->cp_visits = 1;
-                    $establisment->payment_method='Debito Direto';
                     break;
                 case 'premium':
                     $establisment->contract_value = 40.90;
                     $establisment->haccp_visits = 3;
                     $establisment->cp_visits = 2;
-                    $establisment->payment_method='Debito Direto';
                     break;
                 case 'gold':
                     $establisment->contract_value = 50.90;
                     $establisment->haccp_visits = 4;
                     $establisment->cp_visits = 3;
-                    $establisment->payment_method='Debito Direto';
                     break;
             }
         }else{
@@ -587,19 +584,16 @@ class ClientController extends Controller
                     $establisment->contract_value = 29.90;
                     $establisment->haccp_visits = 2;
                     $establisment->cp_visits = 1;
-                    $establisment->payment_method='Debito Direto';
                     break;
                 case 'premium':
                     $establisment->contract_value = 39.90;
                     $establisment->haccp_visits = 3;
                     $establisment->cp_visits = 2;
-                    $establisment->payment_method='Debito Direto';
                     break;
                 case 'gold':
                     $establisment->contract_value = 49.90;
                     $establisment->haccp_visits = 4;
                     $establisment->cp_visits = 3;
-                    $establisment->payment_method='Debito Direto';
                     break;
             }
 
@@ -616,15 +610,20 @@ class ClientController extends Controller
             $establisment->permission=3;
         elseif ($inputs['packs']=='s'&&$inputs['serviceType']=='cp')
             $establisment->permission=2;
-        else
+        elseif($inputs['packs']=='t')
             $establisment->permission=1;
+        else
+            $establisment->permission=4;
         //fim de permissoes
 
         $establisment->regoldiID = $inputs['regoldiID'];
         $establisment->transport_note = $inputs['transport_note'];
         $establisment->save();
-        $user->client_id = $establisment->id;
-        $user->save();
+
+        if( $inputs['verifyHaveRegister']=='nao'){
+            $user->client_id = $establisment->id;
+            $user->save();
+        }
 
         $qtd = Section::where('activityClientId',$establisment->activity)->count();
 
@@ -1079,6 +1078,7 @@ class ClientController extends Controller
 
         $type->name = $inputs['name'];
         $type->superType = $inputs['type'];
+        $type->url_image='/img/manual.png';
 
         $type->save();
 

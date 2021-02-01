@@ -41,18 +41,29 @@
                                             </a>
                                         </div>
                                         <div >
-                                            Dispositivo {{$device->number_device}}
+                                            Disp. {{$device->number_device}}-{{$device->type_device}}
+                                        </div>
+                                    </div>
+                                @elseif($device->controlWarranty==1)
+                                    <div class="file">
+                                        <div>
+                                            <a>
+                                                <img class="devicePersonalized" src="{{ URL::to('/') }}/img/reportPest.png">
+                                            </a>
+                                        </div>
+                                        <div>
+                                            Disp. {{$device->number_device}}-{{$device->type_device}}
                                         </div>
                                     </div>
                                 @else
                                     <div class="file">
                                         <div>
-                                            <a>
-                                                <img class="img-responsive" src="{{ URL::to('/') }}/img/reportPestRed.png">
+                                            <a type="button" >
+                                                <img class="devicePersonalized" src="{{ URL::to('/') }}/img/reportPest.png">
                                             </a>
                                         </div>
-                                        <div style="color: red">
-                                            Dispositivo {{$device->number_device}}
+                                        <div >
+                                            Disp. {{$device->number_device}}-{{$device->type_device}}
                                         </div>
                                     </div>
                                 @endif
@@ -116,7 +127,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">x</button>
-                        <h4 class="modal-title" >Dispositivo {{$device->number_device}}</h4>
+                        <h4 class="modal-title" >Dispositivo {{$device->number_device}}-{{$device->type_device}}</h4>
                     </div>
                     <div class="modal-body">
                         <div class="codes" id="oneCode">
@@ -128,6 +139,9 @@
                         </div>
                     </div>
                     <div class="modal-footer">
+                        <a class="btn_delete" data-item="{{ $device->id }}" href="/frontoffice/replaceDevice/{{ $device->id }}/{{0}}">
+                            Substituir
+                        </a>
                         <button id="{{$device->id}}" class="btn modal-del" onclick="verifyCodeDeviceExist(this.id)">
                             <strong>Confirmar</strong>
                         </button>

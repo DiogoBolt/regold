@@ -284,7 +284,7 @@
     </script>
 
     <div id="divBtns">
-        <button onclick="continueAnswerReport()" id="continue">Continuar</button>
+        <button onclick="continueAnswerReport({{$idReport}})" id="continue">Continuar</button>
     </div>
 @endsection
 

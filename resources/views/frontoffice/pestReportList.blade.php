@@ -34,7 +34,7 @@
                 <table class="table">
                     <caption>Relatório Instalação</caption>
                     <tr>
-                        <th>Nº Relatório</th>
+                        <th>Nº</th>
                         <th>Data/Hora</th>
                         <th></th>
                     </tr>
@@ -46,7 +46,7 @@
                         ?>
                         <tr>
                             <td>
-                                {{$i}} Relatório
+                                {{$i}}
                             </td>
                             <td>{{$reportPest->updated_at}}</td>
                             <td><a href="/frontoffice/reportPestShow/{{$reportPest->id}}">Ver</a></td>
@@ -63,7 +63,7 @@
                     <table class="table">
                         <caption>Relatório Manutenção</caption>
                         <tr>
-                            <th>Nº Relatório</th>
+                            <th>Nº</th>
                             <th>Data/Hora</th>
                             <th></th>
                         </tr>
@@ -75,7 +75,7 @@
                             ?>
                                 <tr>
                                     <td>
-                                        {{$i}} Relatório
+                                        {{$i}}
                                     </td>
                                     <td>{{$reportMaintenance->updated_at}}</td>
                                     <td><a href="/frontoffice/reportMaintenanceShow/{{$reportMaintenance->id}}">Ver</a></td>
@@ -92,7 +92,7 @@
                 <table class="table">
                     <caption>Relatório Pontual</caption>
                     <tr>
-                        <th>Nº Relatório</th>
+                        <th>Nº</th>
                         <th>Data/Hora</th>
                         <th></th>
                     </tr>
@@ -104,7 +104,7 @@
                         ?>
                         <tr>
                             <td>
-                                {{$i}} Relatório
+                                {{$i}}
                             </td>
                             <td>{{$reportPunctual->updated_at}}</td>
                             <td><a href="/frontoffice/reportPunctualShow/{{$reportPunctual->id}}">Ver</a></td>
@@ -121,7 +121,7 @@
                 <table class="table">
                     <caption>Relatório Garantia</caption>
                     <tr>
-                        <th>Nº Relatório</th>
+                        <th>Nº</th>
                         <th>Data/Hora</th>
                         <th></th>
                     </tr>
@@ -133,7 +133,7 @@
                         ?>
                         <tr>
                             <td>
-                                {{$i}} Relatório
+                                {{$i}}
                             </td>
                             <td>{{$reportWarranty->updated_at}}</td>
                             <td><a href="/frontoffice/reportWarrantyShow/{{$reportWarranty->id}}">Ver</a></td>

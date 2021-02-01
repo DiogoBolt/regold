@@ -46,27 +46,25 @@ function showModal(idModal){
     var div= document.getElementsByClassName('news');
 
     for( var i=0; i< div.length; i++){
-        var sectionValue=div[i].children[0].selectedIndex;
-        var sectionText=div[i].children[0].options[sectionValue].text;
-        var nameSection=div[i].children[1].value;
+        var nameSection=div[i].children[0].value;
         var li = document.createElement('li');
         var input= document.createElement('input');
 
         var value = {
-            "idSection" : sectionValue,
+            "idSection" : 0,
             "idClientSection" : 0,
             "activityClientId":0,
             };
     
         input.type="checkbox";
-        input.id=sectionText+nameSection;
+        input.id=/*sectionText+*/nameSection;
         input.name="sections[]";
         input.value=JSON.stringify(value);
         input.checked=true;
 
         var label = document.createElement('label');
-        label.htmlFor=sectionText+nameSection;
-        label.innerHTML= sectionText+nameSection;
+        label.htmlFor=/*sectionText+*/nameSection;
+        label.innerHTML= /*sectionText+*/nameSection;
 
         li.appendChild(input);
         li.appendChild(label);

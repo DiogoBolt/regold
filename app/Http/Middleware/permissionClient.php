@@ -19,9 +19,9 @@ class permissionClient
      */
     public function handle($request, Closure $next)
     {
-        $user = Auth::user();
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Session::get('establismentID');
 
-        $clientPermission=Customer::where('id',$user->client_id)
+        $clientPermission=Customer::where('id',$auxClientId)
         ->first();
 
         if ($clientPermission->permission == 1 and ($request->getRequestUri()=='/frontoffice/documents/Controlopragas' or $request->getRequestUri()=='/frontoffice/documents/HACCP' or $request->getRequestUri()=='/frontoffice/records/oil' or $request->getRequestUri()=='/frontoffice/records/hygiene' or $request->getRequestUri()=='/frontoffice/records/insertProduct')) {

@@ -40,3 +40,22 @@ input[type=radio]+label{
 {
     color: white;
 }
+.btn_delete{
+    display: inline-block;
+    font-weight: normal;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    color: #E5E1E6;
+    font-size: 14px;
+    background-color: red;
+    border: 1px solid transparent;
+    padding: 6px 12px;
+    line-height: 1.6;
+    border-radius: 4px;
+    margin-right: 5px;
+}
+
+.devicePersonalized{
+    filter: grayscale(1);
+}

@@ -1,0 +1,329 @@
+"id","idSection","rule","corrective","severityValue","ruletype","created_at","updated_at"
+"1","8","A área de serviço é de acesso reservado ao pessoal do estabelecimento.",,"5","0",NULL,NULL
+"2","8","Não existe possibilidade de entrada e/ou verifica-se a permanência de animais vivos na área de serviço.",,"5","0",NULL,NULL
+"3","8","A área de serviço está instalada de forma a evitar-se a propagação de fumos e cheiros.","Deve existir um sistema de exaustão eficaz.","5","0",NULL,NULL
+"4","8","O sistema de exaustão é submetido a uma limpeza profunda anualmente.",,"3","0",NULL,NULL
+"5","8","""A conceção da unidade permite a marcha """"sempre em frente"""".""","Não existe cruzamento entre circuitos limpos e circuitos sujos.","4","0",NULL,NULL
+"6","8","Existe uma zona destinada à preparação de alimentos.",,"5","0",NULL,NULL
+"7","8","Existe distinção de copa suja e copa limpa.",,"4","0",NULL,NULL
+"8","8","Na copa suja existe pelo menos uma cuba de lavagem equipada com água quente e fria.",,"5","0",NULL,NULL
+"9","8","Existe ponto de água quente nos lava-mãos situados nas áreas de manipulaçao alimentar.",,"4","0",NULL,NULL
+"10","8","Existe máquina de lavar loiça grande.",,"4","0",NULL,NULL
+"11","8","Existem lava-mãos em número suficiente, com acionamento não manual.","Dotados de pedal, cotoveleira ou sensor.","4","0",NULL,NULL
+"12","8","Existe material adequado e suficiente para higienização das mãos.","Dispositivos com desinfetante e papel para secar as mãos.","4","0",NULL,NULL
+"13","8","Existe zona adequada destinada ao armazenamento de produtos e utensílios de higiene.","Zona bem separada fisicamente da área alimentar ou em armário fechado e identificado.","4","0",NULL,NULL
+"14","8","As portas existentes na unidade de confeção, com acesso ao exterior, encontram-se permanentemente fechadas.","Manter estas portas fechadas. Se possível, colocar portas com mola e/ou colocar rede mosquiteira.","4","0",NULL,NULL
+"15","8","As superfícies em contacto com os alimentos são adequadas.","Lisas, não absorventes, não tóxicas e resistentes à lavagem e desinfeção.","5","0",NULL,NULL
+"16","8","Os materiais e objetos destinados a entrar em contacto com os alimentos são os adequados para uso alimentar.","""Estes objetos/materiais devem estar em conformidade com o Regulamento (CE) N.º 1935/2004, relativo aos  materiais e objetos destinados a entrar em contacto com géneros alimentícios. Estes devem mencionar a  frase """"para contacto com alimentos""""","0","0",NULL,NULL
+"17","8","Equipamentos e utensílios adequados, em bom estado de manutenção e adequados ao volume/tipo de refeições servidas","De material liso, não absorvente, não tóxico e resistente à lavagem e desinfeção.","5","0",NULL,NULL
+"18","8","Recipientes para o lixo acionados não manualmente e  forrados com sacos de plástico."," Têm tampa acionada por pedal ou sensor.","4","0",NULL,NULL
+"19","8","São adotados métodos ou equipamentos que permitam assegurar a separação dos resíduos de forma a promover a sua valorização por fluxos e fileiras?","""Idealmente devem existir um recipiente para cada tipo de resíduo: Embalagens/plástico","0","0",NULL,NULL
+"20","8","Não existem produtos armazenados em contacto direto com o pavimento.","O armazenamento deve ser idealmente em prateleiras, armários ou em paletes/estrados de material lavável e com 20 cm, no mínimo, de altura.","4","0",NULL,NULL
+"21","8","Produtos bem acondicionados nos equipamentos de frio.","""Guardados em recipientes próprios (herméticos) e/ou protegidos com película aderente","0","0",NULL,NULL
+"22","8","Descongelação adequada e respeitando boas práticas.","""Idealmente em equipamentos adequados (ex.: abatedores de temperatura) ou em refrigeração","0","0",NULL,NULL
+"23","8","Equipamentos de congelação sem acumulação de gelo.",,"3","0",NULL,NULL
+"24","8","Produtos datados e dentro nos limites adequados","""Com respetiva data de abertura","0","0",NULL,NULL
+"25","8","Louças e utensílios limpos e protegidos de contaminação.","Ex.: Manter estes materiais num armário fechado, adequado e em bom estado de conservação.","4","0",NULL,NULL
+"26","8","Controlo da qualidade dos óleos de fritura, e adoção de medidas minimizadoras da sua degradação.","Recorrer a kit oleo test. Decreto Lei 240/94, 22/09 e Portaria 1135/95, 15/09","3","0",NULL,NULL
+"27","8","É feito um correto encaminhamento dos óleos usados.","Decreto-lei nº 267/2009, de 29 de setembro - Recorrer a uma empresa certificada de recolha de óleos alimentares usados.","5","0",NULL,NULL
+"28","8","Recolha correta e manutenção adequada das amostras testemunha da confeção diária.","Guardar uma pequena porção do prato do dia num recipiente adequado, datar e manter em refrigeração durante 2-3 dias.","3","0",NULL,NULL
+"29","8","Os produtos presentes apresentam caracteristicas macroscópicas adequadas.","Cor, cheiro, aspeto adequado.","5","0",NULL,NULL
+"30","8","Os produtos estão devidamente protegidos de contaminações cruzadas.","Manter os produtos em recipientes adequados fechados ou utilizando película aderente. Produtos de temperatura ambiente devem estar num armário adequado fechado.","5","0",NULL,NULL
+"31","8"," Os produtos encontram-se acondicionados à temperatura adequada.","Respeitar as condições de armazenamento segundo o fornecedor.","5","0",NULL,NULL
+"32","8","Os produtos devem ter a data de abertura e término e o seu rótulo (do fornecedor) deve ser mantido até ao final.","Após o produto terminar, guardar o rótulo durante 15 dias. ","3","0",NULL,NULL
+"33","8","Existe rastreabilidade dos preparados (sobremesas, molhos, etc.)","Registar datas de produção, lista de ingredientes e alergénios e lotes. O frango assado, depois de assado, é considerado produto do dia.","2","0",NULL,NULL
+"34","8","Existem procedimentos de minimização de contaminações cruzadas na manipulação alimentar.","Utilização de diferentes suerfícies e utensílios de trabalho para cada tipo de produtos (ex.: cores diferentes para manipular peixe, carne, etc.)","4","0",NULL,NULL
+"35","8","Existe distinção dos produtos para consumo apenas dos colaboradores.","""Separar e identificar estes produtos com """"consumo próprio"""".""","3","0",NULL,NULL
+"36","8","Existem equipamentos para controlo dos pontos críticos/binómios tempo-temperatura.","""Termómetros (para confeção do produto)","0","0",NULL,NULL
+"37","8","Na área de serviço não há evidencia de armazenamento de materiais obsoletos ou fora de contexto de trabalho.","Ex.: Pertences dos colaboradores armazenados num vestiário ou numa zona separada da área alimentar.","0","0",NULL,NULL
+"38","8","Existe esterilizador e encontra-se em bom estado de conservação.",,"0","0",NULL,NULL
+"39","8","Vestuário de trabalho dos colaboradores adequado.","Deve ser diferente do vestuário do dia-a-dia do colaborador, em bom estado de conservação, sem potenciais de contaminação e adequado a cada função. Deve ser utilizado apenas em contexto de trabalho. Utilização de touca, quando a função justificar.","5","0",NULL,NULL
+"40","8","Cabelos compridos presos.",,"4","0",NULL,NULL
+"41","8","Colaboradores com unhas limpas e curtas.","Podem utilizar luvas (idealmente coloridas), mas devem trocar aquando manipulação de diferentes tipos de alimentos/materiais/tarefas.","3","0",NULL,NULL
+"42","8","Existem procedimentos nos casos de corte/feridas nas mãos.","Utilizar pensos coloridos e luva ou proteção de dedo, coloridas.","4","0",NULL,NULL
+"43","8","Os colaboradores não trabalham com adornos, ou outros potenciais de contaminação.",,"4","0",NULL,NULL
+"44","8","Os artigos para quebra são geridos de forma adequada.","Estes devem estar separados e no local identificado com o Decreto Lei nº 28/84","3","0",NULL,NULL
+"64","5","As produtos de charcutaria encontram-se devidamente rotulados (ou com etiqueta do fornecedor).","A informação deve estar legível, não rasurada e completa - deve conter data de validade, lote, ingredientes e alergéneos. Manter até ao final da venda e após 15 dias.","5","0",NULL,NULL
+"65","5","Os produtos de charcutaria detém da respetiva data de abertura e de término.",,"4","0",NULL,NULL
+"66","5","A rastreabilidade dos queijos fracionados encontra-se adequada.","Só podem ser fracionados os queijos que contenham mais do que uma face, pois o queijo tem de conter sempre a data de validade, lote e ingredientes. Após o fracionamento, o queijo deve ter 2 datas: a do embalamento e a do termino da validade conforme gravado em retek.","4","0",NULL,NULL
+"67","5","As caracteristicas macroscopicas dos produtos da charcutaria encontra-se adequada (aparentemente).","Descartar os produtos que não apresentem cor, cheiro ou aspeto adequado ou que apresentem embalagens  violada, opada, perda de vácuo ou  má selagem.","5","0",NULL,NULL
+"68","5","Os produtos da charcutaria encontram-se a ser armazenados de forma adequada.","Os produtos devem corresponder ao recomendado pelo fornecedor (de acordo com o rótulo/etiqueta)","5","0",NULL,NULL
+"69","5","Os artigos para quebra são geridos de forma adequada.","Estes devem estar separados e no local identificado com o Decreto Lei nº 28/84","3","0",NULL,NULL
+"70","5","Existe histórico de análises microbiológicas a manipuladores, superfícies ou produtos.","Para verificação do cumprimento da legislação relativa aos critérios microbiológicos dos géneros alimentícios - Regulamento (CE) n.º 2073/2005, de 15 de Novembro e suas alterações, relativo a critérios microbiológicos aplicáveis aos géneros alimentícios","3","0",NULL,NULL
+"71","7","Os materiais e objetos destinados a entrar em contacto com os alimentos são os adequados para uso alimentar.","""Estes objetos/materiais devem estar em conformidade com o Regulamento (CE) N.º 1935/2004, relativo aos  materiais e objetos destinados a entrar em contacto com géneros alimentícios. Estes devem mencionar a  frase """"para contacto com alimentos""""","0","0",NULL,NULL
+"72","7","Equipamentos e utensílios adequados e em bom estado de manutenção.","Apto para uso alimentar, de material liso, não absorvente, não tóxico e resistente à lavagem e desinfeção.","5","0",NULL,NULL
+"73","7","Recipientes para o lixo acionados não manualmente e  forrados com sacos de plástico."," Têm tampa acionada por pedal ou sensor.","4","0",NULL,NULL
+"74","7","Não há acumulação de lixo nos recipientes do lixo desta secção.","Por ser material orgânico, evitar acumular lixo nos caixotes durante longos periodos de tempo.","0","0",NULL,NULL
+"75","7","Não existem produtos armazenados em contacto direto com o pavimento.","O armazenamento deve ser idealmente em prateleiras, armários ou em paletes/estrados de material lavável e com 20 cm, no mínimo, de altura.","4","0",NULL,NULL
+"76","7","Os produtos presentes apresentam caracteristicas macroscópicas adequadas.","Cor, cheiro, aspeto adequado.","5","0",NULL,NULL
+"77","7","Existe informação obrigatória de rastreabilidade visível ao cliente.","""Preço por kg","0","0",NULL,NULL
+"78","7","Os fracionados e embalados dispõe da informação completa.","Verificar se tem etiqueta de balança e se aqui constam todas as menções obrigatórias, modo de conservação e menção de produto do dia. ","4","0",NULL,NULL
+"79","7","Embalagens originais abertas (ex.: azeitonas) têm informação completa.","Colocar data de abertura no rótulo da embalagem original e transcrever para o preçário/ardósia as menções obrigatórias. Após a venda completa da embalagem, o rótulo deve ser mantido durante 15 dias, ascrescentando a data de término.","3","0",NULL,NULL
+"80","7","O embalamento dos produtos a granel dispõe de informação completa.","Verificar se tem etiqueta de balança e se aqui constam todas as menções obrigatórias, modo de conservação (mencionado no rótulo do fornecedor) e menção de produto do dia. ","4","0",NULL,NULL
+"81","7","As embalagens originais das azeitonas e dos tremoços encontra-se fechada ou parcialmente fechada, quando não está ser utilizada.",,"4","0",NULL,NULL
+"82","7","A temperatura de conservação dos produtos a granel corresponde com as recomendações do rótulo do fornecedor.",,"5","0",NULL,NULL
+"86","11","""A conceção da unidade de fabrico permite a marcha """"sempre em frente"""".""","Impedir o cruzamento entre circuitos limpos e circuitos sujos. ","4","0",NULL,NULL
+"87","11","Não há cruzamento entre o fabrico da padaria e o fabrico da pastelaria.","Quando o estabelecimento detém dos 2 tipos de fabrico, a unidade deve estar concebida de forma a não existir cruzamento entre padaria e pastelaria, para minimizar potenciais contaminaçoes cruzadas. ","0","0",NULL,NULL
+"88","11","Os materiais e objetos destinados a entrar em contacto com os alimentos são os adequados para uso alimentar.","""Estes objetos/materiais devem estar em conformidade com o Regulamento (CE) N.º 1935/2004, relativo aos  materiais e objetos destinados a entrar em contacto com géneros alimentícios. Estes devem mencionar a  frase """"para contacto com alimentos""""","0","0",NULL,NULL
+"89","11","Os materiais e objetos destinados a entrar em contacto com os alimentos são armazenados de forma adequada.","Armazenar estes materiais em local fechado (ex.: armário) de material liso, lavável, resistente à corrosão e em bom estado de conservação.","0","0",NULL,NULL
+"90","11","O local de armazenamento das farinhas é adequado. ","""Local bem arejado, seco, com paredes e pisos impermeabilizados e sem irregularidades e facilmente higienizáveis","0","0",NULL,NULL
+"91","11","As práticas de receção e armazenagem da farinha são efetuadas de forma adequada.","""As sacas de farinha após abertura estão fechadas em caixas destinadas a esse fim","0","0",NULL,NULL
+"92","11","Se o estabelecimento fizer entrega dos seus produtos, disponibiliza de condições adequadas nas suas viaturas.","As viaturas devem estar em bom estado de conservação, higienizadas e o controlo de temperatura deve ser monitorizado.","5","0",NULL,NULL
+"93","11","As portas existentes na unidade de fabrico, com acesso ao exterior, encontram-se permanentemente fechadas.","Manter estas portas fechadas. Se possível, colocar portas com mola e/ou colocar rede mosquiteira.","3","0",NULL,NULL
+"94","11","Quando aplicável, os subprodutos existentes são encaminhados para empresas de recolha autorizadas.","No caso das cascas de ovos (classificadas como subprodutos animais de categoria 3) e aplicável em grandes quantidades, aproximadamente 20 kg por semana. Os registos das remessas são mantidos durante dois anos.","2","0",NULL,NULL
+"95","11","O tempo de exposição à temperatura ambiente dos géneros alimentícios (sobretudo os de origem animal), durante a sua preparação, não ultrapassa os 30 minutos.","Este tempo de exposição deve ser controlado.","3","0",NULL,NULL
+"96","11","Os tipos de pão correspondem às definições e características previstas.","De acordo com a Portaria  nº52/2015, de 26/02","5","0",NULL,NULL
+"97","11","O armazenamento dos artigos de massa fresca é efetuado de forma adequada.","Efetuado em ambiente refrigerado, conforme a ficha técnica, e separado fisicamente das restantes categorias armazenadas.","4","0",NULL,NULL
+"98","11","Existem fichas técnicas dos artigos de padaria/pastelaria.","Devem socilitar ao fornecedor as fichas técnicas de todos os artigos que estejam em venda/exposição.","2","0",NULL,NULL
+"99","11","Aquando embalamento, existe rotulagem obrigatória.","Inclui ingredientes, alergénios, lote, data de validade.","0","0",NULL,NULL
+"100","11","Produtos bem acondicionados nos equipamentos de frio.","""Guardados em recipientes próprios (herméticos) e/ou protegidos com película aderente","0","0",NULL,NULL
+"101","11","Produtos datados.","""Com respetiva data de abertura","0","0",NULL,NULL
+"102","11","As instalações encontram-se em bom estado de conservação.","Efetuar manutenção, utilizando materiais lisos, resistentes e impermeáveis.","4","0",NULL,NULL
+"103","11","Os equipamentos são adequados e encontram-se em bom estado de conservação.","Substituir ou efetuar manutenção, utilizando materiais lisos, resistentes, impermeáveis e não tóxicos, aptos para uso alimentar. ","4","0",NULL,NULL
+"104","11","Existe lava-mãos em nr suficiente, com acionamento não manual.",,"4","0",NULL,NULL
+"105","11","Existe material adequado e suficiente para higienização das mãos.","Dispositivos com desinfetante e papel para secar as mãos.","4","0",NULL,NULL
+"106","11","Existe ponto de água quente para higienização.",,"5","0",NULL,NULL
+"107","11","Existe zona adequada destinada ao armazenamento de produtos e utensílios de higiene.","Zona bem separada fisicamente da área alimentar ou em armário fechado e identificado.","3","0",NULL,NULL
+"108","11","Existe distinção de copa suja e copa limpa.",,"4","0",NULL,NULL
+"109","11","Na copa suja existe pelo menos uma cuba de lavagem equipada com água quente e fria.",,"5","0",NULL,NULL
+"110","11","É feito um correto encaminhamento dos óleos usados.","Decreto-lei nº 267/2009, de 29 de setembro - Recorrer a uma empresa certificada de recolha de óleos alimentares usados.","0","0",NULL,NULL
+"117","6","""A conceção da unidade de fabrico permite a marcha """"sempre em frente"""".""","Impedir o cruzamento entre circuitos limpos e circuitos sujos. ","4","0",NULL,NULL
+"118","6","Não há cruzamento entre o fabrico da padaria e o fabrico da pastelaria.","Quando o estabelecimento detém dos 2 tipos de fabrico, a unidade deve estar concebida de forma a não existir cruzamento entre padaria e pastelaria, para minimizar potenciais contaminaçoes cruzadas. ","0","0",NULL,NULL
+"119","6","Os materiais e objetos destinados a entrar em contacto com os alimentos são os adequados para uso alimentar.","""Estes objetos/materiais devem estar em conformidade com o Regulamento (CE) N.º 1935/2004, relativo aos  materiais e objetos destinados a entrar em contacto com géneros alimentícios. Estes devem mencionar a  frase """"para contacto com alimentos""""","0","0",NULL,NULL
+"120","6","Os materiais e objetos destinados a entrar em contacto com os alimentos são armazenados de forma adequada.","Armazenar estes materiais em local fechado (ex.: armário) de material liso, lavável, resistente à corrosão e em bom estado de conservação.","0","0",NULL,NULL
+"121","6","O local de armazenamento das farinhas é adequado. ","""Local bem arejado, seco, com paredes e pisos impermeabilizados e sem irregularidades e facilmente higienizáveis","0","0",NULL,NULL
+"122","6","As práticas de receção e armazenagem da farinha são efetuadas de forma adequada.","""As sacas de farinha após abertura estão fechadas em caixas destinadas a esse fim","0","0",NULL,NULL
+"123","6","Se o estabelecimento fizer entrega dos seus produtos, disponibiliza de condições adequadas nas suas viaturas.","As viaturas devem estar em bom estado de conservação, higienizadas e o controlo de temperatura deve ser monitorizado.","5","0",NULL,NULL
+"124","6","As portas existentes na unidade de fabrico, com acesso ao exterior, encontram-se permanentemente fechadas.","Manter estas portas fechadas. Se possível, colocar portas com mola e/ou colocar rede mosquiteira.","3","0",NULL,NULL
+"125","6","Quando aplicável, os subprodutos existentes são encaminhados para empresas de recolha autorizadas.","No caso das cascas de ovos (classificadas como subprodutos animais de categoria 3) e aplicável em grandes quantidades, aproximadamente 20 kg por semana. Os registos das remessas são mantidos durante dois anos.","2","0",NULL,NULL
+"126","6","O tempo de exposição à temperatura ambiente dos géneros alimentícios (sobretudo os de origem animal), durante a sua preparação, não ultrapassa os 30 minutos.","Este tempo de exposição deve ser controlado.","3","0",NULL,NULL
+"127","6","Os tipos de pão correspondem às definições e características previstas.","De acordo com a Portaria  nº52/2015, de 26/02","5","0",NULL,NULL
+"128","6","O armazenamento dos artigos de massa fresca é efetuado de forma adequada.","Efetuado em ambiente refrigerado, conforme a ficha técnica, e separado fisicamente das restantes categorias armazenadas.","4","0",NULL,NULL
+"129","6","Existem fichas técnicas dos artigos de padaria/pastelaria.","Devem socilitar ao fornecedor as fichas técnicas de todos os artigos que estejam em venda/exposição.","2","0",NULL,NULL
+"130","6","Aquando embalamento, existe rotulagem obrigatória.","Inclui ingredientes, alergénios, lote, data de validade.","0","0",NULL,NULL
+"131","6","Produtos bem acondicionados nos equipamentos de frio.","""Guardados em recipientes próprios (herméticos) e/ou protegidos com película aderente","0","0",NULL,NULL
+"132","6","Produtos datados.","""Com respetiva data de abertura","0","0",NULL,NULL
+"133","6","As instalações encontram-se em bom estado de conservação.","Efetuar manutenção, utilizando materiais lisos, resistentes e impermeáveis.","4","0",NULL,NULL
+"134","6","Os equipamentos são adequados e encontram-se em bom estado de conservação.","Substituir ou efetuar manutenção, utilizando materiais lisos, resistentes, impermeáveis e não tóxicos, aptos para uso alimentar. ","4","0",NULL,NULL
+"135","6","Existe lava-mãos em nr suficiente, com acionamento não manual.",,"4","0",NULL,NULL
+"136","6","Existe material adequado e suficiente para higienização das mãos.","Dispositivos com desinfetante e papel para secar as mãos.","4","0",NULL,NULL
+"137","6","Existe ponto de água quente para higienização.",,"5","0",NULL,NULL
+"138","6","Existe zona adequada destinada ao armazenamento de produtos e utensílios de higiene.","Zona bem separada fisicamente da área alimentar ou em armário fechado e identificado.","3","0",NULL,NULL
+"139","6","Existe distinção de copa suja e copa limpa.",,"4","0",NULL,NULL
+"140","6","Na copa suja existe pelo menos uma cuba de lavagem equipada com água quente e fria.",,"5","0",NULL,NULL
+"141","6","É feito um correto encaminhamento dos óleos usados.","Decreto-lei nº 267/2009, de 29 de setembro - Recorrer a uma empresa certificada de recolha de óleos alimentares usados.","0","0",NULL,NULL
+"148","6","""A conceção da unidade de fabrico permite a marcha """"sempre em frente"""".""","Impedir o cruzamento entre circuitos limpos e circuitos sujos. ","4","0",NULL,NULL
+"149","6","Não há cruzamento entre o fabrico da padaria e o fabrico da pastelaria.","Quando o estabelecimento detém dos 2 tipos de fabrico, a unidade deve estar concebida de forma a não existir cruzamento entre padaria e pastelaria, para minimizar potenciais contaminaçoes cruzadas. ","0","0",NULL,NULL
+"150","6","Os materiais e objetos destinados a entrar em contacto com os alimentos são os adequados para uso alimentar.","""Estes objetos/materiais devem estar em conformidade com o Regulamento (CE) N.º 1935/2004, relativo aos  materiais e objetos destinados a entrar em contacto com géneros alimentícios. Estes devem mencionar a  frase """"para contacto com alimentos""""","0","0",NULL,NULL
+"151","6","Os materiais e objetos destinados a entrar em contacto com os alimentos são armazenados de forma adequada.","Armazenar estes materiais em local fechado (ex.: armário) de material liso, lavável, resistente à corrosão e em bom estado de conservação.","0","0",NULL,NULL
+"152","6","O local de armazenamento das farinhas é adequado. ","""Local bem arejado, seco, com paredes e pisos impermeabilizados e sem irregularidades e facilmente higienizáveis","0","0",NULL,NULL
+"153","6","As práticas de receção e armazenagem da farinha são efetuadas de forma adequada.","""As sacas de farinha após abertura estão fechadas em caixas destinadas a esse fim","0","0",NULL,NULL
+"154","6","Se o estabelecimento fizer entrega dos seus produtos, disponibiliza de condições adequadas nas suas viaturas.","As viaturas devem estar em bom estado de conservação, higienizadas e o controlo de temperatura deve ser monitorizado.","5","0",NULL,NULL
+"155","6","As portas existentes na unidade de fabrico, com acesso ao exterior, encontram-se permanentemente fechadas.","Manter estas portas fechadas. Se possível, colocar portas com mola e/ou colocar rede mosquiteira.","3","0",NULL,NULL
+"156","6","Quando aplicável, os subprodutos existentes são encaminhados para empresas de recolha autorizadas.","No caso das cascas de ovos (classificadas como subprodutos animais de categoria 3) e aplicável em grandes quantidades, aproximadamente 20 kg por semana. Os registos das remessas são mantidos durante dois anos.","2","0",NULL,NULL
+"157","6","O tempo de exposição à temperatura ambiente dos géneros alimentícios (sobretudo os de origem animal), durante a sua preparação, não ultrapassa os 30 minutos.","Este tempo de exposição deve ser controlado.","3","0",NULL,NULL
+"158","6","Os tipos de pão correspondem às definições e características previstas.","De acordo com a Portaria  nº52/2015, de 26/02","5","0",NULL,NULL
+"159","6","O armazenamento dos artigos de massa fresca é efetuado de forma adequada.","Efetuado em ambiente refrigerado, conforme a ficha técnica, e separado fisicamente das restantes categorias armazenadas.","4","0",NULL,NULL
+"160","6","Existem fichas técnicas dos artigos de padaria/pastelaria.","Devem socilitar ao fornecedor as fichas técnicas de todos os artigos que estejam em venda/exposição.","2","0",NULL,NULL
+"161","6","Aquando embalamento, existe rotulagem obrigatória.","Inclui ingredientes, alergénios, lote, data de validade.","0","0",NULL,NULL
+"162","6","Produtos bem acondicionados nos equipamentos de frio.","""Guardados em recipientes próprios (herméticos) e/ou protegidos com película aderente","0","0",NULL,NULL
+"163","6","Produtos datados.","""Com respetiva data de abertura","0","0",NULL,NULL
+"164","6","As instalações encontram-se em bom estado de conservação.","Efetuar manutenção, utilizando materiais lisos, resistentes e impermeáveis.","4","0",NULL,NULL
+"165","6","Os equipamentos são adequados e encontram-se em bom estado de conservação.","Substituir ou efetuar manutenção, utilizando materiais lisos, resistentes, impermeáveis e não tóxicos, aptos para uso alimentar. ","4","0",NULL,NULL
+"166","6","Existe lava-mãos em nr suficiente, com acionamento não manual.",,"4","0",NULL,NULL
+"167","6","Existe material adequado e suficiente para higienização das mãos.","Dispositivos com desinfetante e papel para secar as mãos.","4","0",NULL,NULL
+"168","6","Existe ponto de água quente para higienização.",,"5","0",NULL,NULL
+"169","6","Existe zona adequada destinada ao armazenamento de produtos e utensílios de higiene.","Zona bem separada fisicamente da área alimentar ou em armário fechado e identificado.","3","0",NULL,NULL
+"170","6","Existe distinção de copa suja e copa limpa.",,"4","0",NULL,NULL
+"171","6","Na copa suja existe pelo menos uma cuba de lavagem equipada com água quente e fria.",,"5","0",NULL,NULL
+"172","6","É feito um correto encaminhamento dos óleos usados.","Decreto-lei nº 267/2009, de 29 de setembro - Recorrer a uma empresa certificada de recolha de óleos alimentares usados.","0","0",NULL,NULL
+"180","4","Os operadores detêm de cartão de manipuladores.","Este cartão tem a validade de três anos, ficando a sua renovação dependente da apresentação dos comprovativos da realização de acções de formação de actualização de conhecimentos.","5","0",NULL,NULL
+"181","4","Possui sala adequada destinada para preparados de carne.","Sala concebida de forma a proteger os produtos, materiais, equipamentos e utensílios contra fatores de contaminação.","5","0",NULL,NULL
+"182","4","As portas existentes na sala de preparação, com acesso ao exterior, encontram-se permanentemente fechadas.","Manter estas portas fechadas. Se possível, colocar portas com mola e/ou colocar rede mosquiteira.","5","0",NULL,NULL
+"183","4","Os materiais e objetos destinados a entrar em contacto com os alimentos são os adequados para uso alimentar.","""Estes devem estar em conformidade com o Regulamento (CE) N.º 1935/2004, relativo aos  materiais e objetos destinados a entrar em contacto com géneros alimentícios. Estes devem mencionar a  frase """"para contacto com alimentos""""","0","0",NULL,NULL
+"184","4","Os materiais e objetos destinados a entrar em contacto com os alimentos são armazenados de forma adequada.","Armazenar estes materiais em local fechado (ex.: armário) de material liso, lavável, resistente à corrosão e em bom estado de conservação.","5","0",NULL,NULL
+"185","4","A cabeça da máquina dos picadores não refrigerados é armazenada de forma adequada (quando não utilizada).","Esta é colocada sob proteção frigorifica no intervalo das picagens.","5","0",NULL,NULL
+"186","4","São observados cuidados especiais para evitar que o sangue ou outras escorrências conspurquem os produtos de venda.","""Ex.: As tábuas de corte são só utilizadas para o efeito e estão a uma distância significativa dos produtos de venda","0","0",NULL,NULL
+"187","4","Todas as carnes ou produtos de origem animal ostentam uma marca de salubridade ou uma marca de identificação.","""Atentar aquando a receção a detenção da respetiva marca. A marca de salubridade deve ser aposta diretamente nas peças de carne se estas não estiverem
+acondicionadas, ou impressa no acondicionamento e na respectiva embalagem, ou num rótulo, quando se trate de peças acondicionadas e/ou embaladas. Deve estar legível e bem visível.""","5","0",NULL,NULL
+"188","4","As carnes e seus produtos estão permanentemente protegidos da acção dos raios solares, poeiras e do contacto com o público.","Os locais de exposição dos produtos devem estar devidamente protegidos contra estes fatores externos. Ex.: Vitrines em bom estado de conservação e dotadas de portas ","5","0",NULL,NULL
+"189","4","O produto final é vendido no próprio dia da sua preparação.","Os preparados de carne são considerados produto (apenas) do dia.","5","0",NULL,NULL
+"190","4","Na venda, as carnes frescas de espécies diferentes estão separadas para não contatarem entre si.","""Não obstruir locais de exposição/vitrines e organizá-los deste modo. Ex.: utilização de recipientes adequados","0","0",NULL,NULL
+"191","4","A exposição de carnes frescas de espécies diferentes, carne picada e preparados de carne, colocados no mesmo balcão, estão fisicamente separados entre si.","""Não obstruir locais de exposição/vitrines e organizá-los deste modo. Ex.: utilização de recipientes adequados (material resistente, não tóxico)","0","0",NULL,NULL
+"192","4","Os produtos à base de carne estão expostos em expositor próprio.","Estes produtos - enchidos fumados e/ou termizados - estão expostos num expositor apenas destinado a estes tipos de produtos, bem separado dos restantes produtos.","4","0",NULL,NULL
+"193","4","As peças inteiras de caça selvagem menor quando comercializadas com pele ou penas estão expostas em expositor próprio e separadas das outras carnes.","Estes produtos estão expostos num expositor apenas destinado a estes tipos de produtos, bem separado dos restantes produtos.","4","0",NULL,NULL
+"194","4","A exposição de carnes e seus produtos não estão acondicionados na parte do estabelecimento reservado ao público, bem como à entrada dos locais de venda.","A exposição de carnes e seus produtos faz-se apenas na área de serviço.","5","0",NULL,NULL
+"195","4","As mesas de corte são de material adequado.","Estas devem ser de material inócuo que permita a raspagem e que seja de fácil lavagem e desinfecção.","5","0",NULL,NULL
+"196","4","A suspensão da carne é efetuada de forma adequada.","Os dispositivos de suspensão da carne são de material resistente à corrosão e colocados de modo a evitar que as carnes suspensas contactem entre elas, com a parede ou com o pavimento.","5","0",NULL,NULL
+"197","4","O armazenamento independente de condimentos, aditivos e matérias-primas subsidiárias é efetuado de forma adequada.","Para o efeito, dispor de  armário de material liso, lavável e resistente à corrosão para armazenar estes produtos.","4","0",NULL,NULL
+"198","4","A preparação de carne picada de aves é efetuada de forma adequada. ","Esta apenas pode ser realizada quando exista equipamento de uso exclusivo para o efeito","4","0",NULL,NULL
+"199","4","Existem tábuas e utensílios diferentes para a carnes de aves.","Deve ser implementado um sistema de cores, para facilitar o manusemento. Ex.: utilizar apenas utensílios de cor branca para as aves.","4","0",NULL,NULL
+"200","4"," A preparação de carnes picadas é efetuada de forma adequada.","Esta deve ser efectuada de modo que as mesmas não contenham quaisquer fragmentos de ossos e não pode ser proveniente de: aparas decorrentes do corte ou da raspagem dos ossos e carnes provenientes das seguintes partes: cabeça, com excepção dos masseteres, parte não muscular da linea alba e zona do carpo e do tarso","5","0",NULL,NULL
+"201","4","Os utensílios de preparação de carne picada são utilizados de forma adequada. ","A máquina picadora, o tabuleiro, os moldes e demais utensílios são constituídos por material apropriado, reservados exclusivamente a esse fim e fáceis de desmontar e de limpar","5","0",NULL,NULL
+"202","4","A rastreabilidade da carne é visível para o cliente. ","A informação da origem da carne deve estar junto do respetivo produto e visível ao cliente.","4","0",NULL,NULL
+"203","4","Preçários com menção do animal e a origem.","Informação visível ao cliente.","4","0",NULL,NULL
+"204","4","Existem fichas técnicas dos produtos transformados.","A ficha técnica inclui a informação: ingredientes, alergénios, método de conservação e menção a produto do dia","4","0",NULL,NULL
+"205","4","Existe rastreabilidade dos ingredientes dos produtos transformados.","Utilizar a etiqueta de rastreabilidade para todos os ingredientes com data de abertura e data de utilização (conforme indicação do rótulo do fornecedor).","3","0",NULL,NULL
+"206","4","Aquando embalamento da carne, é disposta a rotulagem obrigatória e rastreabilidade.","""Informação a conter: Menção produto do dia","0","0",NULL,NULL
+"207","4","A rotulagem da carne encontra-se adequada.","""Deve incluir  origem da carne","0","0",NULL,NULL
+"208","4","Os artigos para quebra são geridos de forma adequada.","Estes devem estar separados e no local identificado com o Decreto Lei nº 28/84","3","0",NULL,NULL
+"209","4","Existência e utilização de esterelizador.",,"2","0",NULL,NULL
+"210","4","O embalamento a vácuo encontra-se a ser bem aplicado.","""Não deve existir evidências de perda de vácuo (bolhas, folgas de ar)","0","0",NULL,NULL
+"211","4","O vestuário dos colaboradores encontra-se adequado às suas funções.","Usar vestuário em perfeito estado de limpeza, de cor clara, de fácil lavagem e desinfecção, designadamente resguardo ou bata, avental de material impermeável, gorro, boné ou touca e calçado impermeável, de fácil lavagem e desinfecção","4","0",NULL,NULL
+"212","4","Os subprodutos de origem animal são recolhidos dentro do talho de forma adequada.","Estes subprodutos devem ser recolhidos em sacos não reutilizáveis apropriados para o efeito, colocados em suporte adequado com tampa de comando não manual, devendo este ser despejado, lavado e desinfectado pelo menos uma vez por dia. ","5","0",NULL,NULL
+"213","4","Os subprodutos de origem animal são encaminhados para estabelecimentos aprovados.","Devem efectuar as operações de separação, identificação, pesagem, registo e encaminhamento para eliminação ou aproveitamento daqueles, nos termos previstos no Regulamento (CE) n.º 1774/2002, do Parlamento Europeu e do Conselho, de 3 de Outubro. Devem manter os registos das remessas durante 2 anos.","5","0",NULL,NULL
+"214","4","Existe produção de produtos à base de carne - enchidos fumados e/ou termizados - e é efetuada de forma adequada.","""Esta produção é realizada numa sala anexa, concebida de forma a proteger produtos/materiais/equipamentos/utensílios de fatores de contaminação. Dispõe de dependência destinada exclusivamente às operações de fabrico, que permita uma temperatura ambiente apropriada ao fim a que se destina","0","0",NULL,NULL
+"215","4","Existe histórico de análises microbiológicas a manipuladores, superfícies ou produtos.","Para verificação do cumprimento da legislação relativa aos critérios microbiológicos dos géneros alimentícios - Regulamento (CE) n.º 2073/2005, de 15 de Novembro e suas alterações, relativo a critérios microbiológicos aplicáveis aos géneros alimentícios.","3","0",NULL,NULL
+"242","9","A área de serviço é de acesso reservado ao pessoal do estabelecimento.",,"0","0",NULL,NULL
+"243","9","Não existe possibilidade de entrada e/ou verifica-se a permanência de animais vivos na área de serviço.",,"5","0",NULL,NULL
+"244","9","A área de serviço está instalada de forma a evitar-se a propagação de fumos e cheiros.",,"5","0",NULL,NULL
+"245","9","Quando o estabelecimento apenas serve produtos confecionados, pré-confecionados ou pré-preparados que necessitem apenas de aquecimento ou conclusão de confeção, dispõe de equipamentos adequados a esse efeito.","Ex.: Micro -ondas, forno, chapa, fritadeira, tostadeira, máquina de sumos ou equiparados","5","0",NULL,NULL
+"246","9","""A conceção da unidade permite a marcha """"sempre em frente"""".""","Não existe cruzamento entre circuitos limpos e circuitos sujos.","4","0",NULL,NULL
+"247","9","Existe uma zona destinada à preparação de alimentos.",,"5","0",NULL,NULL
+"248","9","Existe distinção de copa suja e copa limpa.",,"4","0",NULL,NULL
+"249","9","Na copa suja existe pelo menos uma cuba de lavagem equipada com água quente e fria.",,"5","0",NULL,NULL
+"250","9","Existe ponto de água quente nos lava-mãos situados nas áreas de manipulaçao alimentar.",,"4","0",NULL,NULL
+"251","9","Existe máquina de lavar loiça grande.",,"4","0",NULL,NULL
+"252","9","A cozinha é próxima das copas, e ambas estão instaladas de forma a permitir uma comunicação rápida com a sala de refeição.",,"5","0",NULL,NULL
+"253","9","Existem lava-mãos em número suficiente, com acionamento não manual.","Dotados de pedal, cotoveleira ou sensor.","4","0",NULL,NULL
+"254","9","Existe material adequado e suficiente para higienização das mãos.","Dispositivos com desinfetante e papel para secar as mãos.","4","0",NULL,NULL
+"255","9","Existe zona adequada destinada ao armazenamento de produtos e utensílios de higiene.","Zona bem separada fisicamente da área alimentar ou em armário fechado e identificado.","4","0",NULL,NULL
+"256","9","As portas existentes na unidade de confeção, com acesso ao exterior, encontram-se permanentemente fechadas.","Manter estas portas fechadas. Se possível, colocar portas com mola e/ou colocar rede mosquiteira.","4","0",NULL,NULL
+"257","9","As superfícies em contacto com os alimentos são adequadas.","Lisas, não absorventes, não tóxicas e resistentes à lavagem e desinfeção.","5","0",NULL,NULL
+"258","9","Os materiais e objetos destinados a entrar em contacto com os alimentos são os adequados para uso alimentar.","""Estes objetos/materiais devem estar em conformidade com o Regulamento (CE) N.º 1935/2004, relativo aos  materiais e objetos destinados a entrar em contacto com géneros alimentícios. Estes devem mencionar a  frase """"para contacto com alimentos""""","0","0",NULL,NULL
+"259","9","Equipamentos e utensílios adequados, em bom estado de manutenção e adequados ao volume/tipo de refeições servidas","De material liso, não absorvente, não tóxico e resistente à lavagem e desinfeção.","5","0",NULL,NULL
+"260","9","Recipientes para o lixo acionados não manualmente e  forrados com sacos de plástico."," Têm tampa acionada por pedal ou sensor.","4","0",NULL,NULL
+"261","9","São adotados métodos ou equipamentos que permitam assegurar a separação dos resíduos de forma a promover a sua valorização por fluxos e fileiras?","""Idealmente devem existir um recipiente para cada tipo de resíduo: Embalagens/plástico","0","0",NULL,NULL
+"262","9","Não existem produtos armazenados em contacto direto com o pavimento.","O armazenamento deve ser idealmente em prateleiras, armários ou em paletes/estrados de material lavável e com 20 cm, no mínimo, de altura.","4","0",NULL,NULL
+"263","9","Produtos bem acondicionados nos equipamentos de frio.","""Guardados em recipientes próprios (herméticos) e/ou protegidos com película aderente","0","0",NULL,NULL
+"264","9","Descongelação adequada e respeitando boas práticas.","""Idealmente em equipamentos adequados (ex.: abatedores de temperatura) ou em refrigeração","0","0",NULL,NULL
+"265","9","Equipamentos de congelação sem acumulação de gelo.",,"3","0",NULL,NULL
+"266","9","Produtos datados e dentro nos limites adequados","""Com respetiva data de abertura","0","0",NULL,NULL
+"267","9","Se o estabelecimento fizer entrega dos seus produtos, disponibiliza de condições adequadas nas suas viaturas.","As viaturas devem estar em bom estado de conservação, higienizadas e o controlo de temperatura deve ser monitorizado.","5","0",NULL,NULL
+"268","9","Louças e utensílios limpos e protegidos de contaminação.","Ex.: Manter estes materiais num armário fechado, adequado e em bom estado de conservação.","4","0",NULL,NULL
+"269","9","Controlo da qualidade dos óleos de fritura, e adoção de medidas minimizadoras da sua degradação.","Recorrer a kit oleo test. Decreto Lei 240/94, 22/09 e Portaria 1135/95, 15/09","3","0",NULL,NULL
+"270","9","É feito um correto encaminhamento dos óleos usados.","Decreto-lei nº 267/2009, de 29 de setembro - Recorrer a uma empresa certificada de recolha de óleos alimentares usados.","5","0",NULL,NULL
+"271","9","Recolha correta e manutenção adequada das amostras testemunha da confeção diária.","Guardar uma pequena porção do prato do dia num recipiente adequado, datar e manter em refrigeração durante 2-3 dias.","3","0",NULL,NULL
+"272","9","Os produtos presentes apresentam caracteristicas macroscópicas adequadas.","Cor, cheiro, aspeto adequado.","5","0",NULL,NULL
+"273","9","Os produtos estão devidamente protegidos de contaminações cruzadas.","Manter os produtos em recipientes adequados fechados ou utilizando película aderente. Produtos de temperatura ambiente devem estar num armário adequado fechado.","5","0",NULL,NULL
+"274","9"," Os produtos encontram-se acondicionados à temperatura adequada.","Respeitar as confições de armazenamento segundo o fornecedor.","5","0",NULL,NULL
+"275","9","Os produtos devem ter a data de abertura e término e o seu rótulo deve ser mantido até ao final.","Após o produto terminar, guardar o rótulo durante 15 dias. ","3","0",NULL,NULL
+"276","9","Existem procedimentos de minimização de contaminações cruzadas na manipulação alimentar.","Utilização de diferentes suerfícies e utensílios de trabalho para cada tipo de produtos (ex.: cores diferentes para manipular peixe, carne, etc.)","4","0",NULL,NULL
+"277","9","Existe distinção dos produtos para consumo apenas dos colaboradores.","""Separar e identificar estes produtos com """"consumo próprio"""".""","3","0",NULL,NULL
+"278","9","Existe rastreabilidade dos preparados (sobremesas, molhos, etc.)","Registar datas de produção, lista de ingredientes e alergénios e lotes.","2","0",NULL,NULL
+"279","9","Existem equipamentos para controlo dos pontos críticos/binómios tempo-temperatura.","""Termómetros (para confeção do produto)","0","0",NULL,NULL
+"280","9","Na área de serviço não há evidencia de armazenamento de materiais obsoletos ou fora de contexto de trabalho.","Ex.: Pertences dos colaboradores armazenados num vestiário ou numa zona separada da área alimentar.","0","0",NULL,NULL
+"281","9","Vestuário de trabalho dos colaboradores adequado.","Deve ser diferente do vestuário do dia-a-dia do colaborador, em bom estado de conservação, sem potenciais de contaminação e adequado a cada função. Deve ser utilizado apenas em contexto de trabalho. Utilização de touca, quando a função justificar.","5","0",NULL,NULL
+"282","9","Cabelos compridos presos.",,"4","0",NULL,NULL
+"283","9","Colaboradores com unhas limpas e curtas.","Podem utilizar luvas (idealmente coloridas), mas devem trocar aquando manipulação de diferentes tipos de alimentos/materiais/tarefas.","3","0",NULL,NULL
+"284","9","Existem procedimentos nos casos de corte/feridas nas mãos.","Utilizar pensos coloridos e luva ou proteção de dedo, coloridas.","4","0",NULL,NULL
+"285","9","Os colaboradores não trabalham com adornos, ou outros potenciais de contaminação.",,"4","0",NULL,NULL
+"305","10","A área de serviço é de acesso reservado ao pessoal do estabelecimento.",,"5","0",NULL,NULL
+"306","10","Não existe possibilidade de entrada e/ou verifica-se a permanência de animais vivos na área de serviço.",,"5","0",NULL,NULL
+"307","10","A área de serviço está instalada de forma a evitar-se a propagação de fumos e cheiros.","Deve existir um sistema de exaustão eficaz.","5","0",NULL,NULL
+"308","10","O sistema de exaustão é submetido a uma limpeza profunda anualmente.",,"3","0",NULL,NULL
+"309","10","""A conceção da unidade permite a marcha """"sempre em frente"""".""","Não existe cruzamento entre circuitos limpos e circuitos sujos.","4","0",NULL,NULL
+"310","10","Existe uma zona destinada à preparação de alimentos.",,"5","0",NULL,NULL
+"311","10","Existe distinção de copa suja e copa limpa.",,"4","0",NULL,NULL
+"312","10","Na copa suja existe pelo menos uma cuba de lavagem equipada com água quente e fria.",,"5","0",NULL,NULL
+"313","10","Existe ponto de água quente nos lava-mãos situados nas áreas de manipulaçao alimentar.",,"4","0",NULL,NULL
+"314","10","Existe máquina de lavar loiça grande.",,"4","0",NULL,NULL
+"315","10","Existem lava-mãos em número suficiente, com acionamento não manual.","Dotados de pedal, cotoveleira ou sensor.","4","0",NULL,NULL
+"316","10","Existe material adequado e suficiente para higienização das mãos.","Dispositivos com desinfetante e papel para secar as mãos.","4","0",NULL,NULL
+"317","10","Existe zona adequada destinada ao armazenamento de produtos e utensílios de higiene.","Zona bem separada fisicamente da área alimentar ou em armário fechado e identificado.","4","0",NULL,NULL
+"318","10","As portas existentes na unidade de confeção, com acesso ao exterior, encontram-se permanentemente fechadas.","Manter estas portas fechadas. Se possível, colocar portas com mola e/ou colocar rede mosquiteira.","4","0",NULL,NULL
+"319","10","As superfícies em contacto com os alimentos são adequadas.","Lisas, não absorventes, não tóxicas e resistentes à lavagem e desinfeção.","5","0",NULL,NULL
+"320","10","Os materiais e objetos destinados a entrar em contacto com os alimentos são os adequados para uso alimentar.","""Estes objetos/materiais devem estar em conformidade com o Regulamento (CE) N.º 1935/2004, relativo aos  materiais e objetos destinados a entrar em contacto com géneros alimentícios. Estes devem mencionar a  frase """"para contacto com alimentos""""","0","0",NULL,NULL
+"321","10","Equipamentos e utensílios adequados, em bom estado de manutenção e adequados ao volume/tipo de refeições servidas","De material liso, não absorvente, não tóxico e resistente à lavagem e desinfeção.","5","0",NULL,NULL
+"322","10","Recipientes para o lixo acionados não manualmente e  forrados com sacos de plástico."," Têm tampa acionada por pedal ou sensor.","4","0",NULL,NULL
+"323","10","São adotados métodos ou equipamentos que permitam assegurar a separação dos resíduos de forma a promover a sua valorização por fluxos e fileiras?","""Idealmente devem existir um recipiente para cada tipo de resíduo: Embalagens/plástico","0","0",NULL,NULL
+"324","10","Não existem produtos armazenados em contacto direto com o pavimento.","O armazenamento deve ser idealmente em prateleiras, armários ou em paletes/estrados de material lavável e com 20 cm, no mínimo, de altura.","4","0",NULL,NULL
+"325","10","Produtos bem acondicionados nos equipamentos de frio.","""Guardados em recipientes próprios (herméticos) e/ou protegidos com película aderente","0","0",NULL,NULL
+"326","10","Descongelação adequada e respeitando boas práticas.","""Idealmente em equipamentos adequados (ex.: abatedores de temperatura) ou em refrigeração","0","0",NULL,NULL
+"327","10","Equipamentos de congelação sem acumulação de gelo.",,"3","0",NULL,NULL
+"328","10","Produtos datados e dentro nos limites adequados","""Com respetiva data de abertura","0","0",NULL,NULL
+"329","10","Louças e utensílios limpos e protegidos de contaminação.","Ex.: Manter estes materiais num armário fechado, adequado e em bom estado de conservação.","4","0",NULL,NULL
+"330","10","Controlo da qualidade dos óleos de fritura, e adoção de medidas minimizadoras da sua degradação.","Recorrer a kit oleo test. Decreto Lei 240/94, 22/09 e Portaria 1135/95, 15/09","3","0",NULL,NULL
+"331","10","É feito um correto encaminhamento dos óleos usados.","Decreto-lei nº 267/2009, de 29 de setembro - Recorrer a uma empresa certificada de recolha de óleos alimentares usados.","5","0",NULL,NULL
+"332","10","Recolha correta e manutenção adequada das amostras testemunha da confeção diária.","Guardar uma pequena porção do prato do dia num recipiente adequado, datar e manter em refrigeração durante 2-3 dias.","3","0",NULL,NULL
+"333","10","Os produtos presentes apresentam caracteristicas macroscópicas adequadas.","Cor, cheiro, aspeto adequado.","5","0",NULL,NULL
+"334","10","Os produtos estão devidamente protegidos de contaminações cruzadas.","Manter os produtos em recipientes adequados fechados ou utilizando película aderente. Produtos de temperatura ambiente devem estar num armário adequado fechado.","5","0",NULL,NULL
+"335","10"," Os produtos encontram-se acondicionados à temperatura adequada.","Respeitar as condições de armazenamento segundo o fornecedor.","5","0",NULL,NULL
+"336","10","Os produtos devem ter a data de abertura e término e o seu rótulo (do fornecedor) deve ser mantido até ao final.","Após o produto terminar, guardar o rótulo durante 15 dias. ","3","0",NULL,NULL
+"337","10","Existe rastreabilidade dos preparados (sobremesas, molhos, etc.)","Registar datas de produção, lista de ingredientes e alergénios e lotes. O frango assado, depois de assado, é considerado produto do dia.","2","0",NULL,NULL
+"338","10","Existem procedimentos de minimização de contaminações cruzadas na manipulação alimentar.","Utilização de diferentes suerfícies e utensílios de trabalho para cada tipo de produtos (ex.: cores diferentes para manipular peixe, carne, etc.)","4","0",NULL,NULL
+"339","10","Existe distinção dos produtos para consumo apenas dos colaboradores.","""Separar e identificar estes produtos com """"consumo próprio"""".""","3","0",NULL,NULL
+"340","10","Existem equipamentos para controlo dos pontos críticos/binómios tempo-temperatura.","""Termómetros (para confeção do produto)","0","0",NULL,NULL
+"341","10","Na área de serviço não há evidencia de armazenamento de materiais obsoletos ou fora de contexto de trabalho.","Ex.: Pertences dos colaboradores armazenados num vestiário ou numa zona separada da área alimentar.","0","0",NULL,NULL
+"342","10","Existe esterilizador e encontra-se em bom estado de conservação.",,"0","0",NULL,NULL
+"343","10","Vestuário de trabalho dos colaboradores adequado.","Deve ser diferente do vestuário do dia-a-dia do colaborador, em bom estado de conservação, sem potenciais de contaminação e adequado a cada função. Deve ser utilizado apenas em contexto de trabalho. Utilização de touca, quando a função justificar.","5","0",NULL,NULL
+"344","10","Cabelos compridos presos.",,"4","0",NULL,NULL
+"345","10","Colaboradores com unhas limpas e curtas.","Podem utilizar luvas (idealmente coloridas), mas devem trocar aquando manipulação de diferentes tipos de alimentos/materiais/tarefas.","3","0",NULL,NULL
+"346","10","Existem procedimentos nos casos de corte/feridas nas mãos.","Utilizar pensos coloridos e luva ou proteção de dedo, coloridas.","4","0",NULL,NULL
+"347","10","Os colaboradores não trabalham com adornos, ou outros potenciais de contaminação.",,"4","0",NULL,NULL
+"348","10","Os artigos para quebra são geridos de forma adequada.","Estes devem estar separados e no local identificado com o Decreto Lei nº 28/84","3","0",NULL,NULL
+"368","0","Acesso estabelecimento","Bom estado de conservação e limpeza.","0","0",NULL,NULL
+"369","0","Pavimentação","Bom estado de conservação.","0","0",NULL,NULL
+"370","0","WC","Bom estado de conservação e limpeza.","0","1",NULL,NULL
+"371","0","Vestiários","Bom estado de conservação e limpeza. Existência de cacifos.","0","1",NULL,NULL
+"372","0","Áreas Comuns:Validades e stocks,
+Gorgulho","Bom estado de conservação e limpeza;Realização FIFO e FEFO;Controlo de traça e gorgulho nas farinhas, arroz, frutos secos...","0","1",NULL,NULL
+"373","0","Armazém","Separação física dos diferentes artigos de cada Família. Acondicionamento não direto no chão.Instalações adequadas.","0","1",NULL,NULL
+"374","0","Higienização","Substâncias normalizadas. Garantem  a utilização correta dos produtos químicos e cumprem as frequência correta. Fardamento conforme.","0","1",NULL,NULL
+"375","0","Equipamentos e utensílios","Não devem apresentar deterioração (ferrugens, decapagens, chão degradado).","0","1",NULL,NULL
+"376","0","Resíduos","Deve existir caixote do lixo com tampa e pedal. Realizar separação dos diferentes resíduos.","0","1",NULL,NULL
+"377","0","CAE","Associar CAE inerente a cada secção de transformação.","0","2",NULL,NULL
+"378","0","Licença","Requerer licença a fim de poder exercer a atividade.","0","2",NULL,NULL
+"379","0","Manutenção Equipamentos","Evidenciar registo de manutenção das instalações, equipamentos e utensílios e calibração de equipamentos.","0","2",NULL,NULL
+"380","0","Livro Reclamações","Todos estabelecimentos devem ter livro de reclamações disponível  para o consumidor. Inclusive online.","0","2",NULL,NULL
+"381","0","Responsabilidade civil","Evidenciar seguro.","0","2",NULL,NULL
+"382","0","Retalhista ração animais não domésticos"," Realizar registo enquanto retalhistas.","0","2",NULL,NULL
+"383","0","Água:
+Licença de furo ou análises,
+Análises da companhia","Apresentar licença de furo de água e apresentar as análises;Apresentar as análises da água sempre atualizadas.","0","2",NULL,NULL
+"384","0","Controlo de Pragas:
+contrato,
+planta iscos,
+Fichas técnicas,
+Autorizações DGS,
+Relatório visitas","Evidenciar contrato de controlo de HACCP,de forma a controlar o sistema de segurança alimentar;Evidenciar planta com localização dos iscos e a sua toxicidade;Apresentar as fichas técnicas dos produtos utilizados;Apresentar as autorizações de venda dos produtos na sua versão mais atual;Apresentar relatório das visitas efetuadas pelos técnicos.","0","2",NULL,NULL
+"385","0","HACCP:
+contrato,
+manual,
+Boas práticas,
+Registos de temperatura,
+Relatório visitas","Evidenciar contrato de controlo de HACCP,de forma a controlar o sistema de segurança alimentar;Apresentar o Manual com o plano de HACCP, identificação e monitorização de PCC's;Apresentar Manual de Boas Práticas de HACCP e procedimentos a seguir;Realizar, guardar e apresentar os registos de temperaturas dos equipamentos;Apresentar relatório das visitas efetuadas pelos auditores.","0","2",NULL,NULL
+"386","0","Análises:
+Produtos,
+Superfícies,
+manipuladores,
+Formações","Efetuar análises a produtos selecionados caso se aplique e esteja no plano de análises;Efetuar análises a superfícies de contacto com alimentos caso se aplique e esteja no plano de análises;Efetuar análises aos manipuladores de alimentos caso se aplique e esteja no plano de análises;Deve existir um plano de formações anual.","0","2",NULL,NULL
+"387","0","Plano Formação:
+manipuladores de carne (Talho e Charcutaria - 2 em 2 anos)","Manipuladores de carne (Talho e Charcutaria - 2 em 2 anos); Os operadores das secções de Talho e Charcutaria têm de apresentar formação de manipuladores.","0","2",NULL,NULL
+"388","0","Higiene:
+Fichas técnicas,
+fichas de segurança,
+Registos de limpeza,
+planos de higienização","Apresentar as fichas técnicas dos produtos de higiene;Apresentar as fichas de dados de segurança dos produtos de higiene;Devem preencher todos os registos inerentes ao HACCP;Devem apresentar os planos de higienização para cada área da loja com os produtos a utilizar, a sua diluição, frequência de limpeza, método e equipamento.","0","2",NULL,NULL
+"389","0","Resíduos:
+Tratamento de subprodutos","Evidenciar tratamento de subprodutos de origem animal (SPOA), se aplicável a declaração do mesmo.","0","2",NULL,NULL
+"390","0","Sinalética Obrigatória:
+Bebidas alcoólicas,
+tabaco,
+Horário,
+Animais,
+Preços,
+capacidade máxima,
+atividade,
+alergénios,
+Litígios Consumidor,
+Atendimento Prioritário","Devem estar afixados em local visível, legíveis e de fácil acesso.","0","2",NULL,NULL
+"391","0","Fornecedores:
+Controlo Receção MP,
+Viaturas,
+temperaturas,
+Limpeza,
+Acondicionamento,
+Guias","Evidenciar controlo das viaturas de distribuição dos fornecedores (carimbo ou registo);Medir temperatura dos produtos por amostragem e do veículo, assim como solicitar talão de temperatura;Verificar e evidenciar limpeza das viaturas;Analisar se a mercadoria foi bem acondicionada durante o transporte e se existiram danos;Arquivar guias de transporte dos fornecedores.","0","2",NULL,NULL
+"392","0","Avaliação de fornecedores","Preencher registo de avaliação de fornecedores e solicitar certificado de segurança alimentar.","0","2",NULL,NULL
+"393","0","Termómetro","Disponibilizar equipamento para medição de temperatura das mercadoria e viaturas.","0","2",NULL,NULL

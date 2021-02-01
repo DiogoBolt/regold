@@ -24,8 +24,13 @@
         <span class="back-btn__front"><strong>Voltar</strong></span>
         <span class="back-btn__back"><strong>Documentos Controlo Pragas</strong></span>
     </a>
-    @else
+    @elseif($idReportMain=!null)
         <a class="back-btn" href="/frontoffice/maintenance">
+            <span class="back-btn__front"><strong>Voltar</strong></span>
+            <span class="back-btn__back"><strong>Documentos Controlo Pragas</strong></span>
+        </a>
+    @else
+        <a class="back-btn" href="/frontoffice/warranty">
             <span class="back-btn__front"><strong>Voltar</strong></span>
             <span class="back-btn__back"><strong>Documentos Controlo Pragas</strong></span>
         </a>
@@ -39,13 +44,26 @@
                     <div class="panel-body">
                         <form action="/frontoffice/addDevice" method="post">
                             {{ csrf_field() }}
-                            <div class="form-group">
-                                Nº Dispositivo: <input id="num_device" class="form-control" type="text" pattern="[0-9]"  name="num_device" required>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    Nº Dispositivo: <input id="num_device" class="form-control" type="text" name="num_device" required>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                Código Dispositivo: <input id="cod_device" class="form-control" type="text" pattern="[B,C,D,P,G]{1}[0-9]{4}" placeholder="P1234"  name="cod_device" oninput="validateCodeDeviceExist(this)" required>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    Tipo de Dispositivo:  <select class="form-control" name="type_device" {{--onchange="payType(this)"--}} required>
+                                        <option disabled selected value="">Selecione o dispositivo</option>
+                                        <option value="P">Petit</option>
+                                        <option value="G">Glue trapper</option>
+                                        <option value="B">Beta</option>
+                                        <option value="C">Coral</option>
+                                    </select>
+                                </div>
                             </div>
 
+                            <div class="form-group">
+                                Código Dispositivo: <input id="cod_device" class="form-control" type="text" pattern="[a-z]{1}[0-9]{4}[a-z]{1}}" placeholder="A1234A"  name="cod_device" oninput="validateCodeDeviceExist(this)" required>
+                            </div>
                             <div class="form-group">
                                 Tipo de Espécie:  <select class="form-control" name="type_specie" {{--onchange="payType(this)"--}} required>
                                     <option disabled selected value="">Selecione a Espécie</option>
@@ -79,8 +97,12 @@
                             <a href="/frontoffice/firstService" type="button" class="btn btn-default" >
                                 <strong>Cancelar</strong>
                             </a>
-                            @else
+                            @elseif($idReportMain=!null)
                                 <a href="/frontoffice/maintenance" type="button" class="btn btn-default" >
+                                    <strong>Cancelar</strong>
+                                </a>
+                            @else
+                                <a href="/frontoffice/warranty" type="button" class="btn btn-default" >
                                     <strong>Cancelar</strong>
                                 </a>
                                 @endif

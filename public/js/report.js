@@ -296,7 +296,7 @@ function addAnswerArray(){
     }
 }
 
-function continueAnswerReport(){
+function continueAnswerReport(id){
 
     if(verifyAnswer()){
         addAnswerArray();
@@ -313,17 +313,18 @@ function continueAnswerReport(){
 
         $.ajax({
             type: 'POST',
-            url: "/frontoffice/saveAnswers",
+            url: "/frontoffice/saveAnswers/"+id,
             data:{answers:answersJson, obs:obs, idSection:idSection}
-        }).then(
+        })
+        .then(
             setTimeout(function(){
-                window.location.replace('/frontoffice/newReportSections')
+                window.location.replace('/frontoffice/newReportSections/'+id)
             }, 500)
         );
     }
 }
 
-function continueReport(){
+function continueReport(id){
     
     var visitNumber=document.getElementById("visitNumber").innerHTML;
 
@@ -334,10 +335,10 @@ function continueReport(){
     });
     $.ajax({
         type: 'POST',
-        url: "/frontoffice/saveReport/"+visitNumber,
-    }).then(
-        window.location.replace('/frontoffice/newReportSections')
-    );
+        url: "/frontoffice/saveReport/"+visitNumber+"/"+id,
+    }).then(function (data) {
+        window.location.replace('/frontoffice/newReportSections/'+data)
+    });
 }
 
 function concludeReport(){
@@ -519,6 +520,15 @@ function notshowOptions(){
     document.getElementById('subActiva').style.display="none";
     document.getElementById('typeSpecie').required=false;
     document.getElementById('subActiva').required=false;
+}
+
+function showOptions2(){
+    $('#geral').show();
+    $('#reason').hide();
+}
+function notshowOptions2(){
+    $('#geral').hide();
+    $('#reason').show();
 }
 
 ///VERIFICAR O PIN

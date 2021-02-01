@@ -43,12 +43,12 @@
             @foreach($clientSections as $clientSection)
                 @if($clientSection->answered)
                     <li class="teste">
-                        <a class="aWasPersonalized" href="/frontoffice/newReportRules/{{$clientSection->id}}" id="{{$clientSection->id}}">{{$clientSection->designation}}</a>
+                        <a class="aWasPersonalized" href="/frontoffice/newReportRules/{{$idReport}}/{{$clientSection->id}}" id="{{$clientSection->id}}">{{$clientSection->designation}}</a>
                         <!--href="{{url('/frontoffice/personalizeAreasEquipments/personalizeEachSection',$clientSection->id)}}"-->
                     </li>
                 @else
                     <li class="teste">
-                        <a class="aNotPersonalized" href="/frontoffice/newReportRules/{{$clientSection->id}}" id="{{$clientSection->id}}">{{$clientSection->designation}}</a>
+                        <a class="aNotPersonalized" href="/frontoffice/newReportRules/{{$idReport}}/{{$clientSection->id}}" id="{{$clientSection->id}}">{{$clientSection->designation}}</a>
                         <!--href="{{url('/frontoffice/personalizeAreasEquipments/personalizeEachSection',$clientSection->id)}}"-->
                     </li>
                 @endif
@@ -57,7 +57,7 @@
     </div>
     @if(Session::has('sectionsReport'))
         @if(count(Session::get('sectionsReport')) == count($clientSections))
-            <a  href="/concluedReport" class="btn btn-success">Concluir Relatório</a>
+            <a  href="/concluedReport/{{$idReport}}" class="btn btn-success">Concluir Relatório</a>
         @endif
     @endif
 

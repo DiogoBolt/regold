@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\ClientThermo;
+use App\Customer;
 use App\FridgeType;
 use App\Message;
 use App\Thermo;
@@ -34,6 +35,7 @@ class alertTemperatures extends Command
         foreach($thermos as $thermo)
         {
             $clientThermo = ClientThermo::where('imei',$thermo->imei)->first();
+            $client=Customer::where('id',$clientThermo->user_id)->first();
             $last4 = Thermo::where('imei',$thermo->imei)->orderBy('id','DESC')->take(4)->get();
             $maxTemp = FridgeType::where('id',$clientThermo->type)->first()->max_temp;
             $minTemp = FridgeType::where('id',$clientThermo->type)->first()->min_temp;
@@ -56,7 +58,7 @@ class alertTemperatures extends Command
                     $message = new Message();
                     $message->sender_id = 0;
                     $message->receiver_id = $clientThermo->user_id;
-                    $message->text = "A sua Arca numero :" . $clientThermo->id . " encontra-se fora da temperatura esperada!";
+                    $message->text = "A sua Arca numero :" . $clientThermo->id . " do estabelecimento " . $client->name . " encontra-se fora da temperatura esperada!";
                     $message->save();
                 }
             }
@@ -65,7 +67,7 @@ class alertTemperatures extends Command
                 $message = new Message();
                 $message->sender_id = 0;
                 $message->receiver_id = $clientThermo->user_id;
-                $message->text = "O termómetro da arca  :" . $clientThermo->id . " não está a responder.";
+                $message->text = "O termómetro da arca  :" . $clientThermo->id . " do estabelecimento " .$client->name . " não está a responder.";
                 $message->save();
             }
         }
