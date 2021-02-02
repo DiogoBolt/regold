@@ -46,8 +46,8 @@
 
                             @foreach($devices as $device)
                                 <div class="file">
-                                    <div  {{--href="/frontoffice/reportPestShow/{{$device->id}}"--}}>
-                                        <a{{-- href="/frontoffice/reportPestShow/{{$device->id}}"--}}>
+                                    <div >
+                                        <a>
                                             <img class="img-responsive" src="{{ URL::to('/') }}/img/reportPest.png">
                                         </a>
                                     </div>
