@@ -66,7 +66,7 @@
                         <h1 class="title">Ações Desenvolvidas</h1>
                         <div id="divFloatLeft">
                             <div>
-                                <label>Foram revistos todos os dispositivos e efetuada um revisão a todo o tratamento. </label>
+                                <label>Foi efetuada um revisão a todo o tratamento. Foram revistos todos os dispositivos.  </label>
                             </div>
                             <div>
                                 <label>{{$report_maintenance->action}}</label>
@@ -102,6 +102,7 @@
                             @endforeach
                             </tbody>
                         </table>
+                        @if(!$newDevices->isEmpty())
                         <h1 class="title">Novos Dispositivos</h1>
                         <table class="table" id="reportRules">
                             <tr id="reportRulesTop">
@@ -119,6 +120,8 @@
                             @endforeach
                             </tbody>
                         </table>
+                        @endif
+                        @if(!$obs->isEmpty())
                         <table class="table" id="reportRules">
                             <tr id="reportRulesTop">
                                 <th class="thBackground">Justificações</th>
@@ -131,6 +134,7 @@
                             @endforeach
                             </tbody>
                         </table>
+                        @endif
                         <div>
                             <label class="lblBold" >Recomendações: </label>
                             <label> {{$report_maintenance->note}}</label>

@@ -84,8 +84,10 @@
                             <div id="typeSpecie" class="form-group" style="display: none">
                                 Tipo de Espécie:  <select class="form-control" name="type_specie" {{--onchange="payType(this)"--}} >
                                     <option disabled selected value="">Selecione a Espécie</option>
-                                    <option value="Ratos e Ratazanas">Ratos e Ratazanas</option>
-                                    <option value="Baratas">Baratas</option>
+                                    <option value="Roedores">Roedores</option>
+                                    <option value="Blatella germanica">Blatella germanica</option>
+                                    <option value="Blatella oriental">Blatella oriental</option>
+                                    <option value="Blatella americana">Blatella americana</option>
                                     <option value="Formigas">Formigas</option>
                                     <option value="Insectos voadores">Insectos voadores</option>
                                 </select>
@@ -95,7 +97,7 @@
                                 Substância Activa:  <select class="form-control" name="subs_active" {{--onchange="payType(this)"--}}>
                                     <option disabled selected value="">Selecione o Isco</option>
                                     <option value="A-Cipermetrina">A-Cipermetrina</option>
-                                    <option value="Clotiamidina">"Clotiamidina</option>
+                                    <option value="Clotiamidina">Clotiamidina</option>
                                     <option value="Imidaclopride">Imidaclopride</option>
                                     <option value="Telas de cola">Telas de cola</option>
                                     <option value="Brodifacume">Brodifacume</option>
@@ -108,9 +110,10 @@
                             <div id="typeSpecie" class="form-group" >
                                 Ação Desenvolvida:  <select class="form-control" name="action" required>
                                     <option disabled selected value="">Selecione a Ação</option>
-                                    <option value="Foi efetivada pulverização localizada">Foi efetivada pulverização localizada</option>
-                                    <option value="Foi efetivada pulverização em locais apropriados">Foi efetivada pulverização em locais apropriados</option>
-                                    <option value="Foi aplicado gel insecticida em locais apropriados">Foi aplicado gel insecticida em locais apropriados</option>
+                                    <option value="Foi efetivada pulverização localizada.">Foi efetivada pulverização localizada</option>
+                                    <option value="Foi efetivada pulverização em locais apropriados.">Foi efetivada pulverização em locais apropriados</option>
+                                    <option value="Foi aplicado gel insecticida em locais apropriados.">Foi aplicado gel insecticida em locais apropriados</option>
+                                    <option value="Foi colocado raticida nos locais apropriados">Foi colocado raticida nos locais apropriados</option>
                                     <option value="Outra">Outra</option>
                                 </select>
                             </div>

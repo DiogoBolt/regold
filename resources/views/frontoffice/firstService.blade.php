@@ -36,12 +36,12 @@
                                 <label>Espécie a controlar:</label>
                             </div>
                             <div class="form-group">
-                                <label for="rato">Rato</label>
-                                <input type="radio" name="specie" id="rato" value="Rato" required>
-                                <label for="barata">Barata</label>
-                                <input type="radio" name="specie" id="barata" value="Barata" required>
-                                <label for="barata">Rato e Barata</label>
-                                <input type="radio" name="specie" id="rato e barata" value="Rato e Barata" required>
+                                <label for="roedores">Roedores</label>
+                                <input type="radio" name="specie" id="rato" value="Roedores" required>
+                                <label for="blatídeos">Blatídeos</label>
+                                <input type="radio" name="specie" id="barata" value="Blatídeos" required>
+                                <label for="barata">Roedores e Blatídeos</label>
+                                <input type="radio" name="specie" id="rato e barata" value="Roedores e Blatídeos" required>
                             </div>
 
                             @foreach($devices as $device)

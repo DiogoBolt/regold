@@ -535,6 +535,7 @@ class PestController extends Controller
                 ->where('adm.idReportMain',$id)
                 ->get();
 
+
         $obs=ReportPestObs::where('idReportMain',$id)->get();
 
         return view('frontoffice.reportMaintenanceShow',compact('report_maintenance','obs','id','answerDevices','device','newDevices'));

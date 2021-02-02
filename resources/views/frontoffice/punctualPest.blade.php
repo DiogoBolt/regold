@@ -36,10 +36,10 @@
                                 <label>Espécie a controlar:</label>
                             </div>
                             <div class="form-group">
-                                <label for="ratos">Ratos</label>
+                                <label for="roedores">Roedores</label>
                                 <input type="radio" name="specie" id="ratos" value="ratos">
-                                <label for="baratas">Baratas</label>
-                                <input type="radio" name="specie" id="baratas" value="baratas">
+                                <label for="baratas ">Blatídeos </label>
+                                <input type="radio" name="specie" id="baratas" value="Blatídeos">
                                 <label for="moscas/mosquitos">Moscas/Mosquitos</label>
                                 <input type="radio" name="specie" id="moscas/mosquitos" value="moscas/mosquitos">
                                 <label for="pulgas">Pulgas</label>
@@ -53,10 +53,10 @@
                             <div id="typeSpecie" class="form-group" >
                                 Ação Desenvolvida:  <select class="form-control" name="action" {{--onchange="payType(this)"--}} required>
                                     <option disabled selected value="">Selecione a Ação</option>
-                                    <option value="Foi efetivada pulverização localizada">Foi efetivada pulverização localizada</option>
-                                    <option value="Foi efetivada pulverização em locais apropriados">Foi efetivada pulverização em locais apropriados</option>
-                                    <option value="Foi aplicado gel insecticida em locais apropriados">Foi aplicado gel insecticida em locais apropriados</option>
-                                    <option value="Foi susbtituida a tela">Foi susbtituída a tela</option>
+                                    <option value="Foi efetivada pulverização localizada.">Foi efetivada pulverização localizada</option>
+                                    <option value="Foi efetivada pulverização em locais apropriados.">Foi efetivada pulverização em locais apropriados</option>
+                                    <option value="Foi aplicado gel insecticida em locais apropriados.">Foi aplicado gel insecticida em locais apropriados</option>
+                                    <option value="Foi susbtituida a tela.">Foi susbtituída a tela</option>
                                     <option value="Outra">Outra</option>
                                 </select>
                             </div>
@@ -65,7 +65,7 @@
                                 Substância Activa:  <select class="form-control" name="subs_active" {{--onchange="payType(this)"--}}required>
                                     <option disabled selected value="">Selecione o Isco</option>
                                     <option value="A-Cipermetrina">A-Cipermetrina</option>
-                                    <option value="Clotiamidina">"Clotiamidina</option>
+                                    <option value="Clotiamidina">Clotiamidina</option>
                                     <option value="Imidaclopride">Imidaclopride</option>
                                     <option value="Telas de cola">Telas de cola</option>
                                     <option value="Brodifacume">Brodifacume</option>

@@ -89,6 +89,7 @@
                             @endforeach
                             </tbody>
                         </table>
+                        @if(!$newDevices->isEmpty())
                         <h1 class="title">Novos Dispositivos</h1>
                         <table class="table" id="reportRules">
                             <tr id="reportRulesTop">
@@ -106,6 +107,8 @@
                             @endforeach
                             </tbody>
                         </table>
+                        @endif
+                        @if(!$obs->isEmpty())
                         <table class="table" id="reportRules">
                             <tr id="reportRulesTop">
                                 <th class="thBackground">Justificações</th>
@@ -118,6 +121,7 @@
                             @endforeach
                             </tbody>
                         </table>
+                        @endif
                         <div>
                             <label class="lblBold">Recomendações: </label>
                             <label> {{$report_warranty->note}}</label>

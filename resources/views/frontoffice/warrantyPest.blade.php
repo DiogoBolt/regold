@@ -84,8 +84,10 @@
                             <div id="typeSpecie" class="form-group" style="display: none">
                                 Tipo de Espécie:  <select class="form-control" name="type_specie" {{--onchange="payType(this)"--}} >
                                     <option disabled selected value="">Selecione a Espécie</option>
-                                    <option value="Ratos e Ratazanas">Ratos e Ratazanas</option>
-                                    <option value="Baratas">Baratas</option>
+                                    <option value="Roedores">Roedores</option>
+                                    <option value="Blatella germanica">Blatella germanica</option>
+                                    <option value="Blatella oriental">Blatella oriental</option>
+                                    <option value="Blatella americana">Blatella americana</option>
                                     <option value="Formigas">Formigas</option>
                                     <option value="Insectos voadores">Insectos voadores</option>
                                 </select>
@@ -112,6 +114,7 @@
                                     <option value="Foi efetivada pulverização localizada">Foi efetivada pulverização localizada</option>
                                     <option value="Foi efetivada pulverização em locais apropriados">Foi efetivada pulverização em locais apropriados</option>
                                     <option value="Foi aplicado gel insecticida em locais apropriados">Foi aplicado gel insecticida em locais apropriados</option>
+                                    <option value="Foi colocado raticida nos locais apropriados">Foi colocado raticida nos locais apropriados</option>
                                     <option value="Outra">Outra</option>
                                 </select>
                             </div>
