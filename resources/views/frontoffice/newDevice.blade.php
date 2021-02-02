@@ -69,6 +69,7 @@
                                     <option disabled selected value="">Selecione a Espécie</option>
                                     <option value="Ratos e Ratazanas">Ratos e Ratazanas</option>
                                     <option value="Baratas">Baratas</option>
+                                    <option value="Ratos e Baratas">Ratos e Baratas</option>
                                     <option value="Formigas">Formigas</option>
                                     <option value="Insectos voadores">Insectos voadores</option>
                                 </select>

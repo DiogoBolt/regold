@@ -447,6 +447,7 @@ class PestController extends Controller
             $report_MaintenancePest->specie=null;
             $report_MaintenancePest->sub_active=null;
         }
+        $report_MaintenancePest->action=$inputs['action'];
         $report_MaintenancePest->note=$inputs['note'];
         $report_MaintenancePest->concluded=1;
         $report_MaintenancePest->save();
@@ -491,6 +492,7 @@ class PestController extends Controller
         $inputs = $request->all();
         $answer_device=new AnswerDeviceMain();
         $answer_device->status=$inputs['device_status'];
+        $answer_device->action=$inputs['action'];
         $answer_device->id_device=$id;
         $answer_device->idReportMain=$idReport;
         $answer_device->save();
@@ -524,7 +526,7 @@ class PestController extends Controller
             ->where('d.idClient',$auxClientId)
             ->where('adm.idReportMain','=',$id)
             ->where('adm.status','!=',null)
-            ->select(['d.number_device','d.cod_device','d.specie','d.isco','d.type_device','adm.status'])
+            ->select(['d.number_device','d.cod_device','d.specie','d.isco','d.type_device','adm.status','adm.action'])
             ->get();
 
             $newDevices=AnswerDeviceMain::from(AnswerDeviceMain::alias('adm'))
@@ -719,11 +721,11 @@ class PestController extends Controller
             $report_WarrantyPest->specie=null;
             $report_WarrantyPest->sub_active=null;
         }
+        $report_WarrantyPest->action=$inputs['action'];
         $report_WarrantyPest->note=$inputs['note'];
         $report_WarrantyPest->concluded=1;
 
         $report_WarrantyPest->save();
-
 
         $devices=Devices::where('idClient',$auxClientId)
             ->get();
@@ -770,7 +772,7 @@ class PestController extends Controller
             ->where('d.idClient',$auxClientId)
             ->where('adw.status','!=',null)
             ->where('adw.idReportWarranty','=',$id)
-            ->select(['d.number_device','d.cod_device','d.type_device','d.specie','d.isco','d.type_device','adw.status'])
+            ->select(['d.number_device','d.cod_device','d.type_device','d.specie','d.isco','d.type_device','adw.status','adw.action'])
             ->get();
 
         $newDevices=AnswerDeviceWarranty::from(AnswerDeviceWarranty::alias('adw'))
@@ -802,6 +804,7 @@ class PestController extends Controller
 
         $answer_device=new AnswerDeviceWarranty();
         $answer_device->status=$inputs['device_status'];
+        $answer_device->action=$inputs['action'];
         $answer_device->idReportWarranty=$idReport;
         $answer_device->id_device=$id;
         $answer_device->save();

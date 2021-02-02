@@ -105,6 +105,15 @@
                                     <option value="Tiametoxam">Tiametoxam</option>
                                 </select>
                             </div>
+                            <div id="typeSpecie" class="form-group" >
+                                Ação Desenvolvida:  <select class="form-control" name="action" required>
+                                    <option disabled selected value="">Selecione a Ação</option>
+                                    <option value="Foi efetivada pulverização localizada">Foi efetivada pulverização localizada</option>
+                                    <option value="Foi efetivada pulverização em locais apropriados">Foi efetivada pulverização em locais apropriados</option>
+                                    <option value="Foi aplicado gel insecticida em locais apropriados">Foi aplicado gel insecticida em locais apropriados</option>
+                                    <option value="Outra">Outra</option>
+                                </select>
+                            </div>
 
                             <div class="form-group">
                                 <label>Recomendações: </label>

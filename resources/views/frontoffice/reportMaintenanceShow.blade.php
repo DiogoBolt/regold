@@ -66,7 +66,10 @@
                         <h1 class="title">Ações Desenvolvidas</h1>
                         <div id="divFloatLeft">
                             <div>
-                                <label>Foram revistos todos os dispositivos. </label>
+                                <label>Foram revistos todos os dispositivos e efetuada um revisão a todo o tratamento. </label>
+                            </div>
+                            <div>
+                                <label>{{$report_maintenance->action}}</label>
                             </div>
                             <div>
                                 @if($report_maintenance->pest_presence=='sim')
@@ -81,10 +84,11 @@
                     <div class="tableContainer">
                         <table class="table" id="reportRules">
                             <tr id="reportRulesTop">
-                                <th class="thBackground">Nº Dispositivo</th>
+                                <th class="thBackground">Nº</th>
                                 <th class="thBackground">Espécie</th>
                                 <th class="thBackground">Isco</th>
                                 <th class="thBackground">Estado</th>
+                                <th class="thBackground">Ação</th>
                             </tr>
                             <tbody>
                             @foreach($answerDevices as $device)
@@ -93,34 +97,36 @@
                                     <td class="tdBackground tdRule"><label class="rule">{{$device->specie}}</label></td>
                                     <td class="tdBackground tdRule"><label class="rule">{{$device->isco}}</label></td>
                                     <td class="tdBackground tdRule"><label class="rule">{{$device->status}}</label></td>
+                                    <td class="tdBackground tdRule"><label class="rule">{{$device->action}}</label></td>
                                 </tr>
                             @endforeach
+                            </tbody>
+                        </table>
+                        <h1 class="title">Novos Dispositivos</h1>
+                        <table class="table" id="reportRules">
                             <tr id="reportRulesTop">
-                                <th class="thBackground">Dipositivos Instalados</th>
-                                <th class="thBackground"></th>
-                                <th class="thBackground"></th>
-                                <th class="thBackground"></th>
+                                <th class="thBackground">Nº</th>
+                                <th class="thBackground">Espécie</th>
+                                <th class="thBackground">Isco</th>
                             </tr>
+                            <tbody>
                             @foreach($newDevices as $newDevice)
                                 <tr class="tableRow">
                                     <td class="tdBackground tdRule"><label class="rule">{{$newDevice->number_device}}-{{$device->type_device}}</label></td>
                                     <td class="tdBackground tdRule"><label class="rule">{{$newDevice->specie}}</label></td>
                                     <td class="tdBackground tdRule"><label class="rule">{{$newDevice->isco}}</label></td>
-                                    <td class="tdBackground tdRule"><label class="rule"></label></td>
                                 </tr>
                             @endforeach
+                            </tbody>
+                        </table>
+                        <table class="table" id="reportRules">
                             <tr id="reportRulesTop">
                                 <th class="thBackground">Justificações</th>
-                                <th class="thBackground"></th>
-                                <th class="thBackground"></th>
-                                <th class="thBackground"></th>
                             </tr>
+                            </body>
                             @foreach($obs as $ob)
                                 <tr class="tableRow">
                                     <td class="tdBackground tdRule"><label class="rule">{{$ob->observation}}</label></td>
-                                    <td class="tdBackground tdRule"><label class="rule"></label></td>
-                                    <td class="tdBackground tdRule"><label class="rule"></label></td>
-                                    <td class="tdBackground tdRule"><label class="rule"></label></td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -129,6 +135,7 @@
                             <label class="lblBold" >Recomendações: </label>
                             <label> {{$report_maintenance->note}}</label>
                         </div>
+
                     </div>
                         </td>
                     </tr>
