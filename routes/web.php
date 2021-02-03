@@ -41,6 +41,16 @@ Route::post('/frontoffice/client/save','FrontofficeController@saveEditClient');
 Route::post('/frontoffice/editclient/', 'FrontofficeController@postEditClient');
 Route::get('/frontoffice/documents/', 'FrontofficeController@documents');
 
+Route::get('/frontoffice/staff', 'StaffController@getStaff');
+Route::get('/frontoffice/staff/new', 'StaffController@addStaff');
+
+
+Route::get('/possiblecustomers/new', 'PossibleCustomersController@addPossibleCustomer');
+Route::get('/possiblecustomers/edit/{id}', 'PossibleCustomersController@editPossibleCustomer');
+Route::post('/possiblecustomers/edit/{id}', 'PossibleCustomersController@editPossibleCustomerPost');
+Route::post('/possiblecustomers/newPossibleCustomer', 'PossibleCustomersController@addPossibleCustomerPost');
+Route::get('/possiblecustomers/deletecustomer/{id}', 'PossibleCustomersController@deletePossibleCustomer');
+
 Route::group(['middleware'=>['permissionClient']],function(){
 Route::get('/frontoffice/documents/{type}', 'FrontofficeController@documentsBySuper');
 });
