@@ -92,7 +92,7 @@ class PestController extends Controller
             ->first();
 
         $technicalInfo = User::where('id',$auxTechnical)
-            ->select(['id','name','userTypeID'])
+            ->select(['id','name'])
             ->first();
 
         if(!isset($countVisits)){
@@ -111,7 +111,7 @@ class PestController extends Controller
         $report_pest->note=$inputs['note'];
         $report_pest->idClient=$auxClientId;
         $report_pest->numberVisit=$visitNumber;
-        $report_pest->id_tecnichal=$technicalInfo->userTypeID;
+        $report_pest->id_tecnichal=$technicalInfo->id;
         $report_pest->save();
 
         $devices= Devices::where('idClient',$auxClientId)->get();
@@ -172,6 +172,7 @@ class PestController extends Controller
             $device->isco=$inputs['type_isco'];
             $device->idClient=$auxClientId;
             $device->active=1;
+            $device->controlMain=1;
             $device->save();
 
             $answer_device=new AnswerDeviceMain();
@@ -189,6 +190,7 @@ class PestController extends Controller
             $device->specie=$inputs['type_specie'];
             $device->isco=$inputs['type_isco'];
             $device->idClient=$auxClientId;
+            $device->controlWarranty=1;
             $device->active=1;
             $device->save();
 
@@ -333,8 +335,7 @@ class PestController extends Controller
         $report_pest = ReportPest::where('id',$id)
             ->where('idClient',$auxClientId)->first();
 
-        $report_pest->technicalName= User::where('userTypeID',$report_pest->id_tecnichal)
-            ->where('userType',3)
+        $report_pest->technicalName= User::where('id',$report_pest->id_tecnichal)
             ->select(['name'])
             ->pluck('name')
             ->first();
@@ -394,7 +395,7 @@ class PestController extends Controller
             ->first();
 
         $technicalInfo = User::where('id',$auxTechnical)
-            ->select(['id','name','userTypeID'])
+            ->select(['id','name'])
             ->first();
 
         $countVisits= ReportMaintenance::where('idClient',$auxClientId)
@@ -414,7 +415,7 @@ class PestController extends Controller
             $report_MaintenancePest=new ReportMaintenance();
             $report_MaintenancePest->idClient=$auxClientId;
             $report_MaintenancePest->numberVisit=$visitNumber;
-            $report_MaintenancePest->id_tecnichal=$technicalInfo->userTypeID;
+            $report_MaintenancePest->id_tecnichal=$technicalInfo->id;
             $report_MaintenancePest->concluded=0;
             $report_MaintenancePest->save();
             Session::put('reportIdPest',$report_MaintenancePest->id);
@@ -425,7 +426,12 @@ class PestController extends Controller
             ->where('active',1)
             ->get();
 
-        return view ('frontoffice.maintenancePest',compact('devices','client','idReport'));
+       $checkDevices=Devices::where('idClient',$auxClientId)
+           ->where('active',1)
+           ->where('controlMain','!=',null)
+           ->get();
+
+        return view ('frontoffice.maintenancePest',compact('devices','client','idReport','checkDevices'));
     }
 
     public function saveMaintenance(Request $request)
@@ -511,8 +517,7 @@ class PestController extends Controller
         $report_maintenance = ReportMaintenance::where('id',$id)
             ->where('idClient',$auxClientId)->first();
 
-        $report_maintenance->technicalName= User::where('userTypeID',$report_maintenance->id_tecnichal)
-            ->where('userType',3)
+        $report_maintenance->technicalName= User::where('id',$report_maintenance->id_tecnichal)
             ->select(['name'])
             ->pluck('name')
             ->first();
@@ -564,7 +569,7 @@ class PestController extends Controller
             ->first();
 
         $technicalInfo = User::where('id',$auxTechnical)
-            ->select(['id','name','userTypeID'])
+            ->select(['id','name'])
             ->first();
 
         if(!isset($countVisits)){
@@ -584,7 +589,7 @@ class PestController extends Controller
         $report_punctual->action=$inputs['action'];
         $report_punctual->idClient=$auxClientId;
         $report_punctual->numberVisit=$visitNumber;
-        $report_punctual->id_tecnichal=$technicalInfo->userTypeID;
+        $report_punctual->id_tecnichal=$technicalInfo->id;
         $report_punctual->save();
 
         return redirect('/frontoffice/documents/Controlopragas');
@@ -597,19 +602,13 @@ class PestController extends Controller
         $report_punctual = ReportPunctual::where('id',$idReport)
             ->where('idClient',$auxClientId)->first();
 
-        $report_punctual->technicalName= User::where('userTypeID',$report_punctual->id_tecnichal)
-            ->where('userType',3)
+        $report_punctual->technicalName= User::where('id',$report_punctual->id_tecnichal)
             ->select(['name'])
             ->pluck('name')
             ->first();
         $report_punctual->clientName=Customer::where('id',$report_punctual->idClient)
             ->select(['name'])
             ->pluck('name')
-            ->first();
-
-        User::where('userTypeID',$report_punctual->id_tecnichal)
-            ->where('userType',3)
-            ->select(['id','name','userTypeID'])
             ->first();
 
         return view('frontoffice.reportPunctualShow',compact('report_punctual','idReport'));
@@ -665,7 +664,7 @@ class PestController extends Controller
                 ->first();
 
             $technicalInfo = User::where('id',$auxTechnical)
-                ->select(['id','name','userTypeID'])
+                ->select(['id','name'])
                 ->first();
 
             $countVisits= ReportWarranty::where('idClient',$auxClientId)
@@ -685,7 +684,7 @@ class PestController extends Controller
             $report_WarrantyPest=new ReportWarranty();
             $report_WarrantyPest->idClient=$auxClientId;
             $report_WarrantyPest->numberVisit=$visitNumber;
-            $report_WarrantyPest->id_tecnichal=$technicalInfo->userTypeID;
+            $report_WarrantyPest->id_tecnichal=$technicalInfo->id;
             $report_WarrantyPest->concluded=0;
             $report_WarrantyPest->save();
             Session::put('reportIdWarranty',$report_WarrantyPest->id);
@@ -758,8 +757,7 @@ class PestController extends Controller
         $report_warranty = ReportWarranty::where('id',$id)
             ->where('idClient',$auxClientId)->first();
 
-        $report_warranty->technicalName= User::where('userTypeID',$report_warranty->id_tecnichal)
-            ->where('userType',3)
+        $report_warranty->technicalName= User::where('id',$report_warranty->id_tecnichal)
             ->select(['name'])
             ->pluck('name')
             ->first();

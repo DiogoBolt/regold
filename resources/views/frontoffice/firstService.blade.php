@@ -75,9 +75,15 @@
                                 <label>Recomendações: </label>
                                 <textarea class="form-control"  name="note"></textarea>
                             </div>
+                            @if(count($devices)!=0)
                             <div>
                                 <button type="button" data-toggle="modal" data-target="#myModal"  class="btn btn-add" >Concluir</button>
                             </div>
+                            @else
+                                <div>
+                                    <button disabled type="button" data-toggle="modal" data-target="#myModal"  class="btn btn-add" >Concluir</button>
+                                </div>
+                            @endif
                         </form>
                     </div>
                 </div>

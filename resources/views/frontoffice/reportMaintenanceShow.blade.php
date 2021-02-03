@@ -66,7 +66,7 @@
                         <h1 class="title">Ações Desenvolvidas</h1>
                         <div id="divFloatLeft">
                             <div>
-                                <label>Foi efetuada um revisão a todo o tratamento. Foram revistos todos os dispositivos.  </label>
+                                <label>Foi efetuada uma revisão a todo o tratamento. Foram revistos todos os dispositivos.  </label>
                             </div>
                             <div>
                                 <label>{{$report_maintenance->action}}</label>

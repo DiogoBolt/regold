@@ -44,7 +44,7 @@
                                         Disp. {{$device->number_device}}-{{$device->type_device}}
                                     </div>
                                 </div>
-                                @elseif($device->controlMain==1)
+                                @else
                                 <div class="file">
                                     <div>
                                         <a>
@@ -55,7 +55,7 @@
                                         Disp. {{$device->number_device}}-{{$device->type_device}}
                                     </div>
                                 </div>
-                                @else
+                               {{-- @else
                                     <div class="file">
                                         <div>
                                             <a type="button" >
@@ -65,7 +65,7 @@
                                         <div >
                                             Disp. {{$device->number_device}}-{{$device->type_device}}
                                         </div>
-                                    </div>
+                                    </div>--}}
                                 @endif
                             @endforeach
 
@@ -122,10 +122,15 @@
                                 <label>Recomendações: </label>
                                 <textarea class="form-control" name="note"></textarea>
                             </div>
-
+                            @if(count($devices)==count($checkDevices))
                             <div>
                                 <button type="button" data-toggle="modal" data-target="#myModal"  class="btn btn-add">Concluir</button>
                             </div>
+                            @else
+                                <div>
+                                    <button disabled type="button" data-toggle="modal" data-target="#myModal"  class="btn btn-add">Concluir</button>
+                                </div>
+                            @endif
                         </form>
                     </div>
                 </div>
@@ -194,34 +199,6 @@
     </div>
     @endforeach
 
-    {{--<div class="modal fade" id="deleteModal" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">x</button>
-                    <h4 class="modal-title">Deseja instalar novo dispositivo ou justificar a não instalação?</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <div class="col-sm-6">
-                            <a href="/frontoffice/newDevice" class="btn btn-add"><strong>Novo Dispositivo</strong></a>
-                        </div>
-                        <div class="col-sm-6">
-                            <input class="form-control" placeholder="" name="" >
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    --}}{{--<button type="button" class="btn modal-del" id="delete-device">
-                        <strong>Apagar</strong>
-                    </button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                        <strong>Cancelar</strong>
-                    </button>--}}{{--
-                </div>
-            </div>
-        </div>
-    </div>--}}
 @endsection
 
 <script>
