@@ -18,7 +18,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div>
-                        <img class="salesman-img img-responsive" src="/img/navbar/logoindexcolor.png"/>
+                        <img class="salesman-img img-responsive" src="/img/navbar/logoRegolfood.png"/>
                     </div>
                     <form action="/salesman/add"  method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}

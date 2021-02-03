@@ -17,8 +17,6 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel">
                     <div class="panel-body table-responsive">
-
-
                         <a href="/frontoffice/staff/new" class="btn btn-add"><strong>Novo Funcionário</strong></a>
 
                         <table class="table">
@@ -27,9 +25,9 @@
                                 <th>Nome</th>
                             </tr>
                             {{--@foreach($clients as $client)--}}
-                                    <tr>
-                                       {{-- <td><a href="/clients/{{$client->id}}">{{$client->regoldiID}}</a></td>--}}
-                                    </tr>
+                                <tr>
+                                    {{-- <td><a href="/clients/{{$client->id}}">{{$client->regoldiID}}</a></td>--}}
+                                </tr>
                             {{--@endforeach--}}
                         </table>
                     </div>

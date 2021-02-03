@@ -18,9 +18,8 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form {{--action="/possiblecustomers/newPossibleCustomer"--}} method="post" >
+                    <form action="/frontoffice/staff/add" method="post" >
                         {{ csrf_field() }}
-
                         <div id="ownerRegister" style="display:block">
                             <label class="add-label">Dados do Funcionário</label>
                             <div class="col-sm-6">
@@ -40,18 +39,14 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>Haccp</label>
-                                <input type="checkbox" class="checkbox" name="type" id="type" value="1">
-                                <label>Documentos Contabilisticos</label>
-                                <input type="checkbox" class="checkbox" name="type" id="type" value="2">
-                                <label>Controlo de Pragas</label>
-                                <input type="checkbox" class="checkbox" name="type" id="type" value="3">
-                                <label>Registos</label>
-                                <input type="checkbox" class="checkbox" name="type" id="type" value="4">
+                                @foreach($types as $type)
+                                <label>{{$type->name}}</label>
+                                <input type="checkbox" class="radio-inline" name="type[]" id="type" value="{{$type->id}}">
+                                @endforeach
                                 <label>Produtos</label>
-                                <input type="checkbox" class="checkbox" name="type" id="type" value="5">
+                                <input type="checkbox" class="radio-inline" name="type[]" id="type" value="5">
                                 <label>Encomendas</label>
-                                <input type="checkbox" class="checkbox" name="type" id="type" value="6">
+                                <input type="checkbox" class="radio-inline" name="type[]" id="type" value="6">
                             </div>
                         </div>
                         <div>

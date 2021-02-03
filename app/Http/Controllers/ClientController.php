@@ -63,7 +63,7 @@ class ClientController extends Controller
         $user = Auth::user();
 
        if(Session::has('establismentID')){
-        
+
             $auxClientId = Session::get('establismentID');
 
             $clients = Customer::where('ownerID',$user->id)
@@ -117,7 +117,6 @@ class ClientController extends Controller
         
         }else if(Session::has('clientImpersonatedId')){
 
-            
             $auxClientId = Session::get('clientImpersonatedId');
 
             Session::forget('establismentID');
@@ -170,7 +169,7 @@ class ClientController extends Controller
            $clientPermission=Customer::where('id',$user->client_id)
                ->first();
 
-            $clients = Customer::where('ownerID',$user->id)
+            $clients = Customer::where('id', $user->client_id)
             ->select([
                 'id',
                 'name'

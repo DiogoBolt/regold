@@ -44,19 +44,23 @@ class FrontofficeController extends Controller
 
     public function showCustomer()
     {
-        $user=Session::get('establismentID');
 
-        $client = Customer::where('id',$user)
+        $user=Auth::user();
+
+        $client = Customer::where('id',$user->client_id)
         ->first();
+
 
         return view('frontoffice.show',compact('client'));
     }
     public function saveEditClient(Request $request)
     {
+        $user=Auth::user();
         $inputs=$request->all();
 
         $client = Customer::where('id',$inputs['id'])->first();
-        $user = User::where('id',$client->ownerID)->first();
+
+       /* $user = User::where('id',$client->ownerID)->first();*/
 
         $options = [
             'cost' => 10
