@@ -266,7 +266,7 @@ class PersonalizeSectionController extends Controller
             }
         }
      
-        $products = Product::whereNotIn('category',array(6,16))
+        $products = Product::whereNotIn('category',array(6,16,20))
         ->select([
                 'id',
                 'name',

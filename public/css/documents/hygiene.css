@@ -66,6 +66,6 @@
     color: #E5E1E6;
 }
 .btn-recordHygiene{
-    float: right;
-    margin-top: -20px;
+    display: block;
+    margin: auto;
 }
