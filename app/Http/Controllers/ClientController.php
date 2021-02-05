@@ -1286,6 +1286,7 @@ class ClientController extends Controller
     {
         $client = Customer::where('id',$id)->first();
         $pvps = ClientProduct::where('client_id',$id)->get();
+
         foreach($pvps as $pvp)
         {
             $pvp->name = Product::where('id',$pvp->product_id)->first()->name;

@@ -7,7 +7,7 @@
 
 @section('content')
     <div class="container-bar">
-        <p class="container-bar_txt">clientes</p>
+        <p class="container-bar_txt">funcionários</p>
         <div class="container-bar_img">
             <img src="{{ asset('img/clientes.jpg') }}"/>
         </div>
@@ -23,12 +23,15 @@
                             <tr>
                                 <th>Id</th>
                                 <th>Nome</th>
+                                <th>Apagar</th>
                             </tr>
-                            {{--@foreach($clients as $client)--}}
+                            @foreach($userStaff as $user)
                                 <tr>
-                                    {{-- <td><a href="/clients/{{$client->id}}">{{$client->regoldiID}}</a></td>--}}
+                                    <td><a href="/frontoffice/staff/edit/{{$user->id}}">{{$user->id}}</a></td>
+                                    <td><a href="/frontoffice/staff/edit/{{$user->id}}">{{$user->name}}</a></td>
+                                    <td><a href="/frontoffice/deletestaff/{{$user->id}}">X</a></td>
                                 </tr>
-                            {{--@endforeach--}}
+                            @endforeach
                         </table>
                     </div>
                 </div>

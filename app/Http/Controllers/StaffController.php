@@ -26,8 +26,13 @@ class StaffController extends Controller
 
     public function getStaff()
     {
+        $auxClientId = Session::get('establismentID');
 
-        return view('frontoffice.indexStaff');
+        $userStaff=User::where('client_id',$auxClientId)
+            ->where('userType',6)
+            ->get();
+
+        return view('frontoffice.indexStaff',compact('userStaff'));
     }
 
     public function addStaff()
@@ -57,26 +62,65 @@ class StaffController extends Controller
        foreach ($checkboxs as $checkbox){
            $userStaffPer = new StaffPermissions();
            $userStaffPer->id_superType=$checkbox;
-           $userStaffPer->client_id=$auxClientId;
+           $userStaffPer->user_id=$userStaff->id;
            $userStaffPer->save();
        }
-
         return back();
     }
 
-    public function editPossibleCustomer($id)
+    public function editStaff($id)
     {
+        $userStaff = User::where('id',$id)->first();
 
+        $staffPermissions=StaffPermissions::where('user_id',$id)->get();
+
+            $permissions = [1 => 0 , 2 => 0, 3 => 0 , 4 => 0 , 5 => 0, 6 => 0];
+                foreach($staffPermissions as $permission) {
+                    $permissions[$permission->id_superType] = 1;
+                }
+
+        return view('frontoffice.editStaff',compact('userStaff','types','staffPermission','permissions'));
     }
 
-    public function editPossibleCustomerPost(Request $request,$id)
+    public function editStaffPost(Request $request,$id)
     {
+        $inputs=$request->all();
 
+        $userStaff=User::where('id',$id)->first();
+
+        $userStaff->name=$inputs['name'];
+        $userStaff->email=$inputs['email'];
+
+     /*   $checkboxs=$inputs['type'];
+
+        foreach ($checkboxs as $checkbox){
+            $userStaffPer = new StaffPermissions();
+            $userStaffPer->id_superType=$checkbox;
+            $userStaffPer->user_id=$userStaff->id;
+            $userStaffPer->save();
+        }*/
+
+        $options = [
+            'cost' => 10
+        ];
+        if($inputs['password']!=""){
+            $userStaff->password = password_hash($inputs['password'], PASSWORD_BCRYPT, $options);
+            $userStaff->save();
+        }
+        if($inputs['pin']!=""){
+            $userStaff->pin=password_hash($inputs['pin'], PASSWORD_BCRYPT, $options);
+            $userStaff->save();
+        }
+        $userStaff->save();
+        return back();
     }
 
-    public function deletePossibleCustomer($id)
+    public function deleteStaff($id)
     {
+        $userStaff=User::where('id',$id)->first();
+        $userStaff->delete();
 
+        return back();
     }
 
 }

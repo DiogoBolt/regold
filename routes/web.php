@@ -43,7 +43,11 @@ Route::get('/frontoffice/documents/', 'FrontofficeController@documents');
 
 Route::get('/frontoffice/staff', 'StaffController@getStaff');
 Route::get('/frontoffice/staff/new', 'StaffController@addStaff');
+Route::get('/frontoffice/staff/edit/{id}','StaffController@editStaff');
 Route::post('/frontoffice/staff/add','StaffController@addStaffPost');
+Route::post('/frontoffice/staff/edit/{id}','StaffController@editStaffPost');
+Route::get('/frontoffice/deletestaff/{id}','StaffController@deleteStaff');
+
 
 
 /*Route::get('/possiblecustomers/new', 'PossibleCustomersController@addPossibleCustomer');

@@ -55,6 +55,7 @@ class SalesmanController extends Controller
             return $query->where('userType', $inputs['contributor']);
         })->where('userType','!=',4)
         ->where('userType','!=',5)
+        ->where('userType','!=',6)
         ->get();
         $userstypes = UserType::all();
         foreach($contributors as $contributor){
@@ -64,6 +65,7 @@ class SalesmanController extends Controller
                 }
             }
         }
+
         return view('salesman.index', compact('contributors','userstypes'));
     }
     public function salesman($id)
@@ -105,7 +107,7 @@ class SalesmanController extends Controller
     public function newSales()
     {
         $districts = Districts::all();
-        $UserTypes = UserType::all();
+        $UserTypes = UserType::where('id','!=',6)->get();
         return view('salesman.new',compact('districts','UserTypes'));
     }
     public function addSales(Request $request)
@@ -136,7 +138,7 @@ class SalesmanController extends Controller
             $user->userType = 2;
             $user->userTypeID = $technicalhaccp->id;
 
-        }else if($inputs['UserType']=='Técnico Controlo de Pragas'){
+        }else if($inputs['UserType']== 'Técnico Controlo de Pragas'){
             $technicalcp=new TechnicalCP();
             $technicalcp->name = $inputs['name'];
             $technicalcp->address = $inputs['address'];
@@ -146,11 +148,12 @@ class SalesmanController extends Controller
             $technicalcp->save();
             $user->userType = 3;
             $user->userTypeID = $technicalcp->id;
+        }else
+        {
+            $user->userType=5;
         }
-
         $user->name = $inputs['name'];
         $user->email = $inputs['email'];
-        $user->userType=5;
         $user->password = bcrypt($inputs['password']);
         $user->save();
        return redirect()->to('/salesman'); 
