@@ -41,3 +41,6 @@
 #postal_code{
   width: 40%;
 }
+.radio-inline{
+  transform: scale(1.5);
+}

@@ -36,18 +36,18 @@
                                 <label>Espécie a controlar:</label>
                             </div>
                             <div class="form-group">
-                                <label for="rato">Rato</label>
-                                <input type="radio" name="specie" id="rato" value="Rato" required>
-                                <label for="barata">Barata</label>
-                                <input type="radio" name="specie" id="barata" value="Barata" required>
-                                <label for="barata">Rato e Barata</label>
-                                <input type="radio" name="specie" id="rato e barata" value="Rato e Barata" required>
+                                <label for="roedores">Roedores</label>
+                                <input type="radio" name="specie" id="rato" value="Roedores" required>
+                                <label for="blatídeos">Blatídeos</label>
+                                <input type="radio" name="specie" id="barata" value="Blatídeos" required>
+                                <label for="barata">Roedores e Blatídeos</label>
+                                <input type="radio" name="specie" id="rato e barata" value="Roedores e Blatídeos" required>
                             </div>
 
                             @foreach($devices as $device)
                                 <div class="file">
-                                    <div  {{--href="/frontoffice/reportPestShow/{{$device->id}}"--}}>
-                                        <a{{-- href="/frontoffice/reportPestShow/{{$device->id}}"--}}>
+                                    <div >
+                                        <a>
                                             <img class="img-responsive" src="{{ URL::to('/') }}/img/reportPest.png">
                                         </a>
                                     </div>
@@ -75,9 +75,15 @@
                                 <label>Recomendações: </label>
                                 <textarea class="form-control"  name="note"></textarea>
                             </div>
+                            @if(count($devices)!=0)
                             <div>
                                 <button type="button" data-toggle="modal" data-target="#myModal"  class="btn btn-add" >Concluir</button>
                             </div>
+                            @else
+                                <div>
+                                    <button disabled type="button" data-toggle="modal" data-target="#myModal"  class="btn btn-add" >Concluir</button>
+                                </div>
+                            @endif
                         </form>
                     </div>
                 </div>

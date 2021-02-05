@@ -11,8 +11,7 @@
                         <thead class="report-header">
                         <tr>
                             <th class="report-header-cell">
-
-                                <img class="logoReport" src="{{ URL::to('/') }}/img/navbar/RegolfoodLogin.png" alt="logo">
+                                <img class="logoReport" src="{{ URL::to('/') }}/img/navbar/logoRegolfood.png" alt="logo">
 
                     <div id="divBtns">
                         <a class="btn btn-warning" href="/frontoffice/pestReports">
@@ -21,12 +20,6 @@
                         <button class="btn btn-warning" onclick="printReport()">Imprimir</button>
                     </div>
 
-                    {{--<div style="text-align: center; margin-bottom: 20px;">
-                        <img src="\img\regolfoodSmall.png" style="width:100px">
-                    </div>--}}
-
-
-                    <div id="reportInfo">
                         <div id="divFloatRigth">
                             <div>
                                 <label class="lblBold">Estabelecimento: </label>
@@ -57,25 +50,23 @@
                                 <label> {{$report_warranty->updated_at->format('H:i')}}</label>
                             </div>
                         </div>
-                    </div>
                             </th>
                         </tr>
                     </thead>
-
-
-                    <tbody class="report-content">
+                        <tbody class="report-content">
                         <tr>
                             <td class="report-content-cell">
-                    <h1 class="title">Ações Desenvolvidas</h1>
-                    <div id="reportInfo">
-                        <div id="divFloatLeft">
-                            @if($report_warranty->pest_presence=='sim')
-                                 <label>Foi detetada a presença da praga {{$report_warranty->specie}} e aplicada a substância activa {{$report_warranty->sub_active}}.  </label>
-                            @else
-                                 <label>Não foi detetada a presença de pragas.  </label>
-                            @endif
-                        </div>
-                    </div>
+                                <div id="reportInfo">
+                                    <h1 class="title">Ações Desenvolvidas</h1>
+                                    <div id="divFloatLeft">
+                                        @if($report_warranty->pest_presence=='sim')
+                                            <label>Foi detetada a presença da praga {{$report_warranty->specie}} e aplicada a substância activa {{$report_warranty->sub_active}}.  </label>
+                                        @else
+                                            <label>Não foi detetada a presença de pragas.  </label>
+                                        @endif
+                                            <label>{{$report_warranty->action}}</label>
+                                    </div>
+                                </div>
 
                     <div class="tableContainer">
                         <table class="table" id="reportRules">
@@ -84,6 +75,7 @@
                                 <th class="thBackground">Espécie</th>
                                 <th class="thBackground">Isco</th>
                                 <th class="thBackground">Estado</th>
+                                <th class="thBackground">Ação</th>
                             </tr>
                             <tbody>
                             @foreach($answerDevices as $device)
@@ -92,38 +84,44 @@
                                     <td class="tdBackground tdRule"><label class="rule">{{$device->specie}}</label></td>
                                     <td class="tdBackground tdRule"><label class="rule">{{$device->isco}}</label></td>
                                     <td class="tdBackground tdRule"><label class="rule">{{$device->status}}</label></td>
+                                    <td class="tdBackground tdRule"><label class="rule">{{$device->action}}</label></td>
                                 </tr>
                             @endforeach
+                            </tbody>
+                        </table>
+                        @if(!$newDevices->isEmpty())
+                        <h1 class="title">Novos Dispositivos</h1>
+                        <table class="table" id="reportRules">
                             <tr id="reportRulesTop">
-                                <th class="thBackground">Dipositivos Instalados</th>
-                                <th class="thBackground"></th>
-                                <th class="thBackground"></th>
-                                <th class="thBackground"></th>
+                                <th class="thBackground">Nº</th>
+                                <th class="thBackground">Espécie</th>
+                                <th class="thBackground">Isco</th>
                             </tr>
+                            <tbody>
                             @foreach($newDevices as $newDevice)
                                 <tr class="tableRow">
                                     <td class="tdBackground tdRule"><label class="rule">{{$newDevice->number_device}}-{{$device->type_device}}</label></td>
                                     <td class="tdBackground tdRule"><label class="rule">{{$newDevice->specie}}</label></td>
                                     <td class="tdBackground tdRule"><label class="rule">{{$newDevice->isco}}</label></td>
-                                    <td class="tdBackground tdRule"><label class="rule"></label></td>
-                                </tr>
-                            @endforeach
-                            <tr id="reportRulesTop">
-                                <th class="thBackground">Justificações</th>
-                                <th class="thBackground"></th>
-                                <th class="thBackground"></th>
-                                <th class="thBackground"></th>
-                            </tr>
-                            @foreach($obs as $ob)
-                                <tr class="tableRow">
-                                    <td class="tdBackground tdRule"><label class="rule">{{$ob->observation}}</label></td>
-                                    <td class="tdBackground tdRule"><label class="rule"></label></td>
-                                    <td class="tdBackground tdRule"><label class="rule"></label></td>
-                                    <td class="tdBackground tdRule"><label class="rule"></label></td>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
+                        @endif
+                        @if(!$obs->isEmpty())
+                        <table class="table" id="reportRules">
+                            <tr id="reportRulesTop">
+                                <th class="thBackground">Justificações</th>
+                            </tr>
+                            <tbody>
+                            @foreach($obs as $ob)
+                                <tr class="tableRow">
+                                    <td class="tdBackground tdRule"><label class="rule">{{$ob->observation}}</label></td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                        @endif
                         <div>
                             <label class="lblBold">Recomendações: </label>
                             <label> {{$report_warranty->note}}</label>

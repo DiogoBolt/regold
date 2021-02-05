@@ -67,8 +67,9 @@
                             <div class="form-group">
                                 Tipo de Espécie:  <select class="form-control" name="type_specie" {{--onchange="payType(this)"--}} required>
                                     <option disabled selected value="">Selecione a Espécie</option>
-                                    <option value="Ratos e Ratazanas">Ratos e Ratazanas</option>
-                                    <option value="Baratas">Baratas</option>
+                                    <option value="Roedores">Roedores</option>
+                                    <option value="Blatídeos">Blatídeos</option>
+                                    <option value="Roedores e Blatídeos">Roedores e Blatídeos</option>
                                     <option value="Formigas">Formigas</option>
                                     <option value="Insectos voadores">Insectos voadores</option>
                                 </select>

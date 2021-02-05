@@ -22,21 +22,7 @@
         <span class="back-btn__front"><strong>Voltar</strong></span>
         <span class="back-btn__back"><strong>Home</strong></span>
     </a>
-    <!--
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item" aria-current="page">Home</li>
-                <li class="breadcrumb-item " aria-current="page">Documentos </li>
-                <li class="breadcrumb-item active" aria-current="page">Documento</li>
-            </ol>
-        </nav>
 
-        {{-- Go Back Button --}}
-        <a class="back-btn" href="/frontoffice/documents/">
-            <span class="back-btn__front"><strong>Voltar</strong></span>
-            <span class="back-btn__back"><strong>Documentos </strong></span>
-        </a>
-     -->
      <h1 class="title">Secções</h1>
      <div class="divSection">
         <ul class="ulSectionClient">

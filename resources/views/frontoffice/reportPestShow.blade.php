@@ -83,7 +83,7 @@
                     <div class="tableContainer">
                         <table class="table" id="reportRules">
                             <tr id="reportRulesTop">
-                                <th class="thBackground">Nº Dispositivo</th>
+                                <th class="thBackground">Nº</th>
                                 <th class="thBackground">Espécie</th>
                                 <th class="thBackground">Isco</th>
                             </tr>

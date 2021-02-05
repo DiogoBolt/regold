@@ -180,6 +180,9 @@
                                 Informações/notas sobre o cliente 
                                 <textarea class="form-control" placeholder="Informações/notas sobre o cliente" name="transport_note">{{$client->transport_note}}</textarea>
                             </div>
+                            <div id="EmailInvoice" class="form-group">
+                                Email Registo: <input class="form-control" value="{{$user->email}}" placeholder="Insira o E-mail de Registo" type="email" name="email" required >
+                            </div>
                             <label>Nova Password</label>
                             <div class="form-group">
                                 Password: <input class="form-control" value="{{$client->password}}" type="password" name="password">

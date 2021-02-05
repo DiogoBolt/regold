@@ -265,7 +265,7 @@ function addAnswerArray(){
         //console.log(rowsCorrectiveRules[i].children[3].getAttribute('value'));
 
         if(rowsCorrectiveRules[i].style.display!= 'none'){
-            answer.corrective=rowsCorrectiveRules[i].children[2].children[0].value;
+            answer.corrective=rowsCorrectiveRules[i].children[2].children[0].getAttribute('value');
             answer.recidivistCount=rowsCorrectiveRules[i].children[3].getAttribute('value');
         }else{
             answer.corrective= null;

@@ -63,7 +63,7 @@ class ClientController extends Controller
         $user = Auth::user();
 
        if(Session::has('establismentID')){
-        
+
             $auxClientId = Session::get('establismentID');
 
             $clients = Customer::where('ownerID',$user->id)
@@ -117,7 +117,6 @@ class ClientController extends Controller
         
         }else if(Session::has('clientImpersonatedId')){
 
-            
             $auxClientId = Session::get('clientImpersonatedId');
 
             Session::forget('establismentID');
@@ -170,7 +169,7 @@ class ClientController extends Controller
            $clientPermission=Customer::where('id',$user->client_id)
                ->first();
 
-            $clients = Customer::where('ownerID',$user->id)
+            $clients = Customer::where('id', $user->client_id)
             ->select([
                 'id',
                 'name'
@@ -704,10 +703,13 @@ class ClientController extends Controller
     public function editCustomer($id)
     {
         $client = Customer::where('id',$id)->first();
+        $user=User::where('id',$client->ownerID)->first();
+
         $salesman = Salesman::all();
         $districts = Districts::all();
         $serviceTypes = ServiceType::all();
         $activityTypes = ActivityClient::all();
+
 
         $auxDistrict=$this->getCitiesById($client->city)->id_district;
         $auxDristrictInvoice= $this->getCitiesById($client->invoice_city)->id_district;
@@ -723,7 +725,7 @@ class ClientController extends Controller
         $client->allCities=$this->getAllCitiesByDistrict($auxDistrict);
         $client->allCitiesInvoice=$this->getAllCitiesByDistrict($auxDristrictInvoice);
 
-        return view('client.edit',compact('client','salesman','districts','serviceTypes','activityTypes'));
+        return view('client.edit',compact('client','salesman','districts','serviceTypes','activityTypes','user'));
     }
 
     public function editCustomerPost(Request $request)
@@ -760,6 +762,9 @@ class ClientController extends Controller
         $client->contract_value = $inputs['value'];
         $client->regoldiID = $inputs['regoldiID'];
         $client->transport_note = $inputs['transport_note'];
+        $user->email=$inputs['email'];
+        $user->save();
+
         /*$type = ServiceTypeClient::where('id_client', $inputs['id'])->delete();
            //melhorar isto
            if (array_key_exists('serviceType1', $inputs)) {
@@ -793,6 +798,7 @@ class ClientController extends Controller
             $user->pin=password_hash($inputs['pin'], PASSWORD_BCRYPT, $options);
             $user->save();
         }
+
         $client->save();
         return redirect('/clients/'.$inputs['id']);
     }
@@ -950,6 +956,19 @@ class ClientController extends Controller
             $message->save();
         }
         return back();
+    }
+    function deleteReceipt($id){
+
+        $receipt = Receipt::where('id',$id)->first();
+        $receipt->delete();
+
+        return back();
+    }
+    public function getDocuments($id){
+        $client = Customer::where('id',$id)->first();
+        $receipts=Receipt::where('client_id',$client->id)->get();
+
+        return view('client.documentFiles',compact('client','receipts'));
     }
 
     public function groups()

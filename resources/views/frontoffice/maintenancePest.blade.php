@@ -44,7 +44,7 @@
                                         Disp. {{$device->number_device}}-{{$device->type_device}}
                                     </div>
                                 </div>
-                                @elseif($device->controlMain==1)
+                                @else
                                 <div class="file">
                                     <div>
                                         <a>
@@ -55,7 +55,7 @@
                                         Disp. {{$device->number_device}}-{{$device->type_device}}
                                     </div>
                                 </div>
-                                @else
+                               {{-- @else
                                     <div class="file">
                                         <div>
                                             <a type="button" >
@@ -65,7 +65,7 @@
                                         <div >
                                             Disp. {{$device->number_device}}-{{$device->type_device}}
                                         </div>
-                                    </div>
+                                    </div>--}}
                                 @endif
                             @endforeach
 
@@ -84,8 +84,10 @@
                             <div id="typeSpecie" class="form-group" style="display: none">
                                 Tipo de Espécie:  <select class="form-control" name="type_specie" {{--onchange="payType(this)"--}} >
                                     <option disabled selected value="">Selecione a Espécie</option>
-                                    <option value="Ratos e Ratazanas">Ratos e Ratazanas</option>
-                                    <option value="Baratas">Baratas</option>
+                                    <option value="Roedores">Roedores</option>
+                                    <option value="Blatella germanica">Blatella germanica</option>
+                                    <option value="Blatella oriental">Blatella oriental</option>
+                                    <option value="Blatella americana">Blatella americana</option>
                                     <option value="Formigas">Formigas</option>
                                     <option value="Insectos voadores">Insectos voadores</option>
                                 </select>
@@ -95,7 +97,7 @@
                                 Substância Activa:  <select class="form-control" name="subs_active" {{--onchange="payType(this)"--}}>
                                     <option disabled selected value="">Selecione o Isco</option>
                                     <option value="A-Cipermetrina">A-Cipermetrina</option>
-                                    <option value="Clotiamidina">"Clotiamidina</option>
+                                    <option value="Clotiamidina">Clotiamidina</option>
                                     <option value="Imidaclopride">Imidaclopride</option>
                                     <option value="Telas de cola">Telas de cola</option>
                                     <option value="Brodifacume">Brodifacume</option>
@@ -105,15 +107,30 @@
                                     <option value="Tiametoxam">Tiametoxam</option>
                                 </select>
                             </div>
+                            <div id="typeSpecie" class="form-group" >
+                                Ação Desenvolvida:  <select class="form-control" name="action" required>
+                                    <option disabled selected value="">Selecione a Ação</option>
+                                    <option value="Foi efetuada pulverização localizada.">Foi efetuada pulverização localizada</option>
+                                    <option value="Foi efetuada pulverização em locais apropriados.">Foi efetuada pulverização em locais apropriados</option>
+                                    <option value="Foi aplicado gel insecticida em locais apropriados.">Foi aplicado gel insecticida em locais apropriados</option>
+                                    <option value="Foi colocado raticida nos locais apropriados">Foi colocado raticida nos locais apropriados</option>
+                                    <option value="Outra">Outra</option>
+                                </select>
+                            </div>
 
                             <div class="form-group">
                                 <label>Recomendações: </label>
                                 <textarea class="form-control" name="note"></textarea>
                             </div>
-
+                            @if(count($devices)==count($checkDevices))
                             <div>
                                 <button type="button" data-toggle="modal" data-target="#myModal"  class="btn btn-add">Concluir</button>
                             </div>
+                            @else
+                                <div>
+                                    <button disabled type="button" data-toggle="modal" data-target="#myModal"  class="btn btn-add">Concluir</button>
+                                </div>
+                            @endif
                         </form>
                     </div>
                 </div>
@@ -182,34 +199,6 @@
     </div>
     @endforeach
 
-    {{--<div class="modal fade" id="deleteModal" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">x</button>
-                    <h4 class="modal-title">Deseja instalar novo dispositivo ou justificar a não instalação?</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <div class="col-sm-6">
-                            <a href="/frontoffice/newDevice" class="btn btn-add"><strong>Novo Dispositivo</strong></a>
-                        </div>
-                        <div class="col-sm-6">
-                            <input class="form-control" placeholder="" name="" >
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    --}}{{--<button type="button" class="btn modal-del" id="delete-device">
-                        <strong>Apagar</strong>
-                    </button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                        <strong>Cancelar</strong>
-                    </button>--}}{{--
-                </div>
-            </div>
-        </div>
-    </div>--}}
 @endsection
 
 <script>

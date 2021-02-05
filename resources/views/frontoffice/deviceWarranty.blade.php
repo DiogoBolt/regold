@@ -51,6 +51,15 @@
                                 <input type="radio" name="device_status" id="deteriorado" value="deteriorado">
                             </div>
 
+                            <div id="typeSpecie" class="form-group" >
+                                Ação Desenvolvida:  <select class="form-control" name="action" required>
+                                    <option disabled selected value="">Selecione a Ação</option>
+                                    <option value="Foi substituída uma tela de cola">Foi substituída uma tela de cola</option>
+                                    <option value="Foi substituído o raticida">Foi substituído o raticida</option>
+                                    <option value="Outra">Outra</option>
+                                </select>
+                            </div>
+
                             <div>
                                 <button class="btn btn-add" >Concluir</button>
                             </div>

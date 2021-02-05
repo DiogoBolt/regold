@@ -266,7 +266,7 @@ class PersonalizeSectionController extends Controller
             }
         }
      
-        $products = Product::whereNotIn('category',array(6,16))
+        $products = Product::whereNotIn('category',array(6,16,20))
         ->select([
                 'id',
                 'name',
@@ -283,7 +283,7 @@ class PersonalizeSectionController extends Controller
 
     public function saveEachSection(Request $request){
         $inputs = $request->all();
-        dd($inputs);
+
         
         $areas = json_decode($inputs['areas']);
         $equipments = json_decode($inputs['equipments']);

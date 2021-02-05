@@ -201,7 +201,7 @@
                         <tr class="tableRow" style="display:table-row">
                             <th id="correctiveRulesIndex" class="index" value="{{$rule->id}}">{{$rule->index}}</th>
                             <td class="tdRuleBackground"><label class="rule">{{$rule->rule}}</label></td>
-                            <td id="correctiveTd"><p class="corrective" value="{{$rule->corrective}}">{{$rule->corrective}}</p></td>
+                            <td id="correctiveTd"><label class="corrective" value="{{$rule->corrective}}">{{$rule->corrective}}</label></td>
                             @if($showColumnRecidivist==0)
                                 <td style="display:none" id="recidivistCount" value="{{$rule->recidivistCount}}" ><label>R{{$rule->recidivistCount}}</label></td>
                             @else
@@ -212,7 +212,7 @@
                         <tr class="tableRow" style="display:none">
                             <th id="correctiveRulesIndex" class="index" value="{{$rule->id}}">{{$rule->index}}</th>
                             <td class="tdRuleBackground"><label class="rule">{{$rule->rule}}</label></td>
-                            <td id="correctiveTd"><textarea class="corrective" value="{{$rule->corrective}}">{{$rule->corrective}}</textarea></td>
+                            <td id="correctiveTd"><label class="corrective" value="{{$rule->corrective}}">{{$rule->corrective}}</label></td>
                             @if($showColumnRecidivist==0)
                                 <td style="display:none" id="recidivistCount" value="{{$rule->recidivistCount}}" ><label>R{{$rule->recidivistCount}}</label></td>
                             @else

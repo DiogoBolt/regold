@@ -175,7 +175,7 @@
                         <a class="category {{ $super }}" href="/frontoffice/pestReports">
                             <div class="category-body">
                                 <img class="img-categories" src="{{ URL::to('/') }}/img/relatorio.png">
-                                RELATÓRIOS
+                                CERTIFICADO DE SERVIÇO
                             </div>
                         </a>
                 @endif
