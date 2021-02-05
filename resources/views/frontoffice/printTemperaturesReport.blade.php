@@ -1,6 +1,7 @@
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 <link href="{{ asset('css/orders/order.css') }}" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <div class="container">
     <div class="row">
@@ -11,7 +12,7 @@
                         <tr>
                             <th class="report-header-cell">
                             <div style="text-align: center; margin-bottom: 20px;">
-                                <img class="imp_logo" src="/img/navbar/logoRegolfood.png"/>
+                                <img class="imp_logo" src="https://www.regolfood.pt/img/navbar/logoRegolfood.png"/>
                                     <div id="divFloatRigth">
                                         <div>
                                             <label class="lblBold" id="date"> {{$details->year}} </label>
@@ -70,8 +71,9 @@
         <tr>
             <td class="report-content-cell">
                 <footer class="footer_1"id="footer">
-                    <img class="report_footer" src="{{ URL::to('/') }}/img/footer3.png" alt="logo">
+                    <img class="report_footer" src="https://www.regolfood.pt/img/footer3.png" alt="logo">
                 </footer>
+
             </td>
         </tr>
     </tfoot>
@@ -90,4 +92,5 @@
                 window.close();
             }, 500);
         };
+
 </script>

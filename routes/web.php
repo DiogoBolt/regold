@@ -165,6 +165,7 @@ Route::get('/frontoffice/records/temperatures/history','RecordsController@getTem
 Route::get('/frontoffice/records/temperatures/history/get','RecordsController@getHistoryByMonth');
 Route::post('/frontoffice/records/temperatures/history/comment','RecordsController@saveComment');
 Route::get('/frontoffice/records/temperatures/history/print','RecordsController@printReport');
+Route::get('/frontoffice/sendReportEmail/','RecordsController@sendRecordEmail');
 Route::any('/frontoffice/editthermosvalue','RecordsController@editThermoTemperature');
 Route::get('/frontoffice/records/hygiene','RecordsController@getHygieneRecords');
 Route::get('/frontoffice/getlastreads/{id}', 'RecordsController@getLast5Temperatures');

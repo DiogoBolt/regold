@@ -20,6 +20,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 
@@ -419,7 +420,13 @@ class RecordsController extends Controller
 
     public function printReport(Request $request)
     {
+        $user = Auth::user();
         $print_data = json_decode($request->get('printReport')[0]);
+        Mail::send('frontoffice.printTemperaturesReport', ['details' => $print_data[0] , 'data' => $print_data[1]], function ($m) use ($user) {
+            $m->from('suporte@regolfood.pt', 'O Seu Relatório');
+
+            $m->to($user->email)->subject('O Seu Relatório');
+        });
         return view('frontoffice.printTemperaturesReport')->with(['details' => $print_data[0] , 'data' => $print_data[1]]);
     }
 
@@ -467,4 +474,5 @@ class RecordsController extends Controller
         }
         return back();
     }
+
 }
