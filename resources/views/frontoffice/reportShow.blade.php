@@ -270,10 +270,21 @@
                     </tr>
                 </tfoot>
                     </table>
+                    <div id="voltarTopo">
+                        <a href="#" class="btn btn-warning" id="subir">Topo</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function() {
+            $('#subir').click(function(){
+                $('html, body').animate({scrollTop:0}, 'slow');
+                return false;
+            });
+        });
+    </script>
 {{--<script>--}}
 {{--/*--}}
 {{--window.onload = function () {--}}
