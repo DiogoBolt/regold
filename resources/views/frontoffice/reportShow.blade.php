@@ -271,7 +271,7 @@
                 </tfoot>
                     </table>
                     <div id="voltarTopo">
-                        <a href="#" class="btn btn-warning" id="subir">Topo</a>
+                        <a href="#" class="btn btn-warning" id="subir">Voltar ao topo</a>
                     </div>
                 </div>
             </div>
