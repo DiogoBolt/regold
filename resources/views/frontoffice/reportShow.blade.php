@@ -114,9 +114,9 @@
                                                     <td> @if($rule->answer== 'nc')
                                                         <div class="divSeverity">
                                                             <div class="range-slider">
-                                                                <input class="range-slider__range" type="range" value="{{$rule->severityAnswer}}" min="1" max="5" disabled>
+                                                                <input class="range-slider__range" type="range" value="{{$rule->severityValue}}" min="1" max="5" disabled>
                                                             </div>
-                                                            <label class="lblRangeValue">{{$rule->severityAnswer}}</label>
+                                                            <label class="lblRangeValue">{{$rule->severityValue}}</label>
                                                         </div>
                                                         <label class="lblSeverityStatus">{{$rule->severityText}}</label>
                                                         @else
@@ -274,6 +274,7 @@
             </div>
         </div>
     </div>
+
 {{--<script>--}}
 {{--/*--}}
 {{--window.onload = function () {--}}

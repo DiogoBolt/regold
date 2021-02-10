@@ -52,7 +52,7 @@
                             </div>
 
                             <div id="typeSpecie" class="form-group" >
-                                Ação Desenvolvida:  <select class="form-control" name="action" required>
+                                Ação Desenvolvida:  <select class="form-control" name="action">
                                     <option disabled selected value="">Selecione a Ação</option>
                                     <option value="Foi substituída uma tela de cola">Foi substituída uma tela de cola</option>
                                     <option value="Foi substituído o raticida">Foi substituído o raticida</option>

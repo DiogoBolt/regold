@@ -331,18 +331,18 @@
 }
 .range-slider__range::-webkit-slider-thumb {
   appearance: none;
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   background: #2c3e50;
   cursor: pointer;
   transition: 0.15s ease-in-out;
 }
 .range-slider__range::-webkit-slider-thumb:hover {
-  background: #f0f;
+  background: #5a5a5a;
 }
 .range-slider__range:active::-webkit-slider-thumb {
-  background: #f0f;
+  background: #5a5a5a;
 }
 .range-slider__range::-moz-range-thumb {
   width: 32px;
@@ -378,7 +378,7 @@ main {
   width: 60%;
   text-align: center;
   font-size: 15px;
-  margin-top: 5px;
+  margin-top: 15px;
   margin-left: 10%;
 }
 

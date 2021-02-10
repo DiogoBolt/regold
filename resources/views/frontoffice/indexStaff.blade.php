@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.frontoffice')
 
 @section('styles')
     <!-- Custom CSS -->
@@ -7,17 +7,31 @@
 
 @section('content')
     <div class="container-bar">
-        <p class="container-bar_txt">funcionários</p>
+        <p class="container-bar_txt">utilizadores</p>
         <div class="container-bar_img">
             <img src="{{ asset('img/clientes.jpg') }}"/>
         </div>
     </div>
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item" aria-current="page">Home</li>
+            <li class="breadcrumb-item " aria-current="page">{{$client->name}}</li>
+        </ol>
+    </nav>
+
+    <a class="back-btn" href="/home">
+        <span class="back-btn__front"><strong>Voltar</strong></span>
+        <span class="back-btn__back"><strong>Home</strong></span>
+    </a>
+
+
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <div class="panel">
-                    <div class="panel-body table-responsive">
-                        <a href="/frontoffice/staff/new" class="btn btn-add"><strong>Novo Funcionário</strong></a>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <a href="/frontoffice/staff/new" class="btn btn-add"><strong>Novo Utilizador</strong></a>
 
                         <table class="table">
                             <tr>

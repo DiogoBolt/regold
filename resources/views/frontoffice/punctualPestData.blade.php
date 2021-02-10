@@ -64,7 +64,7 @@
                             </div>
 
                             <div id="typeSpecie" class="form-group" >
-                                Ação Desenvolvida:  <select class="form-control" name="action" {{--onchange="payType(this)"--}} required>
+                                Ação Desenvolvida:  <select class="form-control" name="action" {{--onchange="payType(this)"--}} >
                                     <option disabled selected value="">Selecione a Ação</option>
                                     <option value="Foi efetuada pulverização localizada.">Foi efetuada pulverização localizada</option>
                                     <option value="Foi efetuada pulverização em locais apropriados.">Foi efetuada pulverização em locais apropriados</option>
@@ -75,7 +75,7 @@
                             </div>
 
                             <div id="subActiva" class="form-group" >
-                                Substância Activa:  <select class="form-control" name="subs_active" {{--onchange="payType(this)"--}}required>
+                                Substância Activa:  <select class="form-control" name="subs_active" {{--onchange="payType(this)"--}}>
                                     <option disabled selected value="">Selecione o Isco</option>
                                     <option value="A-Cipermetrina">A-Cipermetrina</option>
                                     <option value="Clotiamidina">Clotiamidina</option>

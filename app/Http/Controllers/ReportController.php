@@ -755,6 +755,7 @@ class ReportController extends Controller
         $statiscsGeral->nConfGeral=$auxPerNConfGeral;
         $statiscsGeral->nAplly=$auxPerNApplyGeral;
 
+
         return view('frontoffice.reportShow',compact('report','arraySections','reportsAnswers','reportSectionObs','statiscsGeral'));
     }
 

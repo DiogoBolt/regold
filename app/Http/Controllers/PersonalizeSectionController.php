@@ -284,11 +284,9 @@ class PersonalizeSectionController extends Controller
     public function saveEachSection(Request $request){
         $inputs = $request->all();
 
-        
         $areas = json_decode($inputs['areas']);
         $equipments = json_decode($inputs['equipments']);
         $idSection = json_decode($inputs['idSection']);
-
 
         $auxClientId = Session::get('clientImpersonatedId');
 
