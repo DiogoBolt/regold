@@ -3686,10 +3686,10 @@ img.img-center,.img-center img {margin-left: auto; margin-right: auto;}
     color: #fff;
     transform:rotateX(-90deg) translateZ(15px);
   }
-
-  .back-btn:hover {
-    transform:rotateX(90deg);
-  }
+ /* fazer botao voltar rodar*/
+ /* .back-btn:hover {*/
+ /*   transform:rotateX(90deg);*/
+ /* }*/
 
   .nav-bar_img {
     display: none;

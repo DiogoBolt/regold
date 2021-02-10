@@ -243,7 +243,7 @@
   .conformeBar{
     font-size: 15px !important;
     color: black !important;
-    background-color: green !important; 
+    background-color: green !important;
   }
   .nConformeBar{
     font-size: 15px !important;
@@ -413,5 +413,18 @@ main {
   }
   tfoot.report-footer{
     display:table-footer-group;
+  }
+  #subir{
+    position: fixed;
+    right: 10%;
+    bottom: 0%;
+    z-index: 1000;
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    filter: progid: dximagetransform.microsoft.basicimage(rotation=3);
+    text-align: center;
+    text-decoration: none;
   }
 }
