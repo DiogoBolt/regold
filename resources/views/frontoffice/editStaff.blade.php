@@ -8,7 +8,7 @@
 @section('content')
     <script src="{{ URL::asset('/js/validations.js') }}"></script>
     <div class="container-bar">
-        <p class="container-bar_txt">Editar staff</p>
+        <p class="container-bar_txt">Editar Utilizadores</p>
         <div class="container-bar_img">
             <img src="{{ asset('img/add-user.png') }}" />
         </div>
