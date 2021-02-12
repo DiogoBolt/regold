@@ -453,7 +453,7 @@ class PestController extends Controller
             $report_MaintenancePest->specie=null;
             $report_MaintenancePest->sub_active=null;
         }
-        $report_MaintenancePest->action=$inputs['action'];
+        if(isset($inputs['action'])==0) $report_MaintenancePest->action = null; else $report_MaintenancePest->action=$inputs['action'];
         $report_MaintenancePest->note=$inputs['note'];
         $report_MaintenancePest->concluded=1;
         $report_MaintenancePest->save();
@@ -498,7 +498,7 @@ class PestController extends Controller
         $inputs = $request->all();
         $answer_device=new AnswerDeviceMain();
         $answer_device->status=$inputs['device_status'];
-        $answer_device->action=$inputs['action'];
+        if(isset($inputs['action'])==0) $answer_device->action = null; else $answer_device->action=$inputs['action'];
         $answer_device->id_device=$id;
         $answer_device->idReportMain=$idReport;
         $answer_device->save();
@@ -721,7 +721,7 @@ class PestController extends Controller
             $report_WarrantyPest->specie=null;
             $report_WarrantyPest->sub_active=null;
         }
-        $report_WarrantyPest->action=$inputs['action'];
+        if(isset($inputs['action'])==0) $report_WarrantyPest->action = null; else $report_WarrantyPest->action=$inputs['action'];
         $report_WarrantyPest->note=$inputs['note'];
         $report_WarrantyPest->concluded=1;
 
@@ -803,7 +803,7 @@ class PestController extends Controller
 
         $answer_device=new AnswerDeviceWarranty();
         $answer_device->status=$inputs['device_status'];
-        $answer_device->action=$inputs['action'];
+        if(isset($inputs['action'])==0) $answer_device->action = null; else $answer_device->action=$inputs['action'];
         $answer_device->idReportWarranty=$idReport;
         $answer_device->id_device=$id;
         $answer_device->save();
@@ -837,7 +837,7 @@ class PestController extends Controller
         $punctual_data->specie=$inputs['specie'];
         $punctual_data->note=$inputs['note'];
         $punctual_data->sub_active=$inputs['subs_active'];
-        $punctual_data->action=$inputs['action'];
+        if(isset($inputs['action'])==0) $punctual_data->action = null; else $punctual_data->action=$inputs['action'];
         $punctual_data->save();
 
         return redirect('/frontoffice/reports/punctualList');

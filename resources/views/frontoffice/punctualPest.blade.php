@@ -50,7 +50,7 @@
                                 <input type="radio" name="specie" id="outro" value="outro">
                             </div>
 
-                            <div id="typeSpecie" class="form-group" >
+                            <div id="typeSpecie" class="form-group">
                                 Ação Desenvolvida:  <select class="form-control" name="action" {{--onchange="payType(this)"--}} >
                                     <option disabled selected value="">Selecione a Ação</option>
                                     <option value="Foi efetuada pulverização localizada.">Foi efetuada pulverização localizada</option>
