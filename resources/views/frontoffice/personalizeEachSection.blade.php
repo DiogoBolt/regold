@@ -164,7 +164,7 @@
                                     <option value="{{$product->id}}">{{$product->name}}</option>
                                 @endforeach
                             </select>
-                            <select id="productArea2">
+                            {{--<select id="productArea2">
                                 <option value="" disabled selected>Produto</option>
                                 @foreach($products as $product)
                                     <option value="{{$product->id}}">{{$product->name}}</option>
@@ -176,7 +176,7 @@
                                     <option value="{{$product->id}}">{{$product->name}}</option>
                                 @endforeach
                             </select>
-
+--}}
                             <select id="cleaning">
                                 <option value="" disabled selected>Limpeza</option>
                                 @foreach($cleaningFrequencys as $cleaningFrequency)
@@ -225,7 +225,7 @@
                     @endforeach
                 </select>
             </td>
-            <td>
+           {{-- <td>
                 <select id="product">
                     <option value="" disabled>Produto</option>
                     @foreach($products as $product)
@@ -242,7 +242,7 @@
                         <option value="{{$product->id}}">{{$product->name}}</option>
                     @endforeach
                 </select>
-            </td>
+            </td>--}}
             <td>
                 <select id="cleaning">
                     <option value="" disabled>Limpeza</option>
