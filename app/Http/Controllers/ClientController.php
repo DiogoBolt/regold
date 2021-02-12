@@ -1012,8 +1012,9 @@ class ClientController extends Controller
     public function getDocuments($id){
         $client = Customer::where('id',$id)->first();
         $receipts=Receipt::where('client_id',$client->id)->get();
+        $documentsTypes=DocumentType::all();
 
-        return view('client.documentFiles',compact('client','receipts'));
+        return view('client.documentFiles',compact('client','receipts','documentsTypes'));
     }
 
     public function groups()
