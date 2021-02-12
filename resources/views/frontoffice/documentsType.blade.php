@@ -28,7 +28,7 @@
         <span class="back-btn__back"><strong>Documentos {{ $super }}</strong></span>
     </a>
 
-    @if($type==3 or $type == 2 or $type == 24 or $type == 25 or $type == 15 or $type == 16 or $type == 18 or $type == 19 or $type == 20 or $type == 21 or $type == 26 or $type==30 or $type==31)
+    @if($type==3 or $type == 2 or $type == 24 or $type == 25 or $type == 15 or $type == 16 or $type == 18 or $type == 19 or $type == 20 or $type == 21 or $type == 26 or $type==30 or $type==31 or $type==32)
 
     <div class="container">
         <div class="container-docs">
