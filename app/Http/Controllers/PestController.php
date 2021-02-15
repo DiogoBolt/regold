@@ -356,7 +356,7 @@ class PestController extends Controller
             $device->index=$count;
         }
 
-        return view('frontoffice.reportPestShow',compact('report_pest','idReport','devices','device'));
+        return view('frontoffice.reportPestShow',compact('report_pest','devices','device'));
     }
 
     public function maintenancePest()
@@ -543,7 +543,7 @@ class PestController extends Controller
 
         $obs=ReportPestObs::where('idReportMain',$id)->get();
 
-        return view('frontoffice.reportMaintenanceShow',compact('report_maintenance','obs','id','answerDevices','device','newDevices'));
+        return view('frontoffice.reportMaintenanceShow',compact('report_maintenance','obs','id','answerDevices','newDevices'));
     }
 
     public function punctualPest()

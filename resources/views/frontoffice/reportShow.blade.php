@@ -12,7 +12,7 @@
                             <thead class="report-header">
                                 <tr>
                                     <th class="report-header-cell">
-                        <img class="logoReport" src="{{ URL::to('/') }}/img/navbar/logoRegolfood.png" alt="logo">
+                        <img class="logoReport" src="{{ URL::to('/') }}/img/Regolpest-03.png" alt="logo">
                         
                         <div id="divBtns">
                             <a class="btn btn-warning" href="/frontoffice/reports">
