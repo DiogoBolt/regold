@@ -582,7 +582,7 @@ class PestController extends Controller
             }
         }
 
-        $report_punctual=new ReportPunctual;
+        $report_punctual= new ReportPunctual;
         $report_punctual->specie=$inputs['specie'];
         $report_punctual->note=$inputs['note'];
         $report_punctual->sub_active=$inputs['subs_active'];
