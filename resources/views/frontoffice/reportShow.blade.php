@@ -12,7 +12,7 @@
                             <thead class="report-header">
                                 <tr>
                                     <th class="report-header-cell">
-                        <img class="logoReport" src="{{ URL::to('/') }}/img/Regolpest-03.png" alt="logo">
+                        <img class="logoReport" src="{{ URL::to('/') }}/img/logoRegolfood.png" alt="logo">
                         
                         <div id="divBtns">
                             <a class="btn btn-warning" href="/frontoffice/reports">
@@ -111,15 +111,15 @@
                                                             <label class="naoAplicavel"></label>
                                                         @endif
                                                     </td>
-                                                    <td> @if($rule->answer== 'nc')
-                                                        <div class="divSeverity">
-                                                            <div class="range-slider">
-                                                                <input class="range-slider__range" type="range" value="{{$rule->severityValue}}" min="1" max="5" disabled>
-                                                            </div>
-                                                            <label class="lblRangeValue">{{$rule->severityValue}}</label>
-                                                        </div>
-                                                        <label class="lblSeverityStatus">{{$rule->severityText}}</label>
+                                                    <td> @if($rule->answer== 'c' || $rule->answer== 'na' || $rule->severityValue == 0 )
                                                         @else
+                                                            <div class="divSeverity">
+                                                                <div class="range-slider">
+                                                                    <input class="range-slider__range" type="range" value="{{$rule->severityValue}}" min="1" max="5" disabled>
+                                                                </div>
+                                                                <label class="lblRangeValue">{{$rule->severityValue}}</label>
+                                                            </div>
+                                                            <label class="lblSeverityStatus">{{$rule->severityText}}</label>
                                                         @endif
                                                     </td>
                                                 </tr>
@@ -217,12 +217,12 @@
                                     </div>
                                 </div>
 
-                                <label>Não Aplicavél</label>
+                                {{--<label>Não Aplicavél</label>
                                 <div class="progress">
                                     <div class="progress-bar nAplicavelBar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:{{$section->nApply}}%">
                                         {{$section->nApply}}%
                                     </div>
-                                </div>
+                                </div>--}}
                             </div>
                             </div>
 
@@ -248,12 +248,12 @@
                                     </div>
                                 </div>
 
-                                <label>Não Aplicavél</label>
+                                {{--<label>Não Aplicavél</label>
                                 <div class="progress">
                                     <div class="progress-bar nAplicavelBar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:{{$statiscsGeral->nAplly}}%">
                                         {{$statiscsGeral->nAplly}}%
                                     </div>
-                                </div>
+                                </div>--}}
                             </div>
                     </div>
 

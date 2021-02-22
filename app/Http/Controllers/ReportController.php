@@ -697,35 +697,35 @@ class ReportController extends Controller
             $totalRules=0;
             $totalConforme=0;
             $totalnConforme=0;
-            $totalnAplicavel=0;
+           /* $totalnAplicavel=0;*/
             foreach($reportsAnswers as $reportsAnswer){
-                if($section->id == $reportsAnswer->idClientSection){
+                if($section->id == $reportsAnswer->idClientSection && $reportsAnswer->answer!='na'){
                     $totalRules++;
                     if($reportsAnswer->answer=='c'){
                         $totalConforme++;
                     }else if($reportsAnswer->answer=='nc'){
                         $totalnConforme++;
-                    }else if($reportsAnswer->answer=='na'){
+                    }/*else if($reportsAnswer->answer=='na'){
                         $totalnAplicavel++;
-                    }
+                    }*/
                 }
             }
             $totalRules == 0 ? $auxPerConf=0 :  $auxPerConf=intval(round(($totalConforme*100)/$totalRules));
 
             $totalRules == 0 ?  $auxPerNCont=0: $auxPerNCont=intval(round(($totalnConforme*100)/$totalRules,0));
 
-            $totalRules == 0 ? $auxPerNApply=0 : $auxPerNApply=intval(round(($totalnAplicavel*100)/$totalRules,0));
+           /* $totalRules == 0 ? $auxPerNApply=0 : $auxPerNApply=intval(round(($totalnAplicavel*100)/$totalRules,0));*/
 
             $section->conforme=$auxPerConf;
             $section->nConforme=$auxPerNCont;
-            $section->nApply=$auxPerNApply;
+            /*$section->nApply=$auxPerNApply;*/
         }
 
         //estatisticas geral e por a mensagem de severidade 
         $totalRulesGeral=0;
         $totalConformeGeral=0;
         $totalnConformeGeral=0;
-        $totalnAplicavelGeral=0;
+        /*$totalnAplicavelGeral=0;*/
         foreach($reportsAnswers as $reportsAnswer){
 
             if($reportsAnswer->severityValue==1 || $reportsAnswer->severityValue==2 ){
@@ -736,24 +736,28 @@ class ReportController extends Controller
                 $reportsAnswer->severityText="Crítico";
             }
 
-            $totalRulesGeral++;
+            if($reportsAnswer->answer!='na')
+            {
+                $totalRulesGeral++;
+            }
+
             if($reportsAnswer->answer=='c'){
                 $totalConformeGeral++;
             }else if($reportsAnswer->answer=='nc'){
                 $totalnConformeGeral++;
-            }else if($reportsAnswer->answer=='na'){
+            }/*else if($reportsAnswer->answer=='na'){
                 $totalnAplicavelGeral++;
-            }
+            }*/
         }
 
         $totalRulesGeral == 0 ? $auxPerConfGeral=0 : $auxPerConfGeral=intval(round(($totalConformeGeral*100)/$totalRulesGeral));
         $totalRulesGeral == 0 ? $auxPerNConfGeral=0 : $auxPerNConfGeral=intval(round(($totalnConformeGeral*100)/$totalRulesGeral));
-        $totalRulesGeral == 0 ? $auxPerNApplyGeral=0 : $auxPerNApplyGeral=intval(round(($totalnAplicavelGeral*100)/$totalRulesGeral));
+        /*$totalRulesGeral == 0 ? $auxPerNApplyGeral=0 : $auxPerNApplyGeral=intval(round(($totalnAplicavelGeral*100)/$totalRulesGeral));*/
 
         $statiscsGeral = (object)[];
         $statiscsGeral->confGeral=$auxPerConfGeral;
         $statiscsGeral->nConfGeral=$auxPerNConfGeral;
-        $statiscsGeral->nAplly=$auxPerNApplyGeral;
+        /*$statiscsGeral->nAplly=$auxPerNApplyGeral;*/
 
 
         return view('frontoffice.reportShow',compact('report','arraySections','reportsAnswers','reportSectionObs','statiscsGeral'));

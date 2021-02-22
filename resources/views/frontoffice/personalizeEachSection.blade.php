@@ -15,22 +15,7 @@
         </div>
     </div>
 
-    <!--
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item" aria-current="page">Home</li>
-                <li class="breadcrumb-item " aria-current="page">Documentos </li>
-                <li class="breadcrumb-item active" aria-current="page">Documento</li>
-            </ol>
-        </nav>
 
-        {{-- Go Back Button --}}
-        <a class="back-btn" href="/frontoffice/documents/">
-            <span class="back-btn__front"><strong>Voltar</strong></span>
-            <span class="back-btn__back"><strong>Documentos </strong></span>
-        </a>
-     -->
-    
      {{-- Go Back Button --}}
     <a class="back-btn" href="/frontoffice/personalizeAreasEquipments">
         <span class="back-btn__front"><strong>Voltar</strong></span>
@@ -38,7 +23,7 @@
     </a>
 
      <h1 id="sectionTitle" class="title">{{$clientSection->designation}}</h1>
-     <input type="hidden" id="idSection" name="custId"value="{{$clientSection->id}}">
+     <input type="hidden" id="idSection" name="custId" value="{{$clientSection->id}}">
 
      <!--Area Section-->
      <h2 class="title">ÁREAS</h2>
@@ -47,13 +32,14 @@
             <th>Área</th>
             <th>Produto de Limpeza</th>
             <th>Frequência de Limpeza</th>
-            <th>Checked</th>
+            <th>Ativo</th>
         </tr>
         <tbody>
-        <tr class="tableRow" style="display:none">
+        <tr class="tableRowArea" style="display:none">
             <td>
-                <input type="hidden" id="idClientArea" value="0">
-                <label>0</label></td>
+                <input type="hidden" id="idClientArea" value="">
+                <label class="area" id="area{{$lastArea}}" onclick="showEdit('a',this.id)"></label>
+            </td>
             <td>
                 <select id="product">
                     <option value="" disabled>Produto</option>
@@ -73,10 +59,11 @@
                 <td><input id="checkedArea" type="Checkbox" name="checkedArea[]" checked></td>
         </tr>
         @foreach($areas as $area)
-            <tr class="tableRow">
+            <tr class="tableRowArea">
                 <td>
                     <input type="hidden" id="idClientArea" value="{{$area->idAreaSectionClient}}">
-                    <label>{{$area->designacao}}</label></td>
+                    <label class="area" id="area{{$area->id}}" onclick="showEdit('a',this.id)">{{$area->designacao}}</label>
+                </td>
                 <td>
                     <select id="product">
                     <option value="" disabled>Produto</option>
@@ -109,10 +96,10 @@
             </tr>
         @endforeach
         @foreach($areasSectionClients as $area)
-            <tr class="tableRow">
+            <tr class="tableRowArea">
                 <td>
                     <input type="hidden" id="idClientArea" value="{{$area->id}}">
-                    <label>{{$area->designation}}</label>
+                    <label class="area" id="area{{$area->id}}" onclick="showEdit('a',this.id)">{{$area->designation}}</label>
                 </td>
                 <td>
                     <select id="product">
@@ -158,25 +145,12 @@
                         <div class="news" id="oneNew">
                             <input type="text" id="idDesignation" name="designation" placeholder="Designação">
             
-                            <select id="productArea1">
+                            <select id="product">
                                 <option value="" disabled selected>Produto</option>
                                 @foreach($products as $product)
                                     <option value="{{$product->id}}">{{$product->name}}</option>
                                 @endforeach
                             </select>
-                            {{--<select id="productArea2">
-                                <option value="" disabled selected>Produto</option>
-                                @foreach($products as $product)
-                                    <option value="{{$product->id}}">{{$product->name}}</option>
-                                @endforeach
-                            </select>
-                            <select id="productArea3">
-                                <option value="" disabled selected>Produto</option>
-                                @foreach($products as $product)
-                                    <option value="{{$product->id}}">{{$product->name}}</option>
-                                @endforeach
-                            </select>
---}}
                             <select id="cleaning">
                                 <option value="" disabled selected>Limpeza</option>
                                 @foreach($cleaningFrequencys as $cleaningFrequency)
@@ -208,13 +182,13 @@
             <th>Equipamento</th>
             <th>Produto de Limpeza</th>
             <th>Frequência de Limpeza</th>
-            <th>Checked</th>
+            <th>Ativo</th>
         </tr>
         <tbody>
-        <tr class="tableRow" style="display:none">
+        <tr class="tableRowEquipment" style="display:none">
             <td>
                 <input type="hidden" id="idClientEquipment" value="0">
-                <label></label>
+                <label class="equipment" id="equipment{{$lastEquipment}}" onclick="showEdit('e',this.id)"></label>
             </td>
             <td>
                 <select id="product">
@@ -225,24 +199,6 @@
                     @endforeach
                 </select>
             </td>
-           {{-- <td>
-                <select id="product">
-                    <option value="" disabled>Produto</option>
-                    @foreach($products as $product)
-
-                        <option value="{{$product->id}}">{{$product->name}}</option>
-                    @endforeach
-                </select>
-            </td>
-            <td>
-                <select id="product">
-                    <option value="" disabled>Produto</option>
-                    @foreach($products as $product)
-
-                        <option value="{{$product->id}}">{{$product->name}}</option>
-                    @endforeach
-                </select>
-            </td>--}}
             <td>
                 <select id="cleaning">
                     <option value="" disabled>Limpeza</option>
@@ -256,10 +212,10 @@
 
         </tr>
         @foreach($equipments as $equipment)
-            <tr class="tableRow">
+            <tr class="tableRowEquipment">
                 <td>
                     <input type="hidden" id="idClientEquipment" value="{{$equipment->idAreaSectionClient}}">
-                    <label>{{$equipment->designation}}</label>
+                    <label class="equipment" id="equipment{{$equipment->id}}" onclick="showEdit('e',this.id)">{{$equipment->designation}}</label>
                 </td>
                 <td>
                     <select id="product">
@@ -293,10 +249,10 @@
             </tr>
         @endforeach
         @foreach($equipmentsSectionClient as $equipment)
-            <tr class="tableRow">
+            <tr class="tableRowEquipment">
                 <td> 
                     <input type="hidden" id="idClientEquipment" value="{{$equipment->id}}">
-                    <label>{{$equipment->designation}}</label>
+                    <label class="equipment" id="equipment{{$equipment->id}}" onclick="showEdit('e',this.id)">{{$equipment->designation}}</label>
                 </td>
                 <td>
                     <select id="product">
@@ -341,7 +297,7 @@
                 </div>
                 <div class="modal-body">
                     <div id="allNewsEquipments">
-                        <div class="news" id="oneNew">
+                        <div class="newsE" id="oneNew">
                             <input type="text" id="idDesignation" name="designation" placeholder="Designação">
                             <select id="product">
                                 <option value="" disabled selected>Produto</option>
@@ -373,7 +329,52 @@
     </div>
     <!--end equipments section-->
 
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Editar Designação</h4>
+                </div>
+                <div class="modal-body" id="infomodal">
+                        <input id="type" name="type" type="hidden" value="">
+                        <input id="idItem" name="idItem" type="hidden" value="">
+                        <input id="name" name="name" value="" class="form-control">
+                        <button type="submit" class="btn btn-primary" onclick="editItem()">Editar</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 
     <button id="savePersolize" class="btn-del" onclick="saveEachPersonalize()">Guardar</button>
 
 @endsection
+
+<script>
+    function showEdit(type,id) {
+        $('#name').val(null);
+        $('#myModal').modal('show');
+        $('#type').val(type);
+        var chars = id.slice(0, id.search(/\d/));
+        var numbs = parseInt(id.replace(chars, ''));
+        $('#idItem').val(numbs);
+    }
+    function editItem() {
+        var name = $('#name').val();
+        var id = $('#idItem').val();
+
+        var type = $('#type').val();
+        if(type == 'a')
+            $('#area'+id).text(name);
+        if(type == 'e')
+            $('#equipment'+id).text(name);
+
+        $('#myModal').modal('hide');
+
+    }
+</script>

@@ -97,6 +97,7 @@ function addObsList(){
     var index = document.getElementById('indexObs').selectedIndex;
     var idRule= document.getElementById('indexObs').options[index].value;
     var iptObs = document.getElementById('iptObs').value;
+    var text = document.getElementById('text').value;
 
     console.log(index + " - " + iptObs);
     if(iptObs==""){
@@ -114,7 +115,7 @@ function addObsList(){
             thIndex.setAttribute('value',idRule);
             thIndex.className="index";
             if(index==0)
-                thIndex.innerHTML="Geral";
+                thIndex.innerHTML=text;
             else
             thIndex.innerHTML=index;
 
@@ -357,10 +358,15 @@ function concludeReport(){
 }
 
 function verifySelected(element){
+    var text = document.getElementById('text');
+    var index = document.getElementById('indexObs').selectedIndex;
+
     if(element.selectedIndex !=0){
         document.getElementById('indexObs').style.border="none";
         document.getElementById('indexObs').style.borderBottom="1px solid #000";
-    }
+    }/*else{
+        text.innerHTML=index;
+    }*/
 }
 
 function verifyTextInput(element){
