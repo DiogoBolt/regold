@@ -140,10 +140,12 @@
                                 @endif
                             </div>
                         </div>
+                        @if(Session::has('impersonated'))
                         <div class="register-arc__info delete" data-toggle="modal" data-target="#deleteModal"
                              data-item="{{ $thermo }}">
                             eliminar
                         </div>
+                            @endif
                     </div>
                 @endif
                 @else
@@ -181,10 +183,12 @@
                                     @endif
                                 </div>
                             </div>
+                            @if(Session::has('impersonated'))
                             <div class="register-arc__info delete" data-toggle="modal" data-target="#deleteModal"
                                  data-item="{{ $thermo }}">
                                 eliminar
                             </div>
+                                @endif
                         </div>
                     @else
                         <div class="register-arc freezing">
@@ -220,10 +224,12 @@
                                     @endif
                                 </div>
                             </div>
+                            @if(Session::has('impersonated'))
                             <div class="register-arc__info delete" data-toggle="modal" data-target="#deleteModal"
                                  data-item="{{ $thermo }}">
                                 eliminar
                             </div>
+                                @endif
                         </div>
                     @endif
                 @endif
