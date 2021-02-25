@@ -265,7 +265,10 @@ class PersonalizeSectionController extends Controller
                 $equipment->idAreaSectionClient=0;
             }
         }
-     
+
+        $lastArea=AreaSectionClient::orderBy('id', 'desc')->take(1)->first()->id;
+        $lastEquipment=EquipmentSectionClient::orderBy('id', 'desc')->take(1)->first()->id;
+
         $products = Product::whereNotIn('category',array(6,16,20))
         ->select([
                 'id',
@@ -278,17 +281,15 @@ class PersonalizeSectionController extends Controller
         ])->get();
 
 
-        return view('frontoffice.personalizeEachSection',compact('clientSection','areas','areasSectionClients','equipments','equipmentsSectionClient','products','cleaningFrequencys'));
+        return view('frontoffice.personalizeEachSection',compact('clientSection','areas','areasSectionClients','equipments','equipmentsSectionClient','products','cleaningFrequencys','lastArea','lastEquipment'));
     }
 
     public function saveEachSection(Request $request){
         $inputs = $request->all();
 
-        
         $areas = json_decode($inputs['areas']);
         $equipments = json_decode($inputs['equipments']);
         $idSection = json_decode($inputs['idSection']);
-
 
         $auxClientId = Session::get('clientImpersonatedId');
 
@@ -330,6 +331,7 @@ class PersonalizeSectionController extends Controller
                 $AreaSectionClient->save();
             }else{
                 $AreaSectionClient =AreaSectionClient::where('id',$area->idAreaSectionClient)->first();
+                $AreaSectionClient->designation=$area->designation;
                 $AreaSectionClient->idCleaningFrequency=$area->idCleaningFrequency;
                 $AreaSectionClient->idProduct=$area->idProduct;
                 $AreaSectionClient->save();
@@ -374,7 +376,8 @@ class PersonalizeSectionController extends Controller
                 $EquipmentSectionClient->active=1;
                 $EquipmentSectionClient->save();
             }else{
-                $EquipmentSectionClient =EquipmentSectionClient::where('id',$equipment->idAreaSectionClient)->first();;
+                $EquipmentSectionClient =EquipmentSectionClient::where('id',$equipment->idAreaSectionClient)->first();
+                $EquipmentSectionClient->designation=$equipment->designation;
                 $EquipmentSectionClient->idCleaningFrequency=$equipment->idCleaningFrequency;
                 $EquipmentSectionClient->idProduct=$equipment->idProduct;
                 $EquipmentSectionClient->active=1;

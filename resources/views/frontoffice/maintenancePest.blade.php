@@ -108,7 +108,7 @@
                                 </select>
                             </div>
                             <div id="typeSpecie" class="form-group" >
-                                Ação Desenvolvida:  <select class="form-control" name="action" required>
+                                Ação Desenvolvida:  <select class="form-control" name="action">
                                     <option disabled selected value="">Selecione a Ação</option>
                                     <option value="Foi efetuada pulverização localizada.">Foi efetuada pulverização localizada</option>
                                     <option value="Foi efetuada pulverização em locais apropriados.">Foi efetuada pulverização em locais apropriados</option>

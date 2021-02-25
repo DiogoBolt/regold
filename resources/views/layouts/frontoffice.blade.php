@@ -81,7 +81,7 @@
 
                                 <ul class="dropdown-menu">
                                     <li><a href="/frontoffice/client">Definições</a></li>
-                                    {{--<li><a href="/frontoffice/staff">Funcionários</a></li>--}}
+                                    <li><a href="/frontoffice/staff">Utilizadores</a></li>
                                     <li>
                                         @if(Session::has('impersonated'))
                                             <a href="/impersonate/leaveuser">

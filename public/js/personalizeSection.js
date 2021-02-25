@@ -31,9 +31,13 @@ function showModal(idModal){
 
         qtdDiv=$('#allNewsEquipments')[0].children.length;
 
-        $('.news')[0].children[0].value="";
-        $('.news')[0].children[1].selectedIndex=0
-        $('.news')[0].children[2].selectedIndex=0
+        while(qtdDiv > 1){
+            $('#allNewsEquipments')[0].children[0].remove();
+            --qtdDiv;
+        }
+        $('.newsE')[0].children[0].value="";
+        $('.newsE')[0].children[1].selectedIndex=0
+        $('.newsE')[0].children[2].selectedIndex=0
     }
         
     idClone=0;
@@ -119,7 +123,7 @@ function clone(idModal){
         var divNewClone  = allNewsAreas.getElementsByClassName('news')[0];
     }else if(idModal=='addEquipment'){
         var allNewsEquipments = document.getElementById('allNewsEquipments');
-        var divNewClone  = allNewsEquipments.getElementsByClassName('news')[0];
+        var divNewClone  = allNewsEquipments.getElementsByClassName('newsE')[0];
     }
     document.getElementsByClassName('fa fa-trash')[0].style.display="block";
     var clone=divNewClone.cloneNode(true);
@@ -143,18 +147,23 @@ function addAreasTable(){
     var div = allNewAreas.getElementsByClassName('news');
     for( var i=0; i< div.length; i++){
         var name=div[i].children[0].value;
+        var lastArea=$('.area').last().attr('id');
+        var chars = lastArea.slice(0, lastArea.search(/\d/));
+        var numbs = parseInt(lastArea.replace(chars, ''))+1;
+
         var productAux=div[i].children[1].selectedIndex;
        // var productId=div[i].children[1].options[productAux].value;
         var cleaningFrequencyAux=div[i].children[2].selectedIndex;
         //var cleaningFrequencyID=div[i].children[2].options[cleaningFrequencyAux].value;
 
-        var row = document.getElementsByClassName("tableRow")[0];
+        var row = document.getElementsByClassName("tableRowArea")[0];
         //var aux=  document.getElementById("areasTable").getElementsByTagName('tbody').length;
         var table = document.getElementById("areasTable").getElementsByTagName('tbody')[1];  
  
-        var clone = row.cloneNode(true); 
+        var clone = row.cloneNode(true);
         clone.children[0].children[0].value=0;
         clone.children[0].children[1].innerHTML=name;
+        clone.children[0].children[1].id='area'+numbs;
         clone.children[1].childNodes[1].selectedIndex=productAux;
         clone.children[2].childNodes[1].selectedIndex=cleaningFrequencyAux;
         clone.children[3].childNodes[0].checked=true;
@@ -169,22 +178,28 @@ function addAreasTable(){
 //funcção para adicionar uma novo(s) equipamento(s) á tabela
 function addEquipmentTable(){
     var allNewsEquipments = document.getElementById('allNewsEquipments');
-    var div = allNewsEquipments.getElementsByClassName('news');
+    var div = allNewsEquipments.getElementsByClassName('newsE');
    
     for( var i=0; i< div.length; i++){
         var name=div[i].children[0].value;
+        var lastEquipment=$('.equipment').last().attr('id');
+        console.log(lastEquipment)
+        var chars = lastEquipment.slice(0, lastEquipment.search(/\d/));
+        var numbs = parseInt(lastEquipment.replace(chars, ''))+1;
         var productAux=div[i].children[1].selectedIndex;
+
        // var productId=div[i].children[1].options[productAux].value;
         var cleaningFrequencyAux=div[i].children[2].selectedIndex;
         //var cleaningFrequencyID=div[i].children[2].options[cleaningFrequencyAux].value;
 
-        var row = document.getElementsByClassName("tableRow")[0];
+        var row = document.getElementsByClassName("tableRowEquipment")[0];
         //var aux=  document.getElementById("areasTable").getElementsByTagName('tbody').length;
         var table = document.getElementById("equipmentTable").getElementsByTagName('tbody')[1];  
  
         var clone = row.cloneNode(true); 
         clone.children[0].children[0].value=0;
         clone.children[0].children[1].innerHTML=name;
+        clone.children[0].children[1].id='equipment'+numbs;
         clone.children[1].childNodes[1].selectedIndex=productAux;
         clone.children[2].childNodes[1].selectedIndex=cleaningFrequencyAux;
         clone.children[3].childNodes[0].checked=true;
@@ -199,14 +214,11 @@ function addEquipmentTable(){
 function saveEachPersonalize(){
     //areas selecionadas criar o json para mandar para o controller
     var tableArea = document.getElementById("areasTable");
-    var rowsArea= tableArea.getElementsByClassName("tableRow");
+    var rowsArea= tableArea.getElementsByClassName("tableRowArea");
     var areasSelected=[];
     var idSection=document.getElementById("idSection").value; 
 
     for(var i=0; i<rowsArea.length; i++){
-       /*console.log("designation-> "+ rowsArea[i].cells[0].children[0].textContent);
-       console.log("idProduto-> "+ rowsArea[i].cells[1].children[0].value);
-       console.log("idFrequencia-> "+ rowsArea[i].cells[2].children[0].value);*/
        if(i>0) {
            if (rowsArea[i].cells[3].children[0].checked) {
                var area = {};
@@ -223,13 +235,10 @@ function saveEachPersonalize(){
 
     //equipamentos selecionados criar o json para mandar para o controller
     var tableEquipment = document.getElementById("equipmentTable");
-    var rowsEquipments= tableEquipment.getElementsByClassName("tableRow");
+    var rowsEquipments= tableEquipment.getElementsByClassName("tableRowEquipment");
     var equipmentsSelected=[];
 
     for(var i=0; i<rowsEquipments.length; i++){
-       /*console.log("designation-> "+ rowsEquipments[i].cells[0].children[0].textContent);
-       console.log("idProduto-> "+ rowsEquipments[i].cells[1].children[0].value);
-       console.log("idFrequencia-> "+ rowsEquipments[i].cells[2].children[0].value);*/
         if(i>0)
         {
             if(rowsEquipments[i].cells[3].children[0].checked){
@@ -242,14 +251,10 @@ function saveEachPersonalize(){
                 equipmentsSelected.push(equipment);
             }
         }
-
     }
     var equipments = JSON.stringify(equipmentsSelected);
 
     console.log(equipments);
-
-    //console.log(areas);
-    //console.log(equipments);
 
     $.ajaxSetup({
         headers: {
@@ -263,7 +268,4 @@ function saveEachPersonalize(){
     }).then(
        window.location.replace('/frontoffice/personalizeAreasEquipments')
     );
-
-
-
 }

@@ -24,4 +24,8 @@ class AreaSectionClient extends Model
     public static function alias($alias) {
         return (new static)->table . ' as ' . $alias;
     }
+    public function hygieneRecord()
+    {
+        return $this->hasMany('App\HygieneRecords', 'idArea', 'id');
+    }
 }

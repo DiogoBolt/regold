@@ -13,6 +13,19 @@
         <img src="{{ asset('img/add-user.png') }}" />
     </div>
 </div>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" aria-current="page">Home</li>
+        <li class="breadcrumb-item " aria-current="page">{{$client->name}}</li>
+    </ol>
+</nav>
+
+<a class="back-btn" href="/frontoffice/staff">
+    <span class="back-btn__front"><strong>Voltar</strong></span>
+    <span class="back-btn__back"><strong>Home</strong></span>
+</a>
+
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -21,7 +34,7 @@
                     <form action="/frontoffice/staff/add" method="post" >
                         {{ csrf_field() }}
                         <div id="ownerRegister" style="display:block">
-                            <label class="add-label">Dados do Funcionário</label>
+                            <label class="add-label">Dados do Utilizador</label>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     Nome:<input class="form-control" placeholder="Nome" id='ownerName'  name="ownerName" required>

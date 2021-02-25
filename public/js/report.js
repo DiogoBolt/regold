@@ -114,7 +114,7 @@ function addObsList(){
             thIndex.setAttribute('value',idRule);
             thIndex.className="index";
             if(index==0)
-                thIndex.innerHTML="Geral";
+                thIndex.innerHTML='Geral';
             else
             thIndex.innerHTML=index;
 
@@ -360,6 +360,8 @@ function verifySelected(element){
     if(element.selectedIndex !=0){
         document.getElementById('indexObs').style.border="none";
         document.getElementById('indexObs').style.borderBottom="1px solid #000";
+    }else{
+        text.innerHTML=index;
     }
 }
 

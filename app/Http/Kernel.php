@@ -45,6 +45,9 @@ class Kernel extends HttpKernel
         'permissionClient'=>[
             \App\Http\Middleware\permissionClient::class,
         ],
+        'permissionStaff'=>[
+            \App\Http\Middleware\permissionStaff::class,
+        ],
 
         'api' => [
             'throttle:60,1',

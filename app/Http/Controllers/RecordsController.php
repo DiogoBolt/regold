@@ -221,30 +221,82 @@ class RecordsController extends Controller
 
         $clientSections=ClientSection::where('active',1)->get();
 
-        foreach($sections as $section)
-        {
-            $section->equipments = EquipmentSectionClient::from(EquipmentSectionClient::alias('esc'))
-                ->leftJoin(ClientSection::alias('cs'),'cs.id','=','esc.idSection')
-                ->where('cs.active',1)
-                ->where('esc.idClient',$auxClientId)
-                ->where('esc.active',1)
-                ->orderBy('esc.idSection')
-                ->select('esc.designation','esc.id','esc.idSection','esc.idProduct','esc.idCleaningFrequency')
-                ->get();
+        $areasDaily = AreaSectionClient::WhereDoesntHave('hygieneRecord',function ($query){
+            $query->where('created_at','>',Carbon::today());
+        })
+            ->where('idClient',$auxClientId)
+            ->where('idCleaningFrequency',1)
+            ->orderBy('idSection')
+            ->where('active',1)
+            ->get();
 
-            $section->areas = AreaSectionClient::from(AreaSectionClient::alias('asc'))
-                ->leftJoin(ClientSection::alias('cs'),'cs.id','=','asc.idSection')
-                ->where('cs.active',1)
-                ->where('asc.idClient',$auxClientId)
-                ->where('asc.active',1)
-                ->orderBy('asc.idSection')
-                ->select('asc.designation','asc.id','asc.idSection','asc.idProduct','asc.idCleaningFrequency')
-                ->get();
-        }
+
+        $areasWeekly = AreaSectionClient::WhereDoesntHave('hygieneRecord',function ($query){
+            $query->where('created_at','>',Carbon::today()->subDay(7));
+        })
+            ->where('idClient',$auxClientId)
+            ->where('idCleaningFrequency',2)
+            ->orderBy('idSection')
+            ->where('active',1)
+            ->get();
+
+        $areasBiweekly = AreaSectionClient::WhereDoesntHave('hygieneRecord',function ($query){
+            $query->where('created_at','>',Carbon::today()->subDay(14));
+        })
+            ->where('idClient',$auxClientId)
+            ->where('idCleaningFrequency',3)
+            ->orderBy('idSection')
+            ->where('active',1)
+            ->get();
+
+        $areasMonthly = AreaSectionClient::WhereDoesntHave('hygieneRecord',function ($query){
+            $query->where('created_at','>',Carbon::today()->subDay(30));
+        })
+            ->where('idClient',$auxClientId)
+            ->where('idCleaningFrequency',4)
+            ->orderBy('idSection')
+            ->where('active',1)
+            ->get();
+
+        $equipDaily = EquipmentSectionClient::WhereDoesntHave('hygieneRecordE',function ($query){
+            $query->where('created_at','>',Carbon::today());
+        })
+            ->where('idClient',$auxClientId)
+            ->where('idCleaningFrequency',1)
+            ->orderBy('idSection')
+            ->where('active',1)
+            ->get();
+
+        $equipWeekly = EquipmentSectionClient::WhereDoesntHave('hygieneRecordE',function ($query){
+            $query->where('created_at','>',Carbon::today()->subDay(7));
+        })
+            ->where('idClient',$auxClientId)
+            ->where('idCleaningFrequency',2)
+            ->orderBy('idSection')
+            ->where('active',1)
+            ->get();
+
+        $equipBiweekly = EquipmentSectionClient::WhereDoesntHave('hygieneRecordE',function ($query){
+            $query->where('created_at','>',Carbon::today()->subDay(14));
+        })
+            ->where('idClient',$auxClientId)
+            ->where('idCleaningFrequency',3)
+            ->orderBy('idSection')
+            ->where('active',1)
+            ->get();
+
+        $equipMonthly = EquipmentSectionClient::WhereDoesntHave('hygieneRecordE',function ($query){
+            $query->where('created_at','>',Carbon::today()->subDay(30));
+        })
+            ->where('idClient',$auxClientId)
+            ->where('idCleaningFrequency',4)
+            ->orderBy('idSection')
+            ->where('active',1)
+            ->get();
 
         $today = Carbon::now()->format('Y-m-d');
 
-        return view('frontoffice.hygieneRegister', compact('today','clientSections','sections','section','products'));
+        return view('frontoffice.hygieneRegister', compact('today','clientSections','sections','areasMonthly','areasBiweekly','areasWeekly','areasDaily','equipDaily','equipWeekly','equipBiweekly','equipMonthly','products'));
     }
     public function saveHygieneRecords(Request $request)
     {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 
+use App\Customer;
 use App\DocumentSuperType;
 use App\StaffPermissions;
 use App\User;
@@ -32,14 +33,20 @@ class StaffController extends Controller
             ->where('userType',6)
             ->get();
 
-        return view('frontoffice.indexStaff',compact('userStaff'));
+        $client=Customer::where('id',$auxClientId)->first();
+
+        return view('frontoffice.indexStaff',compact('userStaff','client'));
     }
 
     public function addStaff()
     {
+        $auxClientId = Session::get('establismentID');
+
+        $client=Customer::where('id',$auxClientId)->first();
+
         $types=DocumentSuperType::all();
 
-        return view('frontoffice.newStaff',compact('types'));
+        return view('frontoffice.newStaff',compact('types','client'));
     }
 
     public function addStaffPost(Request $request)
@@ -62,24 +69,28 @@ class StaffController extends Controller
        foreach ($checkboxs as $checkbox){
            $userStaffPer = new StaffPermissions();
            $userStaffPer->id_superType=$checkbox;
+           $userStaffPer->active=1;
            $userStaffPer->user_id=$userStaff->id;
            $userStaffPer->save();
        }
-        return back();
+        return redirect('/frontoffice/staff');
     }
 
     public function editStaff($id)
     {
+        $auxClientId = Session::get('establismentID');
         $userStaff = User::where('id',$id)->first();
 
-        $staffPermissions=StaffPermissions::where('user_id',$id)->get();
+        $client=Customer::where('id',$auxClientId)->first();
+
+        $staffPermissions=StaffPermissions::where('user_id',$id)->where('active',1)->get();
 
             $permissions = [1 => 0 , 2 => 0, 3 => 0 , 4 => 0 , 5 => 0, 6 => 0];
                 foreach($staffPermissions as $permission) {
                     $permissions[$permission->id_superType] = 1;
                 }
 
-        return view('frontoffice.editStaff',compact('userStaff','types','staffPermission','permissions'));
+        return view('frontoffice.editStaff',compact('userStaff','types','staffPermission','permissions','client'));
     }
 
     public function editStaffPost(Request $request,$id)
@@ -90,15 +101,6 @@ class StaffController extends Controller
 
         $userStaff->name=$inputs['name'];
         $userStaff->email=$inputs['email'];
-
-     /*   $checkboxs=$inputs['type'];
-
-        foreach ($checkboxs as $checkbox){
-            $userStaffPer = new StaffPermissions();
-            $userStaffPer->id_superType=$checkbox;
-            $userStaffPer->user_id=$userStaff->id;
-            $userStaffPer->save();
-        }*/
 
         $options = [
             'cost' => 10
@@ -112,6 +114,46 @@ class StaffController extends Controller
             $userStaff->save();
         }
         $userStaff->save();
+
+        if(isset($inputs['type'])){
+            $checkboxs=$inputs['type'];
+            $permissions = [1 => 0 , 2 => 0, 3 => 0 , 4 => 0 , 5 => 0, 6 => 0];
+            foreach($checkboxs as $checkbox) {
+                $permissions[$checkbox] = 1;
+            }
+
+            $i=0;
+            foreach ($permissions as $permission){
+                $i++;
+                if ($permission==1) {
+                    $checked = StaffPermissions::where('user_id', $id)->where('id_superType', $i)->first();
+                    if (!$checked) {
+                        $userStaffPer = new StaffPermissions();
+                        $userStaffPer->id_superType =$i;
+                        $userStaffPer->active=1;
+                        $userStaffPer->user_id = $id;
+                        $userStaffPer->save();
+                    } else {
+                        $checked->active=1;
+                        $checked->save();
+                    }
+                } else{
+                    $checked = StaffPermissions::where('user_id', $id)->where('id_superType', $i)->first();
+                    if($checked){
+                        $checked->active=0;
+                        $checked->save();
+                    }
+                }
+            }
+        }else{
+            $checkeds = StaffPermissions::where('user_id', $id)->get();
+            foreach ($checkeds as $checked){
+                $checked->active=0;
+                $checked->save();
+            }
+        }
+
+
         return back();
     }
 

@@ -22,12 +22,20 @@
             <table class="table">
                 <tr>
                     <th>Documento</th>
+                    <th>Pasta</th>
                     <th>Data</th>
                     <th>Eliminar</th>
                 </tr>
                 @foreach($receipts as $receipt)
                     <tr>
                         <td><a href="/uploads/{{$client->id}}/{{$receipt->file}}">{{$receipt->file}}</a></td>
+                        <td>
+                            @foreach($documentsTypes as $document)
+                                @if($receipt->document_type_id==$document->id)
+                                    {{$document->name}}
+                                @endif
+                            @endforeach
+                        </td>
                         <td>{{date('d-m-Y',strtotime($receipt->created_at))}}</td>
                         <td><a href="/clients/deletereceipt/{{$receipt->id}}">X</a></td>
                     </tr>

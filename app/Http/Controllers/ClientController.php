@@ -15,6 +15,7 @@ use App\Product;
 use App\Receipt;
 use App\Report;
 use App\Salesman;
+use App\StaffPermissions;
 use App\TechnicalHACCP;
 use App\User;
 use App\Districts;
@@ -104,17 +105,28 @@ class ClientController extends Controller
                ->where('r.client_id',$auxClientId)
                ->where('viewed',0)
                ->count();
-                
+
                 $services = ServiceTypeClient::where('id_client',$auxClientId)
                 ->select([
                     'id_service_type',
                 ])
                 ->get();
 
+                if($user->userType==6)
+                {
+                    $staffPermissions=StaffPermissions::where('user_id',$user->id)->where('active',1)->get();
+                    $permissionsStaff = [1 => 0 , 2 => 0, 3 => 0 , 4 => 0 , 5 => 0, 6 => 0];
+                    foreach($staffPermissions as $permission) {
+                        $permissionsStaff[$permission->id_superType] = 1;
+                    }
+                }else{
+                    $permissionsStaff = [1 => 1 , 2 => 1, 3 => 1 , 4 => 1 , 5 => 1, 6 => 1];
+                }
+
                // Session::put('establismentID',$clients[0]->id);
-                
-                return view('client.home',compact('clients','services','receiptsCont','receiptsCP','receiptsHACCP','receiptsReg','clientPermission'));
-        
+
+                return view('client.home',compact('clients','services','receiptsCont','receiptsCP','receiptsHACCP','receiptsReg','clientPermission','permissionsStaff'));
+
         }else if(Session::has('clientImpersonatedId')){
 
             $auxClientId = Session::get('clientImpersonatedId');
@@ -159,22 +171,43 @@ class ClientController extends Controller
                 ])
                 ->get();
 
-                Session::put('establismentID',$auxClientId);
+           Session::put('establismentID',$auxClientId);
 
-            return view('client.home',compact('services','receiptsCont','receiptsCP','receiptsHACCP','receiptsReg','clientPermission'));
+           if($user->userType==6)
+           {
+               $staffPermissions=StaffPermissions::where('user_id',$user->id)->where('active',1)->get();
+               $permissionsStaff = [1 => 0 , 2 => 0, 3 => 0 , 4 => 0 , 5 => 0, 6 => 0];
+               foreach($staffPermissions as $permission) {
+                   $permissionsStaff[$permission->id_superType] = 1;
+               }
+           }else{
+               $permissionsStaff = [1 => 1 , 2 => 1, 3 => 1 , 4 => 1 , 5 => 1, 6 => 1];
+           }
+
+            return view('client.home',compact('services','receiptsCont','receiptsCP','receiptsHACCP','receiptsReg','clientPermission','permissionsStaff'));
 
         }else {
+
             Session::forget('establismentID');
 
            $clientPermission=Customer::where('id',$user->client_id)
                ->first();
 
-            $clients = Customer::where('id', $user->client_id)
-            ->select([
-                'id',
-                'name'
-            ])
-            ->get();
+           if($user->userType==6){
+               $clients = Customer::where('id', $user->client_id)
+                   ->select([
+                       'id',
+                       'name'
+                   ])
+                   ->get();
+           }else{
+               $clients = Customer::where('ownerID', $user->id)
+                   ->select([
+                       'id',
+                       'name'
+                   ])
+                   ->get();
+           }
 
             $receiptsHACCP = Receipt::from(Receipt::alias('r'))
                 ->leftJoin(DocumentType::alias('dt'), 'r.document_type_id', '=', 'dt.id')
@@ -204,17 +237,29 @@ class ClientController extends Controller
                ->where('r.client_id',$clients[0]->id)
                ->where('viewed',0)
                ->count();
-                
+
                 $services = ServiceTypeClient::where('id_client',$clients[0]->id)
                 ->select([
                     'id_service_type',
                 ])
                 ->get();
 
-                Session::put('establismentID',$clients[0]->id);
+           Session::put('establismentID',$clients[0]->id);
 
-            return view('client.home',compact('clients','services','receiptsCont','receiptsCP','receiptsHACCP','receiptsReg','clientPermission'));
+           if($user->userType==6)
+           {
+               $staffPermissions=StaffPermissions::where('user_id',$user->id)->where('active',1)->get();
+               $permissionsStaff = [1 => 0 , 2 => 0, 3 => 0 , 4 => 0 , 5 => 0, 6 => 0];
+               foreach($staffPermissions as $permission) {
+                   $permissionsStaff[$permission->id_superType] = 1;
+               }
+           }else{
+               $permissionsStaff = [1 => 1 , 2 => 1, 3 => 1 , 4 => 1 , 5 => 1, 6 => 1];
+           }
+
+            return view('client.home',compact('clients','services','receiptsCont','receiptsCP','receiptsHACCP','receiptsReg','clientPermission','permissionsStaff'));
         }
+
     }
 
     public function unreadMessages()
@@ -966,9 +1011,10 @@ class ClientController extends Controller
     }
     public function getDocuments($id){
         $client = Customer::where('id',$id)->first();
-        $receipts=Receipt::where('client_id',$client->id)->get();
+        $receipts=Receipt::where('client_id',$client->id)->orderBy('document_type_id','asc')->get();
+        $documentsTypes=DocumentType::all();
 
-        return view('client.documentFiles',compact('client','receipts'));
+        return view('client.documentFiles',compact('client','receipts','documentsTypes'));
     }
 
     public function groups()

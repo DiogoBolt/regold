@@ -261,18 +261,30 @@
         </table>
     </div>
 
-    <div id="addObs">
+    <div id="addObs" >
         <label>Nova Observação</label>
         <br/>
+        <div class="dropdown">
+        <input type="text" />
         <select id="indexObs" onchange="verifySelected(this)" >
             <option value="Geral">Geral</option>
             @foreach($rules as $rule)
                 <option value="{{$rule->id}}">{{$rule->index}}</option>
             @endforeach
         </select>
+        </div>
         <input id="iptObs" oninput="verifyTextInput(this)" type="text" placeholder="Insira a observação">
-        <button class="btn-del" onclick="addObsList()">Save</button>
+        <button onclick="addObsList()">Save</button>
     </div>
+            {{--<div class="dropdown">
+                <input type="text" />
+                <select  onchange="this.previousElementSibling.value=this.value; this.previousElementSibling.focus()">
+                    <option value="Geral">Geral</option>
+                    @foreach($rules as $rule)
+                        <option value="{{$rule->id}}">{{$rule->index}}</option>
+                    @endforeach
+                </select>
+            </div>--}}
 
     <script>
         var wage = document.getElementById("iptObs");
@@ -284,7 +296,7 @@
     </script>
 
     <div id="divBtns">
-        <button class="btn-del" onclick="continueAnswerReport({{$idReport}})" id="continue">Continuar</button>
+        <button onclick="continueAnswerReport({{$idReport}})" id="continue">Continuar</button>
     </div>
 @endsection
 
