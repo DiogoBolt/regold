@@ -7,6 +7,7 @@ use App\DocumentType;
 use App\Group;
 use App\Receipt;
 use App\Thermo;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
@@ -62,6 +63,14 @@ class HomeController extends Controller
 
 
         return 200;
+    }
+
+    public function dbxprice()
+    {
+        $client = new Client;
+        $res = $client->request('GET', 'https://www.marketwatch.com/investing/stock/dbx?mod=over_search');
+        $cenas = explode('session="after">',$res->getBody(),5);
+        return $cenas[1];
     }
 
 }

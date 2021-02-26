@@ -271,7 +271,7 @@
             @endforeach
         </select>
         <input id="iptObs" oninput="verifyTextInput(this)" type="text" placeholder="Insira a observação">
-        <button onclick="addObsList()">Save</button>
+        <button class="btn-del" onclick="addObsList()">Save</button>
     </div>
 
     <script>
@@ -284,7 +284,7 @@
     </script>
 
     <div id="divBtns">
-        <button onclick="continueAnswerReport({{$idReport}})" id="continue">Continuar</button>
+        <button class="btn-del" onclick="continueAnswerReport({{$idReport}})" id="continue">Continuar</button>
     </div>
 @endsection
 
