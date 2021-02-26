@@ -81,7 +81,9 @@
 
                                 <ul class="dropdown-menu">
                                     <li><a href="/frontoffice/client">Definições</a></li>
+                                    @if(Auth::user()->userType!=6)
                                     <li><a href="/frontoffice/staff">Utilizadores</a></li>
+                                    @endif
                                     <li>
                                         @if(Session::has('impersonated'))
                                             <a href="/impersonate/leaveuser">

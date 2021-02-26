@@ -286,7 +286,7 @@ class ClientController extends Controller
         if($user->userType == 5||$user->userType==3 /*|| $user->userType == 2*/)
         {
             $clients = Customer::from(Customer::alias('c'))
-
+                ->where('u.userType','!=',6)
                 ->leftJoin(User::alias('u'), 'u.client_id', '=', 'c.id')
                 ->when($request->filled('cityInvoice'), function ($query) use ($inputs) {
                     return $query->where('c.city', '=', $inputs['cityInvoice']);
@@ -295,7 +295,6 @@ class ClientController extends Controller
                     return $query->where('c.name', 'LIKE', '%' . $inputs['search'] . '%')
                         ->orWhere('c.id', 'LIKE', '%' . $inputs['search'] . '%');
                 })
-
                 ->select([
                     'c.id',
                     'u.id as userid',
@@ -309,6 +308,7 @@ class ClientController extends Controller
             if($user->userType==1)
             {
                 $clients = Customer::from(Customer::alias('c'))
+                    ->where('u.userType','!=',6)
                     ->leftJoin(User::alias('u'), 'u.client_id', '=', 'c.id')
                     ->where('c.salesman',$user->userTypeID)
                     ->when($request->filled('cityInvoice'), function ($query) use ($inputs) {
@@ -318,7 +318,6 @@ class ClientController extends Controller
                         return $query->where('c.name', 'LIKE', '%' . $inputs['search'] . '%')
                             ->orWhere('c.id', 'LIKE', '%' . $inputs['search'] . '%');
                     })
-
                     ->select([
                         'c.id',
                         'u.id as userid',
@@ -330,7 +329,7 @@ class ClientController extends Controller
             {
                 $clients = Customer::from(Customer::alias('c'))
                     ->leftJoin(User::alias('u'), 'u.client_id', '=', 'c.id')
-
+                    ->where('u.userType','!=',6)
                     /*filtro clientes por tecnico
 
                     /*->where('c.technical_haccp',$user->userTypeID)*/
