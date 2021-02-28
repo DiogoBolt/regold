@@ -202,7 +202,7 @@ function addEquipmentTable(){
         var productAux3=div[i].children[3].selectedIndex;
 
        // var productId=div[i].children[1].options[productAux].value;
-        var cleaningFrequencyAux=div[i].children[2].selectedIndex;
+        var cleaningFrequencyAux=div[i].children[4].selectedIndex;
         //var cleaningFrequencyID=div[i].children[2].options[cleaningFrequencyAux].value;
 
         var row = document.getElementsByClassName("tableRowEquipment")[0];
@@ -284,7 +284,7 @@ function saveEachPersonalize(){
         type: 'POST',
         url: "/frontoffice/personalizeAreasEquipments/personalizeEachSection/save",
         data:{areas: areas,equipments:equipments,idSection:idSection}
-    })/*.then(
+    }).then(
        window.location.replace('/frontoffice/personalizeAreasEquipments')
-    );*/
+    );
 }
