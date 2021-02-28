@@ -169,7 +169,7 @@ function addAreasTable(){
         clone.children[1].childNodes[1].selectedIndex=productAux;
         clone.children[2].childNodes[1].selectedIndex=productAux2;
         clone.children[3].childNodes[1].selectedIndex=productAux3;
-        clone.children[4].childNodes[1].selectedIndex=cleaningFrequencyAux;
+        clone.children[4].childNodes[0].selectedIndex=cleaningFrequencyAux;
         clone.children[5].childNodes[0].checked=true;
         clone.style = "display:true";
 
