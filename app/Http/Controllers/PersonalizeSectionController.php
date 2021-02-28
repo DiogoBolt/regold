@@ -219,7 +219,7 @@ class PersonalizeSectionController extends Controller
         ->select([
                 'id',
                 'name',
-            ])->get();
+            ])->orderBy('name')->get();
 
         $cleaningFrequencys = CleanFrequency::select([
             'id',
