@@ -31,6 +31,8 @@
         <tr>
             <th>Área</th>
             <th>Produto de Limpeza</th>
+            <th>Produto de Limpeza</th>
+            <th>Produto de Limpeza</th>
             <th>Frequência de Limpeza</th>
             <th>Ativo</th>
         </tr>
@@ -45,6 +47,22 @@
                     <option value="" disabled>Produto</option>
                     @foreach($products as $product)
                             <option value="{{$product->id}}">{{$product->name}}</option>
+                    @endforeach
+                </select>
+            </td>
+            <td>
+                <select id="product2">
+                    <option value="" disabled>Produto</option>
+                    @foreach($products as $product)
+                        <option value="{{$product->id}}">{{$product->name}}</option>
+                    @endforeach
+                </select>
+            </td>
+            <td>
+                <select id="product3">
+                    <option value="" disabled>Produto</option>
+                    @foreach($products as $product)
+                        <option value="{{$product->id}}">{{$product->name}}</option>
                     @endforeach
                 </select>
             </td>
@@ -157,13 +175,13 @@
                                     <option value="{{$product->id}}">{{$product->name}}</option>
                                 @endforeach
                             </select>
-                            <select id="product">
+                            <select id="product2">
                                 <option value="" disabled selected>Produto</option>
                                 @foreach($products as $product)
                                     <option value="{{$product->id}}">{{$product->name}}</option>
                                 @endforeach
                             </select>
-                            <select id="product">
+                            <select id="product3">
                                 <option value="" disabled selected>Produto</option>
                                 @foreach($products as $product)
                                     <option value="{{$product->id}}">{{$product->name}}</option>
