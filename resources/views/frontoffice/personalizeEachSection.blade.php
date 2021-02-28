@@ -15,7 +15,6 @@
         </div>
     </div>
 
-
      {{-- Go Back Button --}}
     <a class="back-btn" href="/frontoffice/personalizeAreasEquipments">
         <span class="back-btn__front"><strong>Voltar</strong></span>

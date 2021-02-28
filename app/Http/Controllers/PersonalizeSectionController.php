@@ -367,7 +367,6 @@ class PersonalizeSectionController extends Controller
             $equipmentsSectionClient= EquipmentSectionClient::where('id',$indexEquipment)->first();
             $equipmentsSectionClient->active=0;
             $equipmentsSectionClient->save();
-
         }
         
         foreach($equipments as $equipment){
