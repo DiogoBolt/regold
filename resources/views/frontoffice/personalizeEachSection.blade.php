@@ -76,15 +76,16 @@
             </td>
                 <td><input id="checkedArea" type="Checkbox" name="checkedArea[]" checked></td>
         </tr>
-        @foreach($areas as $area)
+       
+        @foreach($areasSectionClients as $area)
             <tr class="tableRowArea">
                 <td>
-                    <input type="hidden" id="idClientArea" value="{{$area->idAreaSectionClient}}">
-                    <label class="area" id="area{{$area->id}}" onclick="showEdit('a',this.id)">{{$area->designacao}}</label>
+                    <input type="hidden" id="idClientArea" value="{{$area->id}}">
+                    <label class="area" id="area{{$area->id}}" onclick="showEdit('a',this.id)">{{$area->designation}}</label>
                 </td>
                 <td>
                     <select id="product">
-                    <option value="" disabled>Produto</option>
+                        <option value="" disabled>Produto</option>
                         @foreach($products as $product)
                             @if($area->idProduct == $product->id)
                                 <option value="{{$product->id}}" selected>{{$product->name}}</option>
@@ -115,59 +116,6 @@
                             @else
                                 <option value="{{$product->id}}">{{$product->name}}</option>
                             @endif
-                        @endforeach
-                    </select>
-                </td>
-                <td>
-                    <select id="cleaning">
-                    <option value="" disabled>Limpeza</option>
-                        @foreach($cleaningFrequencys as $cleaningFrequency)
-                            @if($area->idFrequencyCleaning == $cleaningFrequency->id)
-                                <option value="{{$cleaningFrequency->id}}" selected>{{$cleaningFrequency->designation}}</option>
-                            @else
-                                <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>
-                            @endif
-                        @endforeach
-                    </select>
-                </td>
-                @if($area->checked)
-                <td><input id="checkedArea" type="Checkbox" name="checkedArea[]" checked></td>
-                @else
-                <td><input id="checkedArea" type="Checkbox" name="checkedArea[]"></td>
-                @endif
-            </tr>
-        @endforeach
-        @foreach($areasSectionClients as $area)
-            <tr class="tableRowArea">
-                <td>
-                    <input type="hidden" id="idClientArea" value="{{$area->id}}">
-                    <label class="area" id="area{{$area->id}}" onclick="showEdit('a',this.id)">{{$area->designation}}</label>
-                </td>
-                <td>
-                    <select id="product">
-                    <option value="" disabled>Produto</option>
-                        @foreach($products as $product)
-                            @if($area->idProduct == $product->id)
-                                <option value="{{$product->id}}" selected>{{$product->name}}</option>
-                            @else
-                                <option value="{{$product->id}}">{{$product->name}}</option>
-                            @endif
-                        @endforeach
-                    </select>
-                </td>
-                <td>
-                    <select id="product2">
-                        <option value="" disabled>Produto</option>
-                        @foreach($products as $product)
-                            <option value="{{$product->id}}">{{$product->name}}</option>
-                        @endforeach
-                    </select>
-                </td>
-                <td>
-                    <select id="product3">
-                        <option value="" disabled>Produto</option>
-                        @foreach($products as $product)
-                            <option value="{{$product->id}}">{{$product->name}}</option>
                         @endforeach
                     </select>
                 </td>

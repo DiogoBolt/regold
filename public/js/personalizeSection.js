@@ -226,16 +226,18 @@ function saveEachPersonalize(){
     var tableArea = document.getElementById("areasTable");
     var rowsArea= tableArea.getElementsByClassName("tableRowArea");
     var areasSelected=[];
-    var idSection=document.getElementById("idSection").value; 
+    var idSection=document.getElementById("idSection").value;
 
     for(var i=0; i<rowsArea.length; i++){
        if(i>0) {
-           if (rowsArea[i].cells[3].children[0].checked) {
+           if (rowsArea[i].cells[5].children[0].checked) {
                var area = {};
                area.idAreaSectionClient = rowsArea[i].cells[0].children[0].value;
                area.designation = rowsArea[i].cells[0].children[1].textContent;
                area.idProduct = rowsArea[i].cells[1].children[0].value;
-               area.idCleaningFrequency = rowsArea[i].cells[2].children[0].value;
+               area.idProduct2 = rowsArea[i].cells[2].children[0].value;
+               area.idProduct3 = rowsArea[i].cells[3].children[0].value;
+               area.idCleaningFrequency = rowsArea[i].cells[4].children[0].value;
                area.idSection = idSection;
                areasSelected.push(area);
            }
@@ -256,7 +258,9 @@ function saveEachPersonalize(){
                 equipment.idAreaSectionClient = rowsEquipments[i].cells[0].children[0].value;
                 equipment.designation = rowsEquipments[i].cells[0].children[1].textContent;
                 equipment.idProduct = rowsEquipments[i].cells[1].children[0].value;
-                equipment.idCleaningFrequency = rowsEquipments[i].cells[2].children[0].value;
+                equipment.idProduct2 = rowsEquipments[i].cells[2].children[0].value;
+                equipment.idProduct3 = rowsEquipments[i].cells[3].children[0].value;
+                equipment.idCleaningFrequency = rowsEquipments[i].cells[4].children[0].value;
                 equipment.idSection = idSection;
                 equipmentsSelected.push(equipment);
             }
