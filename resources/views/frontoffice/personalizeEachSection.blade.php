@@ -76,7 +76,7 @@
             </td>
                 <td><input id="checkedArea" type="Checkbox" name="checkedArea[]" checked></td>
         </tr>
-       
+
         @foreach($areasSectionClients as $area)
             <tr class="tableRowArea">
                 <td>
@@ -392,12 +392,25 @@
                                     <option value="{{$product->id}}">{{$product->name}}</option>
                                 @endforeach
                             </select>
+                            <select id="product2">
+                                <option value="" disabled selected>Produto</option>
+                                @foreach($products as $product)
+                                    <option value="{{$product->id}}">{{$product->name}}</option>
+                                @endforeach
+                            </select>
+                            <select id="product3">
+                                <option value="" disabled selected>Produto</option>
+                                @foreach($products as $product)
+                                    <option value="{{$product->id}}">{{$product->name}}</option>
+                                @endforeach
+                            </select>
                             <select id="cleaning">
                                 <option value="" disabled selected>Limpeza</option>
                                 @foreach($cleaningFrequencys as $cleaningFrequency)
                                     <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>
                                 @endforeach
                             </select>
+                            
                             <i class="fa fa-trash fa-lg" style="display:none" onclick="deleteNewSection(parentNode)"></i>
                         </div>
                     </div>
