@@ -86,7 +86,10 @@
                     <select id="product">
                         <option value="" disabled>Produto</option>
                         @foreach($products as $product)
-                            @if($area->idProduct == $product->id)
+                            @if($area->idProduct == 0)
+                                <option value="0" selected>Produto</option>
+
+                            @elseif($area->idProduct == $product->id)
                                 <option value="{{$product->id}}" selected>{{$product->name}}</option>
                             @else
                                 <option value="{{$product->id}}">{{$product->name}}</option>
@@ -98,7 +101,10 @@
                     <select id="product2">
                         <option value="" disabled>Produto</option>
                         @foreach($products as $product)
-                            @if($area->idProduct2 == $product->id)
+                            @if($area->idProduct2 == 0)
+                                <option value="0" selected>Produto</option>
+
+                            @elseif($area->idProduct2 == $product->id)
                                 <option value="{{$product->id}}" selected>{{$product->name}}</option>
                             @else
                                 <option value="{{$product->id}}">{{$product->name}}</option>
@@ -110,7 +116,10 @@
                     <select id="product3">
                         <option value="" disabled>Produto</option>
                         @foreach($products as $product)
-                            @if($area->idProduct3 == $product->id)
+                            @if($area->idProduct3 == 0)
+                                <option value="0" selected>Produto</option>
+
+                            @elseif($area->idProduct3 == $product->id)
                                 <option value="{{$product->id}}" selected>{{$product->name}}</option>
                             @else
                                 <option value="{{$product->id}}">{{$product->name}}</option>
@@ -263,7 +272,10 @@
                     <select id="product">
                     <option value="" disabled>Produto</option>
                         @foreach($products as $product)
-                            @if($equipment->idProduct == $product->id)
+                            @if($equipment->idProduct == 0)
+                                <option value="0" selected>Produto</option>
+
+                            @elseif($equipment->idProduct == $product->id)
                                 <option value="{{$product->id}}" selected>{{$product->name}}</option>
                             @else
                                 <option value="{{$product->id}}">{{$product->name}}</option>
@@ -275,7 +287,10 @@
                     <select id="product2">
                         <option value="" disabled>Produto</option>
                         @foreach($products as $product)
-                            @if($equipment->idProduct2 == $product->id)
+                            @if($equipment1->idProduct == 0)
+                                <option value="0" selected>Produto</option>
+
+                            @elseif($equipment1->idProduct == $product->id)
                                 <option value="{{$product->id}}" selected>{{$product->name}}</option>
                             @else
                                 <option value="{{$product->id}}">{{$product->name}}</option>
@@ -287,7 +302,10 @@
                     <select id="product3">
                         <option value="" disabled>Produto</option>
                         @foreach($products as $product)
-                            @if($equipment->idProduct3 == $product->id)
+                            @if($equipment2->idProduct == 0)
+                                <option value="0" selected>Produto</option>
+
+                            @elseif($equipment2->idProduct == $product->id)
                                 <option value="{{$product->id}}" selected>{{$product->name}}</option>
                             @else
                                 <option value="{{$product->id}}">{{$product->name}}</option>
@@ -298,11 +316,14 @@
                 <td>
                     <select id="cleaning">
                     <option value="" disabled>Limpeza</option>
-                        @foreach($cleaningFrequencys as $cleaningFrequency)
-                            @if($equipment->idCleaningFrequency == $cleaningFrequency->id)
-                                <option value="{{$cleaningFrequency->id}}" selected>{{$cleaningFrequency->designation}}</option>
+                        @foreach($products as $product)
+                            @if($equipment3->idProduct == 0)
+                                <option value="0" selected>Produto</option>
+
+                            @elseif($equipment3->idProduct == $product->id)
+                                <option value="{{$product->id}}" selected>{{$product->name}}</option>
                             @else
-                                <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>
+                                <option value="{{$product->id}}">{{$product->name}}</option>
                             @endif
                         @endforeach
                     </select>
