@@ -171,7 +171,7 @@
                         @endforeach
                     </select>
                 </td>
-               
+
                 <td>
                     <select id="cleaning">
                     <option value="" disabled>Limpeza</option>
@@ -258,6 +258,8 @@
         <tr>
             <th>Equipamento</th>
             <th>Produto de Limpeza</th>
+            <th>Produto de Limpeza</th>
+            <th>Produto de Limpeza</th>
             <th>Frequência de Limpeza</th>
             <th>Ativo</th>
         </tr>
@@ -307,6 +309,30 @@
                     </select>
                 </td>
                 <td>
+                    <select id="product2">
+                        <option value="" disabled>Produto</option>
+                        @foreach($products as $product)
+                            @if($equipment->idProduct2 == $product->id)
+                                <option value="{{$product->id}}" selected>{{$product->name}}</option>
+                            @else
+                                <option value="{{$product->id}}">{{$product->name}}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                </td>
+                <td>
+                    <select id="product3">
+                        <option value="" disabled>Produto</option>
+                        @foreach($products as $product)
+                            @if($equipment->idProduct3 == $product->id)
+                                <option value="{{$product->id}}" selected>{{$product->name}}</option>
+                            @else
+                                <option value="{{$product->id}}">{{$product->name}}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                </td>
+                <td>
                     <select id="cleaning">
                     <option value="" disabled>Limpeza</option>
                         @foreach($cleaningFrequencys as $cleaningFrequency)
@@ -336,6 +362,30 @@
                     <option value="" disabled>Produto</option>
                         @foreach($products as $product)
                             @if($equipment->idProduct == $product->id)
+                                <option value="{{$product->id}}" selected>{{$product->name}}</option>
+                            @else
+                                <option value="{{$product->id}}">{{$product->name}}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                </td>
+                <td>
+                    <select id="product2">
+                        <option value="" disabled>Produto</option>
+                        @foreach($products as $product)
+                            @if($equipment->idProduct2 == $product->id)
+                                <option value="{{$product->id}}" selected>{{$product->name}}</option>
+                            @else
+                                <option value="{{$product->id}}">{{$product->name}}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                </td>
+                <td>
+                    <select id="product3">
+                        <option value="" disabled>Produto</option>
+                        @foreach($products as $product)
+                            @if($equipment->idProduct3 == $product->id)
                                 <option value="{{$product->id}}" selected>{{$product->name}}</option>
                             @else
                                 <option value="{{$product->id}}">{{$product->name}}</option>
