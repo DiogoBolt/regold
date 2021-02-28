@@ -226,6 +226,22 @@
                 </select>
             </td>
             <td>
+                <select id="product2">
+                    <option value="" disabled>Produto</option>
+                    @foreach($products as $product)
+                        <option value="{{$product->id}}">{{$product->name}}</option>
+                    @endforeach
+                </select>
+            </td>
+            <td>
+                <select id="product3">
+                    <option value="" disabled>Produto</option>
+                    @foreach($products as $product)
+                        <option value="{{$product->id}}">{{$product->name}}</option>
+                    @endforeach
+                </select>
+            </td>
+            <td>
                 <select id="cleaning">
                     <option value="" disabled>Limpeza</option>
                     @foreach($cleaningFrequencys as $cleaningFrequency)

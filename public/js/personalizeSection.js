@@ -197,6 +197,8 @@ function addEquipmentTable(){
         var chars = lastEquipment.slice(0, lastEquipment.search(/\d/));
         var numbs = parseInt(lastEquipment.replace(chars, ''))+1;
         var productAux=div[i].children[1].selectedIndex;
+        var productAux2=div[i].children[2].selectedIndex;
+        var productAux3=div[i].children[3].selectedIndex;
 
        // var productId=div[i].children[1].options[productAux].value;
         var cleaningFrequencyAux=div[i].children[2].selectedIndex;
@@ -209,10 +211,12 @@ function addEquipmentTable(){
         var clone = row.cloneNode(true);
         clone.children[0].children[0].value=0;
         clone.children[0].children[1].innerHTML=name;
-        clone.children[0].children[1].id='equipment'+numbs;
+        clone.children[0].children[1].id='area'+numbs;
         clone.children[1].childNodes[1].selectedIndex=productAux;
-        clone.children[2].childNodes[1].selectedIndex=cleaningFrequencyAux;
-        clone.children[3].childNodes[0].checked=true;
+        clone.children[2].childNodes[1].selectedIndex=productAux2;
+        clone.children[3].childNodes[1].selectedIndex=productAux3;
+        clone.children[4].childNodes[0].selectedIndex=cleaningFrequencyAux;
+        clone.children[5].childNodes[0].checked=true;
         clone.style = "display:true";
 
         table.appendChild(clone); // add new row to end of table
@@ -253,7 +257,7 @@ function saveEachPersonalize(){
     for(var i=0; i<rowsEquipments.length; i++){
         if(i>0)
         {
-            if(rowsEquipments[i].cells[3].children[0].checked){
+            if(rowsEquipments[i].cells[5].children[0].checked){
                 var equipment = {};
                 equipment.idAreaSectionClient = rowsEquipments[i].cells[0].children[0].value;
                 equipment.designation = rowsEquipments[i].cells[0].children[1].textContent;
@@ -279,7 +283,7 @@ function saveEachPersonalize(){
         type: 'POST',
         url: "/frontoffice/personalizeAreasEquipments/personalizeEachSection/save",
         data:{areas: areas,equipments:equipments,idSection:idSection}
-    }).then(
+    })/*.then(
        window.location.replace('/frontoffice/personalizeAreasEquipments')
-    );
+    );*/
 }

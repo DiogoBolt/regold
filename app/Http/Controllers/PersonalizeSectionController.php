@@ -235,6 +235,8 @@ class PersonalizeSectionController extends Controller
 
         $areas = json_decode($inputs['areas']);
         $equipments = json_decode($inputs['equipments']);
+
+        dd($equipments);
         $idSection = json_decode($inputs['idSection']);
 
         $auxClientId = Session::get('clientImpersonatedId');
@@ -322,8 +324,8 @@ class PersonalizeSectionController extends Controller
                 $EquipmentSectionClient->designation=$equipment->designation;
                 $EquipmentSectionClient->idCleaningFrequency=$equipment->idCleaningFrequency;
                 $EquipmentSectionClient->idProduct=$equipment->idProduct;
-                $EquipmentSectionClient->idProduct=$equipment->idProduct2;
-                $EquipmentSectionClient->idProduct=$equipment->idProduct3;
+                $EquipmentSectionClient->idProduct2=$equipment->idProduct2;
+                $EquipmentSectionClient->idProduct3=$equipment->idProduct3;
                 $EquipmentSectionClient->active=1;
                 $EquipmentSectionClient->save();
             }else{
@@ -331,8 +333,8 @@ class PersonalizeSectionController extends Controller
                 $EquipmentSectionClient->designation=$equipment->designation;
                 $EquipmentSectionClient->idCleaningFrequency=$equipment->idCleaningFrequency;
                 $EquipmentSectionClient->idProduct=$equipment->idProduct;
-                $EquipmentSectionClient->idProduct=$equipment->idProduct2;
-                $EquipmentSectionClient->idProduct=$equipment->idProduct3;
+                $EquipmentSectionClient->idProduct2=$equipment->idProduct2;
+                $EquipmentSectionClient->idProduct3=$equipment->idProduct3;
                 $EquipmentSectionClient->active=1;
                 $EquipmentSectionClient->save();
             }
