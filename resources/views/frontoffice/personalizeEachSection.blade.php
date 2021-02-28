@@ -95,6 +95,30 @@
                     </select>
                 </td>
                 <td>
+                    <select id="product2">
+                        <option value="" disabled>Produto</option>
+                        @foreach($products as $product)
+                            @if($area->idProduct2 == $product->id)
+                                <option value="{{$product->id}}" selected>{{$product->name}}</option>
+                            @else
+                                <option value="{{$product->id}}">{{$product->name}}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                </td>
+                <td>
+                    <select id="product3">
+                        <option value="" disabled>Produto</option>
+                        @foreach($products as $product)
+                            @if($area->idProduct3 == $product->id)
+                                <option value="{{$product->id}}" selected>{{$product->name}}</option>
+                            @else
+                                <option value="{{$product->id}}">{{$product->name}}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                </td>
+                <td>
                     <select id="cleaning">
                     <option value="" disabled>Limpeza</option>
                         @foreach($cleaningFrequencys as $cleaningFrequency)
@@ -131,6 +155,23 @@
                         @endforeach
                     </select>
                 </td>
+                <td>
+                    <select id="product2">
+                        <option value="" disabled>Produto</option>
+                        @foreach($products as $product)
+                            <option value="{{$product->id}}">{{$product->name}}</option>
+                        @endforeach
+                    </select>
+                </td>
+                <td>
+                    <select id="product3">
+                        <option value="" disabled>Produto</option>
+                        @foreach($products as $product)
+                            <option value="{{$product->id}}">{{$product->name}}</option>
+                        @endforeach
+                    </select>
+                </td>
+               
                 <td>
                     <select id="cleaning">
                     <option value="" disabled>Limpeza</option>
