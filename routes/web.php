@@ -29,11 +29,7 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/duvidascovid', 'HomeController@duvidascovid')->name('covid');
 Route::get('/dbxprice', 'HomeController@dbxprice');
 
-
 Auth::routes(['register' => false]);
-
-/*Route::group(['middleware'=>['permissionClient']],function(){
-});*/
 
 Route::group(['middleware'=>['permissionStaff']],function(){
 

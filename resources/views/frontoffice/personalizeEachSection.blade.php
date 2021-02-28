@@ -131,6 +131,12 @@
         </tbody>
     </table>
     <button id="newSections" class="btn-del" onclick="showModal('addArea')">Nova área</button>
+    {{--<button id="" class="btn-del" onclick="addArea()">Áreas Existentes</button>--}}
+    <select>
+        @foreach($allAreas as $allArea)
+            <option id="allAreas" value='{"idProduct":{{$allArea->idProduct}},"designation":"{{$allArea->designation}}","idCleaningFrequency":{{$allArea->idCleaningFrequency}}}'>{{$allArea->designation}}</option>
+        @endforeach
+    </select>
 
      <!--Modal add novas areas-->
     <div class="modal fade" id="addArea" role="dialog">
@@ -286,6 +292,18 @@
     </table>
 
     <button id="newSections" class="btn-del" onclick="showModal('addEquipment')">Novo Equipamento</button>
+    {{--<button id="" class="btn-del" onclick="">Equipamentos Existentes</button>--}}
+    {{--<select id="">
+        <option value="" disabled>Equipamentos</option>
+        @foreach($products as $product)
+            @if($equipment->idProduct == $product->id)
+                <option value="{{$product->id}}" selected>{{$product->name}}</option>
+            @else
+                <option value="{{$product->id}}">{{$product->name}}</option>
+            @endif
+        @endforeach
+    </select>--}}
+
 
     <!-- Modal add novos equipamentos -->
     <div class="modal fade" id="addEquipment" role="dialog">

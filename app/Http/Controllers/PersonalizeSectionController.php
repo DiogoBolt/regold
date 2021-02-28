@@ -187,6 +187,9 @@ class PersonalizeSectionController extends Controller
     }
 
     public function personalizeEachSection($id){
+
+        $auxClientId = Session::get('clientImpersonatedId');
+
         $clientSection = ClientSection::where('id',$id)
         ->select([
             'id',
@@ -269,6 +272,8 @@ class PersonalizeSectionController extends Controller
         $lastArea=AreaSectionClient::orderBy('id', 'desc')->take(1)->first()->id;
         $lastEquipment=EquipmentSectionClient::orderBy('id', 'desc')->take(1)->first()->id;
 
+        $allAreas = AreaSectionClient::where('idClient',$auxClientId)->where('idSection','!=', $id)->where('active',1)->get();
+
         $products = Product::whereNotIn('category',array(6,16,20))
         ->select([
                 'id',
@@ -281,7 +286,7 @@ class PersonalizeSectionController extends Controller
         ])->get();
 
 
-        return view('frontoffice.personalizeEachSection',compact('clientSection','areas','areasSectionClients','equipments','equipmentsSectionClient','products','cleaningFrequencys','lastArea','lastEquipment'));
+        return view('frontoffice.personalizeEachSection',compact('clientSection','allAreas','areas','areasSectionClients','equipments','equipmentsSectionClient','products','cleaningFrequencys','lastArea','lastEquipment'));
     }
 
     public function saveEachSection(Request $request){

@@ -169,10 +169,16 @@ function addAreasTable(){
         clone.children[3].childNodes[0].checked=true;
         clone.style = "display:true";
 
+
         table.appendChild(clone); // add new row to end of table
     }
 
     $('#addArea').modal('hide');
+}
+
+//função adicionar areas existentess
+function addArea() {
+    var area = $('#allAreas').val()
 }
 
 //funcção para adicionar uma novo(s) equipamento(s) á tabela
