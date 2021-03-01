@@ -18,6 +18,7 @@ use App\OrderLine;
 use App\Product;
 use App\Receipt;
 use App\Schedule;
+use App\TypeRule;
 use App\User;
 use App\Section;
 use App\ClientSection;
@@ -134,8 +135,6 @@ class ReportController extends Controller
 
         $auxClientId = Session::get('clientImpersonatedId');
 
-        $x=0;
-
         //verificar se é o primeiro relatorio caso seja não há reincidencias
         if(Session::get('lastReportId')==null){
             $showColumnRecidivist=0;
@@ -154,8 +153,18 @@ class ReportController extends Controller
             ->first();
         }
 
-        $rules = RulesList::where('idSection',$section->id_section)->get();
+        $types=TypeRule::all();
+
+        $rules=RulesList::where('idSection',$section->id_section)->where('active',1)->get();
+
+        foreach ($types as $type){
+            $rulesT = RulesList::where('idSection',$section->id_section)->where('ruletype',$type->type_id)->where('active',1)->get();
+            $type->rules=$rulesT;
+        }
+
         $answered=false;
+
+        dd($types);
 
         if(Session::get('sectionsReport') != null){
             $sectionsReport = Session::get('sectionsReport');
@@ -324,7 +333,7 @@ class ReportController extends Controller
             }
         }
         //dd($showColumnRecidivist);
-        return view('frontoffice.newReportRules',compact('rules','x','section','showTableCorrective','reportSectionObs','showColumnRecidivist','idReport'));
+        return view('frontoffice.newReportRules',compact('rules','types','section','showTableCorrective','reportSectionObs','showColumnRecidivist','idReport'));
     }
 
     public function getClientSection($id){

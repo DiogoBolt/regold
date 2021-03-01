@@ -49,19 +49,6 @@
                 </tr>
                 <tbody>
                 @foreach($rules as $rule)
-                    <tr>
-                        @if($rule->ruletype==1)
-                            @if($x==0)
-                        <th>Instalações Gerais:</th> {{$x=1}}
-                            @endif
-                        @endif
-                            @if($rule->ruletype==2)
-                                @if($x==1)
-                                <th>Documentação:</th> {{$x=2}}
-                            @endif
-                            @endif
-                    </tr>
-
                     <tr class="tableRow" id="{{$rule->idAnswerReport}}">
                         <th class="index" value="{{$rule->id}}">{{$rule->index}}</th>
                         <td class="tdBackground tdRule" onclick="focusObs({{$rule->index}})"><label class="rule">{{$rule->rule}}</label></td>
@@ -121,8 +108,11 @@
                 <th class="severity">Severidade</th>
             </tr>
             <tbody>
-                @foreach($rules as $rule)
-
+            @foreach($types as $type)
+                <tr class="tableRow">
+                    {{$type->name}}
+                </tr>
+                @foreach($type->rules as $rule)
                 <tr class="tableRow" id="{{$rule->idAnswerReport}}">
                     <th class="index" value="{{$rule->id}}">{{$rule->index}}</th>
                     <td class="tdBackground tdRule" onclick="focusObs({{$rule->index}})"><label class="rule">{{$rule->rule}}</label></td>
@@ -163,8 +153,8 @@
                         <label class="lblSeverityStatus">{{$rule->severityText}}</label>
                     </td>
                 </tr>
-
                 @endforeach
+            @endforeach
             </tbody>
         </table>
     </div>

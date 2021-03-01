@@ -183,7 +183,32 @@ function addAreasTable(){
 
 //função adicionar areas existentess
 function addArea() {
-    var area = $('#allAreas').val()
+    var allNewAreas = document.getElementById('allNewsAreas');
+    var div = allNewAreas.getElementsByClassName('news');
+    for( var i=0; i< div.length; i++) {
+        var area = $('#allAreas').val();
+        console.log(area)
+        var row = document.getElementsByClassName("tableRowArea")[0];
+        var lastArea = $('.area').last().attr('id');
+        var chars = lastArea.slice(0, lastArea.search(/\d/));
+        var numbs = parseInt(lastArea.replace(chars, '')) + 1;
+        //var aux=  document.getElementById("areasTable").getElementsByTagName('tbody').length;
+        var table = document.getElementById("areasTable").getElementsByTagName('tbody')[1];
+
+        var areaClone=JSON.parse(area);
+        var clone = row.cloneNode(true);
+        clone.children[0].children[0].value = 0;
+        clone.children[0].children[1].innerHTML = areaClone.designation;
+        clone.children[0].children[1].id = 'area' + numbs;
+        clone.children[1].childNodes[1].selectedIndex = areaClone.id;
+        clone.children[2].childNodes[1].selectedIndex = ;
+        clone.children[3].childNodes[1].selectedIndex = ;
+        clone.children[4].childNodes[1].selectedIndex = ;
+        clone.children[5].childNodes[0].checked = true;
+        clone.style = "display:true";
+
+        table.appendChild(clone);
+    }
 }
 
 //funcção para adicionar uma novo(s) equipamento(s) á tabela

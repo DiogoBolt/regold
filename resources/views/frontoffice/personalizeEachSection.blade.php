@@ -149,10 +149,10 @@
         </tbody>
     </table>
     <button id="newSections" class="btn-del" onclick="showModal('addArea')">Nova área</button>
-    {{--<button id="" class="btn-del" onclick="addArea()">Áreas Existentes</button>--}}
+    <button id="" class="btn-del" onclick="addArea()">Áreas Existentes</button>
     <select>
         @foreach($allAreas as $allArea)
-            <option id="allAreas" value='{"idProduct":{{$allArea->idProduct}},"designation":"{{$allArea->designation}}","idCleaningFrequency":{{$allArea->idCleaningFrequency}}}'>{{$allArea->designation}}</option>
+            <option id="allAreas" value='{"idProduct":{{$allArea->idProduct}},"idProduct2":{{$allArea->idProduct2}},"idProduct3":{{$allArea->idProduct3}},"designation":"{{$allArea->designation}}","idCleaningFrequency":{{$allArea->idCleaningFrequency}}}'>{{$allArea->designation}}</option>
         @endforeach
     </select>
 
@@ -404,8 +404,8 @@
     </table>
 
     <button id="newSections" class="btn-del" onclick="showModal('addEquipment')">Novo Equipamento</button>
-    {{--<button id="" class="btn-del" onclick="">Equipamentos Existentes</button>--}}
-    {{--<select id="">
+    <button id="" class="btn-del" onclick="">Equipamentos Existentes</button>
+    <select id="">
         <option value="" disabled>Equipamentos</option>
         @foreach($products as $product)
             @if($equipment->idProduct == $product->id)
@@ -414,7 +414,7 @@
                 <option value="{{$product->id}}">{{$product->name}}</option>
             @endif
         @endforeach
-    </select>--}}
+    </select>
 
 
     <!-- Modal add novos equipamentos -->
