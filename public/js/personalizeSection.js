@@ -187,23 +187,50 @@ function addArea() {
     var div = allNewAreas.getElementsByClassName('news');
     for( var i=0; i< div.length; i++) {
         var area = $('#allAreas').val();
-        console.log(area)
+        console.log(area);
         var row = document.getElementsByClassName("tableRowArea")[0];
         var lastArea = $('.area').last().attr('id');
         var chars = lastArea.slice(0, lastArea.search(/\d/));
         var numbs = parseInt(lastArea.replace(chars, '')) + 1;
-        //var aux=  document.getElementById("areasTable").getElementsByTagName('tbody').length;
         var table = document.getElementById("areasTable").getElementsByTagName('tbody')[1];
 
         var areaClone=JSON.parse(area);
+        console.log(areaClone);
         var clone = row.cloneNode(true);
         clone.children[0].children[0].value = 0;
         clone.children[0].children[1].innerHTML = areaClone.designation;
         clone.children[0].children[1].id = 'area' + numbs;
-        clone.children[1].childNodes[1].selectedIndex = areaClone.id;
-        clone.children[2].childNodes[1].selectedIndex = ;
-        clone.children[3].childNodes[1].selectedIndex = ;
-        clone.children[4].childNodes[1].selectedIndex = ;
+        clone.children[1].childNodes[1].selectedIndex = areaClone.idProduct;
+        clone.children[2].childNodes[1].selectedIndex = areaClone.idProduct2;
+        clone.children[3].childNodes[1].selectedIndex = areaClone.idProduct3;
+        clone.children[4].childNodes[1].selectedIndex = areaClone.idCleaningFrequency;
+        clone.children[5].childNodes[0].checked = true;
+        clone.style = "display:true";
+
+        table.appendChild(clone);
+    }
+}
+function addEquipment() {
+    var allNewsEquipments = document.getElementById('allNewsEquipments');
+    var div = allNewsEquipments.getElementsByClassName('newsE');
+    for( var i=0; i< div.length; i++) {
+        var equipment = $('#allEquipments').val();
+        var row = document.getElementsByClassName("tableRowEquipment")[0];
+        var lastEquipment = $('.equipment').last().attr('id');
+        var chars = lastEquipment.slice(0, lastEquipment.search(/\d/));
+        var numbs = parseInt(lastEquipment.replace(chars, '')) + 1;
+        var table = document.getElementById("equipmentTable").getElementsByTagName('tbody')[1];
+
+        var equipmentClone=JSON.parse(equipment);
+
+        var clone = row.cloneNode(true);
+        clone.children[0].children[0].value = 0;
+        clone.children[0].children[1].innerHTML = equipmentClone.designation;
+        clone.children[0].children[1].id = 'area' + numbs;
+        clone.children[1].childNodes[1].selectedIndex = equipmentClone.idProduct;
+        clone.children[2].childNodes[1].selectedIndex = equipmentClone.idProduct2;
+        clone.children[3].childNodes[1].selectedIndex = equipmentClone.idProduct3;
+        clone.children[4].childNodes[1].selectedIndex = equipmentClone.idCleaningFrequency;
         clone.children[5].childNodes[0].checked = true;
         clone.style = "display:true";
 

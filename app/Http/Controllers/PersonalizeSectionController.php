@@ -214,6 +214,9 @@ class PersonalizeSectionController extends Controller
         $lastEquipment=EquipmentSectionClient::orderBy('id', 'desc')->take(1)->first()->id;
 
         $allAreas = AreaSectionClient::where('idClient',$auxClientId)->where('idSection','!=', $id)->where('active',1)->get();
+        $allEquipments = EquipmentSectionClient::where('idClient',$auxClientId)->where('idSection','!=', $id)->where('active',1)->get();
+
+
 
         $products = Product::whereNotIn('category',array(6,16,20))
         ->select([
@@ -227,7 +230,7 @@ class PersonalizeSectionController extends Controller
         ])->get();
 
 
-        return view('frontoffice.personalizeEachSection',compact('clientSection','allAreas','areasSectionClients','equipments','equipmentsSectionClient','products','cleaningFrequencys','lastArea','lastEquipment'));
+        return view('frontoffice.personalizeEachSection',compact('clientSection','allEquipments','allAreas','areasSectionClients','equipments','equipmentsSectionClient','products','cleaningFrequencys','lastArea','lastEquipment'));
     }
 
     public function saveEachSection(Request $request){

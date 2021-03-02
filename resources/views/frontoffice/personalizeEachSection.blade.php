@@ -150,9 +150,10 @@
     </table>
     <button id="newSections" class="btn-del" onclick="showModal('addArea')">Nova área</button>
     <button id="" class="btn-del" onclick="addArea()">Áreas Existentes</button>
-    <select>
+    <select id="allAreas">
+        <option value="" disabled selected>Área</option>
         @foreach($allAreas as $allArea)
-            <option id="allAreas" value='{"idProduct":{{$allArea->idProduct}},"idProduct2":{{$allArea->idProduct2}},"idProduct3":{{$allArea->idProduct3}},"designation":"{{$allArea->designation}}","idCleaningFrequency":{{$allArea->idCleaningFrequency}}}'>{{$allArea->designation}}</option>
+            <option  value='{"idProduct":{{$allArea->idProduct}},"idProduct2":{{$allArea->idProduct2}},"idProduct3":{{$allArea->idProduct3}},"designation":"{{$allArea->designation}}","idCleaningFrequency":{{$allArea->idCleaningFrequency}}}'>{{$allArea->designation}}</option>
         @endforeach
     </select>
 
@@ -404,15 +405,11 @@
     </table>
 
     <button id="newSections" class="btn-del" onclick="showModal('addEquipment')">Novo Equipamento</button>
-    <button id="" class="btn-del" onclick="">Equipamentos Existentes</button>
-    <select id="">
-        <option value="" disabled>Equipamentos</option>
-        @foreach($products as $product)
-            @if($equipment->idProduct == $product->id)
-                <option value="{{$product->id}}" selected>{{$product->name}}</option>
-            @else
-                <option value="{{$product->id}}">{{$product->name}}</option>
-            @endif
+    <button id="" class="btn-del" onclick="addEquipment()">Equipamentos Existentes</button>
+    <select id="allEquipments">
+        <option value="" disabled selected>Equipamento</option>
+        @foreach($allEquipments as $allEquipment)
+            <option value='{"idProduct":{{$allEquipment->idProduct}},"idProduct2":{{$allEquipment->idProduct2}},"idProduct3":{{$allEquipment->idProduct3}},"designation":"{{$allEquipment->designation}}","idCleaningFrequency":{{$allEquipment->idCleaningFrequency}}}'>{{$allEquipment->designation}}</option>
         @endforeach
     </select>
 
