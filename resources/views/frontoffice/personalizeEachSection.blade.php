@@ -148,7 +148,7 @@
         @endforeach
         </tbody>
     </table>
-    <h1 style="font-size:12px">Área já existente:</h1>
+    <h1 style="font-size:12px">Secção já existente:</h1>
     <div>
     <select id="allAreas">
         <option value="" disabled selected>Secção</option>
@@ -407,7 +407,7 @@
         </tbody>
     </table>
 
-    <h1 style="font-size:12px">Equipamento já existente:</h1>
+    <h1 style="font-size:12px">Secção já existente:</h1>
     <div>
     <select id="allEquipments">
         <option value="" disabled selected>Secção</option>
