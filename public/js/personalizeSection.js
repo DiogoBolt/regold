@@ -255,7 +255,7 @@ function addEquipmentTable(){
        // var productId=div[i].children[1].options[productAux].value;
         var cleaningFrequencyAux=div[i].children[4].selectedIndex;
         //var cleaningFrequencyID=div[i].children[2].options[cleaningFrequencyAux].value;
-
+        var row = document.getElementsByClassName("tableRowEquipment")[0];
 
         //var aux=  document.getElementById("areasTable").getElementsByTagName('tbody').length;
         var table = document.getElementById("equipmentTable").getElementsByTagName('tbody')[1];  

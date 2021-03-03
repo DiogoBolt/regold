@@ -89,7 +89,6 @@
                             <option value="0" selected>Produto</option>
                         @endif
                         @foreach($products as $product)
-
                             @if($area->idProduct == $product->id)
                                 <option value="{{$product->id}}" selected>{{$product->name}}</option>
                             @else
@@ -105,7 +104,6 @@
                             <option value="0" selected>Produto</option>
                         @endif
                         @foreach($products as $product)
-
                             @if($area->idProduct2 == $product->id)
                                 <option value="{{$product->id}}" selected>{{$product->name}}</option>
                             @else
@@ -148,7 +146,7 @@
         @endforeach
         </tbody>
     </table>
-    <h1 style="font-size:12px">Área já existente:</h1>
+    <h1 style="font-size:12px">Secção já existente:</h1>
     <div>
     <select id="allAreas">
         <option value="" disabled selected>Secção</option>
@@ -276,8 +274,38 @@
                     <label class="equipment" id="equipment{{$equipment->id}}" onclick="showEdit('e',this.id)">{{$equipment->designation}}</label>
                 </td>
                 <td>
-                    <select id="product">
+                    <select id="product" style="width: 180px">
                     <option value="" disabled>Produto</option>
+                        @if($equipment->idProduct == 0)
+                            <option value="0" selected>Produto</option>
+                        @endif
+                        @foreach($products as $product)
+                            @if($equipment->idProduct == $product->id)
+                                <option value="{{$product->id}}" selected>{{$product->name}}</option>
+                            @else
+                                <option value="{{$product->id}}">{{$product->name}}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                </td>
+                <td>
+                    <select id="product2" style="width: 180px">
+                        <option value="" disabled>Produto</option>
+                        @if($equipment->idProduct == 0)
+                            <option value="0" selected>Produto</option>
+                        @endif
+                        @foreach($products as $product)
+                            @if($equipment->idProduct == $product->id)
+                                <option value="{{$product->id}}" selected>{{$product->name}}</option>
+                            @else
+                                <option value="{{$product->id}}">{{$product->name}}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                </td>
+                <td>
+                    <select id="product3" style="width: 180px">
+                        <option value="" disabled>Produto</option>
                         @if($equipment->idProduct == 0)
                             <option value="0" selected>Produto</option>
                         @endif
@@ -292,46 +320,13 @@
                     </select>
                 </td>
                 <td>
-                    <select id="product2">
-                        <option value="" disabled>Produto</option>
-                        @if($equipment1->idProduct == 0)
-                            <option value="0" selected>Produto</option>
-                        @endif
-                        @foreach($products as $product)
-
-                            @if($equipment1->idProduct == $product->id)
-                                <option value="{{$product->id}}" selected>{{$product->name}}</option>
-                            @else
-                                <option value="{{$product->id}}">{{$product->name}}</option>
-                            @endif
-                        @endforeach
-                    </select>
-                </td>
-                <td>
-                    <select id="product3">
-                        <option value="" disabled>Produto</option>
-                        @if($equipment2->idProduct == 0)
-                            <option value="0" selected>Produto</option>
-                        @endif
-                        @foreach($products as $product)
-
-                            @if($equipment2->idProduct == $product->id)
-                                <option value="{{$product->id}}" selected>{{$product->name}}</option>
-                            @else
-                                <option value="{{$product->id}}">{{$product->name}}</option>
-                            @endif
-                        @endforeach
-                    </select>
-                </td>
-                <td>
                     <select id="cleaning">
                     <option value="" disabled>Limpeza</option>v
-                        @if($equipment3->idProduct == 0)
+                        @if($equipment->idProduct == 0)
                             <option value="0" selected>Produto</option>
                         @endif
                         @foreach($products as $product)
-
-                            @if($equipment3->idProduct == $product->id)
+                            @if($equipment->idProduct == $product->id)
                                 <option value="{{$product->id}}" selected>{{$product->name}}</option>
                             @else
                                 <option value="{{$product->id}}">{{$product->name}}</option>
@@ -353,8 +348,11 @@
                     <label class="equipment" id="equipment{{$equipment->id}}" onclick="showEdit('e',this.id)">{{$equipment->designation}}</label>
                 </td>
                 <td>
-                    <select id="product">
-                    <option value="" disabled>Produto</option>
+                    <select id="product2" style="width: 180px">
+                        <option value="" disabled>Produto</option>
+                        @if($equipment->idProduct == 0)
+                            <option value="0" selected>Produto</option>
+                        @endif
                         @foreach($products as $product)
                             @if($equipment->idProduct == $product->id)
                                 <option value="{{$product->id}}" selected>{{$product->name}}</option>
@@ -365,8 +363,11 @@
                     </select>
                 </td>
                 <td>
-                    <select id="product2">
+                    <select id="product2" style="width: 180px">
                         <option value="" disabled>Produto</option>
+                        @if($equipment->idProduct2 == 0)
+                            <option value="0" selected>Produto</option>
+                        @endif
                         @foreach($products as $product)
                             @if($equipment->idProduct2 == $product->id)
                                 <option value="{{$product->id}}" selected>{{$product->name}}</option>
@@ -377,8 +378,11 @@
                     </select>
                 </td>
                 <td>
-                    <select id="product3">
+                    <select id="product2" style="width: 180px">
                         <option value="" disabled>Produto</option>
+                        @if($equipment->idProduct3 == 0)
+                            <option value="0" selected>Produto</option>
+                        @endif
                         @foreach($products as $product)
                             @if($equipment->idProduct3 == $product->id)
                                 <option value="{{$product->id}}" selected>{{$product->name}}</option>
@@ -389,7 +393,7 @@
                     </select>
                 </td>
                 <td>
-                    <select id="cleaning">
+                    <select id="cleaning" >
                     <option value="" disabled>Limpeza</option>
                         @foreach($cleaningFrequencys as $cleaningFrequency)
                             @if($equipment->idCleaningFrequency == $cleaningFrequency->id)
@@ -407,7 +411,7 @@
         </tbody>
     </table>
 
-    <h1 style="font-size:12px">Equipamento já existente:</h1>
+    <h1 style="font-size:12px">Secção já existente:</h1>
     <div>
     <select id="allEquipments">
         <option value="" disabled selected>Secção</option>
