@@ -48,47 +48,41 @@
                     <th class="severity">Severidade</th>
                 </tr>
                 <tbody>
-                @foreach($rules as $rule)
-                    <tr>
-                        @if($rule->ruletype==1)
-                            @if($x==0)
-                        <th>Instalações Gerais:</th> {{$x=1}}
-                            @endif
-                        @endif
-                            @if($rule->ruletype==2)
-                                @if($x==1)
-                                <th>Documentação:</th> {{$x=2}}
-                            @endif
-                            @endif
-                    </tr>
-
+                <?php $i=1 ?>
+                @foreach($types as $type)
+                    @if(sizeof($type->rules)>0)
+                        <tr>
+                            <td>{{$type->name}}</td>
+                        </tr>
+                    @endif
+                    @foreach($type->rules as $rule)
                     <tr class="tableRow" id="{{$rule->idAnswerReport}}">
-                        <th class="index" value="{{$rule->id}}">{{$rule->index}}</th>
-                        <td class="tdBackground tdRule" onclick="focusObs({{$rule->index}})"><label class="rule">{{$rule->rule}}</label></td>
+                        <th class="index" value="{{$rule->id}}">{{$i}}</th>
+                        <td class="tdBackground tdRule" onclick="focusObs({{$i}})"><label class="rule">{{$rule->rule}}</label></td>
                         <td class="tdBackground" name="radio">
                             @if($rule->answer == 'c')
-                                <input type=radio onclick="dontShowCorrective({{$rule->index}})"  name="radio{{$rule->id}}" value="c" id="c{{$rule->id}}" checked/>
+                                <input type=radio onclick="dontShowCorrective({{$i}})"  name="radio{{$rule->id}}" value="c" id="c{{$rule->id}}" checked/>
                                 <label class="conforme" for="c{{$rule->id}}"></label>
                             @else
-                                <input type=radio onclick="dontShowCorrective({{$rule->index}})"  name="radio{{$rule->id}}" value="c" id="c{{$rule->id}}" />
+                                <input type=radio onclick="dontShowCorrective({{$i}})"  name="radio{{$rule->id}}" value="c" id="c{{$rule->id}}" />
                                 <label class="conforme" for="c{{$rule->id}}"></label>
                             @endif
                         </td>
                         <td class="tdBackground" name="radio">
                             @if($rule->answer == 'nc')
-                                <input type=radio  onclick="showCorrective({{$rule->index}})" name="radio{{$rule->id}}" value="nc" id="nc{{$rule->id}}" checked />
+                                <input type=radio  onclick="showCorrective({{$i}})" name="radio{{$rule->id}}" value="nc" id="nc{{$rule->id}}" checked />
                                 <label class="naoConforme" for="nc{{$rule->id}}"></label>
                             @else
-                                <input type=radio  onclick="showCorrective({{$rule->index}})" name="radio{{$rule->id}}" value="nc" id="nc{{$rule->id}}" />
+                                <input type=radio  onclick="showCorrective({{$i}})" name="radio{{$rule->id}}" value="nc" id="nc{{$rule->id}}" />
                                 <label class="naoConforme" for="nc{{$rule->id}}"></label>
                             @endif
                         </td>
                         <td class="tdBackground" name="radio">
                             @if($rule->answer == 'na')
-                                <input type=radio  onclick="dontShowCorrective({{$rule->index}})" name="radio{{$rule->id}}" value="na" id="na{{$rule->id}}" checked />
+                                <input type=radio  onclick="dontShowCorrective({{$i}})" name="radio{{$rule->id}}" value="na" id="na{{$rule->id}}" checked />
                                 <label class="naoAplicavel" for="na{{$rule->id}}"></label>
                             @else
-                                <input type=radio  onclick="dontShowCorrective({{$rule->index}})" name="radio{{$rule->id}}" value="na" id="na{{$rule->id}}" />
+                                <input type=radio  onclick="dontShowCorrective({{$i}})" name="radio{{$rule->id}}" value="na" id="na{{$rule->id}}" />
                                 <label class="naoAplicavel" for="na{{$rule->id}}"></label>
                             @endif
                         </td>
@@ -102,7 +96,8 @@
                             <label class="lblSeverityStatus">{{$rule->severityText}}</label>
                         </td>
                     </tr>
-
+                    <?php $i++ ?>
+                @endforeach
                 @endforeach
                 </tbody>
             </table>
@@ -121,35 +116,41 @@
                 <th class="severity">Severidade</th>
             </tr>
             <tbody>
-                @foreach($rules as $rule)
-
+            <?php $i=1 ?>
+            @foreach($types as $type)
+                @if(sizeof($type->rules)>0)
+                <tr >
+                    <td>{{$type->name}}</td>
+                </tr>
+                @endif
+                @foreach($type->rules as $rule)
                 <tr class="tableRow" id="{{$rule->idAnswerReport}}">
-                    <th class="index" value="{{$rule->id}}">{{$rule->index}}</th>
-                    <td class="tdBackground tdRule" onclick="focusObs({{$rule->index}})"><label class="rule">{{$rule->rule}}</label></td>
+                    <th class="index" value="{{$rule->id}}">{{$i}}</th>
+                    <td class="tdBackground tdRule" onclick="focusObs({{$i}})"><label class="rule">{{$rule->rule}}</label></td>
                     <td class="tdBackground" name="radio">
                         @if($rule->answer == 'c')
-                            <input type=radio onclick="dontShowCorrective({{$rule->index}})"  name="radio{{$rule->id}}" value="c" id="c{{$rule->id}}" checked/>
+                            <input type=radio onclick="dontShowCorrective({{$i}})"  name="radio{{$rule->id}}" value="c" id="c{{$rule->id}}" checked/>
                             <label class="conforme" for="c{{$rule->id}}"></label>
                         @else
-                          <input type=radio onclick="dontShowCorrective({{$rule->index}})"  name="radio{{$rule->id}}" value="c" id="c{{$rule->id}}" />
+                          <input type=radio onclick="dontShowCorrective({{$i}})"  name="radio{{$rule->id}}" value="c" id="c{{$rule->id}}" />
                           <label class="conforme" for="c{{$rule->id}}"></label>
                         @endif
                     </td>
                     <td class="tdBackground" name="radio">
                         @if($rule->answer == 'nc')
-                            <input type=radio  onclick="showCorrective({{$rule->index}})" name="radio{{$rule->id}}" value="nc" id="nc{{$rule->id}}" checked />
+                            <input type=radio  onclick="showCorrective({{$i}})" name="radio{{$rule->id}}" value="nc" id="nc{{$rule->id}}" checked />
                             <label class="naoConforme" for="nc{{$rule->id}}"></label>
                         @else 
-                            <input type=radio  onclick="showCorrective({{$rule->index}})" name="radio{{$rule->id}}" value="nc" id="nc{{$rule->id}}" />
+                            <input type=radio  onclick="showCorrective({{$i}})" name="radio{{$rule->id}}" value="nc" id="nc{{$rule->id}}" />
                             <label class="naoConforme" for="nc{{$rule->id}}"></label>
                         @endif
                     </td>
                     <td class="tdBackground" name="radio">
                         @if($rule->answer == 'na')
-                            <input type=radio  onclick="dontShowCorrective({{$rule->index}})" name="radio{{$rule->id}}" value="na" id="na{{$rule->id}}" checked />
+                            <input type=radio  onclick="dontShowCorrective({{$i}})" name="radio{{$rule->id}}" value="na" id="na{{$rule->id}}" checked />
                             <label class="naoAplicavel" for="na{{$rule->id}}"></label>
                         @else
-                            <input type=radio  onclick="dontShowCorrective({{$rule->index}})" name="radio{{$rule->id}}" value="na" id="na{{$rule->id}}" />
+                            <input type=radio  onclick="dontShowCorrective({{$i}})" name="radio{{$rule->id}}" value="na" id="na{{$rule->id}}" />
                             <label class="naoAplicavel" for="na{{$rule->id}}"></label>
                         @endif
                     </td>
@@ -163,8 +164,9 @@
                         <label class="lblSeverityStatus">{{$rule->severityText}}</label>
                     </td>
                 </tr>
-
+                    <?php $i++ ?>
                 @endforeach
+            @endforeach
             </tbody>
         </table>
     </div>
@@ -196,10 +198,12 @@
                 @endif
             </tr>
             <tbody>
-                @foreach($rules as $rule)
+            <?php $i=1 ?>
+                @foreach($types as $type)
+                    @foreach($type->rules as $rule)
                     @if($rule->showCorrective==1)
                         <tr class="tableRow" style="display:table-row">
-                            <th id="correctiveRulesIndex" class="index" value="{{$rule->id}}">{{$rule->index}}</th>
+                            <th id="correctiveRulesIndex" class="index" value="{{$rule->id}}">{{$i}}</th>
                             <td class="tdRuleBackground"><label class="rule">{{$rule->rule}}</label></td>
                             <td id="correctiveTd"><label class="corrective" value="{{$rule->corrective}}">{{$rule->corrective}}</label></td>
                             @if($showColumnRecidivist==0)
@@ -210,16 +214,18 @@
                         </tr>
                     @else
                         <tr class="tableRow" style="display:none">
-                            <th id="correctiveRulesIndex" class="index" value="{{$rule->id}}">{{$rule->index}}</th>
+                            <th id="correctiveRulesIndex" class="index" value="{{$rule->id}}">{{$i}}</th>
                             <td class="tdRuleBackground"><label class="rule">{{$rule->rule}}</label></td>
                             <td id="correctiveTd"><label class="corrective" value="{{$rule->corrective}}">{{$rule->corrective}}</label></td>
                             @if($showColumnRecidivist==0)
-                                <td style="display:none" id="recidivistCount" value="{{$rule->recidivistCount}}" ><label>R{{$rule->recidivistCount}}</label></td>
+                                <td style="display:none" id="recidivistCount" value="{{$rule->recidivistCount}}"><label>R{{$rule->recidivistCount}}</label></td>
                             @else
                                 <td id="recidivistCount" value="{{$rule->recidivistCount}}" ><label>R{{$rule->recidivistCount}}</label></td>
                             @endif
                         </tr>
                     @endif
+                    <?php $i++ ?>
+                @endforeach
                 @endforeach
             </tbody>
         </table>
@@ -266,8 +272,12 @@
         <br/>
         <select id="indexObs" onchange="verifySelected(this)" >
             <option value="Geral">Geral</option>
-            @foreach($rules as $rule)
-                <option value="{{$rule->id}}">{{$rule->index}}</option>
+            <?php $i=1 ?>
+            @foreach($types as $type)
+                @foreach($type->rules as $rule)
+                <option value="{{$rule->id}}">{{$i}}</option>
+                    <?php $i++ ?>
+            @endforeach
             @endforeach
         </select>
         <input id="iptObs" oninput="verifyTextInput(this)" type="text" placeholder="Insira a observação">

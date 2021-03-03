@@ -18,6 +18,7 @@ use App\OrderLine;
 use App\Product;
 use App\Receipt;
 use App\Schedule;
+use App\TypeRule;
 use App\User;
 use App\Section;
 use App\ClientSection;
@@ -134,8 +135,6 @@ class ReportController extends Controller
 
         $auxClientId = Session::get('clientImpersonatedId');
 
-        $x=0;
-
         //verificar se é o primeiro relatorio caso seja não há reincidencias
         if(Session::get('lastReportId')==null){
             $showColumnRecidivist=0;
@@ -154,7 +153,15 @@ class ReportController extends Controller
             ->first();
         }
 
-        $rules = RulesList::where('idSection',$section->id_section)->get();
+        $types=TypeRule::all();
+
+        $rules=RulesList::where('idSection',$section->id_section)->where('active',1)->get();
+
+        foreach ($types as $type){
+            $rulesT = RulesList::where('idSection',$section->id_section)->where('ruletype',$type->type_id)->where('active',1)->get();
+            $type->rules=$rulesT;
+        }
+
         $answered=false;
 
         if(Session::get('sectionsReport') != null){
@@ -181,37 +188,39 @@ class ReportController extends Controller
             ->select(['id','idRule','answer','corrective','severityValue'])
             ->get();
 
-            for($i=0; $i<count($rules); $i++){
+            foreach ($types as $type){
+                for($i=0; $i<count($type->rules); $i++){
 
-                if($answersSection[$i]->corrective != null){
-                    $showTableCorrective=1;
-                    $rules[$i]->corrective= $answersSection[$i]->corrective;
-                    $rules[$i]->showCorrective=1;
-                }else{
-                    $rules[$i]->showCorrective=0;
-                }
-
-                for($j=0;$j<count($reportSectionObs);$j++){
-                    if($reportSectionObs[$j]->idRule==$rules[$i]->id){
-                        $reportSectionObs[$j]->index=$i+1;
+                    if($answersSection[$i]->corrective != null){
+                        $showTableCorrective=1;
+                        $type->rules[$i]->corrective= $answersSection[$i]->corrective;
+                        $type->rules[$i]->showCorrective=1;
+                    }else{
+                        $type->rules[$i]->showCorrective=0;
                     }
-                }
-                
-                $rules[$i]->severityValue=$answersSection[$i]->severityValue;
 
-                if($answersSection[$i]->severityValue==1 || $answersSection[$i]->severityValue==2 ){
-                    $rules[$i]->severityText="Não Crítico";
-                }else if($answersSection[$i]->severityValue==3 || $answersSection[$i]->severityValue==4 ){
-                    $rules[$i]->severityText="Moderado";
-                }else if($answersSection[$i]->severityValue==5){
-                    $rules[$i]->severityText="Crítico";
+                    for($j=0;$j<count($reportSectionObs);$j++){
+                        if($reportSectionObs[$j]->idRule==$type->rules[$i]->id){
+                            $reportSectionObs[$j]->index=$i+1;
+                        }
+                    }
+
+                    $type->rules[$i]->severityValue=$answersSection[$i]->severityValue;
+
+                    if($answersSection[$i]->severityValue==1 || $answersSection[$i]->severityValue==2 ){
+                        $type->rules[$i]->severityText="Não Crítico";
+                    }else if($answersSection[$i]->severityValue==3 || $answersSection[$i]->severityValue==4 ){
+                        $type->rules[$i]->severityText="Moderado";
+                    }else if($answersSection[$i]->severityValue==5){
+                        $type->rules[$i]->severityText="Crítico";
+                    }
+
+                    $type->rules[$i]->idAnswerReport=$answersSection[$i]->id;
+                    $type->rules[$i]->index=$i+1;
+                    $type->rules[$i]->answer=$answersSection[$i]->answer;
                 }
-                
-                $rules[$i]->idAnswerReport=$answersSection[$i]->id;
-                $rules[$i]->index=$i+1;
-                $rules[$i]->answer=$answersSection[$i]->answer;
             }
-            
+
         }else{
             
             if(Session::get('lastReportId')!=null){
@@ -233,80 +242,83 @@ class ReportController extends Controller
                 ->select(['id','observation','idRule'])
                 ->get();
 
-                for($i=0; $i<count($rules); $i++){
+                foreach ($types as $type){
+                    for($i=0; $i<count($type->rules); $i++){
 
-                    $recidivistCount=0;
+                        $recidivistCount=0;
 
-                    //for para contar o numero de reincidencias
-                    for($k=0; $k<count($lastReportsListIds); $k++){
-                        $auxTest=RulesAnswerReport::where('idReport',$lastReportsListIds[$k])
-                        ->where('idRule',$rules[$i]->id)
-                        ->select(['answer'])
-                        ->pluck('answer')
-                        ->first();
-                        if($auxTest=='nc'){
-                            $recidivistCount++;
+                        //for para contar o numero de reincidencias
+                        for($k=0; $k<count($lastReportsListIds); $k++){
+                            $auxTest=RulesAnswerReport::where('idReport',$lastReportsListIds[$k])
+                                ->where('idRule',$type->rules[$i]->id)
+                                ->select(['answer'])
+                                ->pluck('answer')
+                                ->first();
+                            if($auxTest=='nc'){
+                                $recidivistCount++;
+                            }
                         }
-                    }
 
-                    $rules[$i]->recidivistCount=$recidivistCount;
+                        $type->rules[$i]->recidivistCount=$recidivistCount;
 
-                    $existLastReport=false;
-                    $indexExistLastReport=-1;
-                    
-                    for($x=0;$x<count($reportSectionObs);$x++){
-                        if($reportSectionObs[$x]->idRule==$rules[$i]->id){
-                            $reportSectionObs[$x]->index=$i+1;
+                        $existLastReport=false;
+                        $indexExistLastReport=-1;
+
+                        for($x=0;$x<count($reportSectionObs);$x++){
+                            if($reportSectionObs[$x]->idRule==$type->rules[$i]->id){
+                                $reportSectionObs[$x]->index=$i+1;
+                            }
                         }
-                    }
 
-                    for($j=0; $j<count($rulesLastReportAnswers); $j++){
-                        
-                        $rules[$i]->index=$i+1;
+                        for($j=0; $j<count($rulesLastReportAnswers); $j++){
 
-                        if($rules[$i]->id == $rulesLastReportAnswers[$j]->idRule){
-                            $existLastReport=true;
-                            $indexExistLastReport=$j;
-                            break;
+                            $type->rules[$i]->index=$i+1;
+
+                            if($type->rules[$i]->id == $rulesLastReportAnswers[$j]->idRule){
+                                $existLastReport=true;
+                                $indexExistLastReport=$j;
+                                break;
+                            }else{
+                                $existLastReport=false;
+                            }
+                        }
+                        if($existLastReport){
+
+                            if($rulesLastReportAnswers[$indexExistLastReport]->answer=="nc"){
+                                $type->rules[$i]->showCorrective=1;
+                                $type->rules[$i]->corrective=$rulesLastReportAnswers[$indexExistLastReport]->corrective;
+                                $type->rules[$i]->answer=$rulesLastReportAnswers[$indexExistLastReport]->answer;
+                                $showTableCorrective=1;
+                            }else{
+                                $type->rules[$i]->showCorrective=0;
+                                $type->rules[$i]->answer=$rulesLastReportAnswers[$indexExistLastReport]->answer;
+                            }
+
+                            $type->rules[$i]->severityValue=$rulesLastReportAnswers[$indexExistLastReport]->severityValue;
+
+                            if($type->rules[$i]->severityValue==1 || $type->rules[$i]->severityValue==2 ){
+                                $type->rules[$i]->severityText="Não Crítico";
+                            }else if($type->rules[$i]->severityValue==3 || $type->rules[$i]->severityValue==4 ){
+                                $type->rules[$i]->severityText="Moderado";
+                            }else if($type->rules[$i]->severityValue==5){
+                                $type->rules[$i]->severityText="Crítico";
+                            }
                         }else{
-                            $existLastReport=false;
-                        }
-                    }
-                    if($existLastReport){
-                        
-                        if($rulesLastReportAnswers[$indexExistLastReport]->answer=="nc"){
-                            $rules[$i]->showCorrective=1;
-                            $rules[$i]->corrective=$rulesLastReportAnswers[$indexExistLastReport]->corrective;
-                            $rules[$i]->answer=$rulesLastReportAnswers[$indexExistLastReport]->answer;
-                            $showTableCorrective=1;
-                        }else{
-                            $rules[$i]->showCorrective=0;
-                            $rules[$i]->answer=$rulesLastReportAnswers[$indexExistLastReport]->answer;
-                        }
-                         
-                        $rules[$i]->severityValue=$rulesLastReportAnswers[$indexExistLastReport]->severityValue;
-
-                        if($rules[$i]->severityValue==1 || $rules[$i]->severityValue==2 ){
-                            $rules[$i]->severityText="Não Crítico";
-                        }else if($rules[$i]->severityValue==3 || $rules[$i]->severityValue==4 ){
-                            $rules[$i]->severityText="Moderado";
-                        }else if($rules[$i]->severityValue==5){
-                            $rules[$i]->severityText="Crítico";
-                        }
-                    }else{
-                        $rules[$i]->showCorrective=0;
-                        $rules[$i]->idAnswerReport=0;
-                        $rules[$i]->index=$i+1;
-                        $rules[$i]->answer='nd';
-                        if($rules[$i]->severityValue==1 || $rules[$i]->severityValue==2 ){
-                            $rules[$i]->severityText="Não Crítico";
-                        }else if($rules[$i]->severityValue==3 || $rules[$i]->severityValue==4 ){
-                            $rules[$i]->severityText="Moderado";
-                        }else if($rules[$i]->severityValue==5){
-                            $rules[$i]->severityText="Crítico";
+                            $type->rules[$i]->showCorrective=0;
+                            $type->rules[$i]->idAnswerReport=0;
+                            $type->rules[$i]->index=$i+1;
+                            $type->rules[$i]->answer='nd';
+                            if($type->rules[$i]->severityValue==1 || $type->rules[$i]->severityValue==2 ){
+                                $type->rules[$i]->severityText="Não Crítico";
+                            }else if($type->rules[$i]->severityValue==3 || $type->rules[$i]->severityValue==4 ){
+                                $type->rules[$i]->severityText="Moderado";
+                            }else if($type->rules[$i]->severityValue==5){
+                                $type->rules[$i]->severityText="Crítico";
+                            }
                         }
                     }
                 }
+
             }else{
 
                 $reportSectionObs=ReportSectionObs::where('idReport',$idReport)
@@ -324,7 +336,7 @@ class ReportController extends Controller
             }
         }
         //dd($showColumnRecidivist);
-        return view('frontoffice.newReportRules',compact('rules','x','section','showTableCorrective','reportSectionObs','showColumnRecidivist','idReport'));
+        return view('frontoffice.newReportRules',compact('rules','types','section','showTableCorrective','reportSectionObs','showColumnRecidivist','idReport'));
     }
 
     public function getClientSection($id){
@@ -607,14 +619,24 @@ class ReportController extends Controller
         $reportsAnswers=RulesAnswerReport::where('idReport',$report->id)
         ->get();
 
+
         //for para ir buscar as regras
         foreach($reportsAnswers as $reportsAnswer){
             $reportsAnswer->rule=RulesList::where('id',$reportsAnswer->idRule)
             ->select(['rule'])
-            ->pluck('rule')
             ->first();
+
+            $rule=RulesList::where('id',$reportsAnswer->idRule)->first();
+
+            if($rule->ruletype){
+                $reportsAnswer->rule->type=TypeRule::where('type_id',$rule->ruletype)
+                    ->first()->name;
+            }
         }
-        
+
+
+        $types=TypeRule::all();
+
         //secção para ir buscar os dados das secçoes pelo id
         $arraySections=[];
 
@@ -648,7 +670,7 @@ class ReportController extends Controller
             $existObs=false;
             foreach($reportsAnswers as $reportsAnswer){
                 if($section->id == $reportsAnswer->idClientSection){
-                    if($reportsAnswer->answer == 'nc'){
+                    if($reportsAnswer->answer == 'nc' && $reportsAnswer->corrective != null){
                         $existCorrective=true;
                         break;
                     }
@@ -760,7 +782,7 @@ class ReportController extends Controller
         /*$statiscsGeral->nAplly=$auxPerNApplyGeral;*/
 
 
-        return view('frontoffice.reportShow',compact('report','arraySections','reportsAnswers','reportSectionObs','statiscsGeral'));
+        return view('frontoffice.reportShow',compact('report','types','arraySections','reportsAnswers','reportSectionObs','statiscsGeral'));
     }
 
     public function reportStatistics(){

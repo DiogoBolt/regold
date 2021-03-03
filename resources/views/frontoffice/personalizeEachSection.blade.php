@@ -15,7 +15,6 @@
         </div>
     </div>
 
-
      {{-- Go Back Button --}}
     <a class="back-btn" href="/frontoffice/personalizeAreasEquipments">
         <span class="back-btn__front"><strong>Voltar</strong></span>
@@ -43,7 +42,7 @@
                 <label class="area" id="area{{$lastArea}}" onclick="showEdit('a',this.id)"></label>
             </td>
             <td>
-                <select id="product">
+                <select class="prod" id="product" style="width: 180px">
                     <option value="" disabled>Produto</option>
                     @foreach($products as $product)
                             <option value="{{$product->id}}">{{$product->name}}</option>
@@ -51,7 +50,7 @@
                 </select>
             </td>
             <td>
-                <select id="product2">
+                <select class="prod" id="product2" style="width: 180px">
                     <option value="" disabled>Produto</option>
                     @foreach($products as $product)
                         <option value="{{$product->id}}">{{$product->name}}</option>
@@ -59,7 +58,7 @@
                 </select>
             </td>
             <td>
-                <select id="product3">
+                <select class="prod" id="product3" style="width: 180px">
                     <option value="" disabled>Produto</option>
                     @foreach($products as $product)
                         <option value="{{$product->id}}">{{$product->name}}</option>
@@ -76,16 +75,20 @@
             </td>
                 <td><input id="checkedArea" type="Checkbox" name="checkedArea[]" checked></td>
         </tr>
-        @foreach($areas as $area)
+
+        @foreach($areasSectionClients as $area)
             <tr class="tableRowArea">
                 <td>
-                    <input type="hidden" id="idClientArea" value="{{$area->idAreaSectionClient}}">
-                    <label class="area" id="area{{$area->id}}" onclick="showEdit('a',this.id)">{{$area->designacao}}</label>
+                    <input type="hidden" id="idClientArea" value="{{$area->id}}">
+                    <label class="area" id="area{{$area->id}}" onclick="showEdit('a',this.id)">{{$area->designation}}</label>
                 </td>
                 <input type="text" cd  style="width: 50%">
                 <td>
-                    <select id="product">
-                    <option value="" disabled>Produto</option>
+                    <select class="prod" id="product" style="width: 180px">
+                        <option value="" disabled>Produto</option>
+                        @if($area->idProduct == 0)
+                            <option value="0" selected>Produto</option>
+                        @endif
                         @foreach($products as $product)
                             @if($area->idProduct == $product->id)
                                 <option value="{{$product->id}}" selected>{{$product->name}}</option>
@@ -96,8 +99,11 @@
                     </select>
                 </td>
                 <td>
-                    <select id="product2">
+                    <select class="prod" id="product2" style="width: 180px">
                         <option value="" disabled>Produto</option>
+                        @if($area->idProduct2 == 0)
+                            <option value="0" selected>Produto</option>
+                        @endif
                         @foreach($products as $product)
                             @if($area->idProduct2 == $product->id)
                                 <option value="{{$product->id}}" selected>{{$product->name}}</option>
@@ -108,67 +114,18 @@
                     </select>
                 </td>
                 <td>
-                    <select id="product3">
+                    <select class="prod" id="product3" style="width: 180px">
                         <option value="" disabled>Produto</option>
+                        @if($area->idProduct3 == 0)
+                            <option value="0" selected>Produto</option>
+                        @endif
                         @foreach($products as $product)
+
                             @if($area->idProduct3 == $product->id)
                                 <option value="{{$product->id}}" selected>{{$product->name}}</option>
                             @else
                                 <option value="{{$product->id}}">{{$product->name}}</option>
                             @endif
-                        @endforeach
-                    </select>
-                </td>
-                <td>
-                    <select id="cleaning">
-                    <option value="" disabled>Limpeza</option>
-                        @foreach($cleaningFrequencys as $cleaningFrequency)
-                            @if($area->idFrequencyCleaning == $cleaningFrequency->id)
-                                <option value="{{$cleaningFrequency->id}}" selected>{{$cleaningFrequency->designation}}</option>
-                            @else
-                                <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>
-                            @endif
-                        @endforeach
-                    </select>
-                </td>
-                @if($area->checked)
-                <td><input id="checkedArea" type="Checkbox" name="checkedArea[]" checked></td>
-                @else
-                <td><input id="checkedArea" type="Checkbox" name="checkedArea[]"></td>
-                @endif
-            </tr>
-        @endforeach
-        @foreach($areasSectionClients as $area)
-            <tr class="tableRowArea">
-                <td>
-                    <input type="hidden" id="idClientArea" value="{{$area->id}}">
-                    <label class="area" id="area{{$area->id}}" onclick="showEdit('a',this.id)">{{$area->designation}}</label>
-                </td>
-                <td>
-                    <select id="product">
-                    <option value="" disabled>Produto</option>
-                        @foreach($products as $product)
-                            @if($area->idProduct == $product->id)
-                                <option value="{{$product->id}}" selected>{{$product->name}}</option>
-                            @else
-                                <option value="{{$product->id}}">{{$product->name}}</option>
-                            @endif
-                        @endforeach
-                    </select>
-                </td>
-                <td>
-                    <select id="product2">
-                        <option value="" disabled>Produto</option>
-                        @foreach($products as $product)
-                            <option value="{{$product->id}}">{{$product->name}}</option>
-                        @endforeach
-                    </select>
-                </td>
-                <td>
-                    <select id="product3">
-                        <option value="" disabled>Produto</option>
-                        @foreach($products as $product)
-                            <option value="{{$product->id}}">{{$product->name}}</option>
                         @endforeach
                     </select>
                 </td>
@@ -190,13 +147,17 @@
         @endforeach
         </tbody>
     </table>
-    <button id="newSections" class="btn-del" onclick="showModal('addArea')">Nova área</button>
-    {{--<button id="" class="btn-del" onclick="addArea()">Áreas Existentes</button>--}}
-    <select>
-        @foreach($allAreas as $allArea)
-            <option id="allAreas" value='{"idProduct":{{$allArea->idProduct}},"designation":"{{$allArea->designation}}","idCleaningFrequency":{{$allArea->idCleaningFrequency}}}'>{{$allArea->designation}}</option>
+    <h1 style="font-size:12px">Secção já existente:</h1>
+    <div>
+    <select id="allAreas">
+        <option value="" disabled selected>Secção</option>
+        @foreach($otherSections as $otherSection)
+            <option value="{{$otherSection->allAreas}}">{{$otherSection->designation}}</option>
         @endforeach
     </select>
+        <button id="" class="btn_equip" onclick="addArea()">Adicionar</button>
+    </div>
+    <button id="newSections" class="btn-del" onclick="showModal('addArea')">Nova área</button>
 
      <!--Modal add novas areas-->
     <div class="modal fade" id="addArea" role="dialog">
@@ -211,19 +172,19 @@
                         <div class="news" id="oneNew">
                             <input type="text" id="idDesignation" name="designation" placeholder="Designação">
             
-                            <select id="product">
+                            <select class="prod" id="product" style="width: 180px">
                                 <option value="" disabled selected>Produto</option>
                                 @foreach($products as $product)
                                     <option value="{{$product->id}}">{{$product->name}}</option>
                                 @endforeach
                             </select>
-                            <select id="product2">
+                            <select class="prod" id="product2" style="width: 180px">
                                 <option value="" disabled selected>Produto</option>
                                 @foreach($products as $product)
                                     <option value="{{$product->id}}">{{$product->name}}</option>
                                 @endforeach
                             </select>
-                            <select id="product3">
+                            <select class="prod" id="product3" style="width: 180px">
                                 <option value="" disabled selected>Produto</option>
                                 @foreach($products as $product)
                                     <option value="{{$product->id}}">{{$product->name}}</option>
@@ -235,7 +196,7 @@
                                     <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>
                                 @endforeach
                             </select>
-                            <i class="fa fa-trash fa-lg" style="display:none" onclick="deleteNewSection(parentNode)"></i>
+                            <i class="fa fa-tazer rash fa-lg" style="display:none" onclick="deleteNewSection(parentNode)"></i>
                         </div>
                     </div>
                     <button id="btnAddNewSection" onclick="clone('addArea')"><i class="fa fa-plus"></i></button>
@@ -271,11 +232,27 @@
                 <label class="equipment" id="equipment{{$lastEquipment}}" onclick="showEdit('e',this.id)"></label>
             </td>
             <td>
-                <select id="product">
+                <select class="prod" id="product" style="width: 180px">
                     <option value="" disabled>Produto</option>
                     @foreach($products as $product)
 
                             <option value="{{$product->id}}">{{$product->name}}</option>
+                    @endforeach
+                </select>
+            </td>
+            <td>
+                <select class="prod" id="product2" style="width: 180px">
+                    <option value="" disabled>Produto</option>
+                    @foreach($products as $product)
+                        <option value="{{$product->id}}">{{$product->name}}</option>
+                    @endforeach
+                </select>
+            </td>
+            <td>
+                <select class="prod" id="product3" style="width: 180px">
+                    <option value="" disabled>Produto</option>
+                    @foreach($products as $product)
+                        <option value="{{$product->id}}">{{$product->name}}</option>
                     @endforeach
                 </select>
             </td>
@@ -298,8 +275,11 @@
                     <label class="equipment" id="equipment{{$equipment->id}}" onclick="showEdit('e',this.id)">{{$equipment->designation}}</label>
                 </td>
                 <td>
-                    <select id="product">
+                    <select id="product" style="width: 180px">
                     <option value="" disabled>Produto</option>
+                        @if($equipment->idProduct == 0)
+                            <option value="0" selected>Produto</option>
+                        @endif
                         @foreach($products as $product)
                             @if($equipment->idProduct == $product->id)
                                 <option value="{{$product->id}}" selected>{{$product->name}}</option>
@@ -310,10 +290,13 @@
                     </select>
                 </td>
                 <td>
-                    <select id="product2">
+                    <select id="product2" style="width: 180px">
                         <option value="" disabled>Produto</option>
+                        @if($equipment->idProduct == 0)
+                            <option value="0" selected>Produto</option>
+                        @endif
                         @foreach($products as $product)
-                            @if($equipment->idProduct2 == $product->id)
+                            @if($equipment->idProduct == $product->id)
                                 <option value="{{$product->id}}" selected>{{$product->name}}</option>
                             @else
                                 <option value="{{$product->id}}">{{$product->name}}</option>
@@ -322,10 +305,14 @@
                     </select>
                 </td>
                 <td>
-                    <select id="product3">
+                    <select id="product3" style="width: 180px">
                         <option value="" disabled>Produto</option>
+                        @if($equipment->idProduct == 0)
+                            <option value="0" selected>Produto</option>
+                        @endif
                         @foreach($products as $product)
-                            @if($equipment->idProduct3 == $product->id)
+
+                            @if($equipment->idProduct == $product->id)
                                 <option value="{{$product->id}}" selected>{{$product->name}}</option>
                             @else
                                 <option value="{{$product->id}}">{{$product->name}}</option>
@@ -335,12 +322,15 @@
                 </td>
                 <td>
                     <select id="cleaning">
-                    <option value="" disabled>Limpeza</option>
-                        @foreach($cleaningFrequencys as $cleaningFrequency)
-                            @if($equipment->idCleaningFrequency == $cleaningFrequency->id)
-                                <option value="{{$cleaningFrequency->id}}" selected>{{$cleaningFrequency->designation}}</option>
+                    <option value="" disabled>Limpeza</option>v
+                        @if($equipment->idProduct == 0)
+                            <option value="0" selected>Produto</option>
+                        @endif
+                        @foreach($products as $product)
+                            @if($equipment->idProduct == $product->id)
+                                <option value="{{$product->id}}" selected>{{$product->name}}</option>
                             @else
-                                <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>
+                                <option value="{{$product->id}}">{{$product->name}}</option>
                             @endif
                         @endforeach
                     </select>
@@ -359,8 +349,11 @@
                     <label class="equipment" id="equipment{{$equipment->id}}" onclick="showEdit('e',this.id)">{{$equipment->designation}}</label>
                 </td>
                 <td>
-                    <select id="product">
-                    <option value="" disabled>Produto</option>
+                    <select id="product2" style="width: 180px">
+                        <option value="" disabled>Produto</option>
+                        @if($equipment->idProduct == 0)
+                            <option value="0" selected>Produto</option>
+                        @endif
                         @foreach($products as $product)
                             @if($equipment->idProduct == $product->id)
                                 <option value="{{$product->id}}" selected>{{$product->name}}</option>
@@ -371,8 +364,11 @@
                     </select>
                 </td>
                 <td>
-                    <select id="product2">
+                    <select id="product2" style="width: 180px">
                         <option value="" disabled>Produto</option>
+                        @if($equipment->idProduct2 == 0)
+                            <option value="0" selected>Produto</option>
+                        @endif
                         @foreach($products as $product)
                             @if($equipment->idProduct2 == $product->id)
                                 <option value="{{$product->id}}" selected>{{$product->name}}</option>
@@ -383,8 +379,11 @@
                     </select>
                 </td>
                 <td>
-                    <select id="product3">
+                    <select id="product2" style="width: 180px">
                         <option value="" disabled>Produto</option>
+                        @if($equipment->idProduct3 == 0)
+                            <option value="0" selected>Produto</option>
+                        @endif
                         @foreach($products as $product)
                             @if($equipment->idProduct3 == $product->id)
                                 <option value="{{$product->id}}" selected>{{$product->name}}</option>
@@ -395,7 +394,7 @@
                     </select>
                 </td>
                 <td>
-                    <select id="cleaning">
+                    <select id="cleaning" >
                     <option value="" disabled>Limpeza</option>
                         @foreach($cleaningFrequencys as $cleaningFrequency)
                             @if($equipment->idCleaningFrequency == $cleaningFrequency->id)
@@ -413,18 +412,18 @@
         </tbody>
     </table>
 
-    <button id="newSections" class="btn-del" onclick="showModal('addEquipment')">Novo Equipamento</button>
-    {{--<button id="" class="btn-del" onclick="">Equipamentos Existentes</button>--}}
-    {{--<select id="">
-        <option value="" disabled>Equipamentos</option>
-        @foreach($products as $product)
-            @if($equipment->idProduct == $product->id)
-                <option value="{{$product->id}}" selected>{{$product->name}}</option>
-            @else
-                <option value="{{$product->id}}">{{$product->name}}</option>
-            @endif
+    <h1 style="font-size:12px">Secção já existente:</h1>
+    <div>
+    <select id="allEquipments">
+        <option value="" disabled selected>Secção</option>
+        @foreach($otherSections as $otherSection)
+            <option value="{{$otherSection->allEquipments}}">{{$otherSection->designation}}</option>
         @endforeach
-    </select>--}}
+    </select>
+    <button id="" class="btn_equip" onclick="addEquipment()">Adicionar</button>
+    </div>
+
+    <button id="newSections" class="btn-del" onclick="showModal('addEquipment')">Novo Equipamento</button>
 
 
     <!-- Modal add novos equipamentos -->
@@ -445,12 +444,25 @@
                                     <option value="{{$product->id}}">{{$product->name}}</option>
                                 @endforeach
                             </select>
+                            <select id="product2">
+                                <option value="" disabled selected>Produto</option>
+                                @foreach($products as $product)
+                                    <option value="{{$product->id}}">{{$product->name}}</option>
+                                @endforeach
+                            </select>
+                            <select id="product3">
+                                <option value="" disabled selected>Produto</option>
+                                @foreach($products as $product)
+                                    <option value="{{$product->id}}">{{$product->name}}</option>
+                                @endforeach
+                            </select>
                             <select id="cleaning">
                                 <option value="" disabled selected>Limpeza</option>
                                 @foreach($cleaningFrequencys as $cleaningFrequency)
                                     <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>
                                 @endforeach
                             </select>
+                            
                             <i class="fa fa-trash fa-lg" style="display:none" onclick="deleteNewSection(parentNode)"></i>
                         </div>
                     </div>
@@ -507,8 +519,8 @@
     function editItem() {
         var name = $('#name').val();
         var id = $('#idItem').val();
-
         var type = $('#type').val();
+        console.log(type)
         if(type == 'a')
             $('#area'+id).text(name);
         if(type == 'e')
