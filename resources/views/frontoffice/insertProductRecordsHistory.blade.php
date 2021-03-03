@@ -87,6 +87,7 @@
                         <th>Dia</th>
                         <th>Produto</th>
                         <th>Fornecedores</th>
+                        <th>Fatura/Guia</th>
                         <th>Temperatura</th>
                         <th>Limpeza</th>
                         <th>Estado do Produto</th>
@@ -171,6 +172,7 @@
                         <td>${data.day}</td>
                         <td>${data.product}</td>
                         <td>${data.provider}</td>
+                        <td>${data.fatura_guia}</td>
                         <td>${data.temperature}</td>
                         <td>${data.cleaning}</td>
                         <td>${data.product_status}</td>

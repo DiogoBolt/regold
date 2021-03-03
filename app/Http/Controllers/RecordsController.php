@@ -153,6 +153,7 @@ class RecordsController extends Controller
             $product_records->provider= $inputs['provid'];
         }
 
+        $product_records->fatura_guia=$inputs['fatura'];
         $product_records->date=$inputs['date'];
         $product_records->temperature= $inputs['temperature'];
         $product_records->cleaning= $inputs['cleaning'];
@@ -162,6 +163,7 @@ class RecordsController extends Controller
         $product_records->label= $inputs['label'];
         $product_records->client_id = $auxClientId;
         $product_records->save();
+
 
         return redirect('/frontoffice/records/insertProduct')->with('message','Registo realizado com sucesso!');
     }
@@ -196,7 +198,7 @@ class RecordsController extends Controller
         $end_month = $date->copy()->endOfMonth();
 
         return ProductRecords::query()->select([
-            'id', 'date', 'product','provider','temperature','cleaning','product_status','package','label','observations' ,DB::raw('DAY(updated_at) as day'),
+            'id', 'date', 'product','provider','fatura_guia','temperature','cleaning','product_status','package','label','observations' ,DB::raw('DAY(updated_at) as day'),
         ])
             ->where('client_id',$auxClientId)
             ->whereBetween('updated_at', [$start_month, $end_month])

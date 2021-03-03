@@ -68,6 +68,9 @@
                                 <option value="{{$provider->name}}"></option>
                             @endforeach
                         </datalist>
+
+                        <label class="label-insertPro" for="fatura_guia">FATURA/GUIA</label>
+                        <input name="fatura" class="input_insertProd" required />
                     </td>
                 </tr>
                 <tr>
@@ -174,7 +177,76 @@
             <button class="btn btn-Val" >Validar</button>
             <a class="btn-history"  href="/frontoffice/records/insertProduct/history">Histórico</a>
         </div>
+
+        <input type="file" accept="image/*" name="image">
+
     </form>
+
+
+{{--    <button id="snap" onclick="TirarFoto()">Tirar foto</button>
+
+    <div id="container">
+        <video autoplay="false" id="videoElement">
+
+        </video>
+    </div>--}}
+
+
+    <button type="button" onclick="init()">Abrir Camera</button>
+    <div class="controller">
+        <button id="snap">CAPTURE</button>
+    </div>
+    <button type="button" onclick="LimparFoto()">Limpar Foto</button>
+
+    <div class="video-wrap">
+        <video id="video" playsinline autoplay></video>
+        <canvas id="canvasvideo" width="640" height="480"></canvas>
+    </div>
+
+    <script>
+
+        'use strict';
+
+        const video=document.getElementById('video');
+        const canvasvideo=document.getElementById('canvasvideo');
+        const snap=document.getElementById('snap');
+
+        const constraints={
+            audio: false,
+            video:{
+                width:640,height:480
+            }
+        };
+
+        async function init() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia(constraints);
+                handleSuccess(stream);
+            } catch (e) {
+
+            }
+        }
+
+        function handleSuccess(stream){
+            window.stream=stream;
+            video.srcObject=stream;
+        }
+
+        var context=canvasvideo.getContext('2d');
+        snap.addEventListener("click",function(){
+            context.drawImage(video,0,0,640,480);
+        })
+
+        function LimparFoto()
+        {
+            context.clearRect(0, 0, canvasvideo.width, canvasvideo.height);
+        }
+
+    </script>
+
+
+
+
 @endsection
 
 
