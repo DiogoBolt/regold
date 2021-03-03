@@ -51,7 +51,7 @@
                 <?php $i=1 ?>
                 @foreach($types as $type)
                     @if(sizeof($type->rules)>0)
-                        <tr >
+                        <tr>
                             <td>{{$type->name}}</td>
                         </tr>
                     @endif
@@ -272,8 +272,12 @@
         <br/>
         <select id="indexObs" onchange="verifySelected(this)" >
             <option value="Geral">Geral</option>
-            @foreach($rules as $rule)
-                <option value="{{$rule->id}}">{{$rule->index}}</option>
+            <?php $i=1 ?>
+            @foreach($types as $type)
+                @foreach($type->rules as $rule)
+                <option value="{{$rule->id}}">{{$i}}</option>
+                    <?php $i++ ?>
+            @endforeach
             @endforeach
         </select>
         <input id="iptObs" oninput="verifyTextInput(this)" type="text" placeholder="Insira a observação">

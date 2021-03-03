@@ -103,6 +103,10 @@
     font-size: 18px;
     text-align: center;
   }
+
+.tableRowT{
+  background-color: red ;
+}
   
   .table{
     width:100% !important;

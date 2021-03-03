@@ -619,14 +619,24 @@ class ReportController extends Controller
         $reportsAnswers=RulesAnswerReport::where('idReport',$report->id)
         ->get();
 
+
         //for para ir buscar as regras
         foreach($reportsAnswers as $reportsAnswer){
             $reportsAnswer->rule=RulesList::where('id',$reportsAnswer->idRule)
             ->select(['rule'])
-            ->pluck('rule')
             ->first();
+
+            $rule=RulesList::where('id',$reportsAnswer->idRule)->first();
+
+            if($rule->ruletype){
+                $reportsAnswer->rule->type=TypeRule::where('type_id',$rule->ruletype)
+                    ->first()->name;
+            }
         }
-        
+
+
+        $types=TypeRule::all();
+
         //secção para ir buscar os dados das secçoes pelo id
         $arraySections=[];
 
@@ -660,7 +670,7 @@ class ReportController extends Controller
             $existObs=false;
             foreach($reportsAnswers as $reportsAnswer){
                 if($section->id == $reportsAnswer->idClientSection){
-                    if($reportsAnswer->answer == 'nc'){
+                    if($reportsAnswer->answer == 'nc' && $reportsAnswer->corrective != null){
                         $existCorrective=true;
                         break;
                     }
@@ -772,7 +782,7 @@ class ReportController extends Controller
         /*$statiscsGeral->nAplly=$auxPerNApplyGeral;*/
 
 
-        return view('frontoffice.reportShow',compact('report','arraySections','reportsAnswers','reportSectionObs','statiscsGeral'));
+        return view('frontoffice.reportShow',compact('report','types','arraySections','reportsAnswers','reportSectionObs','statiscsGeral'));
     }
 
     public function reportStatistics(){
