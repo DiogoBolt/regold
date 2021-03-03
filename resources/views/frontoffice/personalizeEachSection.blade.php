@@ -42,7 +42,7 @@
                 <label class="area" id="area{{$lastArea}}" onclick="showEdit('a',this.id)"></label>
             </td>
             <td>
-                <select id="product">
+                <select class="prod" id="product" style="width: 180px">
                     <option value="" disabled>Produto</option>
                     @foreach($products as $product)
                             <option value="{{$product->id}}">{{$product->name}}</option>
@@ -50,7 +50,7 @@
                 </select>
             </td>
             <td>
-                <select id="product2">
+                <select class="prod" id="product2" style="width: 180px">
                     <option value="" disabled>Produto</option>
                     @foreach($products as $product)
                         <option value="{{$product->id}}">{{$product->name}}</option>
@@ -58,7 +58,7 @@
                 </select>
             </td>
             <td>
-                <select id="product3">
+                <select class="prod" id="product3" style="width: 180px">
                     <option value="" disabled>Produto</option>
                     @foreach($products as $product)
                         <option value="{{$product->id}}">{{$product->name}}</option>
@@ -83,7 +83,7 @@
                     <label class="area" id="area{{$area->id}}" onclick="showEdit('a',this.id)">{{$area->designation}}</label>
                 </td>
                 <td>
-                    <select id="product">
+                    <select class="prod" id="product" style="width: 180px">
                         <option value="" disabled>Produto</option>
                         @if($area->idProduct == 0)
                             <option value="0" selected>Produto</option>
@@ -99,7 +99,7 @@
                     </select>
                 </td>
                 <td>
-                    <select id="product2">
+                    <select class="prod" id="product2" style="width: 180px">
                         <option value="" disabled>Produto</option>
                         @if($area->idProduct2 == 0)
                             <option value="0" selected>Produto</option>
@@ -115,7 +115,7 @@
                     </select>
                 </td>
                 <td>
-                    <select id="product3">
+                    <select class="prod" id="product3" style="width: 180px">
                         <option value="" disabled>Produto</option>
                         @if($area->idProduct3 == 0)
                             <option value="0" selected>Produto</option>
@@ -148,14 +148,17 @@
         @endforeach
         </tbody>
     </table>
-    <button id="newSections" class="btn-del" onclick="showModal('addArea')">Nova área</button>
-    <button id="" class="btn-del" onclick="addArea()">Áreas Existentes</button>
+    <h1 style="font-size:12px">Área já existente:</h1>
+    <div>
     <select id="allAreas">
         <option value="" disabled selected>Área</option>
         @foreach($allAreas as $allArea)
             <option  value='{"idProduct":{{$allArea->idProduct}},"idProduct2":{{$allArea->idProduct2}},"idProduct3":{{$allArea->idProduct3}},"designation":"{{$allArea->designation}}","idCleaningFrequency":{{$allArea->idCleaningFrequency}}}'>{{$allArea->designation}}</option>
         @endforeach
     </select>
+        <button id="" class="btn_equip" onclick="addArea()">Adicionar</button>
+    </div>
+    <button id="newSections" class="btn-del" onclick="showModal('addArea')">Nova área</button>
 
      <!--Modal add novas areas-->
     <div class="modal fade" id="addArea" role="dialog">
@@ -170,19 +173,19 @@
                         <div class="news" id="oneNew">
                             <input type="text" id="idDesignation" name="designation" placeholder="Designação">
             
-                            <select id="product">
+                            <select class="prod" id="product" style="width: 180px">
                                 <option value="" disabled selected>Produto</option>
                                 @foreach($products as $product)
                                     <option value="{{$product->id}}">{{$product->name}}</option>
                                 @endforeach
                             </select>
-                            <select id="product2">
+                            <select class="prod" id="product2" style="width: 180px">
                                 <option value="" disabled selected>Produto</option>
                                 @foreach($products as $product)
                                     <option value="{{$product->id}}">{{$product->name}}</option>
                                 @endforeach
                             </select>
-                            <select id="product3">
+                            <select class="prod" id="product3" style="width: 180px">
                                 <option value="" disabled selected>Produto</option>
                                 @foreach($products as $product)
                                     <option value="{{$product->id}}">{{$product->name}}</option>
@@ -194,7 +197,7 @@
                                     <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>
                                 @endforeach
                             </select>
-                            <i class="fa fa-trash fa-lg" style="display:none" onclick="deleteNewSection(parentNode)"></i>
+                            <i class="fa fa-tazer rash fa-lg" style="display:none" onclick="deleteNewSection(parentNode)"></i>
                         </div>
                     </div>
                     <button id="btnAddNewSection" onclick="clone('addArea')"><i class="fa fa-plus"></i></button>
@@ -230,7 +233,7 @@
                 <label class="equipment" id="equipment{{$lastEquipment}}" onclick="showEdit('e',this.id)"></label>
             </td>
             <td>
-                <select id="product">
+                <select class="prod" id="product" style="width: 180px">
                     <option value="" disabled>Produto</option>
                     @foreach($products as $product)
 
@@ -239,7 +242,7 @@
                 </select>
             </td>
             <td>
-                <select id="product2">
+                <select class="prod" id="product2" style="width: 180px">
                     <option value="" disabled>Produto</option>
                     @foreach($products as $product)
                         <option value="{{$product->id}}">{{$product->name}}</option>
@@ -247,7 +250,7 @@
                 </select>
             </td>
             <td>
-                <select id="product3">
+                <select class="prod" id="product3" style="width: 180px">
                     <option value="" disabled>Produto</option>
                     @foreach($products as $product)
                         <option value="{{$product->id}}">{{$product->name}}</option>
@@ -404,14 +407,18 @@
         </tbody>
     </table>
 
-    <button id="newSections" class="btn-del" onclick="showModal('addEquipment')">Novo Equipamento</button>
-    <button id="" class="btn-del" onclick="addEquipment()">Equipamentos Existentes</button>
+    <h1 style="font-size:12px">Equipamento já existente:</h1>
+    <div>
     <select id="allEquipments">
         <option value="" disabled selected>Equipamento</option>
         @foreach($allEquipments as $allEquipment)
             <option value='{"idProduct":{{$allEquipment->idProduct}},"idProduct2":{{$allEquipment->idProduct2}},"idProduct3":{{$allEquipment->idProduct3}},"designation":"{{$allEquipment->designation}}","idCleaningFrequency":{{$allEquipment->idCleaningFrequency}}}'>{{$allEquipment->designation}}</option>
         @endforeach
     </select>
+    <button id="" class="btn_equip" onclick="addEquipment()">Adicionar</button>
+    </div>
+
+    <button id="newSections" class="btn-del" onclick="showModal('addEquipment')">Novo Equipamento</button>
 
 
     <!-- Modal add novos equipamentos -->
