@@ -153,6 +153,14 @@ class RecordsController extends Controller
             $product_records->provider= $inputs['provid'];
         }
 
+        if($request->hasfile('image'))
+        {
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension(); // getting image extension
+            $filename =time().'.'.$extension;
+            $file->move('uploads/records/', $filename);
+            $product_records->image=$filename;
+        }
         $product_records->fatura_guia=$inputs['fatura'];
         $product_records->date=$inputs['date'];
         $product_records->temperature= $inputs['temperature'];
