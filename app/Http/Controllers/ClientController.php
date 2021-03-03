@@ -286,8 +286,7 @@ class ClientController extends Controller
         if($user->userType == 5||$user->userType==3 /*|| $user->userType == 2*/)
         {
             $clients = Customer::from(Customer::alias('c'))
-                ->where('u.userType','!=',6)
-                ->leftJoin(User::alias('u'), 'u.client_id', '=', 'c.id')
+                ->leftJoin(User::alias('u'), 'u.id', '=', 'c.ownerID')
                 ->when($request->filled('cityInvoice'), function ($query) use ($inputs) {
                     return $query->where('c.city', '=', $inputs['cityInvoice']);
                 })
@@ -309,7 +308,7 @@ class ClientController extends Controller
             {
                 $clients = Customer::from(Customer::alias('c'))
                     ->where('u.userType','!=',6)
-                    ->leftJoin(User::alias('u'), 'u.client_id', '=', 'c.id')
+                    ->leftJoin(User::alias('u'), 'u.id', '=', 'c.ownerID')
                     ->where('c.salesman',$user->userTypeID)
                     ->when($request->filled('cityInvoice'), function ($query) use ($inputs) {
                         return $query->where('c.city', '=', $inputs['cityInvoice']);
@@ -328,7 +327,7 @@ class ClientController extends Controller
             }elseif ($user->userType==2)
             {
                 $clients = Customer::from(Customer::alias('c'))
-                    ->leftJoin(User::alias('u'), 'u.client_id', '=', 'c.id')
+                    ->leftJoin(User::alias('u'), 'u.id', '=', 'c.ownerID')
                     ->where('u.userType','!=',6)
                     /*filtro clientes por tecnico
 

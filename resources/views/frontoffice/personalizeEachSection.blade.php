@@ -151,9 +151,9 @@
     <button id="newSections" class="btn-del" onclick="showModal('addArea')">Nova área</button>
     <button id="" class="btn-del" onclick="addArea()">Áreas Existentes</button>
     <select id="allAreas">
-        <option value="" disabled selected>Área</option>
-        @foreach($allAreas as $allArea)
-            <option  value='{"idProduct":{{$allArea->idProduct}},"idProduct2":{{$allArea->idProduct2}},"idProduct3":{{$allArea->idProduct3}},"designation":"{{$allArea->designation}}","idCleaningFrequency":{{$allArea->idCleaningFrequency}}}'>{{$allArea->designation}}</option>
+        <option value="" disabled selected>Secção</option>
+        @foreach($otherSections as $otherSection)
+            <option value="{{$otherSection->allAreas}}">{{$otherSection->designation}}</option>
         @endforeach
     </select>
 
@@ -407,9 +407,9 @@
     <button id="newSections" class="btn-del" onclick="showModal('addEquipment')">Novo Equipamento</button>
     <button id="" class="btn-del" onclick="addEquipment()">Equipamentos Existentes</button>
     <select id="allEquipments">
-        <option value="" disabled selected>Equipamento</option>
-        @foreach($allEquipments as $allEquipment)
-            <option value='{"idProduct":{{$allEquipment->idProduct}},"idProduct2":{{$allEquipment->idProduct2}},"idProduct3":{{$allEquipment->idProduct3}},"designation":"{{$allEquipment->designation}}","idCleaningFrequency":{{$allEquipment->idCleaningFrequency}}}'>{{$allEquipment->designation}}</option>
+        <option value="" disabled selected>Secção</option>
+        @foreach($otherSections as $otherSection)
+            <option value="{{$otherSection->allEquipments}}">{{$otherSection->designation}}</option>
         @endforeach
     </select>
 
@@ -507,8 +507,8 @@
     function editItem() {
         var name = $('#name').val();
         var id = $('#idItem').val();
-
         var type = $('#type').val();
+        console.log(type)
         if(type == 'a')
             $('#area'+id).text(name);
         if(type == 'e')

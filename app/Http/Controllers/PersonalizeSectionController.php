@@ -213,8 +213,15 @@ class PersonalizeSectionController extends Controller
         $lastArea=AreaSectionClient::orderBy('id', 'desc')->take(1)->first()->id;
         $lastEquipment=EquipmentSectionClient::orderBy('id', 'desc')->take(1)->first()->id;
 
-        $allAreas = AreaSectionClient::where('idClient',$auxClientId)->where('idSection','!=', $id)->where('active',1)->get();
-        $allEquipments = EquipmentSectionClient::where('idClient',$auxClientId)->where('idSection','!=', $id)->where('active',1)->get();
+        $otherSections=ClientSection::where('id_client',$auxClientId)->where('active',1)->where('id_section','!=',$id)->get();
+
+
+
+        foreach ($otherSections as $otherSection){
+            $otherSection->allAreas = AreaSectionClient::where('idClient',$auxClientId)->where('idSection', $otherSection->id)->where('active',1)->select(['designation','idProduct','idProduct2','idProduct3','idCleaningFrequency'])->get();
+            $otherSection->allEquipments = EquipmentSectionClient::where('idClient',$auxClientId)->where('idSection', $otherSection->id)->where('active',1)->select(['designation','idProduct','idProduct2','idProduct3','idCleaningFrequency'])->get();
+        }
+
 
 
 
@@ -230,7 +237,7 @@ class PersonalizeSectionController extends Controller
         ])->get();
 
 
-        return view('frontoffice.personalizeEachSection',compact('clientSection','allEquipments','allAreas','areasSectionClients','equipments','equipmentsSectionClient','products','cleaningFrequencys','lastArea','lastEquipment'));
+        return view('frontoffice.personalizeEachSection',compact('clientSection','otherSections','areasSectionClients','equipments','equipmentsSectionClient','products','cleaningFrequencys','lastArea','lastEquipment'));
     }
 
     public function saveEachSection(Request $request){
