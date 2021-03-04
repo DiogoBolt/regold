@@ -82,7 +82,6 @@
                     <input type="hidden" id="idClientArea" value="{{$area->id}}">
                     <label class="area" id="area{{$area->id}}" onclick="showEdit('a',this.id)">{{$area->designation}}</label>
                 </td>
-                <input type="text" cd  style="width: 50%">
                 <td>
                     <select class="prod" id="product" style="width: 180px">
                         <option value="" disabled>Produto</option>
