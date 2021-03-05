@@ -114,7 +114,7 @@
                                 <span class="show-info" data-toggle="modal" data-target="#info-modal" onclick="showLastReads({{$thermo->id}})"><i class="glyphicon glyphicon-info-sign"></i></span>
                             </div>
                             <p>arca de congelação</p>
-                            <h1>{{$thermo->number}}</h1>
+                            <h1 class="term">{{$thermo->number}}</h1>
                         </div>
                         <div class="register-arc__data">
                             <span>{{$thermo->fridgeType->min_temp}}º/c até {{$thermo->fridgeType->max_temp}}º/c</span>

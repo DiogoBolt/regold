@@ -82,8 +82,11 @@
 }
 
 .register-arc__info h1, .register-arc__data h1 {
-    font-size: 40px;
     color: inherit;
+    text-align: center;
+    overflow: hidden;
+    max-height: none;
+    font-size: 100%;
 }
 
 .register-arc__info {
@@ -177,6 +180,7 @@
     margin-bottom: 20px;
     padding: 6px 12px;
 }
+
 
 /* Filter */
 
