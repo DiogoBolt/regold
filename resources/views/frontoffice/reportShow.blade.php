@@ -80,13 +80,13 @@
                                     </tr>
                                     <tbody>
                                         @foreach($reportsAnswers as $rule)
-                                            <?php $i=0?>
                                             @if($section->id==$rule->idClientSection)
-                                                @if($rule->rule->type!=null)
+                                                @if($rule->rule->first==1)
                                                 <tr>
                                                     <td>{{$rule->rule->type}}</td>
                                                 </tr>
                                                 @endif
+
                                                 <tr class="tableRow"> 
                                                     <th class="index">{{$rule->index}}</th>
                                                     <td class="tdBackground tdRule"><label class="rule">{{$rule->rule->rule}}</label></td>
@@ -130,8 +130,7 @@
                                                     </td>
                                                 </tr>
                                             @endif
-                                            <?php $i++ ?>
-                                        @endforeach
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>

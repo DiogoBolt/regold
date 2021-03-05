@@ -620,20 +620,6 @@ class ReportController extends Controller
         ->get();
 
 
-        //for para ir buscar as regras
-        foreach($reportsAnswers as $reportsAnswer){
-            $reportsAnswer->rule=RulesList::where('id',$reportsAnswer->idRule)
-            ->select(['rule'])
-            ->first();
-
-            $rule=RulesList::where('id',$reportsAnswer->idRule)->first();
-
-            if($rule->ruletype){
-                $reportsAnswer->rule->type=TypeRule::where('type_id',$rule->ruletype)
-                    ->first()->name;
-            }
-        }
-
 
         $types=TypeRule::all();
 
@@ -666,6 +652,76 @@ class ReportController extends Controller
 
         //for para verificar se para cada secção existe medidas corretivas e obs
         foreach($arraySections as $section){
+
+            $documentacao=0;
+            $areaServico=0;
+            $limpeza=0;
+            $equipamentos=0;
+            $acond=0;
+            $proc=0;
+            $inst=0;
+
+            //for para ir buscar as regras
+            foreach($reportsAnswers as $reportsAnswer){
+
+
+                $reportsAnswer->rule=RulesList::where('id',$reportsAnswer->idRule)
+                    ->select(['rule','ruletype'])
+                    ->first();
+
+                switch ($reportsAnswer->rule->ruletype) {
+                    case 1:
+                        if($areaServico==0){
+                            $reportsAnswer->rule->first=1;
+                        }
+                        $areaServico++;
+                        break;
+                    case 2:
+                        if($limpeza==0){
+                            $reportsAnswer->rule->first=1;
+                        }
+                        $limpeza++;
+                        break;
+                    case 3:
+                        if($equipamentos==0){
+                            $reportsAnswer->rule->first=1;
+                        }
+                        $equipamentos++;
+                        break;
+                    case 4:
+                        if($acond==0){
+                            $reportsAnswer->rule->first=1;
+                        }
+                        $acond++;
+                        break;
+                    case 5:
+                        if($proc==0){
+                            $reportsAnswer->rule->first=1;
+                        }
+                        $proc++;
+                        break;
+                    case 6:
+                        if($inst==0){
+                            $reportsAnswer->rule->first=1;
+                        }
+                        $inst++;
+                        break;
+                    case 7:
+                        if($documentacao==0){
+                            $reportsAnswer->rule->first=1;
+                        }
+                        $documentacao++;
+                        break;
+                }
+
+                $rule=RulesList::where('id',$reportsAnswer->idRule)->first();
+
+                if($rule->ruletype){
+                    $reportsAnswer->rule->type=TypeRule::where('type_id',$rule->ruletype)
+                        ->first()->name;
+                }
+            }
+
             $existCorrective=false;
             $existObs=false;
             foreach($reportsAnswers as $reportsAnswer){
@@ -698,6 +754,76 @@ class ReportController extends Controller
       
         //for para meter o valor do index para cada "regra"
         foreach($arraySections as $section){
+
+            $documentacao=0;
+            $areaServico=0;
+            $limpeza=0;
+            $equipamentos=0;
+            $acond=0;
+            $proc=0;
+            $inst=0;
+
+            //for para ir buscar as regras
+            foreach($reportsAnswers as $reportsAnswer){
+
+
+                $reportsAnswer->rule=RulesList::where('id',$reportsAnswer->idRule)
+                    ->select(['rule','ruletype'])
+                    ->first();
+
+                switch ($reportsAnswer->rule->ruletype) {
+                    case 1:
+                        if($areaServico==0){
+                            $reportsAnswer->rule->first=1;
+                        }
+                        $areaServico++;
+                        break;
+                    case 2:
+                        if($limpeza==0){
+                            $reportsAnswer->rule->first=1;
+                        }
+                        $limpeza++;
+                        break;
+                    case 3:
+                        if($equipamentos==0){
+                            $reportsAnswer->rule->first=1;
+                        }
+                        $equipamentos++;
+                        break;
+                    case 4:
+                        if($acond==0){
+                            $reportsAnswer->rule->first=1;
+                        }
+                        $acond++;
+                        break;
+                    case 5:
+                        if($proc==0){
+                            $reportsAnswer->rule->first=1;
+                        }
+                        $proc++;
+                        break;
+                    case 6:
+                        if($inst==0){
+                            $reportsAnswer->rule->first=1;
+                        }
+                        $inst++;
+                        break;
+                    case 7:
+                        if($documentacao==0){
+                            $reportsAnswer->rule->first=1;
+                        }
+                        $documentacao++;
+                        break;
+                }
+
+                $rule=RulesList::where('id',$reportsAnswer->idRule)->first();
+
+                if($rule->ruletype){
+                    $reportsAnswer->rule->type=TypeRule::where('type_id',$rule->ruletype)
+                        ->first()->name;
+                }
+            }
+
             $count=0;
             foreach($reportsAnswers as $reportsAnswer){
                 if($section->id == $reportsAnswer->idClientSection){

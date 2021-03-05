@@ -295,7 +295,7 @@
                         {{ csrf_field() }}
                     <input id="dayTime" name="dayTime" type="hidden" value="">
                     <input id="idThermo" name="idThermo" type="hidden" value="">
-                    <input  name="valor" class="form-control">
+                    <input  name="valor" type="number" step=".01" class="form-control">
                     <button type="submit" class="btn btn-primary">Editar</button>
                     </form>
                 </div>
