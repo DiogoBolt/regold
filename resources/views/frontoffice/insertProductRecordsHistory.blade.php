@@ -94,6 +94,7 @@
                         <th>Embalagem</th>
                         <th>Rotulagem</th>
                         <th>Medidas Corretivas</th>
+                        <th>Fotografia</th>
                     </tr>
                     </thead>
                     <tbody id="table-body"></tbody>
@@ -179,6 +180,7 @@
                         <td>${data.package}</td>
                         <td>${data.label}</td>
                         <td>${data.observations}</td>
+                        <td>${data.image}</td>
                     </tr>
                 `;
             });

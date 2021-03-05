@@ -181,7 +181,7 @@ class RecordsController extends Controller
         $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Session::get('establismentID');;
         $months = $this->months;
 
-        $clientProducts = ProductRecords::query()->select(['id', 'date', 'product','provider','temperature','cleaning','product_status','package','label','observations', DB::raw('DAY(updated_at) as day'),
+        $clientProducts = ProductRecords::query()->select(['id', 'date', 'product','provider','temperature','cleaning','product_status','package','label','observations','image', DB::raw('DAY(updated_at) as day'),
         ])
             ->where('client_id', $auxClientId)
             ->groupBy('id')
