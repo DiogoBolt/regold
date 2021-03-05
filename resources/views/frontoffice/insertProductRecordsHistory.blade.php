@@ -90,10 +90,11 @@
                         <th>Fatura/Guia</th>
                         <th>Temperatura</th>
                         <th>Limpeza</th>
-                        <th>Estado do Produto</th>
+                        <th>Estado</th>
                         <th>Embalagem</th>
                         <th>Rotulagem</th>
                         <th>Medidas Corretivas</th>
+                        <th>Foto</th>
                     </tr>
                     </thead>
                     <tbody id="table-body"></tbody>
@@ -139,6 +140,7 @@
                     data[element.name] = element.value;
                 }
             });
+            console.log(data)
             submitForm(data);
         }
 
@@ -179,6 +181,7 @@
                         <td>${data.package}</td>
                         <td>${data.label}</td>
                         <td>${data.observations}</td>
+                        <td><a href="/uploads/records/${data.image}">${data.image}</a></td>
                     </tr>
                 `;
             });
