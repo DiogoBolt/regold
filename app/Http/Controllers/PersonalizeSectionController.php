@@ -202,13 +202,9 @@ class PersonalizeSectionController extends Controller
         ->orWhere('idSection',0)
         ->get();
         
-        $areasSectionClients=AreaSectionClient::where('idSection', $clientSection->id)
-        ->where('active',1)
-        ->get();
+        $areasSectionClients=AreaSectionClient::where('idSection', $clientSection->id)->get();
 
-        $equipmentsSectionClient=EquipmentSectionClient::where('idSection', $clientSection->id)
-            ->where('active',1)->get();
-
+        $equipmentsSectionClient=EquipmentSectionClient::where('idSection', $clientSection->id)->get();
 
         $lastArea=AreaSectionClient::orderBy('id', 'desc')->take(1)->first()->id;
         $lastEquipment=EquipmentSectionClient::orderBy('id', 'desc')->take(1)->first()->id;
@@ -216,8 +212,8 @@ class PersonalizeSectionController extends Controller
         $otherSections=ClientSection::where('id_client',$auxClientId)->where('active',1)->where('id_section','!=',$id)->get();
 
         foreach ($otherSections as $otherSection){
-            $otherSection->allAreas = AreaSectionClient::where('idClient',$auxClientId)->where('idSection', $otherSection->id)->where('active',1)->select(['designation','idProduct','idCleaningFrequency','idProduct2','idCleaningFrequency2','idProduct3','idCleaningFrequency3'])->get();
-            $otherSection->allEquipments = EquipmentSectionClient::where('idClient',$auxClientId)->where('idSection', $otherSection->id)->where('active',1)->select(['designation','idProduct','idCleaningFrequency','idProduct2','idCleaningFrequency2','idProduct3','idCleaningFrequency3'])->get();
+            $otherSection->allAreas = AreaSectionClient::where('idClient',$auxClientId)->where('idSection', $otherSection->id)->select(['designation','idProduct','idCleaningFrequency','idProduct2','idCleaningFrequency2','idProduct3','idCleaningFrequency3'])->get();
+            $otherSection->allEquipments = EquipmentSectionClient::where('idClient',$auxClientId)->where('idSection', $otherSection->id)->select(['designation','idProduct','idCleaningFrequency','idProduct2','idCleaningFrequency2','idProduct3','idCleaningFrequency3'])->get();
         }
 
         $products = Product::whereNotIn('category',array(6,16,20))
@@ -267,8 +263,7 @@ class PersonalizeSectionController extends Controller
 
         foreach($indexsAreas as $indexAreas){
             $areasSectionClientActive= AreaSectionClient::where('id',$indexAreas)->first();
-            $areasSectionClientActive->active=0;
-            $areasSectionClientActive->save();
+            $areasSectionClientActive->delete();
         }
 
         foreach($areas as $area){
@@ -283,7 +278,6 @@ class PersonalizeSectionController extends Controller
                 $AreaSectionClient->idProduct=$area->idProduct;
                 $AreaSectionClient->idProduct2=$area->idProduct2;
                 $AreaSectionClient->idProduct3=$area->idProduct3;
-                $AreaSectionClient->active=1;
                 $AreaSectionClient->save();
             }else{
                 $AreaSectionClient =AreaSectionClient::where('id',$area->idAreaSectionClient)->first();
@@ -320,8 +314,7 @@ class PersonalizeSectionController extends Controller
         
         foreach($indexsEquipment as $indexEquipment){
             $equipmentsSectionClient= EquipmentSectionClient::where('id',$indexEquipment)->first();
-            $equipmentsSectionClient->active=0;
-            $equipmentsSectionClient->save();
+            $equipmentsSectionClient->delete();
         }
         
         foreach($equipments as $equipment){
@@ -336,7 +329,6 @@ class PersonalizeSectionController extends Controller
                 $EquipmentSectionClient->idProduct=$equipment->idProduct;
                 $EquipmentSectionClient->idProduct2=$equipment->idProduct2;
                 $EquipmentSectionClient->idProduct3=$equipment->idProduct3;
-                $EquipmentSectionClient->active=1;
                 $EquipmentSectionClient->save();
             }else{
                 $EquipmentSectionClient =EquipmentSectionClient::where('id',$equipment->idAreaSectionClient)->first();
@@ -347,7 +339,6 @@ class PersonalizeSectionController extends Controller
                 $EquipmentSectionClient->idProduct=$equipment->idProduct;
                 $EquipmentSectionClient->idProduct2=$equipment->idProduct2;
                 $EquipmentSectionClient->idProduct3=$equipment->idProduct3;
-                $EquipmentSectionClient->active=1;
                 $EquipmentSectionClient->save();
             }
         }

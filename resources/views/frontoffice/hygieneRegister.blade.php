@@ -64,7 +64,6 @@
                     </tr>
                     </thead>
                     @foreach($areasDaily as $area )
-
                             <tbody>
                             <td>{{$area->designation}}</td>
                             <td>@foreach($clientSections as $clientSection)
@@ -74,13 +73,12 @@
                                 @endforeach
                             </td>
                             <td>@foreach($products as $product)
-                                    @if($area->idProduct==$product->id)
+                                    @if($area->productId==$product->id)
                                         <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
                                     @endif
                                 @endforeach</td>
-                            <td><input name="checkbox[]" type="checkbox" id="{{$area->designation}}" value='{"idArea":{{$area->id}},"idProduct":{{$area->idProduct}},"designation":"{{$area->designation}}","idCleaningFrequency":{{$area->idCleaningFrequency}}}'></td>
+                            <td><input name="checkbox[]" type="checkbox" id="{{$area->designation}}" value='{"idArea":{{$area->id}},"idProduct":{{$area->productId}},"designation":"{{$area->designation}}","idCleaningFrequency":1}'></td>
                             </tbody>
-
                     @endforeach
                 </table>
                 <table class="table table-bordered">
@@ -93,7 +91,6 @@
                     </tr>
                     </thead>
                     @foreach($equipDaily as $equip )
-
                             <tbody>
                             <td>{{$equip->designation}}</td>
                             <td>@foreach($clientSections as $clientSection)
@@ -103,13 +100,12 @@
                                 @endforeach
                             </td>
                             <td>@foreach($products as $product)
-                                    @if($equip->idProduct==$product->id)
+                                    @if($equip->productId==$product->id)
                                         <a href="/frontoffice/product/{{$product->id}}">{{$equip->idProduct}}{{$product->name}}</a>
                                     @endif
                                 @endforeach</td>
-                            <td><input name="checkbox[]" type="checkbox" id="{{$equip->designation}}" value='{"idEquipment":{{$equip->id}},"idProduct":{{$equip->idProduct}},"designation":"{{$equip->designation}}","idCleaningFrequency":{{$equip->idCleaningFrequency}}}'></td>
+                            <td><input name="checkbox[]" type="checkbox" id="{{$equip->designation}}" value='{"idEquipment":{{$equip->id}},"idProduct":{{$equip->productId}},"designation":"{{$equip->designation}}","idCleaningFrequency":1}'></td>
                             </tbody>
-
                     @endforeach
                 </table>
                 <button id="savePersolize" class="btn-recordHygiene" onclick="saveRecordHygiene()" {{--onclick="saveEachPersonalize()"--}}>Guardar</button>
@@ -127,7 +123,6 @@
                     </tr>
                     </thead>
                     @foreach($areasWeekly as $area )
-
                             <tbody>
                             <td>{{$area->designation}}</td>
                             <td>@foreach($clientSections as $clientSection)
@@ -137,13 +132,12 @@
                                 @endforeach
                             </td>
                             <td>@foreach($products as $product)
-                                    @if($area->idProduct==$product->id)
+                                    @if($area->productId==$product->id)
                                         <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
                                     @endif
                                 @endforeach</td>
-                            <td><input name="checkbox[]" type="checkbox" id="{{$area->designation}}" value='{"idArea":{{$area->id}},"idProduct":{{$area->idProduct}},"designation":"{{$area->designation}}","idCleaningFrequency":{{$area->idCleaningFrequency}}}'></td>
+                            <td><input name="checkbox[]" type="checkbox" id="{{$area->designation}}" value='{"idArea":{{$area->id}},"idProduct":{{$area->productId}},"designation":"{{$area->designation}}","idCleaningFrequency":2}'></td>
                             </tbody>
-
                     @endforeach
                 </table>
 
@@ -157,7 +151,6 @@
                     </tr>
                     </thead>
                     @foreach($equipWeekly as $equip )
-
                             <tbody>
                             <td>{{$equip->designation}}</td>
                             <td>@foreach($clientSections as $clientSection)
@@ -167,13 +160,12 @@
                                 @endforeach
                             </td>
                             <td>@foreach($products as $product)
-                                    @if($equip->idProduct==$product->id)
+                                    @if($equip->productId==$product->id)
                                         <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
                                     @endif
                                 @endforeach</td>
-                            <td><input name="checkbox[]" type="checkbox" id="{{$equip->designation}}" value='{"idEquipment":{{$equip->id}},"idProduct":{{$equip->idProduct}},"designation":"{{$equip->designation}}","idCleaningFrequency":{{$equip->idCleaningFrequency}}}'></td>
+                            <td><input name="checkbox[]" type="checkbox" id="{{$equip->designation}}" value='{"idEquipment":{{$equip->id}},"idProduct":{{$equip->productId}},"designation":"{{$equip->designation}}","idCleaningFrequency":2}'></td>
                             </tbody>
-
                     @endforeach
                 </table>
                 <button id="savePersolize" class="btn-recordHygiene" onclick="saveRecordHygiene()" {{--onclick="saveEachPersonalize()"--}}>Guardar</button>
@@ -189,7 +181,6 @@
                     </tr>
                     </thead>
                     @foreach($areasBiweekly as $area )
-
                             <tbody>
                             <td>{{$area->designation}}</td>
                             <td>@foreach($clientSections as $clientSection)
@@ -199,13 +190,12 @@
                                 @endforeach
                             </td>
                             <td>@foreach($products as $product)
-                                    @if($area->idProduct==$product->id)
+                                    @if($area->productId==$product->id)
                                         <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
                                     @endif
                                 @endforeach</td>
-                            <td><input name="checkbox[]" type="checkbox" id="{{$area->designation}}" value='{"idArea":{{$area->id}},"idProduct":{{$area->idProduct}},"designation":"{{$area->designation}}","idCleaningFrequency":{{$area->idCleaningFrequency}}}'></td>
+                            <td><input name="checkbox[]" type="checkbox" id="{{$area->designation}}" value='{"idArea":{{$area->id}},"idProduct":{{$area->productId}},"designation":"{{$area->designation}}","idCleaningFrequency":3}'></td>
                             </tbody>
-
                     @endforeach
                 </table>
 
@@ -219,7 +209,6 @@
                     </tr>
                     </thead>
                     @foreach($equipBiweekly as $equip )
-
                             <tbody>
                             <td>{{$equip->designation}}</td>
                             <td>@foreach($clientSections as $clientSection)
@@ -229,13 +218,12 @@
                                 @endforeach
                             </td>
                             <td>@foreach($products as $product)
-                                    @if($equip->idProduct==$product->id)
+                                    @if($equip->productId==$product->id)
                                         <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
                                     @endif
                                 @endforeach</td>
-                            <td><input name="checkbox[]" type="checkbox" id="{{$equip->designation}}" value='{"idEquipment":{{$equip->id}},"idProduct":{{$equip->idProduct}},"designation":"{{$equip->designation}}","idCleaningFrequency":{{$equip->idCleaningFrequency}}}'></td>
+                            <td><input name="checkbox[]" type="checkbox" id="{{$equip->designation}}" value='{"idEquipment":{{$equip->id}},"idProduct":{{$equip->productId}},"designation":"{{$equip->designation}}","idCleaningFrequency":3}'></td>
                             </tbody>
-
                     @endforeach
                 </table>
                 <button id="savePersolize" class="btn-recordHygiene" onclick="saveRecordHygiene()" {{--onclick="saveEachPersonalize()"--}}>Guardar</button>
@@ -251,7 +239,6 @@
                     </tr>
                     </thead>
                     @foreach($areasMonthly as $area )
-
                             <tbody>
                             <td>{{$area->designation}}</td>
                             <td>@foreach($clientSections as $clientSection)
@@ -261,13 +248,12 @@
                                 @endforeach
                             </td>
                             <td>@foreach($products as $product)
-                                    @if($area->idProduct==$product->id)
+                                    @if($area->productId==$product->id)
                                         <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
                                     @endif
                                 @endforeach</td>
-                            <td><input name="checkbox[]" type="checkbox" id="{{$area->designation}}" value='{"idArea":{{$area->id}},"idProduct":{{$area->idProduct}},"designation":"{{$area->designation}}","idCleaningFrequency":{{$area->idCleaningFrequency}}}'></td>
+                            <td><input name="checkbox[]" type="checkbox" id="{{$area->designation}}" value='{"idArea":{{$area->id}},"idProduct":{{$area->productId}},"designation":"{{$area->designation}}","idCleaningFrequency":4}'></td>
                             </tbody>
-
                     @endforeach
                 </table>
 
@@ -280,8 +266,7 @@
                         <th><input  onClick="checkBoxes(this)" type="checkbox" > Selecionar tudo</th>
                     </tr>
                     </thead>
-                    @foreach($equipMonthly as $equip )
-
+                    @foreach($equipMonthly as $equip)
                             <tbody>
                             <td>{{$equip->designation}}</td>
                             <td>@foreach($clientSections as $clientSection)
@@ -291,23 +276,18 @@
                                 @endforeach
                             </td>
                             <td>@foreach($products as $product)
-                                    @if($equip->idProduct==$product->id)
+                                    @if($equip->productId==$product->id)
                                         <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
                                     @endif
                                 @endforeach</td>
-                            <td><input name="checkbox[]" type="checkbox" id="{{$equip->designation}}" value='{"idEquipment":{{$equip->id}},"idProduct":{{$equip->idProduct}},"designation":"{{$equip->designation}}","idCleaningFrequency":{{$equip->idCleaningFrequency}}}'></td>
+                            <td><input name="checkbox[]" type="checkbox" id="{{$equip->designation}}" value='{"idEquipment":{{$equip->id}},"idProduct":{{$equip->productId}},"designation":"{{$equip->designation}}","idCleaningFrequency":4}'></td>
                             </tbody>
-
                     @endforeach
                 </table>
-                <button id="savePersolize" onclick="saveRecordHygiene()" class="btn-recordHygiene" {{--onclick="saveEachPersonalize()"--}}>Guardar</button>
+                <button id="savePersolize" onclick="saveRecordHygiene()" class="btn-recordHygiene" >Guardar</button>
             </div>
         <a class="btn-history"  href="/frontoffice/records/hygiene/history">Histórico</a>
     </div>
-           {{-- @else
-                <h2 class="text-center margin-top">Sem áreas e equipamentos registados. Nessário criar secções, áreas e equipamentos</h2>
-            @endif--}}
-
 
 <script>
     function openFrequency(evt, id) {
@@ -364,6 +344,5 @@
 
     }
 </script>
-
 
 @endsection
