@@ -86,8 +86,9 @@
     text-align: center;
     overflow: hidden;
     max-height: none;
-    font-size: 100%;
+    font-size:2rem;
 }
+
 
 .register-arc__info {
     background-color: #000;
