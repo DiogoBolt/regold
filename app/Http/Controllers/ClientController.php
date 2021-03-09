@@ -968,23 +968,28 @@ class ClientController extends Controller
     public function addReceipt(Request $request)
     {
         $inputs = $request->all();
+
         if($request->hasfile('receipt') and Customer::where('id',$inputs['client'])->first() != null)
         {
-            $receipt = new Receipt;
-            $receipt->client_id = $inputs['client'];
-            $receipt->name = date('Y-m-d');
-            $receipt->document_type_id = $inputs['type'];
-            $receipt->viewed = 0;
+            $files = $request->file('receipt');
 
-            $file = $request->file('receipt');
-            $extension = $file->getClientOriginalExtension(); // getting image extension
-            $filename = $file->getClientOriginalName().'.'.$extension;
-            $file->move('uploads/'.$inputs['client'].'/', $filename);
 
-            //TODO Envio de email
-            //dd($inputs['client']);
-            $receipt->file = $filename;
-            $receipt->save();
+            foreach ($files as $file){
+                $receipt = new Receipt;
+                $receipt->client_id = $inputs['client'];
+                $receipt->name = date('Y-m-d');
+                $receipt->document_type_id = $inputs['type'];
+                $receipt->viewed = 0;
+
+                $extension = $file->getClientOriginalExtension(); // getting image extension
+                $filename = $file->getClientOriginalName().'.'.$extension;
+                $file->move('uploads/'.$inputs['client'].'/', $filename);
+
+                //TODO Envio de email
+                //dd($inputs['client']);
+                $receipt->file = $filename;
+                $receipt->save();
+            }
 
             $clientUser = Customer::where('id',$inputs['client'])
             ->select([

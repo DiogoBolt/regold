@@ -102,8 +102,8 @@
                                 @endforeach
                         </select>
 
-                        <label for="{{$client->id}}" class="btn"><strong>Adicionar Documento</strong></label>
-                        <input id="{{$client->id}}" class="input-order" type="file" name="receipt">
+                        <label for="{{$client->id}}" class="btn" ><strong>Adicionar Documento</strong></label>
+                        <input id="{{$client->id}}" class="input-order" type="file" name="receipt[]" multiple>
 
                         <button class="btn" style="margin-top: 10px">Associar</button>
                     </form>
