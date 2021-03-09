@@ -458,7 +458,7 @@ class RecordsController extends Controller
             $recordsHygiene->idClient=$auxClientId;
             if(isset($checkbox->idArea)) $recordsHygiene->idArea=$checkbox->idArea; else $recordsHygiene->idArea=0;
             if(isset($checkbox->idEquipment)) $recordsHygiene->idEquipment=$checkbox->idEquipment; else $recordsHygiene->idEquipment=0;
-            $recordsHygiene->idProduct=$checkbox->idProduct;
+            $recordsHygiene->idProduct=$checkbox->productId;
             $recordsHygiene->designation=$checkbox->designation;
             $recordsHygiene->idCleaningFrequency=$checkbox->idCleaningFrequency;
             $recordsHygiene->checked=1;
