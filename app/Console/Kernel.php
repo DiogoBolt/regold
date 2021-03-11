@@ -5,6 +5,7 @@ namespace App\Console;
 use App\Console\Commands\alertTemperatures;
 use App\Console\Commands\createPrices;
 use App\Console\Commands\monthlyFee;
+use App\Console\Commands\productUpdate;
 use App\Console\Commands\UpdateTemperatures;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -20,6 +21,7 @@ class Kernel extends ConsoleKernel
         UpdateTemperatures::class,
         alertTemperatures::class,
         monthlyFee::class,
+        productUpdate::class,
         createPrices::class,
     ];
 
