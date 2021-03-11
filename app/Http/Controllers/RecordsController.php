@@ -227,7 +227,7 @@ class RecordsController extends Controller
 
         $products=Product::all();
 
-        $clientSections=ClientSection::where('active',1)->get();
+        $clientSections=ClientSection::where('id_client',$auxClientId)->where('active',1)->get();
 
         $ids = [];
 
@@ -259,8 +259,6 @@ class RecordsController extends Controller
                     $areaDaily->productId=$areaDaily->idProduct3;
                 }
             }
-
-
 
             $areasWeekly = AreaSectionClient::WhereDoesntHave('hygieneRecord',function ($query){
                 $query->where('created_at','>',Carbon::today()->subDay(7));
@@ -458,7 +456,7 @@ class RecordsController extends Controller
             $recordsHygiene->idClient=$auxClientId;
             if(isset($checkbox->idArea)) $recordsHygiene->idArea=$checkbox->idArea; else $recordsHygiene->idArea=0;
             if(isset($checkbox->idEquipment)) $recordsHygiene->idEquipment=$checkbox->idEquipment; else $recordsHygiene->idEquipment=0;
-            $recordsHygiene->idProduct=$checkbox->productId;
+            $recordsHygiene->idProduct=$checkbox->idProduct;
             $recordsHygiene->designation=$checkbox->designation;
             $recordsHygiene->idCleaningFrequency=$checkbox->idCleaningFrequency;
             $recordsHygiene->checked=1;
