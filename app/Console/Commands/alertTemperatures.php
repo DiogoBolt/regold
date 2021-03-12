@@ -63,6 +63,12 @@ class alertTemperatures extends Command
                         $message->text = "A sua Arca numero :" . $clientThermo->id . " do estabelecimento " . $client->name . " encontra-se fora da temperatura esperada!";
                         $message->save();
                     }
+                }else{
+                    $message = new Message();
+                    $message->sender_id = 0;
+                    $message->receiver_id = $clientThermo->user_id;
+                    $message->text = "A sua Arca numero :" . $clientThermo->id . " do estabelecimento " . $client->name . " encontra-se fora da temperatura esperada!";
+                    $message->save();
                 }
                 }
 
