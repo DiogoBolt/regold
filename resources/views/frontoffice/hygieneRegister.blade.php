@@ -60,7 +60,8 @@
                         <th>Área</th>
                         <th>Secção</th>
                         <th>Produto</th>
-                        <th><input onClick="checkBoxes(this)" type="Checkbox"> Selecionar tudo</th>
+                        <th>Obs</th>
+                        <th><input onClick="checkBoxes(this)" type="Checkbox"></th>
                     </tr>
                     </thead>
                     @foreach($areasDaily as $area )
@@ -76,7 +77,9 @@
                                     @if($area->productId==$product->id)
                                         <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
                                     @endif
-                                @endforeach</td>
+                                @endforeach
+                            </td>
+                            <td>{{$area->observation}}</td>
                             <td><input name="checkbox[]" type="checkbox" id="{{$area->designation}}" value='{"idArea":{{$area->id}},"idProduct":{{$area->productId}},"designation":"{{$area->designation}}","idCleaningFrequency":1}'></td>
                             </tbody>
                     @endforeach
@@ -87,7 +90,8 @@
                         <th>Equipamento</th>
                         <th>Secção</th>
                         <th>Produto</th>
-                        <th><input onClick="checkBoxes(this)" type="checkbox" > Selecionar tudo</th>
+                        <th>Obs</th>
+                        <th><input onClick="checkBoxes(this)" type="checkbox" ></th>
                     </tr>
                     </thead>
                     @foreach($equipDaily as $equip )
@@ -103,7 +107,9 @@
                                     @if($equip->productId==$product->id)
                                         <a href="/frontoffice/product/{{$product->id}}">{{$equip->idProduct}}{{$product->name}}</a>
                                     @endif
-                                @endforeach</td>
+                                @endforeach
+                            </td>
+                            <td>{{$equip->observation}}</td>
                             <td><input name="checkbox[]" type="checkbox" id="{{$equip->designation}}" value='{"idEquipment":{{$equip->id}},"idProduct":{{$equip->productId}},"designation":"{{$equip->designation}}","idCleaningFrequency":1}'></td>
                             </tbody>
                     @endforeach
@@ -119,7 +125,8 @@
                         <th>Área</th>
                         <th>Secção</th>
                         <th>Produto</th>
-                        <th><input  onClick="checkBoxes(this)" type="checkbox" > Selecionar tudo</th>
+                        <th>Obs</th>
+                        <th><input  onClick="checkBoxes(this)" type="checkbox" ></th>
                     </tr>
                     </thead>
                     @foreach($areasWeekly as $area )
@@ -135,7 +142,9 @@
                                     @if($area->productId==$product->id)
                                         <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
                                     @endif
-                                @endforeach</td>
+                                @endforeach
+                            </td>
+                            <td>{{$area->observation}}</td>
                             <td><input name="checkbox[]" type="checkbox" id="{{$area->designation}}" value='{"idArea":{{$area->id}},"idProduct":{{$area->productId}},"designation":"{{$area->designation}}","idCleaningFrequency":2}'></td>
                             </tbody>
                     @endforeach
@@ -147,7 +156,8 @@
                         <th>Equipamento</th>
                         <th>Secção</th>
                         <th>Produto</th>
-                        <th><input  onClick="checkBoxes(this)" type="checkbox"> Selecionar tudo</th>
+                        <th>Obs</th>
+                        <th><input  onClick="checkBoxes(this)" type="checkbox"></th>
                     </tr>
                     </thead>
                     @foreach($equipWeekly as $equip )
@@ -163,7 +173,9 @@
                                     @if($equip->productId==$product->id)
                                         <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
                                     @endif
-                                @endforeach</td>
+                                @endforeach
+                            </td>
+                            <td>{{$equip->observation}}</td>
                             <td><input name="checkbox[]" type="checkbox" id="{{$equip->designation}}" value='{"idEquipment":{{$equip->id}},"idProduct":{{$equip->productId}},"designation":"{{$equip->designation}}","idCleaningFrequency":2}'></td>
                             </tbody>
                     @endforeach
@@ -177,7 +189,8 @@
                         <th>Área</th>
                         <th>Secção</th>
                         <th>Produto</th>
-                        <th><input onClick="checkBoxes(this)" type="checkbox" > Selecionar tudo</th>
+                        <th>Obs</th>
+                        <th><input onClick="checkBoxes(this)" type="checkbox" ></th>
                     </tr>
                     </thead>
                     @foreach($areasBiweekly as $area )
@@ -193,7 +206,9 @@
                                     @if($area->productId==$product->id)
                                         <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
                                     @endif
-                                @endforeach</td>
+                                @endforeach
+                            </td>
+                            <td>{{$area->observation}}</td>
                             <td><input name="checkbox[]" type="checkbox" id="{{$area->designation}}" value='{"idArea":{{$area->id}},"idProduct":{{$area->productId}},"designation":"{{$area->designation}}","idCleaningFrequency":3}'></td>
                             </tbody>
                     @endforeach
@@ -205,7 +220,8 @@
                         <th>Equipamento</th>
                         <th>Secção</th>
                         <th>Produto</th>
-                        <th><input  onClick="checkBoxes(this)" type="checkbox" > Selecionar tudo</th>
+                        <th>Obs</th>
+                        <th><input  onClick="checkBoxes(this)" type="checkbox" ></th>
                     </tr>
                     </thead>
                     @foreach($equipBiweekly as $equip )
@@ -222,6 +238,7 @@
                                         <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
                                     @endif
                                 @endforeach</td>
+                            <td>{{$equip->observation}}</td>
                             <td><input name="checkbox[]" type="checkbox" id="{{$equip->designation}}" value='{"idEquipment":{{$equip->id}},"idProduct":{{$equip->productId}},"designation":"{{$equip->designation}}","idCleaningFrequency":3}'></td>
                             </tbody>
                     @endforeach
@@ -235,7 +252,8 @@
                         <th>Área</th>
                         <th>Secção</th>
                         <th>Produto</th>
-                        <th><input  onClick="checkBoxes(this)" type="checkbox"> Selecionar tudo</th>
+                        <th>Obs</th>
+                        <th><input  onClick="checkBoxes(this)" type="checkbox"></th>
                     </tr>
                     </thead>
                     @foreach($areasMonthly as $area )
@@ -252,6 +270,7 @@
                                         <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
                                     @endif
                                 @endforeach</td>
+                            <td>{{$area->observation}}</td>
                             <td><input name="checkbox[]" type="checkbox" id="{{$area->designation}}" value='{"idArea":{{$area->id}},"idProduct":{{$area->productId}},"designation":"{{$area->designation}}","idCleaningFrequency":4}'></td>
                             </tbody>
                     @endforeach
@@ -263,7 +282,8 @@
                         <th>Equipamento</th>
                         <th>Secção</th>
                         <th>Produto</th>
-                        <th><input  onClick="checkBoxes(this)" type="checkbox" > Selecionar tudo</th>
+                        <th>Obs</th>
+                        <th><input  onClick="checkBoxes(this)" type="checkbox" ></th>
                     </tr>
                     </thead>
                     @foreach($equipMonthly as $equip)
@@ -280,6 +300,7 @@
                                         <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
                                     @endif
                                 @endforeach</td>
+                            <td>{{$equip->observation}}</td>
                             <td><input name="checkbox[]" type="checkbox" id="{{$equip->designation}}" value='{"idEquipment":{{$equip->id}},"idProduct":{{$equip->productId}},"designation":"{{$equip->designation}}","idCleaningFrequency":4}'></td>
                             </tbody>
                     @endforeach

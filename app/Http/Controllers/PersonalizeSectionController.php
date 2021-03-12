@@ -209,7 +209,7 @@ class PersonalizeSectionController extends Controller
         $lastArea=AreaSectionClient::orderBy('id', 'desc')->take(1)->first()->id;
         $lastEquipment=EquipmentSectionClient::orderBy('id', 'desc')->take(1)->first()->id;
 
-        $otherSections=ClientSection::where('id_client',$auxClientId)->where('active',1)->where('id_section','!=',$id)->get();
+        $otherSections=ClientSection::where('id_client',$auxClientId)->where('active',1)->where('id','!=',$id)->get();
 
         foreach ($otherSections as $otherSection){
             $otherSection->allAreas = AreaSectionClient::where('idClient',$auxClientId)->where('idSection', $otherSection->id)->select(['designation','idProduct','idCleaningFrequency','idProduct2','idCleaningFrequency2','idProduct3','idCleaningFrequency3'])->get();
@@ -364,6 +364,33 @@ class PersonalizeSectionController extends Controller
         ])->get();
 
         return $cleaningFrequencys;
+    }
+
+    public function saveObs(Request $request){
+
+        $inputs = $request->all();
+
+        if($inputs['type2']=='a'){
+            $item=AreaSectionClient::where('id',$inputs['idItem2'])->first();
+            $item->observation=$inputs['obs'];
+            $item->save();
+        }
+        if($inputs['type2']=='e'){
+            $item=EquipmentSectionClient::where('id',$inputs['idItem2'])->first();
+            $item->observation=$inputs['obs'];
+            $item->save();
+        }
+    }
+    public function getObs($type,$id)
+    {
+        if($type == 'a'){
+            $obs = AreaSectionClient::where('id',$id)->first()->observation;
+        }
+        if($type == 'e'){
+            $obs = EquipmentSectionClient::where('id',$id)->first()->observation;
+        }
+
+        return $obs;
     }
 
 }

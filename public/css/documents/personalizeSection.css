@@ -243,8 +243,10 @@ h1.title {
 }
 
 #idDesignation{
-  display: inline-block;
+  display: block;
   height: 32px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .fa-trash{
@@ -351,9 +353,14 @@ product_12{
   user-select: none;
 }
 .prod{
+  width: 180px;
   font-size: small;
   padding: 4px 6px;
-  font-size-adjust: none;
+  align-items: flex-start ;
+}
+.clean{
+  padding: 4px 6px;
+  font-size: small;
 }
 
 

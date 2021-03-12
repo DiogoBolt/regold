@@ -92,6 +92,8 @@ Route::group(['middleware'=>['permissionStaff']],function(){
     Route::get('/frontoffice/personalizeAreasEquipments','PersonalizeSectionController@getAreasEquipments');
     Route::get('/frontoffice/personalizeAreasEquipments/personalizeEachSection/{id}','PersonalizeSectionController@personalizeEachSection');
     Route::post('/frontoffice/personalizeAreasEquipments/personalizeEachSection/save','PersonalizeSectionController@saveEachSection');
+    Route::post('/frontoffice/addObs','PersonalizeSectionController@saveObs');
+    Route::get('/frontoffice/getObs/{type}/{id}','PersonalizeSectionController@getObs');
 
 //routes novo relatorio
     Route::get('/frontoffice/newReport', 'ReportController@getReportCover');
