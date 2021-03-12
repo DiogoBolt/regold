@@ -11,6 +11,7 @@ use App\ThermoAverageTemperature;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class alertTemperatures extends Command
 {
@@ -62,6 +63,12 @@ class alertTemperatures extends Command
                         $message->receiver_id = $clientThermo->user_id;
                         $message->text = "A sua Arca numero :" . $clientThermo->id . " do estabelecimento " . $client->name . " encontra-se fora da temperatura esperada!";
                         $message->save();
+
+                        Mail::send('frontoffice.alertTemperatures', ['arca' => $clientThermo->id , 'estabelecimento' => $client->name], function ($m) use ($client) {
+                            $m->from('suporte@regolfood.pt', 'Temperatura fora do valor esperado');
+
+                            $m->to($client->email)->subject('Temperatura fora do valor esperado');
+                        });
                     }
                 }else{
                     $message = new Message();
@@ -69,6 +76,11 @@ class alertTemperatures extends Command
                     $message->receiver_id = $clientThermo->user_id;
                     $message->text = "A sua Arca numero :" . $clientThermo->id . " do estabelecimento " . $client->name . " encontra-se fora da temperatura esperada!";
                     $message->save();
+                    Mail::send('frontoffice.alertTemperatures', ['arca' => $clientThermo->id , 'estabelecimento' => $client->name], function ($m) use ($client) {
+                        $m->from('suporte@regolfood.pt', 'Temperatura fora do valor esperado');
+
+                        $m->to($client->email)->subject('Temperatura fora do valor esperado');
+                    });
                 }
                 }
 
