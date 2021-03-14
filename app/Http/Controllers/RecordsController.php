@@ -669,4 +669,16 @@ class RecordsController extends Controller
         return back();
     }
 
+    public function editThermoName(Request $request)
+    {
+        $inputs = $request->all();
+        $thermo = ClientThermo::where('id',$inputs['idThermo'])->first();
+
+        $thermo->number = $inputs['name'];
+        $thermo->save();
+
+        return back();
+
+    }
+
 }

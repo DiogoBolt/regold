@@ -73,7 +73,7 @@
                                 <span class="show-info" data-toggle="modal" data-target="#info-modal" onclick="showLastReads({{$thermo->id}})"><i class="glyphicon glyphicon-info-sign"></i></span>
                             </div>
                             <p>arca de refrigeração</p>
-                            <h1>{{$thermo->number}}</h1>
+                            <h1 onclick="showEditTemp({{$thermo->id}})">{{$thermo->number}}</h1>
                         </div>
                         <div class="register-arc__data">
                             <span>{{$thermo->fridgeType->min_temp}}º/c até {{$thermo->fridgeType->max_temp}}º/c</span>
@@ -114,7 +114,7 @@
                                 <span class="show-info" data-toggle="modal" data-target="#info-modal" onclick="showLastReads({{$thermo->id}})"><i class="glyphicon glyphicon-info-sign"></i></span>
                             </div>
                             <p>arca de congelação</p>
-                            <h1 class="term">{{$thermo->number}}</h1>
+                            <h1 class="term" onclick="showEditTemp({{$thermo->id}})">{{$thermo->number}}</h1>
                         </div>
                         <div class="register-arc__data">
                             <span>{{$thermo->fridgeType->min_temp}}º/c até {{$thermo->fridgeType->max_temp}}º/c</span>
@@ -157,7 +157,7 @@
                                     <span class="show-info" data-toggle="modal" data-target="#info-modal" onclick="showLastReads({{$thermo->id}})"><i class="glyphicon glyphicon-info-sign"></i></span>
                                 </div>
                                 <p>arca de refrigeração</p>
-                                <h1>{{$thermo->number}}</h1>
+                                <h1 onclick="showEditTemp({{$thermo->id}})">{{$thermo->number}}</h1>
                             </div>
                             <div class="register-arc__data">
                                 <span>{{$thermo->fridgeType->min_temp}}º/c até {{$thermo->fridgeType->max_temp}}º/c</span>
@@ -198,7 +198,7 @@
                                     <span class="show-info" data-toggle="modal" data-target="#info-modal" onclick="showLastReads({{$thermo->id}})"><i class="glyphicon glyphicon-info-sign"></i></span>
                                 </div>
                                 <p>arca de congelação</p>
-                                <h1>{{$thermo->number}}</h1>
+                                <h1 onclick="showEditTemp({{$thermo->id}})">{{$thermo->number}}</h1>
                             </div>
                             <div class="register-arc__data">
                                 <span>{{$thermo->fridgeType->min_temp}}º/c até {{$thermo->fridgeType->max_temp}}º/c</span>
@@ -306,11 +306,39 @@
         </div>
     </div>
 
+    <div id="modalName" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Editar Nome</h4>
+                </div>
+                <div class="modal-body" id="namemodal">
+                    <form action="/frontoffice/editthermosname" method="POST">
+                        {{ csrf_field() }}
+                        <input id="idThermoName" name="idThermo" type="hidden" value="">
+                        <input  name="name" class="form-control">
+                        <button type="submit" class="btn btn-primary">Editar</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 <script>
 
     function showEditTemp(id,time)
+    {
+        $('#modalName').modal('show');
+        $('#idThermoName').val(id);
+    }
+
+    function showEditName(id)
     {
         $('#myModal').modal('show');
         $('#dayTime').val(time) ;
