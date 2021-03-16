@@ -11,6 +11,7 @@ use App\ThermoAverageTemperature;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class alertTemperatures extends Command
 {
@@ -53,15 +54,36 @@ class alertTemperatures extends Command
             if($rounds == 4)
             {
                 $lastmessage = Message::where('receiver_id',$clientThermo->user_id)->orderBy('id','DESC')->first();
-                if($lastmessage->created_at < Carbon::now()->subHours(12))
+                if(isset($lastmessage))
                 {
+                    if($lastmessage->created_at < Carbon::now()->subHours(12))
+                    {
+                        $message = new Message();
+                        $message->sender_id = 0;
+                        $message->receiver_id = $clientThermo->user_id;
+                        $message->text = "A sua Arca numero :" . $clientThermo->id . " do estabelecimento " . $client->name . " encontra-se fora da temperatura esperada!";
+                        $message->save();
+
+                        Mail::send('frontoffice.alertTemperatures', ['arca' => $clientThermo->id , 'estabelecimento' => $client->name], function ($m) use ($client) {
+                            $m->from('suporte@regolfood.pt', 'Temperatura fora do valor esperado');
+
+                            $m->to($client->email)->subject('Temperatura fora do valor esperado');
+                        });
+                    }
+                }else{
                     $message = new Message();
                     $message->sender_id = 0;
                     $message->receiver_id = $clientThermo->user_id;
                     $message->text = "A sua Arca numero :" . $clientThermo->id . " do estabelecimento " . $client->name . " encontra-se fora da temperatura esperada!";
                     $message->save();
+                    Mail::send('frontoffice.alertTemperatures', ['arca' => $clientThermo->id , 'estabelecimento' => $client->name], function ($m) use ($client) {
+                        $m->from('suporte@regolfood.pt', 'Temperatura fora do valor esperado');
+
+                        $m->to($client->email)->subject('Temperatura fora do valor esperado');
+                    });
                 }
-            }
+                }
+
             if(Thermo::where('imei',$thermo->imei)->orderBy('id','DESC')->first()->created_at < Carbon::now()->subHours(1))
             {
                 $message = new Message();

@@ -160,6 +160,7 @@ Route::group(['middleware'=>['permissionStaff']],function(){
     Route::get('/frontoffice/records/temperatures/history/print','RecordsController@printReport');
     Route::get('/frontoffice/sendReportEmail/','RecordsController@sendRecordEmail');
     Route::any('/frontoffice/editthermosvalue','RecordsController@editThermoTemperature');
+    Route::any('/frontoffice/editthermosname','RecordsController@editThermoName');
     Route::get('/frontoffice/records/hygiene','RecordsController@getHygieneRecords');
     Route::get('/frontoffice/getlastreads/{id}', 'RecordsController@getLast5Temperatures');
 
