@@ -39,6 +39,7 @@
                                 <thead>
                                 <tr>
                                     <th>Área/Equipamento</th>
+                                    <th>Secção</th>
                                     <th>Dia</th>
                                     <th>Limpo</th>
                                 </tr>
@@ -47,6 +48,7 @@
                                     @foreach ($data as $item)
                                         <tr>
                                             <td>{{ $item->designation}}</td>
+                                            <td>{{ $item->section_designation }}</td>
                                             <td>{{ $item->day}}</td>
                                             <td>{{'Limpo'}}</td>
                                         </tr>

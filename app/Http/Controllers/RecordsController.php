@@ -499,6 +499,20 @@ class RecordsController extends Controller
             ->orderBy('idEquipment','asc')
             ->get();
 
+
+        foreach ($item as $i)
+        {
+            if($i->idArea == 0)
+            {
+                $e = EquipmentSectionClient::where('id',$i->idEquipment)->first()->idSection;
+                $i->section_designation = ClientSection::where('id',$e)->first()->designation;
+            }
+            if($i->idEquipment == 0){
+                $a = AreaSectionClient::where('id',$i->idArea)->first()->idSection;
+                $i->section_designation = ClientSection::where('id',$a)->first()->designation;
+            }
+        }
+
         return response()->json($item);
     }
 
