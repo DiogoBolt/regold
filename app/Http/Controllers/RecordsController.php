@@ -525,7 +525,6 @@ class RecordsController extends Controller
                 ->pluck('userType')->first();
         }
 
-
         $clientThermos = ClientThermo::query()->where('user_id', Session::get('establismentID'))->get();
 
         foreach ($clientThermos as $clientthermo) {
@@ -644,25 +643,25 @@ class RecordsController extends Controller
         {
             if(isset($average))
             {
-                $average->morning_temp = $inputs['valor'];
+                $average->morning_temp = str_replace(',','.',$inputs['valor']);
                 $average->save();
             }else{
                 $average = new ThermoAverageTemperature;
                 $average->client_thermo = $thermo->id;
                 $average->user_id = Auth::user()->client_id;
-                $average->morning_temp = $inputs['valor'];
+                $average->morning_temp = str_replace(',','.',$inputs['valor']);
                 $average->save();
             }
         }else{
             if(isset($average))
             {
-                $average->afternoon_temp = $inputs['valor'];
+                $average->afternoon_temp = str_replace(',','.',$inputs['valor']);
                 $average->save();
             }else{
                 $average = new ThermoAverageTemperature;
                 $average->client_thermo = $thermo->id;
                 $average->user_id = Auth::user()->client_id;
-                $average->afternoon_temp = $inputs['valor'];
+                $average->afternoon_temp = str_replace(',','.',$inputs['valor']);
                 $average->save();
             }
         }

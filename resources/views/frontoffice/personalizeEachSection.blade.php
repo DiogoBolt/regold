@@ -230,8 +230,7 @@
                             <div id="allNewsAreas">
                                 <div class="news" id="oneNew">
                                     <input type="text" id="idDesignation" name="designation" placeholder="Designação">
-                                    <div>
-                                    <select class="prod" id="product" >
+                                    <select class="prod" id="product" style="width: 50%">
                                         <option value="" disabled selected>Produto</option>
                                         @foreach($products as $product)
                                             <option value="{{$product->id}}">{{$product->name}}</option>
@@ -243,9 +242,7 @@
                                             <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>
                                         @endforeach
                                     </select>
-                                    </div>
-                                    <div>
-                                    <select class="prod" id="product2" >
+                                    <select class="prod" id="product2" style="width: 50%">
                                         <option value="" disabled selected>Produto</option>
                                         @foreach($products as $product)
                                             <option value="{{$product->id}}">{{$product->name}}</option>
@@ -257,9 +254,7 @@
                                             <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>
                                         @endforeach
                                     </select>
-                                    </div>
-                                    <div>
-                                    <select class="prod" id="product3" >
+                                    <select class="prod" id="product3" style="width: 50%">
                                         <option value="" disabled selected>Produto</option>
                                         @foreach($products as $product)
                                             <option value="{{$product->id}}">{{$product->name}}</option>
@@ -271,7 +266,6 @@
                                             <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>
                                         @endforeach
                                     </select>
-                                    </div>
                                     <i class="fa fa-tazer rash fa-lg" style="display:none" onclick="deleteNewSection(parentNode)"></i>
                                 </div>
                             </div>
@@ -496,8 +490,7 @@
                             <div id="allNewsEquipments">
                                 <div class="newsE" id="oneNew">
                                     <input type="text" id="idDesignation" name="designation" placeholder="Designação">
-                                    <div>
-                                    <select class="prod" id="product">
+                                    <select class="prod" id="product" style="width: 50%">
                                         <option value="" disabled selected>Produto</option>
                                         @foreach($products as $product)
                                             <option value="{{$product->id}}">{{$product->name}}</option>
@@ -509,9 +502,7 @@
                                             <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>
                                         @endforeach
                                     </select>
-                                    </div>
-                                    <div>
-                                    <select class="prod" id="product2">
+                                    <select class="prod" id="product2" style="width: 50%">
                                         <option value="" disabled selected>Produto</option>
                                         @foreach($products as $product)
                                             <option value="{{$product->id}}">{{$product->name}}</option>
@@ -523,9 +514,7 @@
                                             <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>
                                         @endforeach
                                     </select>
-                                    </div>
-                                    <div>
-                                    <select class="prod" id="product3">
+                                    <select class="prod" id="product3" style="width: 50%">
                                         <option value="" disabled selected>Produto</option>
                                         @foreach($products as $product)
                                             <option value="{{$product->id}}">{{$product->name}}</option>
@@ -537,7 +526,6 @@
                                             <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>
                                         @endforeach
                                     </select>
-                                    </div>
                                     <i class="fa fa-trash fa-lg" style="display:none" onclick="deleteNewSection(parentNode)"></i>
                                 </div>
                             </div>
@@ -590,7 +578,6 @@
                     <h4 class="modal-title">Observações</h4>
                 </div>
                 <div id="obsShow">
-
                 </div>
                 <div class="modal-body" id="infomodal2">
                     <input id="type2" name="type2" type="hidden" value="">
@@ -616,8 +603,8 @@
         var idItem2 = $('#idItem2').val(id);
 
         $.get('/frontoffice/getObs/'+type+'/'+id, function( data ) {
-            console.log(data)
-           $('#obsShow').append(data);
+           $('#obsShow').html('');
+           $('#obsShow').append('Observação: ' +data);
         });
     }
 

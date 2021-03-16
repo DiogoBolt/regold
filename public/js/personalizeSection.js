@@ -157,13 +157,8 @@ function addAreasTable(){
         var cleaningFrequencyAux2=div[i].children[4].selectedIndex;
         var productAux3=div[i].children[5].selectedIndex;
         var cleaningFrequencyAux3=div[i].children[6].selectedIndex;
-       // var productId=div[i].children[1].options[productAux].value;
-
-
-        //var cleaningFrequencyID=div[i].children[2].options[cleaningFrequencyAux].value;
 
         var row = document.getElementsByClassName("tableRowArea")[0];
-        //var aux=  document.getElementById("areasTable").getElementsByTagName('tbody').length;
         var table = document.getElementById("areasTable").getElementsByTagName('tbody')[1];  
  
         var clone = row.cloneNode(true);
@@ -271,12 +266,8 @@ function addEquipmentTable(){
         var productAux3=div[i].children[5].selectedIndex;
         var cleaningFrequencyAux3=div[i].children[6].selectedIndex;
 
-       // var productId=div[i].children[1].options[productAux].value;
-
-        //var cleaningFrequencyID=div[i].children[2].options[cleaningFrequencyAux].value;
         var row = document.getElementsByClassName("tableRowEquipment")[0];
 
-        //var aux=  document.getElementById("areasTable").getElementsByTagName('tbody').length;
         var table = document.getElementById("equipmentTable").getElementsByTagName('tbody')[1];  
  
         var clone = row.cloneNode(true);
