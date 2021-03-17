@@ -52,7 +52,7 @@
                     </td>
                     <td>
                         <select class="prod" id="product" style="width: 180px">
-                            <option value="" disabled>Produto</option>
+                            <option value="">Produto</option>
                             @foreach($products as $product)
                                 <option value="{{$product->id}}">{{$product->name}}</option>
                             @endforeach
@@ -60,7 +60,7 @@
                     </td>
                     <td>
                         <select class="clean" id="cleaning" >
-                            <option value="" disabled>Limpeza</option>
+                            <option value="">Limpeza</option>
                             @foreach($cleaningFrequencys as $cleaningFrequency)
                                 <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>
                             @endforeach
@@ -68,7 +68,7 @@
                     </td>
                     <td>
                         <select class="prod" id="product2" style="width: 180px">
-                            <option value="" disabled>Produto</option>
+                            <option value="">Produto</option>
                             @foreach($products as $product)
                                 <option value="{{$product->id}}">{{$product->name}}</option>
                             @endforeach
@@ -76,7 +76,7 @@
                     </td>
                     <td>
                         <select class="clean" id="cleaning2">
-                            <option value="" disabled>Limpeza</option>
+                            <option value="">Limpeza</option>
                             @foreach($cleaningFrequencys as $cleaningFrequency)
                                 <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>
                             @endforeach
@@ -84,7 +84,7 @@
                     </td>
                     <td>
                         <select class="prod" id="product3" style="width: 180px">
-                            <option value="" disabled>Produto</option>
+                            <option value="">Produto</option>
                             @foreach($products as $product)
                                 <option value="{{$product->id}}">{{$product->name}}</option>
                             @endforeach
@@ -92,7 +92,7 @@
                     </td>
                     <td>
                         <select class="clean" id="cleaning3">
-                            <option value="" disabled>Limpeza</option>
+                            <option value="">Limpeza</option>
                             @foreach($cleaningFrequencys as $cleaningFrequency)
                                 <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>
                             @endforeach
@@ -112,10 +112,7 @@
                         </td>
                         <td>
                             <select class="prod" id="product" style="width: 180px">
-                                <option value="" disabled>Produto</option>
-                                @if($area->idProduct == 0)
-                                    <option value="0" selected>Produto</option>
-                                @endif
+                                <option value="">Produto</option>
                                 @foreach($products as $product)
                                     @if($area->idProduct == $product->id)
                                         <option value="{{$product->id}}" selected>{{$product->name}}</option>
@@ -127,10 +124,7 @@
                         </td>
                         <td>
                             <select class="clean" id="cleaning">
-                                <option value="" disabled>Limpeza</option>
-                                @if($area->idCleaningFrequency == 0)
-                                    <option value="0" selected>Limpeza</option>
-                                @endif
+                                <option value="" >Limpeza</option>
                                 @foreach($cleaningFrequencys as $cleaningFrequency)
                                     @if($area->idCleaningFrequency == $cleaningFrequency->id)
                                         <option value="{{$cleaningFrequency->id}}" selected>{{$cleaningFrequency->designation}}</option>
@@ -142,10 +136,7 @@
                         </td>
                         <td>
                             <select class="prod" id="product2" style="width: 180px">
-                                <option value="" disabled>Produto</option>
-                                @if($area->idProduct2 == 0)
-                                    <option value="0" selected>Produto</option>
-                                @endif
+                                <option value="">Produto</option>
                                 @foreach($products as $product)
                                     @if($area->idProduct2 == $product->id)
                                         <option value="{{$product->id}}" selected>{{$product->name}}</option>
@@ -157,10 +148,7 @@
                         </td>
                         <td>
                             <select class="clean" id="cleaning2">
-                                <option value="" disabled>Limpeza</option>
-                                @if($area->idCleaningFrequency2 == 0)
-                                    <option value="0" selected>Limpeza</option>
-                                @endif
+                                <option value="" >Limpeza</option>
                                 @foreach($cleaningFrequencys as $cleaningFrequency)
                                     @if($area->idCleaningFrequency2 == $cleaningFrequency->id)
                                         <option value="{{$cleaningFrequency->id}}" selected>{{$cleaningFrequency->designation}}</option>
@@ -172,12 +160,8 @@
                         </td>
                         <td>
                             <select class="prod" id="product3" style="width: 180px">
-                                <option value="" disabled>Produto</option>
-                                @if($area->idProduct3 == 0)
-                                    <option value="0" selected>Produto</option>
-                                @endif
+                                <option value="" >Produto</option>
                                 @foreach($products as $product)
-
                                     @if($area->idProduct3 == $product->id)
                                         <option value="{{$product->id}}" selected>{{$product->name}}</option>
                                     @else
@@ -188,10 +172,7 @@
                         </td>
                         <td>
                             <select class="clean" id="cleaning3">
-                                <option value="" disabled>Limpeza</option>
-                                @if($area->idCleaningFrequency3 == 0)
-                                    <option value="0" selected>Limpeza</option>
-                                @endif
+                                <option value="" >Limpeza</option>
                                 @foreach($cleaningFrequencys as $cleaningFrequency)
                                     @if($area->idCleaningFrequency3 == $cleaningFrequency->id)
                                         <option value="{{$cleaningFrequency->id}}" selected>{{$cleaningFrequency->designation}}</option>
@@ -231,37 +212,37 @@
                                 <div class="news" id="oneNew">
                                     <input type="text" id="idDesignation" name="designation" placeholder="Designação">
                                     <select class="prod" id="product" style="width: 50%">
-                                        <option value="" disabled selected>Produto</option>
+                                        <option value="" selected>Produto</option>
                                         @foreach($products as $product)
                                             <option value="{{$product->id}}">{{$product->name}}</option>
                                         @endforeach
                                     </select>
                                     <select class="clean" id="cleaning">
-                                        <option value="" disabled selected>Limpeza</option>
+                                        <option value="" selected>Limpeza</option>
                                         @foreach($cleaningFrequencys as $cleaningFrequency)
                                             <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>
                                         @endforeach
                                     </select>
                                     <select class="prod" id="product2" style="width: 50%">
-                                        <option value="" disabled selected>Produto</option>
+                                        <option value="" selected>Produto</option>
                                         @foreach($products as $product)
                                             <option value="{{$product->id}}">{{$product->name}}</option>
                                         @endforeach
                                     </select>
                                     <select class="clean" id="cleaning2">
-                                        <option value="" disabled selected>Limpeza</option>
+                                        <option value="" selected>Limpeza</option>
                                         @foreach($cleaningFrequencys as $cleaningFrequency)
                                             <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>
                                         @endforeach
                                     </select>
                                     <select class="prod" id="product3" style="width: 50%">
-                                        <option value="" disabled selected>Produto</option>
+                                        <option value="" selected>Produto</option>
                                         @foreach($products as $product)
                                             <option value="{{$product->id}}">{{$product->name}}</option>
                                         @endforeach
                                     </select>
                                     <select class="clean" id="cleaning3">
-                                        <option value="" disabled selected>Limpeza</option>
+                                        <option value="" selected>Limpeza</option>
                                         @foreach($cleaningFrequencys as $cleaningFrequency)
                                             <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>
                                         @endforeach
@@ -309,7 +290,7 @@
                     </td>
                     <td>
                         <select class="prod" id="product" style="width: 180px">
-                            <option value="" disabled>Produto</option>
+                            <option value="">Produto</option>
                             @foreach($products as $product)
                                 <option value="{{$product->id}}">{{$product->name}}</option>
                             @endforeach
@@ -317,7 +298,7 @@
                     </td>
                     <td>
                         <select class="clean" id="cleaning">
-                            <option value="" disabled>Limpeza</option>
+                            <option value="">Limpeza</option>
                             @foreach($cleaningFrequencys as $cleaningFrequency)
                                 <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>
                             @endforeach
@@ -325,7 +306,7 @@
                     </td>
                     <td>
                         <select class="prod" id="product2" style="width: 180px">
-                            <option value="" disabled>Produto</option>
+                            <option value="">Produto</option>
                             @foreach($products as $product)
                                 <option value="{{$product->id}}">{{$product->name}}</option>
                             @endforeach
@@ -333,7 +314,7 @@
                     </td>
                     <td>
                         <select class="clean" id="cleaning2">
-                            <option value="" disabled>Limpeza</option>
+                            <option value="">Limpeza</option>
                             @foreach($cleaningFrequencys as $cleaningFrequency)
                                 <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>
                             @endforeach
@@ -341,7 +322,7 @@
                     </td>
                     <td>
                         <select class="prod" id="product3" style="width: 180px">
-                            <option value="" disabled>Produto</option>
+                            <option value="">Produto</option>
                             @foreach($products as $product)
                                 <option value="{{$product->id}}">{{$product->name}}</option>
                             @endforeach
@@ -349,7 +330,7 @@
                     </td>
                     <td>
                         <select class="clean" id="cleaning3">
-                            <option value="" disabled>Limpeza</option>
+                            <option value="">Limpeza</option>
                             @foreach($cleaningFrequencys as $cleaningFrequency)
                                 <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>
                             @endforeach
@@ -369,10 +350,7 @@
                         </td>
                         <td>
                             <select class="prod" id="product">
-                                <option value="" disabled>Produto</option>
-                                @if($equipment->idProduct == 0)
-                                    <option value="0" selected>Produto</option>
-                                @endif
+                                <option value="">Produto</option>
                                 @foreach($products as $product)
                                     @if($equipment->idProduct == $product->id)
                                         <option value="{{$product->id}}" selected>{{$product->name}}</option>
@@ -384,10 +362,7 @@
                         </td>
                         <td>
                             <select class="clean" id="cleaning" >
-                                <option value="" disabled>Limpeza</option>
-                                @if($equipment->idCleaningFrequency == 0)
-                                    <option value="0" selected>Limpeza</option>
-                                @endif
+                                <option value="">Limpeza</option>
                                 @foreach($cleaningFrequencys as $cleaningFrequency)
                                     @if($equipment->idCleaningFrequency == $cleaningFrequency->id)
                                         <option value="{{$cleaningFrequency->id}}" selected>{{$cleaningFrequency->designation}}</option>
@@ -399,10 +374,7 @@
                         </td>
                         <td>
                             <select class="prod" id="product2">
-                                <option value="" disabled>Produto</option>
-                                @if($equipment->idProduct2 == 0)
-                                    <option value="0" selected>Produto</option>
-                                @endif
+                                <option value="">Produto</option>
                                 @foreach($products as $product)
                                     @if($equipment->idProduct2 == $product->id)
                                         <option value="{{$product->id}}" selected>{{$product->name}}</option>
@@ -414,10 +386,7 @@
                         </td>
                         <td>
                             <select class="clean" id="cleaning" >
-                                <option value="" disabled>Limpeza</option>
-                                @if($equipment->idCleaningFrequency2 == 0)
-                                    <option value="0" selected>Limpeza</option>
-                                @endif
+                                <option value="">Limpeza</option>
                                 @foreach($cleaningFrequencys as $cleaningFrequency)
                                     @if($equipment->idCleaningFrequency2 == $cleaningFrequency->id)
                                         <option value="{{$cleaningFrequency->id}}" selected>{{$cleaningFrequency->designation}}</option>
@@ -429,10 +398,7 @@
                         </td>
                         <td>
                             <select class="prod" id="product3" >
-                                <option value="" disabled>Produto</option>
-                                @if($equipment->idProduct3 == 0)
-                                    <option value="0" selected>Produto</option>
-                                @endif
+                                <option value="">Produto</option>
                                 @foreach($products as $product)
                                     @if($equipment->idProduct3 == $product->id)
                                         <option value="{{$product->id}}" selected>{{$product->name}}</option>
@@ -444,10 +410,7 @@
                         </td>
                         <td>
                             <select class="clean" id="cleaning" >
-                                <option value="" disabled>Limpeza</option>
-                                @if($equipment->idCleaningFrequency3 == 0)
-                                    <option value="0" selected>Limpeza</option>
-                                @endif
+                                <option value="">Limpeza</option>
                                 @foreach($cleaningFrequencys as $cleaningFrequency)
                                     @if($equipment->idCleaningFrequency3 == $cleaningFrequency->id)
                                         <option value="{{$cleaningFrequency->id}}" selected>{{$cleaningFrequency->designation}}</option>
@@ -491,37 +454,37 @@
                                 <div class="newsE" id="oneNew">
                                     <input type="text" id="idDesignation" name="designation" placeholder="Designação">
                                     <select class="prod" id="product" style="width: 50%">
-                                        <option value="" disabled selected>Produto</option>
+                                        <option value="" selected>Produto</option>
                                         @foreach($products as $product)
                                             <option value="{{$product->id}}">{{$product->name}}</option>
                                         @endforeach
                                     </select>
                                     <select class="clean" id="cleaning">
-                                        <option value="" disabled selected>Limpeza</option>
+                                        <option value="" selected>Limpeza</option>
                                         @foreach($cleaningFrequencys as $cleaningFrequency)
                                             <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>
                                         @endforeach
                                     </select>
                                     <select class="prod" id="product2" style="width: 50%">
-                                        <option value="" disabled selected>Produto</option>
+                                        <option value="" selected>Produto</option>
                                         @foreach($products as $product)
                                             <option value="{{$product->id}}">{{$product->name}}</option>
                                         @endforeach
                                     </select>
                                     <select class="clean" id="cleaning2">
-                                        <option value="" disabled selected>Limpeza</option>
+                                        <option value="" selected>Limpeza</option>
                                         @foreach($cleaningFrequencys as $cleaningFrequency)
                                             <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>
                                         @endforeach
                                     </select>
                                     <select class="prod" id="product3" style="width: 50%">
-                                        <option value="" disabled selected>Produto</option>
+                                        <option value="" selected>Produto</option>
                                         @foreach($products as $product)
                                             <option value="{{$product->id}}">{{$product->name}}</option>
                                         @endforeach
                                     </select>
                                     <select class="clean" id="cleaning3">
-                                        <option value="" disabled selected>Limpeza</option>
+                                        <option value="" selected>Limpeza</option>
                                         @foreach($cleaningFrequencys as $cleaningFrequency)
                                             <option value="{{$cleaningFrequency->id}}">{{$cleaningFrequency->designation}}</option>
                                         @endforeach

@@ -27,6 +27,11 @@ function showModal(idModal){
         $('.news')[0].children[0].value="";
         $('.news')[0].children[1].selectedIndex=0
         $('.news')[0].children[2].selectedIndex=0
+        $('.news')[0].children[3].selectedIndex=0
+        $('.news')[0].children[4].selectedIndex=0
+        $('.news')[0].children[5].selectedIndex=0
+        $('.news')[0].children[6].selectedIndex=0
+
     }else if(idModal=='addEquipment'){
 
         qtdDiv=$('#allNewsEquipments')[0].children.length;
@@ -38,6 +43,11 @@ function showModal(idModal){
         $('.newsE')[0].children[0].value="";
         $('.newsE')[0].children[1].selectedIndex=0
         $('.newsE')[0].children[2].selectedIndex=0
+        $('.newsE')[0].children[3].selectedIndex=0
+        $('.newsE')[0].children[4].selectedIndex=0
+        $('.newsE')[0].children[5].selectedIndex=0
+        $('.newsE')[0].children[6].selectedIndex=0
+
     }
         
     idClone=0;
@@ -175,7 +185,6 @@ function addAreasTable(){
 
         clone.children[8].childNodes[0].checked=true;
         clone.style = "display:true";
-
 
         table.appendChild(clone); // add new row to end of table
     }
