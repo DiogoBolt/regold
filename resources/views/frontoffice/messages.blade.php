@@ -26,30 +26,43 @@
         <span class="back-btn__back"><strong>Home</strong></span>
     </a>
 
+    <div class="dropdown">
+        <button onclick="myFunction()" class="dropbtn">Filtro</button>
+        <div id="myDropdown" class="dropdown-content">
+            <a onclick="filterMessage(1)">Todas</a>
+            <a onclick="filterMessage(2)">Não Lidas</a>
+            <a onclick="filterMessage(3)">Termómetros</a>
+            <a onclick="filterMessage(4)">Documentos</a>
+            <a onclick="filterMessage(5)">Encomendas</a>
+        </div>
+    </div>
+
+
     <div class="container">
         <div id="messages-container" class="box-body">
             @foreach($messages as $item)
-
-                <div class="row msg {{$item->name}} 
+                <div id= "{{$item->id}}" class="row msg {{$item->name}}
                     {{$item->viewed === 1 ? 'viewed' : 'not-viewed'}}"
                     data-item="{{ $item }}"
                     data-toggle="modal" data-target="#messageModal">
 
-                    <div class="msg-img">
-                        <img src="/img/message.png" />
+                    @if($item->viewed == 1)
+                    <div  class="msg-img">
+                        <img  src="/img/message.png" />
                     </div>
+                    @else
+                        <div class="msg-img">
+                            <img id="img{{$item->id}}" src="/img/message_unread.png" />
+                        </div>
+                    @endif
                     <div class="msg-info">
                         <div class="msg-title"><strong>{{$item->created_at}}</strong><span></span></div>
                         <div class="msg-body">{{$item->text}}</div>
                     </div>
-
                 </div>
             @endforeach
-
             <i class="row msg" aria-hidden="true" style="background-color: transparent;box-shadow: none;"></i>
-                
         </div>
-
     </div>
 
      <!-- Modal -->
@@ -79,20 +92,96 @@
        
         $('#messageModal').on('show.bs.modal', function (event) {
             let item = $(event.relatedTarget); 
-            let data = item.data('item'); 
-            
+            let data = item.data('item');
+
             $(this).find('.modal-title').text(data.created_at);
             $(this).find('.modal-body').text(data.text);
 
             if(data.viewed === 0) {
                 $(this).find('.modal-header').addClass('not-viewed');
                 $(this).find('.modal-footer button').addClass('not-viewed');
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: 'POST',
+                    url: "/frontoffice/message/"+data.id,
+                })
+                $('#'+data.id).removeClass('row msg not-viewed').addClass('row msg viewed')
+                $('#img'+data.id).attr('src','/img/message.png')
             }
-
         });
 
     }, false);
 
-   
+    function filterMessage(type) {
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            type: 'GET',
+            url:'/frontoffice/messages/'+type,
+            async: false,
+        }).done(function (data) {
+            $('#messages-container').empty()
+
+            for(var i=0;i<data.length;i++ ){
+                if(data[i].viewed==0){
+                    $('#messages-container').append(`<div id= "${data[i].id}" class="row msg not-viewed"
+                    data-item="${data[i]}"
+                    data-toggle="modal" data-target="#messageModal">
+
+                    <div class="msg-img">
+                        <img id="img${data[i].id}" src="/img/message_unread.png" />
+                    </div>
+
+                    <div class="msg-info">
+                        <div class="msg-title"><strong>${data[i].created_at}</strong><span></span></div>
+                            <div class="msg-body">${data[i].text}</div>
+                        </div>
+                    </div>`)
+                }
+                else
+                {
+                    $('#messages-container').append(`<div id= "${data[i].id}" class="row msg viewed"
+                        data-item="${data[i]}"
+                        data-toggle="modal" data-target="#messageModal">
+
+                        <div  class="msg-img">
+                            <img  src="/img/message.png" />
+                        </div>
+
+                        <div class="msg-info">
+                            <div class="msg-title"><strong>${data[i].created_at}</strong><span></span></div>
+                                <div class="msg-body">${data[i].text}</div>
+                            </div>
+                        </div>`)
+                }
+            }
+        });
+    }
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    // Close the dropdown if the user clicks outside of it
+    window.onclick = function(event) {
+        if (!event.target.matches('.dropbtn')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
 
 </script>

@@ -522,16 +522,52 @@ class FrontofficeController extends Controller
     function messages()
     {
         $user = Auth::user();
+
         $messages = Message::where('receiver_id',$user->id)
+            ->where('viewed',0)
             ->orderBy('created_at', 'desc')
             ->get();
 
-        foreach($messages as $message)
+
+
+
+        /*foreach($messages as $message)
         {
             $message->viewed = 1;
             $message->save();
-        }
+        }*/
         return view('frontoffice.messages',compact('messages'));
+    }
+    function filterMessages($type){
+
+        $user = Auth::user();
+
+        if($type == 1){
+            $messages = Message::where('receiver_id',$user->id)
+                ->orderBy('created_at', 'desc')
+                ->get();
+        }elseif($type == 2){
+            $messages = Message::where('receiver_id',$user->id)
+                ->where('viewed',0)
+                ->orderBy('created_at', 'desc')
+                ->get();
+        }else{
+            $messages = Message::where('receiver_id',$user->id)
+                ->where('type',$type)
+                ->orderBy('created_at', 'desc')
+                ->get();
+        }
+
+       return $messages;
+
+    }
+
+    function readMessage($id){
+
+        $message=Message::where('id',$id)->first();
+        $message->viewed=1;
+        $message->save();
+
     }
 
     public function processCart(Request $request)
@@ -603,6 +639,7 @@ class FrontofficeController extends Controller
                     $message->sender_id = 1;
                     $message->receiver_id = $user->id;
                     $message->viewed = 0;
+                    $message->type = 5;
                     $message->save();
                     $order->total = $total;
                     $order->save();

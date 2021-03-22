@@ -177,8 +177,8 @@
                 /* Weird bug happening, had to send each property separately */
                 tableBody.innerHTML += `
                     <tr>
-                        <td>${data.designation} </td>
-                        <td>${data.section_designation} </td>
+                        <td>${data.designation}</td>
+                        <td>${data.section_designation}</td>
                         <td>${data.day}</td>
                         <td>${data.checked ? 'Limpo':'Não Limpo'}</td>
                     </tr>

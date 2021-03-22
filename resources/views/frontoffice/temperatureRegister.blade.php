@@ -73,7 +73,7 @@
                                 <span class="show-info" data-toggle="modal" data-target="#info-modal" onclick="showLastReads({{$thermo->id}})"><i class="glyphicon glyphicon-info-sign"></i></span>
                             </div>
                             <p>arca de refrigeração</p>
-                            <h1 onclick="showEditTemp({{$thermo->id}})">{{$thermo->number}}</h1>
+                            <h1 onclick="showEditName({{$thermo->id}})">{{$thermo->number}}</h1>
                         </div>
                         <div class="register-arc__data">
                             <span>{{$thermo->fridgeType->min_temp}}º/c até {{$thermo->fridgeType->max_temp}}º/c</span>
@@ -114,7 +114,7 @@
                                 <span class="show-info" data-toggle="modal" data-target="#info-modal" onclick="showLastReads({{$thermo->id}})"><i class="glyphicon glyphicon-info-sign"></i></span>
                             </div>
                             <p>arca de congelação</p>
-                            <h1 class="term" onclick="showEditTemp({{$thermo->id}})">{{$thermo->number}}</h1>
+                            <h1 class="term" onclick="showEditName({{$thermo->id}})">{{$thermo->number}}</h1>
                         </div>
                         <div class="register-arc__data">
                             <span>{{$thermo->fridgeType->min_temp}}º/c até {{$thermo->fridgeType->max_temp}}º/c</span>
@@ -157,7 +157,7 @@
                                     <span class="show-info" data-toggle="modal" data-target="#info-modal" onclick="showLastReads({{$thermo->id}})"><i class="glyphicon glyphicon-info-sign"></i></span>
                                 </div>
                                 <p>arca de refrigeração</p>
-                                <h1 onclick="showEditTemp({{$thermo->id}})">{{$thermo->number}}</h1>
+                                <h1 onclick="showEditName({{$thermo->id}})">{{$thermo->number}}</h1>
                             </div>
                             <div class="register-arc__data">
                                 <span>{{$thermo->fridgeType->min_temp}}º/c até {{$thermo->fridgeType->max_temp}}º/c</span>
@@ -295,7 +295,7 @@
                         {{ csrf_field() }}
                     <input id="dayTime" name="dayTime" type="hidden" value="">
                     <input id="idThermo" name="idThermo" type="hidden" value="">
-                    <input  name="valor" class="form-control">
+                    <input  name="valor"  class="form-control" required>
                     <button type="submit" class="btn btn-primary">Editar</button>
                     </form>
                 </div>
@@ -317,7 +317,7 @@
                     <form action="/frontoffice/editthermosname" method="POST">
                         {{ csrf_field() }}
                         <input id="idThermoName" name="idThermo" type="hidden" value="">
-                        <input  name="name" class="form-control">
+                        <input  name="name" class="form-control" required>
                         <button type="submit" class="btn btn-primary">Editar</button>
                     </form>
                 </div>
@@ -332,13 +332,14 @@
 
 <script>
 
-    function showEditTemp(id,time)
+    function showEditName(id)
     {
         $('#modalName').modal('show');
         $('#idThermoName').val(id);
     }
 
-    function showEditName(id)
+    
+    function showEditTemp(id,time)
     {
         $('#myModal').modal('show');
         $('#dayTime').val(time) ;

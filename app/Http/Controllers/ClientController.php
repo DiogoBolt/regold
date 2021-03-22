@@ -265,11 +265,11 @@ class ClientController extends Controller
     public function unreadMessages()
     {
         $user = Auth::user();
-        $auxClientId = Session::get('establismentID');
+       /* $auxClientId = Session::get('establismentID');
 
-        $client = Customer::where('id',$auxClientId)->first();
+        $client = Customer::where('id',$auxClientId)->first();*/
 
-        $messages = Message::where('receiver_id',$auxClientId)->where('viewed',0)->count();
+        $messages = Message::where('receiver_id',$user->id)->where('viewed',0)->count();
 
         return $messages;
     }
@@ -1001,6 +1001,7 @@ class ClientController extends Controller
             $message->sender_id = Auth::user()->id;
             $message->text = "Foi adicionado um documento à sua conta";
             $message->viewed = 0;
+            $message->type = 4;
             $message->save();
         }
         return back();

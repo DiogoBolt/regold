@@ -540,6 +540,7 @@ class ProductController extends Controller
         $message->sender_id = $user->id;
         $message->receiver_id = $clientUser->ownerID;
         $message->text = "A sua encomenda nº" . $order->id ." do estabelecimento " . $clientUser->name . " foi processada. Obrigado.";
+        $message->type = 5;
         $message->viewed = 0;
 
         $message->save();
@@ -588,6 +589,7 @@ class ProductController extends Controller
         $message->sender_id = $user->id;
         $message->receiver_id = $clientUser->ownerID;
         $message->text = "Pagamento da Encomenda nº" . $order->id ." do estabelecimento " . $clientUser->name . " recebida pelo vendedor " . $user->name . ". Obrigado.";
+        $message->type = 5;
         $message->viewed = 0;
 
         $message->save();
@@ -873,6 +875,7 @@ class ProductController extends Controller
         $message->sender_id = $user->id;
         $message->receiver_id = $clientUser->ownerID;
         $message->text = "Foi adicionado o recibo à sua encomenda nº" . $order->id . " do estabelecimento " . $clientUser->name . " . Obrigado.";
+        $message->type = 4;
         $message->viewed = 0;
 
         $message->save();

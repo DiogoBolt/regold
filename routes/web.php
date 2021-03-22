@@ -68,6 +68,9 @@ Route::group(['middleware'=>['permissionStaff']],function(){
     Route::get('/frontoffice/favorites/delete/{id}', 'FavoriteController@deleteFavorite');
     Route::get('/frontoffice/cart/delete/{id}', 'FrontofficeController@deleteLineFromCart');
     Route::get('/frontoffice/messages', 'FrontofficeController@messages');
+    Route::get('/frontoffice/messages/{type}', 'FrontofficeController@filterMessages');
+    Route::post('/frontoffice/message/{id}', 'FrontofficeController@readMessage');
+
     Route::get('/frontoffice/cartValue', 'FrontofficeController@cartValue');
     Route::get('/frontoffice/unreadMessages', 'ClientController@unreadMessages');
     Route::get('/frontoffice/invoices', 'FrontofficeController@invoices')->name('invoices');

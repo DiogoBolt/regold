@@ -62,6 +62,7 @@ class alertTemperatures extends Command
                         $message->sender_id = 0;
                         $message->receiver_id = $clientThermo->user_id;
                         $message->text = "A sua Arca numero :" . $clientThermo->id . " do estabelecimento " . $client->name . " encontra-se fora da temperatura esperada!";
+                        $message->type = 3;
                         $message->save();
 
                         Mail::send('frontoffice.alertTemperatures', ['arca' => $clientThermo->id , 'estabelecimento' => $client->name], function ($m) use ($client) {
@@ -75,6 +76,7 @@ class alertTemperatures extends Command
                     $message->sender_id = 0;
                     $message->receiver_id = $clientThermo->user_id;
                     $message->text = "A sua Arca numero :" . $clientThermo->id . " do estabelecimento " . $client->name . " encontra-se fora da temperatura esperada!";
+                    $message->type = 3;
                     $message->save();
                     Mail::send('frontoffice.alertTemperatures', ['arca' => $clientThermo->id , 'estabelecimento' => $client->name], function ($m) use ($client) {
                         $m->from('suporte@regolfood.pt', 'Temperatura fora do valor esperado');
@@ -90,6 +92,7 @@ class alertTemperatures extends Command
                 $message->sender_id = 0;
                 $message->receiver_id = $clientThermo->user_id;
                 $message->text = "O termómetro da arca  :" . $clientThermo->id . " do estabelecimento " .$client->name . " não está a responder.";
+                $message->type = 3;
                 $message->save();
             }
         }
