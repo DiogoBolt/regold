@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ClientThermo;
 use App\Customer;
 use App\DocumentType;
 use App\Group;
@@ -65,12 +66,16 @@ class HomeController extends Controller
         return 200;
     }
 
-    public function dbxprice()
+    public function thermoUpdate($imei)
     {
-        $client = new Client;
-        $res = $client->request('GET', 'https://www.marketwatch.com/investing/stock/dbx?mod=over_search');
-        $cenas = explode('session="after">',$res->getBody(),5);
-        return $cenas[1];
+        $thermo = ClientThermo::where('imei',$imei)->first();
+
+        if($thermo)
+        {
+            return $thermo->updateTimer;
+        }else{
+            return 0;
+        }
     }
 
 }

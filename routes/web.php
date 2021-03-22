@@ -27,7 +27,7 @@ Route::post('/api/confirm/', 'ApiController@confirmPayment');
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/duvidascovid', 'HomeController@duvidascovid')->name('covid');
-Route::get('/dbxprice', 'HomeController@dbxprice');
+Route::get('/thermoUpdate/{imei}', 'HomeController@thermoUpdate');
 
 Auth::routes(['register' => false]);
 
