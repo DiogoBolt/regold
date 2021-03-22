@@ -91,13 +91,14 @@
  
        
         $('#messageModal').on('show.bs.modal', function (event) {
-            let item = $(event.relatedTarget); 
-            let data = item.data('item');
 
+            let item = $(event.relatedTarget);
+            let data = item.data('item');
             $(this).find('.modal-title').text(data.created_at);
             $(this).find('.modal-body').text(data.text);
 
-            if(data.viewed === 0) {
+            console.log(data.viewed)
+            if(data.viewed == 0) {
                 $(this).find('.modal-header').addClass('not-viewed');
                 $(this).find('.modal-footer button').addClass('not-viewed');
                 $.ajaxSetup({
@@ -105,6 +106,7 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
+
                 $.ajax({
                     type: 'POST',
                     url: "/frontoffice/message/"+data.id,
@@ -133,8 +135,9 @@
 
             for(var i=0;i<data.length;i++ ){
                 if(data[i].viewed==0){
-                    $('#messages-container').append(`<div id= "${data[i].id}" class="row msg not-viewed"
-                    data-item="${data[i]}"
+                    $('#messages-container').append(`<div id= "${data[i].id}" class="row msg ${data[i].name}
+                    ${data[i].viewed === 1 ? 'viewed' : 'not-viewed'}"
+                    data-item='{"id":${data[i].id},"text":"${data[i].text}","created_at":"${data[i].created_at}","viewed":"${data[i].viewed}"}'
                     data-toggle="modal" data-target="#messageModal">
 
                     <div class="msg-img">
@@ -149,8 +152,9 @@
                 }
                 else
                 {
-                    $('#messages-container').append(`<div id= "${data[i].id}" class="row msg viewed"
-                        data-item="${data[i]}"
+                    $('#messages-container').append(`<div id= "${data[i].id}" class="row msg ${data[i].name}
+                    ${data[i].viewed === 1 ? 'viewed' : 'not-viewed'}"
+                        data-item='{"id":${data[i].id},"text":"${data[i].text}","created_at":"${data[i].created_at}","viewed":"${data[i].viewed}"}'
                         data-toggle="modal" data-target="#messageModal">
 
                         <div  class="msg-img">

@@ -528,14 +528,6 @@ class FrontofficeController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-
-
-
-        /*foreach($messages as $message)
-        {
-            $message->viewed = 1;
-            $message->save();
-        }*/
         return view('frontoffice.messages',compact('messages'));
     }
     function filterMessages($type){
@@ -559,7 +551,6 @@ class FrontofficeController extends Controller
         }
 
        return $messages;
-
     }
 
     function readMessage($id){
@@ -567,7 +558,6 @@ class FrontofficeController extends Controller
         $message=Message::where('id',$id)->first();
         $message->viewed=1;
         $message->save();
-
     }
 
     public function processCart(Request $request)
