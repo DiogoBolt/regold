@@ -29,7 +29,7 @@
     <div class="dropdown-filter">
         <button onclick="myFunction()" class="dropbtn-filter">Filtro</button>
         <div id="myDropdown" class="dropdown-filter-content">
-            <a onclick="filterMessage(1)">Todas</a>
+            <a onclick="filterMessage(1)">Caixa de Entrada</a>
             <a onclick="filterMessage(2)">Não Lidas</a>
             <a onclick="filterMessage(3)">Termómetros</a>
             <a onclick="filterMessage(4)">Documentos</a>
@@ -132,6 +132,20 @@
             async: false,
         }).done(function (data) {
             $('#messages-container').empty()
+
+            if(type==1)
+                $(".dropbtn-filter").text('Caixa de Entrada')
+            if(type==2)
+                $(".dropbtn-filter").text('Não lidas')
+            if(type==3)
+                $(".dropbtn-filter").text('Termómetros')
+            if(type==4)
+                $(".dropbtn-filter").text('Documentos')
+            if(type==5)
+                $(".dropbtn-filter").text('Encomendas')
+
+
+
 
             for(var i=0;i<data.length;i++ ){
                 if(data[i].viewed==0){
