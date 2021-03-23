@@ -26,9 +26,9 @@
         <span class="back-btn__back"><strong>Home</strong></span>
     </a>
 
-    <div class="dropdown">
-        <button onclick="myFunction()" class="dropbtn">Filtro</button>
-        <div id="myDropdown" class="dropdown-content">
+    <div class="dropdown-filter">
+        <button onclick="myFunction()" class="dropbtn-filter">Filtro</button>
+        <div id="myDropdown" class="dropdown-filter-content">
             <a onclick="filterMessage(1)">Todas</a>
             <a onclick="filterMessage(2)">Não Lidas</a>
             <a onclick="filterMessage(3)">Termómetros</a>
@@ -176,8 +176,8 @@
 
     // Close the dropdown if the user clicks outside of it
     window.onclick = function(event) {
-        if (!event.target.matches('.dropbtn')) {
-            var dropdowns = document.getElementsByClassName("dropdown-content");
+        if (!event.target.matches('.dropbtn-filter')) {
+            var dropdowns = document.getElementsByClassName("dropdown-filter-content");
             var i;
             for (i = 0; i < dropdowns.length; i++) {
                 var openDropdown = dropdowns[i];
