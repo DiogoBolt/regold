@@ -98,7 +98,6 @@
                     <thead>
                     <tr>
                         <th onclick="sortTable(0)">Área/Equipamento<i class="arrow up"></i></th>
-                        <th>Secção</th>
                         <th onclick="sortTable(1)">Dia<i class="arrow down"></i></th>
                         <th>Limpo</th>
                     </tr>
@@ -178,7 +177,6 @@
                 tableBody.innerHTML += `
                     <tr>
                         <td>${data.designation}</td>
-                        <td>${data.section_designation}</td>
                         <td>${data.day}</td>
                         <td>${data.checked ? 'Limpo':'Não Limpo'}</td>
                     </tr>

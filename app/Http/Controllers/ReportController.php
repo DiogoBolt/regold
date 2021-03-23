@@ -58,6 +58,7 @@ class ReportController extends Controller
         $auxClientId = Session::get('clientImpersonatedId');
         $auxTechnical = Session::get('impersonated');
 
+
         Session::forget('sectionsReport');
         /*Session::forget('reportId');*/
         Session::forget('lastReportId');
@@ -543,7 +544,7 @@ class ReportController extends Controller
 
             $report= new Report;
             $report->idClient=$auxClientId;
-            $report->id_tecnichal=$technicalInfo->userTypeID;
+            $report->id_tecnichal=$technicalInfo->id;
             $report->numberVisit=$visitNumber;
             $report->save();
             /*Session::put('reportId',$report->id);*/
@@ -595,8 +596,7 @@ class ReportController extends Controller
         $report = Report::where('id',$idReport)
         ->where('idClient',$auxClientId)->first();
 
-        $report->technicalName= User::where('userTypeID',$report->id_tecnichal)
-        ->where('userType',2)
+        $report->technicalName= User::where('id',$report->id_tecnichal)
         ->select(['name'])
         ->pluck('name')
         ->first();

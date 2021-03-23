@@ -144,9 +144,6 @@
             if(type==5)
                 $(".dropbtn-filter").text('Encomendas')
 
-
-
-
             for(var i=0;i<data.length;i++ ){
                 if(data[i].viewed==0){
                     $('#messages-container').append(`<div id= "${data[i].id}" class="row msg ${data[i].name}
