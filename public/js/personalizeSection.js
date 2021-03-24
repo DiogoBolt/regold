@@ -265,7 +265,6 @@ function addEquipmentTable(){
     for( var i=0; i< div.length; i++){
         var name=div[i].children[0].value;
         var lastEquipment=$('.equipment').last().attr('id');
-        console.log(lastEquipment)
         var chars = lastEquipment.slice(0, lastEquipment.search(/\d/));
         var numbs = parseInt(lastEquipment.replace(chars, ''))+1;
         var productAux=div[i].children[1].selectedIndex;
@@ -282,7 +281,7 @@ function addEquipmentTable(){
         var clone = row.cloneNode(true);
         clone.children[0].children[0].value=0;
         clone.children[0].children[1].innerHTML=name;
-        clone.children[0].children[1].id ='area'+numbs;
+        clone.children[0].children[1].id ='equipment'+numbs;
         clone.children[1].children[0].id = numbs;
         clone.children[2].childNodes[1].selectedIndex=productAux;
         clone.children[3].childNodes[1].selectedIndex=cleaningFrequencyAux;
