@@ -587,7 +587,7 @@ class ProductController extends Controller
         $message = new Message();
 
         $message->sender_id = $user->id;
-        $message->receiver_id = $clientUser->ownerID;
+        $message->receiver_id = $clientUser->id;
         $message->text = "Pagamento da Encomenda nº" . $order->id ." do estabelecimento " . $clientUser->name . " recebida pelo vendedor " . $user->name . ". Obrigado.";
         $message->type = 5;
         $message->viewed = 0;

@@ -638,7 +638,7 @@ class FrontofficeController extends Controller
                         $message->text = "O pagamento da compra nº" . $order->id . " do estabelecimento " . $client->name . " será efetuado no dia 30 do próximo mês";
                     }
                     $message->sender_id = 1;
-                    $message->receiver_id = $user->id;
+                    $message->receiver_id = $user->client_id;
                     $message->viewed = 0;
                     $message->type = 5;
                     $message->save();

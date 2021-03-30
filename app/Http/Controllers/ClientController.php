@@ -996,11 +996,11 @@ class ClientController extends Controller
 
             $clientUser = Customer::where('id',$inputs['client'])
             ->select([
-                'ownerID'
+                'id','ownerID'
             ])->first();
 
             $message = new Message();
-            $message->receiver_id = $clientUser->ownerID;
+            $message->receiver_id = $clientUser->id;
             $message->sender_id = Auth::user()->id;
             $message->text = "Foi adicionado um documento à sua conta";
             $message->viewed = 0;
