@@ -523,7 +523,7 @@ class FrontofficeController extends Controller
     {
         $user = Auth::user();
 
-        $messages = Message::where('receiver_id',$user->id)
+        $messages = Message::where('receiver_id',$user->client_id)
             ->where('viewed',0)
             ->orderBy('created_at', 'desc')
             ->get();
@@ -535,16 +535,27 @@ class FrontofficeController extends Controller
         $user = Auth::user();
 
         if($type == 1){
-            $messages = Message::where('receiver_id',$user->id)
+            $messages = Message::where('receiver_id',$user->client_id)
                 ->orderBy('created_at', 'desc')
                 ->get();
         }elseif($type == 2){
-            $messages = Message::where('receiver_id',$user->id)
+            $messages = Message::where('receiver_id',$user->client_id)
                 ->where('viewed',0)
                 ->orderBy('created_at', 'desc')
                 ->get();
+        }elseif($type == 3){
+            $messages = Message::where('receiver_id',$user->client_id)
+                ->where('type',$type)
+                ->orderBy('created_at', 'desc')
+                ->get();
+        }elseif ($type == 4)
+        {
+            $messages = Message::where('receiver_id',$user->client_id)
+                ->where('type',$type)
+                ->orderBy('created_at', 'desc')
+                ->get();
         }else{
-            $messages = Message::where('receiver_id',$user->id)
+            $messages = Message::where('receiver_id',$user->client_id)
                 ->where('type',$type)
                 ->orderBy('created_at', 'desc')
                 ->get();

@@ -76,6 +76,32 @@
                             </div>
 
                             <div class="form-group">
+                                Técnico HACCP: <select class="form-control" name="technicalhaccp" required>
+                                    <option  selected value="">Selecione o Técnico HACCP</option>
+                                    @foreach($technicalhaccp as $technical)
+                                        @if( $technical->id == Auth::user()->userTypeID )
+                                            <option selected value="{{$technical->id}}">{{$technical->name}}</option>
+                                        @else
+                                            <option value="{{$technical->id}}">{{$technical->name}}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                Técnico CP: <select class="form-control" name="technicalcp" required>
+                                    <option  selected value="">Selecione o Técnico CP</option>
+                                    @foreach($technicalcp as $technical)
+                                        @if( $technical->id == Auth::user()->userTypeID )
+                                            <option selected value="{{$technical->id}}">{{$technical->name}}</option>
+                                        @else
+                                            <option value="{{$technical->id}}">{{$technical->name}}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group">
                                 Nome Comercial:<input class="form-control" placeholder="Nome Comercial" name="name" required>
                             </div>
 
@@ -147,7 +173,9 @@
                                     Rua e número da porta<input class="form-control" placeholder="Morada de Entrega" name="invoiceAddress" id="invoiceAddress">
                                 </div>
                             </div>
+                        </div>
 
+                        <div class="col-sm-6">
                             <div id="EmailInvoice" class="form-group">
                                 Email Faturação: <input class="form-control" id="ReceiptEmail"  placeholder="Insira o E-mail de Faturação" type="email" name="invoiceEmail" >
                             </div>
@@ -159,9 +187,7 @@
                             <div class="form-group">
                                 Telefone: <input class="form-control" placeholder="9********/2********" type="tel" name="telephone" required>
                             </div>
-                        </div>
 
-                        <div class="col-sm-6">
                             <div id="packs" class="form-group" >
                                 Tipo de Pack:  <select class="form-control" name="packs" onchange="packType(this)" >
                                         <option disabled selected value="">Selecione o Tipo de Pack</option>

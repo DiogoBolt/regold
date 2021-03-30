@@ -571,7 +571,6 @@
         });
     }
 
-
     function saveObs(){
 
         var type2 = $('#type2').val();
@@ -589,5 +588,4 @@
             data:{type2: type2,idItem2:idItem2,obs:obs}
         }).done($('#myModalObs').modal('hide'));
     }
-
 </script>

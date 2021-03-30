@@ -435,7 +435,6 @@ class RecordsController extends Controller
                 }
             }
 
-
         $today = Carbon::now()->format('Y-m-d');
 
         return view('frontoffice.hygieneRegister', compact('today','clientSections','sections','areasMonthly','areasBiweekly','areasWeekly','areasDaily','equipDaily','equipWeekly','equipBiweekly','equipMonthly','products'));

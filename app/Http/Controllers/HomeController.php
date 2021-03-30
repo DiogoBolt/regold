@@ -62,7 +62,6 @@ class HomeController extends Controller
 
         $thermo->save();
 
-
         return 200;
     }
 
@@ -77,5 +76,4 @@ class HomeController extends Controller
             return 0;
         }
     }
-
 }

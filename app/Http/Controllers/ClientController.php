@@ -16,6 +16,7 @@ use App\Receipt;
 use App\Report;
 use App\Salesman;
 use App\StaffPermissions;
+use App\TechnicalCP;
 use App\TechnicalHACCP;
 use App\User;
 use App\Districts;
@@ -377,7 +378,7 @@ class ClientController extends Controller
 
     public function indexRegolfood(Request $request)
     {
-        $inputs = $request->all();
+      $inputs = $request->all();
 
       $olderScheduled= Schedule::where('month',Carbon::now()->month)->pluck('idClient')->all();
 
@@ -454,11 +455,12 @@ class ClientController extends Controller
     {
         $salesman = Salesman::all();
         $technicalhaccp = TechnicalHACCP::all();
+        $technicalcp = TechnicalCP::all();
         $districts = Districts::all();
         $serviceTypes = ServiceType::all();
         $activityTypes = ActivityClient::all();
 
-        return view('client.new',compact('salesman','technicalhaccp','districts','serviceTypes','activityTypes'));
+        return view('client.new',compact('salesman','technicalhaccp','technicalcp','districts','serviceTypes','activityTypes'));
     }
 
     public function getCitiesByDistrict($id)
@@ -471,7 +473,6 @@ class ClientController extends Controller
         ])->get();
 
         return $cities;
-
     }
 
     //funcao para verificar se o email é unico
@@ -587,6 +588,8 @@ class ClientController extends Controller
         //email
         $establisment->nif = $inputs['nif'];
         $establisment->salesman = $inputs['salesman'];
+        $establisment->technical_haccp = $inputs['technicalhaccp'];
+        $establisment->technical_cp = $inputs['technicalcp'];
         $establisment->telephone = $inputs['telephone'];
         $establisment->activity=1;
 
@@ -1353,6 +1356,5 @@ class ClientController extends Controller
         $pvp->save();
 
     }
-
 
 }
