@@ -53,7 +53,7 @@ class alertTemperatures extends Command
                         }
                     }
                     if ($rounds == 4) {
-                        $lastmessage = Message::where('receiver_id', $clientThermo->user_id)->orderBy('id', 'DESC')->first();
+                        $lastmessage = Message::where('receiver_id', $clientThermo->user_id)->where('thermo_type',1)->orderBy('id', 'DESC')->first();
                         if (isset($lastmessage)) {
                             if ($lastmessage->created_at < Carbon::now()->subHours(12)) {
                                 $message = new Message();
@@ -61,6 +61,7 @@ class alertTemperatures extends Command
                                 $message->receiver_id = $clientThermo->user_id;
                                 $message->text = "A sua Arca numero :" . $clientThermo->number . " do estabelecimento " . $client->name . " encontra-se fora da temperatura esperada!";
                                 $message->type = 3;
+                                $message->thermo_type = 1;
                                 $message->save();
 
                                 Mail::send('frontoffice.alertTemperatures', ['arca' => $clientThermo->id, 'estabelecimento' => $client->name], function ($m) use ($client) {
@@ -75,6 +76,7 @@ class alertTemperatures extends Command
                             $message->receiver_id = $clientThermo->user_id;
                             $message->text = "A sua Arca numero :" . $clientThermo->number . " do estabelecimento " . $client->name . " encontra-se fora da temperatura esperada!";
                             $message->type = 3;
+                            $message->thermo_type = 1;
                             $message->save();
                             Mail::send('frontoffice.alertTemperatures', ['arca' => $clientThermo->id, 'estabelecimento' => $client->name], function ($m) use ($client) {
                                 $m->from('suporte@regolfood.pt', 'Temperatura fora do valor esperado');
@@ -84,13 +86,20 @@ class alertTemperatures extends Command
                         }
                     }
 
-                    if (Thermo::where('imei', $thermo->imei)->orderBy('id', 'DESC')->first()->created_at < Carbon::now()->subHours(1)) {
+                    if (Thermo::where('imei', $thermo->imei)->orderBy('id', 'DESC')->first()->created_at < Carbon::now()->subHours(1) and Thermo::where('imei', $thermo->imei)->orderBy('id', 'DESC')->first()->created_at > Carbon::now()->subHours(2)) {
                         $message = new Message();
                         $message->sender_id = 0;
                         $message->receiver_id = $clientThermo->user_id;
                         $message->text = "O termómetro da arca  :" . $clientThermo->number . " do estabelecimento " . $client->name . " não está a responder.";
                         $message->type = 3;
+                        $message->thermo_type = 2;
                         $message->save();
+
+                        Mail::send('frontoffice.alertTemperatures2', ['arca' => $clientThermo->id, 'estabelecimento' => $client->name], function ($m) use ($client) {
+                            $m->from('suporte@regolfood.pt', 'Arca Não está a responder');
+
+                            $m->to($client->email)->subject('Arca Não está a responder');
+                        });
                     }
                 }
 
