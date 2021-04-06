@@ -5,7 +5,7 @@
 
 <br>
 
-A sua arca numero {{$arca}}, do estabelecimento {{$estabelecimento}} encontra-se fora da temperatura esperada.
+A sua arca de {{$type}} numero {{$arca}}, do estabelecimento {{$estabelecimento}} encontra-se fora da temperatura esperada.
 
 <br> <br>
 

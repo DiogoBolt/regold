@@ -5,7 +5,7 @@
 
 <br>
 
-A sua arca numero {{$arca}}, do estabelecimento {{$estabelecimento}} não está a responder.
+A sua arca de {{$type}}  numero {{$arca}}, do estabelecimento {{$estabelecimento}} não está a responder.
 
 <br> <br>
 
