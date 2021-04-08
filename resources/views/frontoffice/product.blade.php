@@ -95,12 +95,12 @@
                 <span class="info-btn" data-toggle="modal" data-target="#myModal">&#9432;</span>
          
                 <div>
-                    <a href="/uploads/{{$product->id}}/{{$product->manual}}" class="btn" download>
+                    <a href="/uploads/products/{{$product->manual}}" class="btn" download>
                         Ficha Técnica <img src="/img/download.png">
                     </a>
                 </div>
                 <div>
-                    <a href="/uploads/{{$product->id}}/{{$product->seguranca}}" class="btn" download>
+                    <a href="/uploads/products/{{$product->seguranca}}" class="btn" download>
                         Ficha de Segurança <img src="/img/download.png">
                     </a>
                 </div>

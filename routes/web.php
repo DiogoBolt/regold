@@ -24,7 +24,6 @@ View::composer(/**
 
 Route::post('/api/confirm/', 'ApiController@confirmPayment');
 
-
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/duvidascovid', 'HomeController@duvidascovid')->name('covid');
 Route::get('/thermoUpdate/{imei}', 'HomeController@thermoUpdate');
@@ -45,7 +44,6 @@ Route::group(['middleware'=>['permissionStaff']],function(){
     Route::post('/frontoffice/staff/add','StaffController@addStaffPost');
     Route::post('/frontoffice/staff/edit/{id}','StaffController@editStaffPost');
     Route::get('/frontoffice/deletestaff/{id}','StaffController@deleteStaff');
-
 
     Route::group(['middleware'=>['permissionClient']],function(){
         Route::get('/frontoffice/documents/{type}', 'FrontofficeController@documentsBySuper');
@@ -81,7 +79,6 @@ Route::group(['middleware'=>['permissionStaff']],function(){
 //route to change session var
     Route::post('/client/addSessionVar/{id}','ClientController@addSessionVar');
     Route::post('/client/deleteSessionVar','ClientController@deleteSessionVar');
-
 
 //Thermos
     Route::get('/frontoffice/thermo', 'ThermoController@index');
@@ -169,6 +166,10 @@ Route::group(['middleware'=>['permissionStaff']],function(){
 
     Route::get('/frontoffice/records/hygiene','RecordsController@getHygieneRecords');
     Route::post('/frontoffice/records/hygiene/save','RecordsController@saveHygieneRecords');
+
+    Route::get('/frontoffice/records/hygiene/{cleaningFrequency}','RecordsController@getByFrequency');
+
+
     Route::get('/frontoffice/records/hygiene/history','RecordsController@getHygieneRecordsHistory');
     Route::get('/frontoffice/records/hygiene/history/get','RecordsController@getHygieneByMonth');
     Route::get('/frontoffice/records/hygiene/history/print','RecordsController@printRecordsHygiene');

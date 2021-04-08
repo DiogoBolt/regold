@@ -46,7 +46,7 @@
 
     <div class="register-container">
         <div class="tab">
-            <button class="tablinks active"  onclick="openFrequency(event, 1)">Diário</button>
+            <button class="tablinks active" onclick="openFrequency(event, 1)">Diário</button>
             <button class="tablinks" onclick="openFrequency(event, 2)">Semanal</button>
             <button class="tablinks" onclick="openFrequency(event, 3)">Quinzenal</button>
             <button class="tablinks" onclick="openFrequency(event, 4)">Mensal</button>
@@ -114,201 +114,51 @@
                             </tbody>
                     @endforeach
                 </table>
-                <button id="savePersolize" class="btn-recordHygiene" onclick="saveRecordHygiene()" {{--onclick="saveEachPersonalize()"--}}>Guardar</button>
-            </div>
+
+                <button id="savePersolize" class="btn-recordHygiene" onclick="saveRecordHygiene()" >Guardar</button>
+
+                <a class="btn-history"  href="/frontoffice/records/hygiene/history">Histórico</a>
+        </div>
 
 
-            <div id="2" class="tabcontent">
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>Área</th>
-                        <th>Secção</th>
-                        <th>Produto</th>
-                        <th>Obs</th>
-                        <th><input  onClick="checkBoxes(this)" type="checkbox" ></th>
-                    </tr>
-                    </thead>
-                    @foreach($areasWeekly as $area )
-                            <tbody>
-                            <td>{{$area->designation}}</td>
-                            <td>@foreach($clientSections as $clientSection)
-                                    @if($area->idSection==$clientSection->id)
-                                        {{$clientSection->designation}}
-                                    @endif
-                                @endforeach
-                            </td>
-                            <td>@foreach($products as $product)
-                                    @if($area->productId==$product->id)
-                                        <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
-                                    @endif
-                                @endforeach
-                            </td>
-                            <td>{{$area->observation}}</td>
-                            <td><input name="checkbox[]" type="checkbox" id="{{$area->designation}}" value='{"idArea":{{$area->id}},"idProduct":{{$area->productId}},"designation":"{{$area->designation}}","idCleaningFrequency":2}'></td>
-                            </tbody>
-                    @endforeach
-                </table>
+        <div class="tabcontent" id="bb" style="display: none">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Área</th>
+                    <th>Secção</th>
+                    <th>Produto</th>
+                    <th>Obs</th>
+                    <th><input onClick="checkBoxes(this)" type="Checkbox"></th>
+                </tr>
+                </thead>
+                <tbody id="aa">
 
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>Equipamento</th>
-                        <th>Secção</th>
-                        <th>Produto</th>
-                        <th>Obs</th>
-                        <th><input  onClick="checkBoxes(this)" type="checkbox"></th>
-                    </tr>
-                    </thead>
-                    @foreach($equipWeekly as $equip )
-                            <tbody>
-                            <td>{{$equip->designation}}</td>
-                            <td>@foreach($clientSections as $clientSection)
-                                    @if($equip->idSection==$clientSection->id)
-                                        {{$clientSection->designation}}
-                                    @endif
-                                @endforeach
-                            </td>
-                            <td>@foreach($products as $product)
-                                    @if($equip->productId==$product->id)
-                                        <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
-                                    @endif
-                                @endforeach
-                            </td>
-                            <td>{{$equip->observation}}</td>
-                            <td><input name="checkbox[]" type="checkbox" id="{{$equip->designation}}" value='{"idEquipment":{{$equip->id}},"idProduct":{{$equip->productId}},"designation":"{{$equip->designation}}","idCleaningFrequency":2}'></td>
-                            </tbody>
-                    @endforeach
-                </table>
-                <button id="savePersolize" class="btn-recordHygiene" onclick="saveRecordHygiene()" {{--onclick="saveEachPersonalize()"--}}>Guardar</button>
-            </div>
-            <div id="3" class="tabcontent">
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>Área</th>
-                        <th>Secção</th>
-                        <th>Produto</th>
-                        <th>Obs</th>
-                        <th><input onClick="checkBoxes(this)" type="checkbox" ></th>
-                    </tr>
-                    </thead>
-                    @foreach($areasBiweekly as $area )
-                            <tbody>
-                            <td>{{$area->designation}}</td>
-                            <td>@foreach($clientSections as $clientSection)
-                                    @if($area->idSection==$clientSection->id)
-                                        {{$clientSection->designation}}
-                                    @endif
-                                @endforeach
-                            </td>
-                            <td>@foreach($products as $product)
-                                    @if($area->productId==$product->id)
-                                        <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
-                                    @endif
-                                @endforeach
-                            </td>
-                            <td>{{$area->observation}}</td>
-                            <td><input name="checkbox[]" type="checkbox" id="{{$area->designation}}" value='{"idArea":{{$area->id}},"idProduct":{{$area->productId}},"designation":"{{$area->designation}}","idCleaningFrequency":3}'></td>
-                            </tbody>
-                    @endforeach
-                </table>
+                </tbody>
+            </table>
 
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>Equipamento</th>
-                        <th>Secção</th>
-                        <th>Produto</th>
-                        <th>Obs</th>
-                        <th><input  onClick="checkBoxes(this)" type="checkbox" ></th>
-                    </tr>
-                    </thead>
-                    @foreach($equipBiweekly as $equip )
-                            <tbody>
-                            <td>{{$equip->designation}}</td>
-                            <td>@foreach($clientSections as $clientSection)
-                                    @if($equip->idSection==$clientSection->id)
-                                        {{$clientSection->designation}}
-                                    @endif
-                                @endforeach
-                            </td>
-                            <td>@foreach($products as $product)
-                                    @if($equip->productId==$product->id)
-                                        <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
-                                    @endif
-                                @endforeach</td>
-                            <td>{{$equip->observation}}</td>
-                            <td><input name="checkbox[]" type="checkbox" id="{{$equip->designation}}" value='{"idEquipment":{{$equip->id}},"idProduct":{{$equip->productId}},"designation":"{{$equip->designation}}","idCleaningFrequency":3}'></td>
-                            </tbody>
-                    @endforeach
-                </table>
-                <button id="savePersolize" class="btn-recordHygiene" onclick="saveRecordHygiene()" {{--onclick="saveEachPersonalize()"--}}>Guardar</button>
-            </div>
-            <div id="4" class="tabcontent">
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>Área</th>
-                        <th>Secção</th>
-                        <th>Produto</th>
-                        <th>Obs</th>
-                        <th><input  onClick="checkBoxes(this)" type="checkbox"></th>
-                    </tr>
-                    </thead>
-                    @foreach($areasMonthly as $area )
-                            <tbody>
-                            <td>{{$area->designation}}</td>
-                            <td>@foreach($clientSections as $clientSection)
-                                    @if($area->idSection==$clientSection->id)
-                                        {{$clientSection->designation}}
-                                    @endif
-                                @endforeach
-                            </td>
-                            <td>@foreach($products as $product)
-                                    @if($area->productId==$product->id)
-                                        <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
-                                    @endif
-                                @endforeach</td>
-                            <td>{{$area->observation}}</td>
-                            <td><input name="checkbox[]" type="checkbox" id="{{$area->designation}}" value='{"idArea":{{$area->id}},"idProduct":{{$area->productId}},"designation":"{{$area->designation}}","idCleaningFrequency":4}'></td>
-                            </tbody>
-                    @endforeach
-                </table>
+        </div>
 
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>Equipamento</th>
-                        <th>Secção</th>
-                        <th>Produto</th>
-                        <th>Obs</th>
-                        <th><input  onClick="checkBoxes(this)" type="checkbox" ></th>
-                    </tr>
-                    </thead>
-                    @foreach($equipMonthly as $equip)
-                            <tbody>
-                            <td>{{$equip->designation}}</td>
-                            <td>@foreach($clientSections as $clientSection)
-                                    @if($equip->idSection==$clientSection->id)
-                                        {{$clientSection->designation}}
-                                    @endif
-                                @endforeach
-                            </td>
-                            <td>@foreach($products as $product)
-                                    @if($equip->productId==$product->id)
-                                        <a href="/frontoffice/product/{{$product->id}}">{{$product->name}}</a>
-                                    @endif
-                                @endforeach</td>
-                            <td>{{$equip->observation}}</td>
-                            <td><input name="checkbox[]" type="checkbox" id="{{$equip->designation}}" value='{"idEquipment":{{$equip->id}},"idProduct":{{$equip->productId}},"designation":"{{$equip->designation}}","idCleaningFrequency":4}'></td>
-                            </tbody>
-                    @endforeach
-                </table>
-                <button id="savePersolize" onclick="saveRecordHygiene()" class="btn-recordHygiene" >Guardar</button>
-            </div>
-        <a class="btn-history"  href="/frontoffice/records/hygiene/history">Histórico</a>
-    </div>
+        <div class="tabcontent" id="cc" style="display: none">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Equipamento</th>
+                    <th>Secção</th>
+                    <th>Produto</th>
+                    <th>Obs</th>
+                    <th><input onClick="checkBoxes(this)" type="Checkbox"></th>
+                </tr>
+                </thead>
+                <tbody id="dd">
+
+                </tbody>
+            </table>
+
+            <button id="savePersolize" class="btn-recordHygiene" onclick="saveRecordHygiene()" >Guardar</button>
+
+            <a class="btn-history"  href="/frontoffice/records/hygiene/history">Histórico</a>
+        </div>
 
 <script>
     function openFrequency(evt, id) {
@@ -321,8 +171,67 @@
         for (i = 0; i < tablinks.length; i++) {
             tablinks[i].className = tablinks[i].className.replace(" active", "");
         }
-        document.getElementById(id).style.display = "block";
-        evt.currentTarget.className += " active";
+        /*document.getElementById(id).style.display = "block";
+        evt.currentTarget.className += " active";*/
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'GET',
+            url: "/frontoffice/records/hygiene/" + id,
+        }).done(function (data) {
+            $('#aa').empty()
+            $('#bb').css("display", "block")
+            $('#cc').css("display", "block")
+            if(data.idArea!=0){
+                for(var i=0;i<data.length;i++ ) {
+                    $('#aa').append(`
+                    <tr>
+                        <td>${data[i].designation}</td>
+                        <td>${data[i].sectionDesignation}</td>
+                        <td><a>${data[i].productName}</a></td>
+                        <td>${data[i].observation}</td>
+                        <td><input name="checkbox[]" type="checkbox" id="${data[i].designation}" value='{"idArea":${data[i].id},"idProduct":${data[i].productId},"designation":"${data[i].designation}","idCleaningFrequency":"${id}"}'></td>
+                    </tr>
+             `)
+                }
+            }else{
+                for(var i=0;i<data.length;i++ ) {
+                    $('#dd').append(`
+                    <tr>
+                        <td>${data[i].designation}</td>
+                        <td>${data[i].sectionDesignation}</td>
+                        <td><a>${data[i].productName}</a></td>
+                        <td>${data[i].observation}</td>
+                        <td><input name="checkbox[]" type="checkbox" id="${data[i].designation}" value='{"idEquipment":${data[i].id},"idProduct":${data[i].productId},"designation":"${data[i].designation}","idCleaningFrequency":"${id}"}'></td>
+                    </tr>
+             `)
+                }
+            }
+
+        });
+        /*$.ajax({
+            type: 'GET',
+            url: "/frontoffice/records/hygiene/area/" + id,
+        }).done(function (data) {
+            $('#dd').empty()
+            $('#cc').css("display", "block")
+            for(var i=0;i<data.length;i++ ) {
+                $('#dd').append(`
+                    <tr>
+                        <td>${data[i].designation}</td>
+                        <td>${data[i].sectionDesignation}</td>
+                        <td><a>${data[i].productName}</a></td>
+                        <td>${data[i].observation}</td>
+                        <td><input name="checkbox[]" type="checkbox" id="${data[i].designation}" value='{"idEquipment":${data[i].id},"idProduct":${data[i].productId},"designation":"${data[i].designation}","idCleaningFrequency":"${id}"}'></td>
+                    </tr>
+             `)
+            }
+        });*/
+
     }
     checkBoxes = function (me) {
         $(me).closest("table").find('input[type="checkbox"]').not(me).prop('checked', me.checked);

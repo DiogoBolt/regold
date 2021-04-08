@@ -270,7 +270,7 @@ class ClientController extends Controller
 
         $client = Customer::where('id',$auxClientId)->first();*/
 
-        $messages = Message::where('receiver_id',$user->id)->where('viewed',0)->count();
+        $messages = Message::where('receiver_id',$user->client_id)->where('viewed',0)->count();
 
         return $messages;
     }

@@ -109,6 +109,7 @@ class RecordsController extends Controller
 
     public function insertRecords()
     {
+
         $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Session::get('establismentID');
         $client_insertProducts=ClientInsertProducts::where('client_id', $auxClientId)->get();
         $client_providers=ClientProviders::where('client_id', $auxClientId)->get();
@@ -260,80 +261,6 @@ class RecordsController extends Controller
                 }
             }
 
-            $areasWeekly = AreaSectionClient::WhereDoesntHave('hygieneRecord',function ($query){
-                $query->where('created_at','>',Carbon::today()->subDay(7));
-            })
-                ->where('idClient',$auxClientId)
-                ->whereIN('idSection',$ids)
-                ->Where(function($query) {
-                    $query->where('idCleaningFrequency',2)
-                        ->orwhere('idCleaningFrequency2',2)
-                        ->orwhere('idCleaningFrequency3',2);
-                })
-                ->orderBy('idSection')
-                ->get();
-
-            foreach ($areasWeekly as $areaWeekly){
-                if($areaWeekly->idCleaningFrequency == 2){
-                    $areaWeekly->productId = $areaWeekly->idProduct;
-                }
-                if($areaWeekly->idCleaningFrequency2 == 2){
-                    $areaWeekly->productId = $areaWeekly->idProduct2;
-                }
-                if($areaWeekly->idCleaningFrequency3 == 2){
-                    $areaWeekly->productId = $areaWeekly->idProduct3;
-                }
-            }
-
-            $areasBiweekly = AreaSectionClient::WhereDoesntHave('hygieneRecord',function ($query){
-                $query->where('created_at','>',Carbon::today()->subDay(14));
-            })
-                ->where('idClient',$auxClientId)
-                ->whereIN('idSection',$ids)
-                ->Where(function($query) {
-                    $query->where('idCleaningFrequency',3)
-                        ->orwhere('idCleaningFrequency2',3)
-                        ->orwhere('idCleaningFrequency3',3);
-                })
-                ->orderBy('idSection')
-                ->get();
-
-            foreach ($areasBiweekly as $areaBiweekly){
-                if($areaBiweekly->idCleaningFrequency == 3){
-                    $areaBiweekly->productId=$areaBiweekly->idProduct;
-                }
-                if($areaBiweekly->idCleaningFrequency2 == 3){
-                    $areaBiweekly->productId=$areaBiweekly->idProduct2;
-                }
-                if($areaBiweekly->idCleaningFrequency3 == 3){
-                    $areaBiweekly->productId=$areaBiweekly->idProduct3;
-                }
-            }
-
-            $areasMonthly = AreaSectionClient::WhereDoesntHave('hygieneRecord',function ($query){
-                $query->where('created_at','>',Carbon::today()->subDay(30));
-            })
-                ->where('idClient',$auxClientId)
-                ->whereIN('idSection',$ids)
-                ->Where(function($query) {
-                    $query->where('idCleaningFrequency',4)
-                        ->orwhere('idCleaningFrequency2',4)
-                        ->orwhere('idCleaningFrequency3',4);
-                })
-                ->orderBy('idSection')
-                ->get();
-
-            foreach ($areasMonthly as $areaMonthly){
-                if($areaMonthly->idCleaningFrequency == 4){
-                    $areaMonthly->productId=$areaMonthly->idProduct;
-                }
-                if($areaMonthly->idCleaningFrequency2 == 4){
-                    $areaMonthly->productId=$areaMonthly->idProduct2;
-                }
-                if($areaMonthly->idCleaningFrequency3 == 4){
-                    $areaMonthly->productId=$areaMonthly->idProduct3;
-                }
-            }
 
             $equipDaily = EquipmentSectionClient::WhereDoesntHave('hygieneRecordE',function ($query){
                 $query->where('created_at','>',Carbon::today());
@@ -360,7 +287,26 @@ class RecordsController extends Controller
                 }
             }
 
-            $equipWeekly = EquipmentSectionClient::WhereDoesntHave('hygieneRecordE',function ($query){
+        $today = Carbon::now()->format('Y-m-d');
+
+        return view('frontoffice.hygieneRegister', compact('today','clientSections','sections','areasMonthly','areasBiweekly','areasWeekly','areasDaily','equipDaily','equipWeekly','equipBiweekly','equipMonthly','products'));
+    }
+
+    public function getByFrequency($id){
+
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Session::get('establismentID');;
+
+        $clientSections=ClientSection::where('id_client',$auxClientId)->where('active',1)->get();
+
+        $ids = [];
+
+        foreach ($clientSections as $clientSection){
+            array_push($ids,$clientSection->id);
+        }
+
+        if($id==2){
+
+            $items = AreaSectionClient::WhereDoesntHave('hygieneRecord',function ($query){
                 $query->where('created_at','>',Carbon::today()->subDay(7));
             })
                 ->where('idClient',$auxClientId)
@@ -373,7 +319,33 @@ class RecordsController extends Controller
                 ->orderBy('idSection')
                 ->get();
 
-            foreach ($equipWeekly as $equipW){
+            foreach ($items as $areaWeekly){
+                if($areaWeekly->idCleaningFrequency == 2){
+                    $areaWeekly->productId = $areaWeekly->idProduct;
+                }
+                if($areaWeekly->idCleaningFrequency2 == 2){
+                    $areaWeekly->productId = $areaWeekly->idProduct2;
+                }
+                if($areaWeekly->idCleaningFrequency3 == 2){
+                    $areaWeekly->productId = $areaWeekly->idProduct3;
+                }
+                /*$areaWeekly->sectionDesignation = ClientSection::where('id',$areaWeekly->idSection)->first()->designation;
+                $areaWeekly->productName = Product::where('id',$areaWeekly->productId)->first()->name;*/
+            }
+            $items = EquipmentSectionClient::WhereDoesntHave('hygieneRecordE',function ($query){
+                $query->where('created_at','>',Carbon::today()->subDay(7));
+            })
+                ->where('idClient',$auxClientId)
+                ->whereIN('idSection',$ids)
+                ->Where(function($query) {
+                    $query->where('idCleaningFrequency',2)
+                        ->orwhere('idCleaningFrequency2',2)
+                        ->orwhere('idCleaningFrequency3',2);
+                })
+                ->orderBy('idSection')
+                ->get();
+
+            foreach ($items as $equipW){
                 if($equipW->idCleaningFrequency == 2){
                     $equipW->productId=$equipW->idProduct;
                 }
@@ -383,9 +355,15 @@ class RecordsController extends Controller
                 if($equipW->idCleaningFrequency3 == 2){
                     $equipW->productId=$equipW->idProduct3;
                 }
+                /*$equipW->sectionDesignation = ClientSection::where('id',$equipW->idSection)->first()->designation;
+                $equipW->productName = Product::where('id',$equipW->productId)->first()->name;*/
             }
 
-            $equipBiweekly = EquipmentSectionClient::WhereDoesntHave('hygieneRecordE',function ($query){
+
+        }elseif($id==3)
+
+        {
+            $items = AreaSectionClient::WhereDoesntHave('hygieneRecord',function ($query){
                 $query->where('created_at','>',Carbon::today()->subDay(14));
             })
                 ->where('idClient',$auxClientId)
@@ -398,7 +376,35 @@ class RecordsController extends Controller
                 ->orderBy('idSection')
                 ->get();
 
-            foreach ($equipBiweekly as $equipB){
+            foreach ($items as $areaBiweekly){
+                if($areaBiweekly->idCleaningFrequency == 3){
+                    $areaBiweekly->productId=$areaBiweekly->idProduct;
+                }
+                if($areaBiweekly->idCleaningFrequency2 == 3){
+                    $areaBiweekly->productId=$areaBiweekly->idProduct2;
+                }
+                if($areaBiweekly->idCleaningFrequency3 == 3){
+                    $areaBiweekly->productId=$areaBiweekly->idProduct3;
+                }
+                /*$areaBiweekly->sectionDesignation = ClientSection::where('id',$areaBiweekly->idSection)->first()->designation;
+                $areaBiweekly->productName = Product::where('id',$areaBiweekly->productId)->first()->name;*/
+            }
+            $items = EquipmentSectionClient::WhereDoesntHave('hygieneRecordE',function ($query){
+                $query->where('created_at','>',Carbon::today()->subDay(14));
+            })
+                ->where('idClient',$auxClientId)
+                ->whereIN('idSection',$ids)
+                ->Where(function($query) {
+                    $query->where('idCleaningFrequency',3)
+                        ->orwhere('idCleaningFrequency2',3)
+                        ->orwhere('idCleaningFrequency3',3);
+                })
+                ->orderBy('idSection')
+                ->get();
+
+
+            foreach ($items as $equipB){
+
                 if($equipB->idCleaningFrequency == 3){
                     $equipB->productId=$equipB->idProduct;
                 }
@@ -408,9 +414,13 @@ class RecordsController extends Controller
                 if($equipB->idCleaningFrequency3 == 3){
                     $equipB->productId=$equipB->idProduct3;
                 }
+                /*$equipB->sectionDesignation = ClientSection::where('id',$equipB->idSection)->first()->designation;
+                $equipB->productName = Product::where('id',$equipB->productId)->first()->name;*/
             }
 
-            $equipMonthly = EquipmentSectionClient::WhereDoesntHave('hygieneRecordE',function ($query){
+
+        }elseif ($id==4){
+            $items = AreaSectionClient::WhereDoesntHave('hygieneRecord',function ($query){
                 $query->where('created_at','>',Carbon::today()->subDay(30));
             })
                 ->where('idClient',$auxClientId)
@@ -423,7 +433,33 @@ class RecordsController extends Controller
                 ->orderBy('idSection')
                 ->get();
 
-            foreach ($equipMonthly as $equipM){
+            foreach ($items as $areaMonthly){
+                if($areaMonthly->idCleaningFrequency == 4){
+                    $areaMonthly->productId=$areaMonthly->idProduct;
+                }
+                if($areaMonthly->idCleaningFrequency2 == 4){
+                    $areaMonthly->productId=$areaMonthly->idProduct2;
+                }
+                if($areaMonthly->idCleaningFrequency3 == 4){
+                    $areaMonthly->productId=$areaMonthly->idProduct3;
+                }
+                /*$areaMonthly->sectionDesignation = ClientSection::where('id',$areaMonthly->idSection)->first()->designation;
+                $areaMonthly->productName = Product::where('id',$areaMonthly->productId)->first()->name;*/
+            }
+            $items = EquipmentSectionClient::WhereDoesntHave('hygieneRecordE',function ($query){
+                $query->where('created_at','>',Carbon::today()->subDay(30));
+            })
+                ->where('idClient',$auxClientId)
+                ->whereIN('idSection',$ids)
+                ->Where(function($query) {
+                    $query->where('idCleaningFrequency',4)
+                        ->orwhere('idCleaningFrequency2',4)
+                        ->orwhere('idCleaningFrequency3',4);
+                })
+                ->orderBy('idSection')
+                ->get();
+
+            foreach ($items as $equipM){
                 if($equipM->idCleaningFrequency == 4){
                     $equipM->productId=$equipM->idProduct;
                 }
@@ -433,12 +469,43 @@ class RecordsController extends Controller
                 if($equipM->idCleaningFrequency3 == 4){
                     $equipM->productId=$equipM->idProduct3;
                 }
+                /*$equipM->sectionDesignation = ClientSection::where('id',$equipM->idSection)->first()->designation;
+                $equipM->productName = Product::where('id',$equipM->productId)->first()->name;*/
             }
+        }
 
-        $today = Carbon::now()->format('Y-m-d');
-
-        return view('frontoffice.hygieneRegister', compact('today','clientSections','sections','areasMonthly','areasBiweekly','areasWeekly','areasDaily','equipDaily','equipWeekly','equipBiweekly','equipMonthly','products'));
+        return $items;
     }
+
+    public function getEquipByFrequency($id){
+
+        $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Session::get('establismentID');;
+
+        $clientSections=ClientSection::where('id_client',$auxClientId)->where('active',1)->get();
+
+        $ids = [];
+
+        foreach ($clientSections as $clientSection){
+            array_push($ids,$clientSection->id);
+        }
+
+        if($id==2){
+
+
+
+        }elseif($id==3)
+        {
+
+
+
+        }elseif ($id==4){
+
+
+        }
+
+        return $itemsE;
+    }
+
     public function saveHygieneRecords(Request $request)
     {
         $user = Auth::user();
@@ -676,7 +743,6 @@ class RecordsController extends Controller
         $thermo->save();
 
         return back();
-
     }
 
 }
