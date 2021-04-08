@@ -169,19 +169,13 @@ Route::group(['middleware'=>['permissionStaff']],function(){
 
     Route::get('/frontoffice/records/hygiene/{cleaningFrequency}','RecordsController@getByFrequency');
 
-
     Route::get('/frontoffice/records/hygiene/history','RecordsController@getHygieneRecordsHistory');
     Route::get('/frontoffice/records/hygiene/history/get','RecordsController@getHygieneByMonth');
     Route::get('/frontoffice/records/hygiene/history/print','RecordsController@printRecordsHygiene');
 
 });
 
-
-
-
-
 Route::group(['middleware' => ['backoffice']], function () {
-
 
     //Possible Customers
 
@@ -191,7 +185,6 @@ Route::group(['middleware' => ['backoffice']], function () {
     Route::post('/possiblecustomers/edit/{id}', 'PossibleCustomersController@editPossibleCustomerPost');
     Route::post('/possiblecustomers/newPossibleCustomer', 'PossibleCustomersController@addPossibleCustomerPost');
     Route::get('/possiblecustomers/deletecustomer/{id}', 'PossibleCustomersController@deletePossibleCustomer');
-
 
     /////
 
@@ -207,7 +200,6 @@ Route::group(['middleware' => ['backoffice']], function () {
     Route::post('/schedule/regolfood/save/{id}','ClientController@saveScheduleRegolfood');
     Route::get('/clients/regolpest', 'ClientController@indexRegolpest');
     Route::get('/schedule','ClientController@getSchedule');
-
 
     Route::get('/clients', 'ClientController@index');
     Route::get('/clients/new', 'ClientController@newCustomer');

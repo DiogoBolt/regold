@@ -114,12 +114,7 @@
                             </tbody>
                     @endforeach
                 </table>
-
-                <button id="savePersolize" class="btn-recordHygiene" onclick="saveRecordHygiene()" >Guardar</button>
-
-                <a class="btn-history"  href="/frontoffice/records/hygiene/history">Histórico</a>
         </div>
-
 
         <div class="tabcontent" id="bb" style="display: none">
             <table class="table table-bordered">
@@ -136,7 +131,6 @@
 
                 </tbody>
             </table>
-
         </div>
 
         <div class="tabcontent" id="cc" style="display: none">
@@ -154,11 +148,11 @@
 
                 </tbody>
             </table>
-
-            <button id="savePersolize" class="btn-recordHygiene" onclick="saveRecordHygiene()" >Guardar</button>
-
-            <a class="btn-history"  href="/frontoffice/records/hygiene/history">Histórico</a>
         </div>
+        <button id="savePersolize" class="btn-recordHygiene" onclick="saveRecordHygiene()" >Guardar</button>
+
+        <a class="btn-history"  href="/frontoffice/records/hygiene/history">Histórico</a>
+    </div>
 
 <script>
     function openFrequency(evt, id) {
@@ -184,54 +178,32 @@
             url: "/frontoffice/records/hygiene/" + id,
         }).done(function (data) {
             $('#aa').empty()
+            $('#dd').empty()
             $('#bb').css("display", "block")
             $('#cc').css("display", "block")
-            if(data.idArea!=0){
-                for(var i=0;i<data.length;i++ ) {
-                    $('#aa').append(`
+            for(var i=0;i<data[0].length;i++ ) {
+                $('#aa').append(`
                     <tr>
-                        <td>${data[i].designation}</td>
-                        <td>${data[i].sectionDesignation}</td>
-                        <td><a>${data[i].productName}</a></td>
-                        <td>${data[i].observation}</td>
-                        <td><input name="checkbox[]" type="checkbox" id="${data[i].designation}" value='{"idArea":${data[i].id},"idProduct":${data[i].productId},"designation":"${data[i].designation}","idCleaningFrequency":"${id}"}'></td>
+                        <td>${data[0][i].designation}</td>
+                        <td>${data[0][i].sectionDesignation}</td>
+                        <td><a href="/frontoffice/product/${data[0][i].productId}">${data[0][i].productName}</a></td>
+                        <td>${data[0][i].observation?null:''}</td>
+                        <td><input name="checkbox[]" type="checkbox" id="${data[0][i].designation}" value='{"idArea":${data[0][i].id},"idProduct":${data[0][i].productId},"designation":"${data[0][i].designation}","idCleaningFrequency":"${id}"}'></td>
                     </tr>
              `)
-                }
-            }else{
-                for(var i=0;i<data.length;i++ ) {
-                    $('#dd').append(`
-                    <tr>
-                        <td>${data[i].designation}</td>
-                        <td>${data[i].sectionDesignation}</td>
-                        <td><a>${data[i].productName}</a></td>
-                        <td>${data[i].observation}</td>
-                        <td><input name="checkbox[]" type="checkbox" id="${data[i].designation}" value='{"idEquipment":${data[i].id},"idProduct":${data[i].productId},"designation":"${data[i].designation}","idCleaningFrequency":"${id}"}'></td>
-                    </tr>
-             `)
-                }
             }
-
-        });
-        /*$.ajax({
-            type: 'GET',
-            url: "/frontoffice/records/hygiene/area/" + id,
-        }).done(function (data) {
-            $('#dd').empty()
-            $('#cc').css("display", "block")
-            for(var i=0;i<data.length;i++ ) {
+            for(var i=0;i<data[1].length;i++ ) {
                 $('#dd').append(`
                     <tr>
-                        <td>${data[i].designation}</td>
-                        <td>${data[i].sectionDesignation}</td>
-                        <td><a>${data[i].productName}</a></td>
-                        <td>${data[i].observation}</td>
-                        <td><input name="checkbox[]" type="checkbox" id="${data[i].designation}" value='{"idEquipment":${data[i].id},"idProduct":${data[i].productId},"designation":"${data[i].designation}","idCleaningFrequency":"${id}"}'></td>
+                        <td>${data[1][i].designation}</td>
+                        <td>${data[1][i].sectionDesignation}</td>
+                        <td><a href="/frontoffice/product/${data[1][i].productId}">${data[1][i].productName}</a></td>
+                        <td>${data[1][i].observation?null:''}</td>
+                        <td><input name="checkbox[]" type="checkbox" id="${data[1][i].designation}" value='{"idEquipment":${data[1][i].id},"idProduct":${data[1][i].productId},"designation":"${data[1][i].designation}","idCleaningFrequency":"${id}"}'></td>
                     </tr>
              `)
             }
-        });*/
-
+        });
     }
     checkBoxes = function (me) {
         $(me).closest("table").find('input[type="checkbox"]').not(me).prop('checked', me.checked);
@@ -271,7 +243,6 @@
                 window.location.replace('/frontoffice/records/hygiene');
             },1000)
         );
-
     }
 </script>
 
