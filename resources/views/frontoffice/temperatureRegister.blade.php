@@ -69,7 +69,7 @@
                     <div class="register-arc cooling">
                         <div class="register-arc__info">
                             <div class="register-arc__info-extra">
-                                <span><img style="width:20px;height:20px" src="{{ URL::to('/') }}/img/signal-icon-{{$thermo->signal_power}}.png"></span>
+                                <span><img style="width:20px;height:20px" src="{{ URL::to('/') }}/img/signal-icon-{{$thermo->signal_power}}.png">{{$thermo->thermo->signal_power}}</span>
                                 <span class="show-info" data-toggle="modal" data-target="#info-modal" onclick="showLastReads({{$thermo->id}})"><i class="glyphicon glyphicon-info-sign"></i></span>
                             </div>
                             <p>arca de refrigeração</p>
@@ -110,7 +110,7 @@
                     <div class="register-arc freezing">
                         <div class="register-arc__info">
                             <div class="register-arc__info-extra">
-                                    <span><img style="width:20px;height:20px" src="{{ URL::to('/') }}/img/signal-icon-{{$thermo->signal_power}}.png"></span>
+                                    <span><img style="width:20px;height:20px" src="{{ URL::to('/') }}/img/signal-icon-{{$thermo->signal_power}}.png">{{$thermo->thermo->signal_power}}</span>
                                 <span class="show-info" data-toggle="modal" data-target="#info-modal" onclick="showLastReads({{$thermo->id}})"><i class="glyphicon glyphicon-info-sign"></i></span>
                             </div>
                             <p>arca de congelação</p>
@@ -153,7 +153,7 @@
                         <div class="register-arc cooling">
                             <div class="register-arc__info">
                                 <div class="register-arc__info-extra">
-                                    <span><img style="width:20px;height:20px" src="{{ URL::to('/') }}/img/signal-icon-{{$thermo->signal_power}}.png"></span>
+                                    <span><img style="width:20px;height:20px" src="{{ URL::to('/') }}/img/signal-icon-{{$thermo->signal_power}}.png">{{$thermo->thermo->signal_power}}</span>
                                     <span class="show-info" data-toggle="modal" data-target="#info-modal" onclick="showLastReads({{$thermo->id}})"><i class="glyphicon glyphicon-info-sign"></i></span>
                                 </div>
                                 <p>arca de refrigeração</p>
@@ -194,7 +194,7 @@
                         <div class="register-arc freezing">
                             <div class="register-arc__info">
                                 <div class="register-arc__info-extra">
-                                    <span><img style="width:20px;height:20px" src="{{ URL::to('/') }}/img/signal-icon-{{$thermo->signal_power}}.png"></span>
+                                    <span><img style="width:20px;height:20px" src="{{ URL::to('/') }}/img/signal-icon-{{$thermo->signal_power}}.png">{{$thermo->thermo->signal_power}}</span>
                                     <span class="show-info" data-toggle="modal" data-target="#info-modal" onclick="showLastReads({{$thermo->id}})"><i class="glyphicon glyphicon-info-sign"></i></span>
                                 </div>
                                 <p>arca de congelação</p>
