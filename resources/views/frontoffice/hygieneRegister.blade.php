@@ -3,6 +3,7 @@
 @section('styles')
     <!-- Custom CSS -->
     <link href="{{ asset('css/documents/hygiene.css') }}" rel="stylesheet">
+
 @endsection
 
 @section('content')
@@ -44,7 +45,7 @@
             <p> {{$today}} </p>
     </div>
 
-    <div class="register-container">
+    <div id="rr" class="register-container">
         <div class="tab">
             <button class="tablinks active" onclick="openFrequency(event, 1)">Diário</button>
             <button class="tablinks" onclick="openFrequency(event, 2)">Semanal</button>
@@ -114,9 +115,12 @@
                             </tbody>
                     @endforeach
                 </table>
-        </div>
+                <button class="btn btn-Val" onclick="saveRecordHygiene()">Validar</button>
+                <a class="btn-history"  href="/frontoffice/records/hygiene/history">Histórico</a>
+            </div>
 
-        <div class="tabcontent" id="bb" style="display: none">
+
+        <div class="tabcontent" id="table-area" style="display: none">
             <table class="table table-bordered">
                 <thead>
                 <tr>
@@ -127,13 +131,14 @@
                     <th><input onClick="checkBoxes(this)" type="Checkbox"></th>
                 </tr>
                 </thead>
-                <tbody id="aa">
+                <tbody id="tbody-area">
 
                 </tbody>
             </table>
         </div>
 
-        <div class="tabcontent" id="cc" style="display: none">
+
+        <div class="tabcontent" id="table-equip" style="display: none">
             <table class="table table-bordered">
                 <thead>
                 <tr>
@@ -144,15 +149,14 @@
                     <th><input onClick="checkBoxes(this)" type="Checkbox"></th>
                 </tr>
                 </thead>
-                <tbody id="dd">
+                <tbody id="tbody-equip">
 
                 </tbody>
             </table>
+            <button class="btn btn-Val" onclick="saveRecordHygiene()">Validar</button>
+            <a class="btn-history" href="/frontoffice/records/hygiene/history">Histórico</a>
         </div>
-        <button id="savePersolize" class="btn-recordHygiene" onclick="saveRecordHygiene()" >Guardar</button>
 
-        <a class="btn-history"  href="/frontoffice/records/hygiene/history">Histórico</a>
-    </div>
 
 <script>
     function openFrequency(evt, id) {
@@ -165,8 +169,7 @@
         for (i = 0; i < tablinks.length; i++) {
             tablinks[i].className = tablinks[i].className.replace(" active", "");
         }
-        /*document.getElementById(id).style.display = "block";
-        evt.currentTarget.className += " active";*/
+        evt.currentTarget.className += " active";
 
         $.ajaxSetup({
             headers: {
@@ -175,14 +178,12 @@
         });
         $.ajax({
             type: 'GET',
-            url: "/frontoffice/records/hygiene/" + id,
+            url: "/frontoffice/records/hygieneFreq/" + id,
         }).done(function (data) {
-            $('#aa').empty()
-            $('#dd').empty()
-            $('#bb').css("display", "block")
-            $('#cc').css("display", "block")
+            $('#table-area').css("display", "block")
+            $('#table-equip').css("display", "block")
             for(var i=0;i<data[0].length;i++ ) {
-                $('#aa').append(`
+                $('#tbody-area').empty().append(`
                     <tr>
                         <td>${data[0][i].designation}</td>
                         <td>${data[0][i].sectionDesignation}</td>
@@ -193,7 +194,7 @@
              `)
             }
             for(var i=0;i<data[1].length;i++ ) {
-                $('#dd').append(`
+                $('#tbody-equip').empty().append(`
                     <tr>
                         <td>${data[1][i].designation}</td>
                         <td>${data[1][i].sectionDesignation}</td>

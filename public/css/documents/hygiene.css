@@ -52,17 +52,25 @@
 }
 
 .btn-history{
-    background-color: var(--main-color);
     display: inline-block;
+    font-weight: normal;
     text-align: center;
+    white-space: nowrap;
     vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
     border: 1px solid transparent;
     padding: 6px 12px;
     font-size: 14px;
     line-height: 1.6;
     border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     user-select: none;
-    margin-bottom: 20px;
+    background-color: #0d3625;
     color: #E5E1E6;
 }
 .btn-recordHygiene{

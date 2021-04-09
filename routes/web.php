@@ -67,6 +67,7 @@ Route::group(['middleware'=>['permissionStaff']],function(){
     Route::get('/frontoffice/cart/delete/{id}', 'FrontofficeController@deleteLineFromCart');
     Route::get('/frontoffice/messages', 'FrontofficeController@messages');
     Route::get('/frontoffice/messages/{type}', 'FrontofficeController@filterMessages');
+    Route::get('/frontoffice/messages/allreads/{id}','FrontofficeController@allreads');
     Route::post('/frontoffice/message/{id}', 'FrontofficeController@readMessage');
 
     Route::get('/frontoffice/cartValue', 'FrontofficeController@cartValue');
@@ -167,7 +168,7 @@ Route::group(['middleware'=>['permissionStaff']],function(){
     Route::get('/frontoffice/records/hygiene','RecordsController@getHygieneRecords');
     Route::post('/frontoffice/records/hygiene/save','RecordsController@saveHygieneRecords');
 
-    Route::get('/frontoffice/records/hygiene/{cleaningFrequency}','RecordsController@getByFrequency');
+    Route::get('/frontoffice/records/hygieneFreq/{cleaningFrequency}','RecordsController@getByFrequency');
 
     Route::get('/frontoffice/records/hygiene/history','RecordsController@getHygieneRecordsHistory');
     Route::get('/frontoffice/records/hygiene/history/get','RecordsController@getHygieneByMonth');

@@ -7,7 +7,7 @@
 
 @section('content')
     <div class="container-bar">
-        <p class="container-bar_txt">{{$client->name}}</p>
+        <p class="container-bar_txt">{{$user->name}}</p>
         <div class="container-bar_img">
             <a href="/frontoffice/client/edit/{{$client->id}}"><img src="/img/settings.png"></a>
         </div>
@@ -16,7 +16,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item" aria-current="page">Home</li>
-            <li class="breadcrumb-item " aria-current="page">{{$client->name}}</li>
+            <li class="breadcrumb-item " aria-current="page">{{$user->name}}</li>
         </ol>
     </nav>
     
@@ -40,10 +40,10 @@
                                 {{ csrf_field() }}
                                 <input value="{{$client->id}}" style="display:none" name="id">
                                 <div class="form-group">
-                                    Nova Password: <input class="form-control" value="{{$client->password}}" type="password" name="password">
+                                    Nova Password: <input class="form-control" value="" type="password" name="password">
                                 </div>
                                 <div class="form-group">
-                                    Novo Pin: <input class="form-control" value="{{$client->pin}}" type="password" name="pin">
+                                    Novo Pin: <input class="form-control" value="" type="password" name="pin">
                                 </div>
                                 <div>
                                     <button class="btn btn-Val" >Editar</button>

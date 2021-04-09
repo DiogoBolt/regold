@@ -27,6 +27,7 @@
     </a>
 
     <div class="dropdown-filter">
+        <a href="/frontoffice/messages/allreads/{{$user->client_id}}"><button>Marcar como lidas</button></a>
         <button onclick="myFunction()" class="dropbtn-filter">Filtro</button>
         <div id="myDropdown" class="dropdown-filter-content">
             <a onclick="filterMessage(1)">Caixa de Entrada</a>
@@ -40,6 +41,9 @@
 
     <div class="container">
         <div id="messages-container" class="box-body">
+            @if($messages->isEmpty())
+                <h4 style="position:absolute">Não existem mensagens por ler</h4>
+            @else
             @foreach($messages as $item)
                 <div id= "{{$item->id}}" class="row msg {{$item->name}}
                     {{$item->viewed === 1 ? 'viewed' : 'not-viewed'}}"
@@ -61,6 +65,7 @@
                     </div>
                 </div>
             @endforeach
+            @endif
             <i class="row msg" aria-hidden="true" style="background-color: transparent;box-shadow: none;"></i>
         </div>
     </div>

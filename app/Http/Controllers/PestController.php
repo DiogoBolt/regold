@@ -5,50 +5,20 @@ namespace App\Http\Controllers;
 
 use App\AnswerDeviceMain;
 use App\AnswerDeviceWarranty;
-use App\Callback;
-use App\Cart;
-use App\Category;
 use App\Customer;
 use App\Devices;
-use App\DocumentSuperType;
-use App\DocumentType;
-use App\Favorite;
-use App\Group;
-use App\Message;
-use App\Order;
 use App\ReportMaintenance;
 use App\ReportPest;
-use App\OrderLine;
-use App\Product;
-use App\Receipt;
 use App\ReportPestObs;
 use App\ReportPunctual;
 use App\ReportPunctualData;
 use App\ReportWarranty;
 use App\User;
-use App\Section;
-use App\ClientSection;
 use App\ControlCustomizationClients;
-use App\Area;
-use App\Equipment;
-use App\CleanFrequency;
-use App\AreaSectionClient;
-use App\EquipmentSectionClient;
-use App\TechnicalHACCP;
-use App\RulesList;
-use App\Report;
-use App\RulesAnswerReport;
-use App\ReportSectionObs;
-use Illuminate\Hashing\BcryptHasher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
-use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Validator;
-use phpDocumentor\Reflection\DocBlock\Tags\See;
+
 use function Sodium\compare;
 
 
@@ -63,6 +33,7 @@ class PestController extends Controller
     {
         $this->middleware('auth');
     }
+
 
     public function firstService()
     {

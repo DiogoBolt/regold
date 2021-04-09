@@ -44,23 +44,21 @@ class FrontofficeController extends Controller
 
     public function showCustomer()
     {
-
         $user=Auth::user();
 
-        $client = Customer::where('id',$user->client_id)
+        $user = User::where('id',$user->id)
         ->first();
 
+        $client = Customer::where('id',$user->client_id)->first();
 
-        return view('frontoffice.show',compact('client'));
+        return view('frontoffice.show',compact('user','client'));
     }
     public function saveEditClient(Request $request)
     {
         $user=Auth::user();
         $inputs=$request->all();
 
-        $client = Customer::where('id',$inputs['id'])->first();
-
-       /* $user = User::where('id',$client->ownerID)->first();*/
+        $client=Customer::where('id',$inputs['id'])->first();
 
         $options = [
             'cost' => 10
@@ -73,9 +71,8 @@ class FrontofficeController extends Controller
             $user->pin=password_hash($inputs['pin'], PASSWORD_BCRYPT, $options);
             $user->save();
         }
-        $client->save();
 
-        return view('frontoffice.show',compact('client'));
+        return view('frontoffice.show',compact('client','user'));
 
     }
 
@@ -528,7 +525,7 @@ class FrontofficeController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('frontoffice.messages',compact('messages'));
+        return view('frontoffice.messages',compact('messages','user'));
     }
     function filterMessages($type){
 
@@ -569,6 +566,19 @@ class FrontofficeController extends Controller
         $message=Message::where('id',$id)->first();
         $message->viewed=1;
         $message->save();
+    }
+    function allreads($id){
+
+        $messages=Message::where('receiver_id',$id)
+            ->where('viewed',0)
+            ->get();
+
+        foreach ($messages as $message){
+            $message->viewed=1;
+            $message->save();
+        }
+
+        return back();
     }
 
     public function processCart(Request $request)
