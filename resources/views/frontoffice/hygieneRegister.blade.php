@@ -81,7 +81,7 @@
                                 @endforeach
                             </td>
                             <td>{{$area->observation}}</td>
-                            <td><input name="checkbox[]" type="checkbox" id="{{$area->designation}}" value='{"idArea":{{$area->id}},"idProduct":{{$area->productId}},"designation":"{{$area->designation}}","idCleaningFrequency":1}'></td>
+                            <td><input name="checkbox[]" type="checkbox" id="{{$area->designation}}" value='{"idArea":{{$area->id}},"idProduct":{{$area->productId}},"designation":"{{$area->designation}}","idSection":"{{$area->idSection}}","idCleaningFrequency":1}'></td>
                             </tbody>
                     @endforeach
                 </table>
@@ -111,7 +111,7 @@
                                 @endforeach
                             </td>
                             <td>{{$equip->observation}}</td>
-                            <td><input name="checkbox[]" type="checkbox" id="{{$equip->designation}}" value='{"idEquipment":{{$equip->id}},"idProduct":{{$equip->productId}},"designation":"{{$equip->designation}}","idCleaningFrequency":1}'></td>
+                            <td><input name="checkbox[]" type="checkbox" id="{{$equip->designation}}" value='{"idEquipment":{{$equip->id}},"idProduct":{{$equip->productId}},"designation":"{{$equip->designation}}","idSection":"{{$equip->idSection}}","idCleaningFrequency":1}'></td>
                             </tbody>
                     @endforeach
                 </table>
@@ -180,27 +180,29 @@
             type: 'GET',
             url: "/frontoffice/records/hygieneFreq/" + id,
         }).done(function (data) {
+            $('#tbody-area').empty()
+            $('#tbody-equip').empty()
             $('#table-area').css("display", "block")
             $('#table-equip').css("display", "block")
             for(var i=0;i<data[0].length;i++ ) {
-                $('#tbody-area').empty().append(`
+                $('#tbody-area').append(`
                     <tr>
                         <td>${data[0][i].designation}</td>
                         <td>${data[0][i].sectionDesignation}</td>
                         <td><a href="/frontoffice/product/${data[0][i].productId}">${data[0][i].productName}</a></td>
                         <td>${data[0][i].observation?null:''}</td>
-                        <td><input name="checkbox[]" type="checkbox" id="${data[0][i].designation}" value='{"idArea":${data[0][i].id},"idProduct":${data[0][i].productId},"designation":"${data[0][i].designation}","idCleaningFrequency":"${id}"}'></td>
+                        <td><input name="checkbox[]" type="checkbox" id="${data[0][i].designation}" value='{"idArea":${data[0][i].id},"idProduct":${data[0][i].productId},"designation":"${data[0][i].designation}","idSection":"${data[0][i].idSection}","idCleaningFrequency":"${id}"}'></td>
                     </tr>
              `)
             }
             for(var i=0;i<data[1].length;i++ ) {
-                $('#tbody-equip').empty().append(`
+                $('#tbody-equip').append(`
                     <tr>
                         <td>${data[1][i].designation}</td>
                         <td>${data[1][i].sectionDesignation}</td>
                         <td><a href="/frontoffice/product/${data[1][i].productId}">${data[1][i].productName}</a></td>
                         <td>${data[1][i].observation?null:''}</td>
-                        <td><input name="checkbox[]" type="checkbox" id="${data[1][i].designation}" value='{"idEquipment":${data[1][i].id},"idProduct":${data[1][i].productId},"designation":"${data[1][i].designation}","idCleaningFrequency":"${id}"}'></td>
+                        <td><input name="checkbox[]" type="checkbox" id="${data[1][i].designation}" value='{"idEquipment":${data[1][i].id},"idProduct":${data[1][i].productId},"designation":"${data[1][i].designation}","idSection":"${data[1][i].idSection}","idCleaningFrequency":"${id}"}'></td>
                     </tr>
              `)
             }
@@ -226,6 +228,7 @@
                 checkbox.idProduct=values['idProduct'];
                 checkbox.idCleaningFrequency=values['idCleaningFrequency']
                 checkbox.designation=values['designation'];
+                checkbox.idSection=values['idSection'];
                 allCheckboxes.push(checkbox);
             }
         }

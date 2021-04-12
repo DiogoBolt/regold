@@ -111,10 +111,11 @@
                             <div id="typeSpecie" class="form-group" >
                                 Ação Desenvolvida:  <select class="form-control" name="action">
                                     <option disabled selected value="">Selecione a Ação</option>
-                                    <option value="Foi efetivada pulverização localizada">Foi efetivada pulverização localizada</option>
-                                    <option value="Foi efetivada pulverização em locais apropriados">Foi efetivada pulverização em locais apropriados</option>
+                                    <option value="Foi efetuada pulverização localizada">Foi efetuada pulverização localizada</option>
+                                    <option value="Foi efetuada pulverização em locais apropriados">Foi efetuada pulverização em locais apropriados</option>
                                     <option value="Foi aplicado gel insecticida em locais apropriados">Foi aplicado gel insecticida em locais apropriados</option>
                                     <option value="Foi colocado raticida nos locais apropriados">Foi colocado raticida nos locais apropriados</option>
+                                    <option value="Foi efetuada a pulverização e aplicado o gel insecticida">Foi efetuada a pulverização e aplicado o gel insecticida</option>
                                     <option value="Outra">Outra</option>
                                 </select>
                             </div>

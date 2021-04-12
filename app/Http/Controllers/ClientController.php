@@ -588,8 +588,8 @@ class ClientController extends Controller
         //email
         $establisment->nif = $inputs['nif'];
         $establisment->salesman = $inputs['salesman'];
-        $establisment->technical_haccp = $inputs['technicalhaccp'];
-        $establisment->technical_cp = $inputs['technicalcp'];
+        /*$establisment->technical_haccp = $inputs['technicalhaccp'];
+        $establisment->technical_cp = $inputs['technicalcp'];*/
         $establisment->telephone = $inputs['telephone'];
         $establisment->activity=1;
 

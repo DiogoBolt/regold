@@ -264,7 +264,7 @@ class RecordsController extends Controller
 
             $equipDaily = EquipmentSectionClient::WhereDoesntHave('hygieneRecordE',function ($query){
                 $query->where('created_at','>',Carbon::today())
-                    ->where('idCleaningFrequency',2);
+                    ->where('idCleaningFrequency',1);
             })
                 ->where('idClient',$auxClientId)
                 ->whereIN('idSection',$ids)
@@ -319,8 +319,6 @@ class RecordsController extends Controller
                 })
                 ->orderBy('idSection')
                 ->get();
-
-
 
             $itemsE = EquipmentSectionClient::WhereDoesntHave('hygieneRecordE',function ($query){
                 $query->where('created_at','>',Carbon::today())
@@ -475,7 +473,7 @@ class RecordsController extends Controller
             $recordsHygiene->idProduct=$checkbox->idProduct;
             $recordsHygiene->designation=$checkbox->designation;
             $recordsHygiene->idCleaningFrequency=$checkbox->idCleaningFrequency;
-            $recordsHygiene->checked=1;
+            $recordsHygiene->idSection=$checkbox->idSection;
             $recordsHygiene->save();
         }
     }
@@ -509,11 +507,18 @@ class RecordsController extends Controller
             ->where('idCleaningFrequency',$cleaningFrequency)
             ->whereBetween('updated_at', [$start_month, $end_month])
             ->select([
-                'id', 'idClient', 'idArea','idEquipment','idProduct','idCleaningFrequency','designation','checked',DB::raw('DAY(created_at) as day'), DB::raw('DAY(updated_at) as day')
+                'id', 'idClient', 'idArea','idEquipment','idProduct','idCleaningFrequency','designation','idSection',DB::raw('DAY(created_at) as day'), DB::raw('DAY(updated_at) as day')
             ])
             ->orderBy('idArea', 'asc')
             ->orderBy('idEquipment','asc')
             ->get();
+
+        foreach ($item as $i){
+            if($i->idSection!=null)
+            $i->sectionDesignation = ClientSection::where('id',$i->idSection)->first()->designation;
+            else
+                $i->sectionDesignation = '';
+        }
 
         return response()->json($item);
     }
