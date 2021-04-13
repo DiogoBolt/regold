@@ -240,7 +240,6 @@ class RecordsController extends Controller
                 $query->where('created_at','>',Carbon::today())
                     ->where('idCleaningFrequency',1);
             })
-                ->where('idClient',$auxClientId)
                 ->whereIN('idSection',$ids)
                 ->Where(function($query) {
                     $query->where('idCleaningFrequency',1)
@@ -266,7 +265,6 @@ class RecordsController extends Controller
                 $query->where('created_at','>',Carbon::today())
                     ->where('idCleaningFrequency',1);
             })
-                ->where('idClient',$auxClientId)
                 ->whereIN('idSection',$ids)
                 ->Where(function($query) {
                     $query->where('idCleaningFrequency',1)
@@ -310,7 +308,6 @@ class RecordsController extends Controller
                 $query->where('created_at','>',Carbon::today())
                     ->where('idCleaningFrequency',1);
             })
-                ->where('idClient',$auxClientId)
                 ->whereIN('idSection',$ids)
                 ->Where(function($query) {
                     $query->where('idCleaningFrequency',1)
@@ -324,7 +321,6 @@ class RecordsController extends Controller
                 $query->where('created_at','>',Carbon::today())
                     ->where('idCleaningFrequency',1);
             })
-                ->where('idClient',$auxClientId)
                 ->whereIN('idSection',$ids)
                 ->Where(function($query) {
                     $query->where('idCleaningFrequency',1)
@@ -340,7 +336,6 @@ class RecordsController extends Controller
                 $query->where('created_at','>',Carbon::today()->subDay(7))
                     ->where('idCleaningFrequency',2);
             })
-                ->where('idClient',$auxClientId)
                 ->whereIN('idSection',$ids)
                 ->Where(function($query) {
                     $query->where('idCleaningFrequency',2)
@@ -354,7 +349,6 @@ class RecordsController extends Controller
                 $query->where('created_at','>',Carbon::today()->subDay(7))
                     ->where('idCleaningFrequency',2);
             })
-                ->where('idClient',$auxClientId)
                 ->whereIN('idSection',$ids)
                 ->Where(function($query) {
                     $query->where('idCleaningFrequency',2)
@@ -370,7 +364,6 @@ class RecordsController extends Controller
                 $query->where('created_at','>',Carbon::today()->subDay(14))
                     ->where('idCleaningFrequency',3);
             })
-                ->where('idClient',$auxClientId)
                 ->whereIN('idSection',$ids)
                 ->Where(function($query) {
                     $query->where('idCleaningFrequency',3)
@@ -384,7 +377,6 @@ class RecordsController extends Controller
                 $query->where('created_at','>',Carbon::today()->subDay(14))
                     ->where('idCleaningFrequency',3);
             })
-                ->where('idClient',$auxClientId)
                 ->whereIN('idSection',$ids)
                 ->Where(function($query) {
                     $query->where('idCleaningFrequency',3)
@@ -399,7 +391,6 @@ class RecordsController extends Controller
                 $query->where('created_at','>',Carbon::today()->subDay(30))
                     ->where('idCleaningFrequency',4);
             })
-                ->where('idClient',$auxClientId)
                 ->whereIN('idSection',$ids)
                 ->Where(function($query) {
                     $query->where('idCleaningFrequency',4)
@@ -413,7 +404,6 @@ class RecordsController extends Controller
                 $query->where('created_at','>',Carbon::today()->subDay(30))
                 ->where('idCleaningFrequency',4);
             })
-                ->where('idClient',$auxClientId)
                 ->whereIN('idSection',$ids)
                 ->Where(function($query) {
                     $query->where('idCleaningFrequency',4)

@@ -25,8 +25,6 @@ function showModal(idModal){
             --qtdDiv;
         }
         $('.news')[0].children[0].value="";
-        $('.news')[0].children[1].selectedIndex=0
-        $('.news')[0].children[2].selectedIndex=0
         $('.news')[0].children[3].selectedIndex=0
         $('.news')[0].children[4].selectedIndex=0
         $('.news')[0].children[5].selectedIndex=0
@@ -41,8 +39,6 @@ function showModal(idModal){
             --qtdDiv;
         }
         $('.newsE')[0].children[0].value="";
-        $('.newsE')[0].children[1].selectedIndex=0
-        $('.newsE')[0].children[2].selectedIndex=0
         $('.newsE')[0].children[3].selectedIndex=0
         $('.newsE')[0].children[4].selectedIndex=0
         $('.newsE')[0].children[5].selectedIndex=0
