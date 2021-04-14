@@ -66,7 +66,7 @@
 
                             <h1 id="sectionTitle" class="title">{{$section->designation}}</h1>
 
-                            <p class="tableLegend">Legenda: <b>C-</b> Conforme <b>C- </b>Não Conforme <b>NA-</b> Não Aplicavél</p>
+                            <p class="tableLegend">Legenda: <b>C-</b> Conforme <b>NC- </b>Não Conforme <b>NA-</b> Não Aplicavél</p>
                         
                             <div class="tableContainer">
                                 <table class="table" id="reportRules">
@@ -81,15 +81,9 @@
                                     <tbody>
                                         @foreach($reportsAnswers as $rule)
                                             @if($section->id==$rule->idClientSection)
-                                                @if($rule->rule->first==1)
-                                                <tr>
-                                                    <td>{{$rule->rule->type}}</td>
-                                                </tr>
-                                                @endif
-
                                                 <tr class="tableRow"> 
                                                     <th class="index">{{$rule->index}}</th>
-                                                    <td class="tdBackground tdRule"><label class="rule">{{$rule->rule->rule}}</label></td>
+                                                    <td class="tdBackground tdRule"><label class="rule">{{$rule->rule}}</label></td>
                                                     <td class="tdBackground" name="radio">
                                                         @if($rule->answer == 'c')
                                                             <input type=radio  checked/>
@@ -130,7 +124,7 @@
                                                     </td>
                                                 </tr>
                                             @endif
-                                    @endforeach
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -158,7 +152,7 @@
                                                 @if($rule->answer=='nc' && $section->id==$rule->idClientSection)
                                                     <tr class="tableRow" style="display:table-row">
                                                         <th class="index" >{{$rule->index}}</th>
-                                                        <td class="tdRuleBackground"><label class="rule">{{$rule->rule->rule}}</label></td>
+                                                        <td class="tdRuleBackground"><label class="rule">{{$rule->rule}}</label></td>
                                                         <td id="correctiveTd"><label class="corrective">{{$rule->corrective}}</label></td>
                                                     </tr>
                                                 @endif

@@ -32,6 +32,7 @@
 
     <div class="container">
         <div class="container-docs">
+
             @if(count($receipts) > 0)
                 <table class="table">
                     <tr>

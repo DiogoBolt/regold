@@ -38,15 +38,11 @@
                         <th>Data/Hora</th>
                         <th></th>
                     </tr>
-                    <?php $i=0;
-                    ?>
 
                     @foreach($reports as $report)
-                        <?php $i++
-                        ?>
                         <tr>
                             <td>
-                                {{$i}}
+                                {{$report->index}}
                             </td>
                             <td>{{$report->updated_at}}</td>
                             <td><a href="/frontoffice/reportShow/{{$report->id}}">Ver</a></td>
