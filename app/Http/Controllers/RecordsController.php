@@ -236,15 +236,15 @@ class RecordsController extends Controller
             array_push($ids,$clientSection->id);
         }
 
-            $areasDaily = AreaSectionClient::WhereDoesntHave('hygieneRecord',function ($query){
-                $query->where('created_at','>',Carbon::today())
-                    ->where('idCleaningFrequency',1);
-            })
-                ->whereIN('idSection',$ids)
+            $areasDaily = AreaSectionClient::whereIN('idSection',$ids)
                 ->Where(function($query) {
                     $query->where('idCleaningFrequency',1)
                         ->orwhere('idCleaningFrequency2',1)
                         ->orwhere('idCleaningFrequency3',1);
+                })
+                ->WhereDoesntHave('hygieneRecord',function ($query){
+                    $query->where('created_at','>',Carbon::today())
+                        ->where('idCleaningFrequency',1);
                 })
                 ->orderBy('idSection')
                 ->get();
@@ -261,16 +261,17 @@ class RecordsController extends Controller
                 }
             }
 
-            $equipDaily = EquipmentSectionClient::WhereDoesntHave('hygieneRecordE',function ($query){
-                $query->where('created_at','>',Carbon::today())
-                    ->where('idCleaningFrequency',1);
-            })
-                ->whereIN('idSection',$ids)
+            $equipDaily = EquipmentSectionClient::whereIN('idSection',$ids)
                 ->Where(function($query) {
                     $query->where('idCleaningFrequency',1)
                         ->orwhere('idCleaningFrequency2',1)
                         ->orwhere('idCleaningFrequency3',1);
                 })
+                ->WhereDoesntHave('hygieneRecordE',function ($query){
+                    $query->where('created_at','>',Carbon::today())
+                        ->where('idCleaningFrequency',1);
+                })
+
                 ->orderBy('idSection')
                 ->get();
 
@@ -304,111 +305,111 @@ class RecordsController extends Controller
         }
         if($id==1){
 
-            $itemsA = AreaSectionClient::WhereDoesntHave('hygieneRecord',function ($query){
-                $query->where('created_at','>',Carbon::today())
-                    ->where('idCleaningFrequency',1);
-            })
-                ->whereIN('idSection',$ids)
+            $itemsA = AreaSectionClient::whereIN('idSection',$ids)
                 ->Where(function($query) {
                     $query->where('idCleaningFrequency',1)
                         ->orwhere('idCleaningFrequency2',1)
                         ->orwhere('idCleaningFrequency3',1);
                 })
+                ->WhereDoesntHave('hygieneRecord',function ($query){
+                    $query->where('created_at','>',Carbon::today())
+                        ->where('idCleaningFrequency',1);
+                })
                 ->orderBy('idSection')
                 ->get();
 
-            $itemsE = EquipmentSectionClient::WhereDoesntHave('hygieneRecordE',function ($query){
-                $query->where('created_at','>',Carbon::today())
-                    ->where('idCleaningFrequency',1);
-            })
-                ->whereIN('idSection',$ids)
+            $itemsE = EquipmentSectionClient::whereIN('idSection',$ids)
                 ->Where(function($query) {
                     $query->where('idCleaningFrequency',1)
                         ->orwhere('idCleaningFrequency2',1)
                         ->orwhere('idCleaningFrequency3',1);
+                })
+                ->WhereDoesntHave('hygieneRecordE',function ($query){
+                    $query->where('created_at','>',Carbon::today())
+                        ->where('idCleaningFrequency',1);
                 })
                 ->orderBy('idSection')
                 ->get();
         }
         elseif($id==2){
 
-            $itemsA = AreaSectionClient::WhereDoesntHave('hygieneRecord',function ($query){
-                $query->where('created_at','>',Carbon::today()->subDay(7))
-                    ->where('idCleaningFrequency',2);
-            })
-                ->whereIN('idSection',$ids)
+            $itemsA = AreaSectionClient::whereIN('idSection',$ids)
                 ->Where(function($query) {
                     $query->where('idCleaningFrequency',2)
                         ->orwhere('idCleaningFrequency2',2)
                         ->orwhere('idCleaningFrequency3',2);
                 })
+                ->WhereDoesntHave('hygieneRecord',function ($query){
+                    $query->where('created_at','>',Carbon::today()->subDay(7))
+                        ->where('idCleaningFrequency',2);
+                })
                 ->orderBy('idSection')
                 ->get();
 
-            $itemsE = EquipmentSectionClient::WhereDoesntHave('hygieneRecordE',function ($query){
-                $query->where('created_at','>',Carbon::today()->subDay(7))
-                    ->where('idCleaningFrequency',2);
-            })
-                ->whereIN('idSection',$ids)
+            $itemsE = EquipmentSectionClient::whereIN('idSection',$ids)
                 ->Where(function($query) {
                     $query->where('idCleaningFrequency',2)
                         ->orwhere('idCleaningFrequency2',2)
                         ->orwhere('idCleaningFrequency3',2);
+                })
+                ->WhereDoesntHave('hygieneRecordE',function ($query){
+                    $query->where('created_at','>',Carbon::today()->subDay(7))
+                        ->where('idCleaningFrequency',2);
                 })
                 ->orderBy('idSection')
                 ->get();
 
         }elseif($id==3)
         {
-            $itemsA = AreaSectionClient::WhereDoesntHave('hygieneRecord',function ($query){
-                $query->where('created_at','>',Carbon::today()->subDay(14))
-                    ->where('idCleaningFrequency',3);
-            })
-                ->whereIN('idSection',$ids)
+            $itemsA = AreaSectionClient::whereIN('idSection',$ids)
                 ->Where(function($query) {
                     $query->where('idCleaningFrequency',3)
                         ->orwhere('idCleaningFrequency2',3)
                         ->orwhere('idCleaningFrequency3',3);
                 })
+                ->WhereDoesntHave('hygieneRecord',function ($query){
+                    $query->where('created_at','>',Carbon::today()->subDay(14))
+                        ->where('idCleaningFrequency',3);
+                })
                 ->orderBy('idSection')
                 ->get();
 
-            $itemsE = EquipmentSectionClient::WhereDoesntHave('hygieneRecordE',function ($query){
-                $query->where('created_at','>',Carbon::today()->subDay(14))
-                    ->where('idCleaningFrequency',3);
-            })
-                ->whereIN('idSection',$ids)
+            $itemsE = EquipmentSectionClient::whereIN('idSection',$ids)
                 ->Where(function($query) {
                     $query->where('idCleaningFrequency',3)
                         ->orwhere('idCleaningFrequency2',3)
                         ->orwhere('idCleaningFrequency3',3);
+                })
+                ->WhereDoesntHave('hygieneRecordE',function ($query){
+                    $query->where('created_at','>',Carbon::today()->subDay(14))
+                        ->where('idCleaningFrequency',3);
                 })
                 ->orderBy('idSection')
                 ->get();
 
         }elseif ($id==4){
-            $itemsA = AreaSectionClient::WhereDoesntHave('hygieneRecord',function ($query){
-                $query->where('created_at','>',Carbon::today()->subDay(30))
-                    ->where('idCleaningFrequency',4);
-            })
-                ->whereIN('idSection',$ids)
+            $itemsA = AreaSectionClient::whereIN('idSection',$ids)
                 ->Where(function($query) {
                     $query->where('idCleaningFrequency',4)
                         ->orwhere('idCleaningFrequency2',4)
                         ->orwhere('idCleaningFrequency3',4);
                 })
+                ->WhereDoesntHave('hygieneRecord',function ($query){
+                    $query->where('created_at','>',Carbon::today()->subDay(30))
+                        ->where('idCleaningFrequency',4);
+                })
                 ->orderBy('idSection')
                 ->get();
 
-            $itemsE = EquipmentSectionClient::WhereDoesntHave('hygieneRecordE',function ($query){
-                $query->where('created_at','>',Carbon::today()->subDay(30))
-                ->where('idCleaningFrequency',4);
-            })
-                ->whereIN('idSection',$ids)
+            $itemsE = EquipmentSectionClient::whereIN('idSection',$ids)
                 ->Where(function($query) {
                     $query->where('idCleaningFrequency',4)
                         ->orwhere('idCleaningFrequency2',4)
                         ->orwhere('idCleaningFrequency3',4);
+                })
+                ->WhereDoesntHave('hygieneRecordE',function ($query){
+                    $query->where('created_at','>',Carbon::today()->subDay(30))
+                        ->where('idCleaningFrequency',4);
                 })
                 ->orderBy('idSection')
                 ->get();
