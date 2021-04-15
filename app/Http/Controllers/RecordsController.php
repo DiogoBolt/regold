@@ -520,6 +520,18 @@ class RecordsController extends Controller
         return view('frontoffice.printRecordsHygiene')->with(['details' => $print_data[0] , 'data' => $print_data[1]]);
     }
 
+    public function getObservation($id,$type){
+
+        if($type=='a')
+        {
+            $observation = AreaSectionClient::where('id',$id)->first()->observation;
+        }else{
+            $observation = EquipmentSectionClient::where('id',$id)->first()->observation;
+        }
+
+        return $observation;
+    }
+
     ///////////REGISTOS DE TEMPERATURA//////////////////////////////////////////////////////////////////////
 
     public function getTemperatureRecords()

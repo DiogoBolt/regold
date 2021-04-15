@@ -167,6 +167,7 @@ Route::group(['middleware'=>['permissionStaff']],function(){
 
     Route::get('/frontoffice/records/hygiene','RecordsController@getHygieneRecords');
     Route::post('/frontoffice/records/hygiene/save','RecordsController@saveHygieneRecords');
+    Route::get('/frontoffice/getObservation/{id}/{type}', 'RecordsController@getObservation');
 
     Route::get('/frontoffice/records/hygieneFreq/{cleaningFrequency}','RecordsController@getByFrequency');
 
