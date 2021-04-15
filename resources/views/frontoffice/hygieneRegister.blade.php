@@ -80,7 +80,9 @@
                                     @endif
                                 @endforeach
                             </td>
-                            <td>{{$area->observation}}</td>
+                            <td>
+                                <span class="show-info" data-toggle="modal" data-target="#info-modal" onclick="showObservation({{$area->id}},'a')"><i class="glyphicon glyphicon-info-sign"></i></span>
+                            </td>
                             <td><input name="checkbox[]" type="checkbox" id="{{$area->designation}}" value='{"idArea":{{$area->id}},"idProduct":{{$area->productId}},"designation":"{{$area->designation}}","idSection":"{{$area->idSection}}","idCleaningFrequency":1}'></td>
                             </tbody>
                     @endforeach
@@ -110,7 +112,9 @@
                                     @endif
                                 @endforeach
                             </td>
-                            <td>{{$equip->observation}}</td>
+                            <td>
+                                <span class="show-info" data-toggle="modal" data-target="#info-modal" onclick="showObservation({{$equip->id}},'e')" ><i class="glyphicon glyphicon-info-sign"></i></span>
+                            </td>
                             <td><input name="checkbox[]" type="checkbox" id="{{$equip->designation}}" value='{"idEquipment":{{$equip->id}},"idProduct":{{$equip->productId}},"designation":"{{$equip->designation}}","idSection":"{{$equip->idSection}}","idCleaningFrequency":1}'></td>
                             </tbody>
                     @endforeach
@@ -157,6 +161,24 @@
             <a class="btn-history" href="/frontoffice/records/hygiene/history">Histórico</a>
         </div>
 
+        <div id="info-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Info</h4>
+                    </div>
+                    <div class="modal-body" id="infomodal">
+                        <!-- METE AQUI O TEXTO POR JS STICK LA PICE -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
 
 <script>
     function openFrequency(evt, id) {
@@ -190,7 +212,7 @@
                         <td>${data[0][i].designation}</td>
                         <td>${data[0][i].sectionDesignation}</td>
                         <td><a href="/frontoffice/product/${data[0][i].productId}">${data[0][i].productName}</a></td>
-                        <td>${data[0][i].observation?null:''}</td>
+                        <td><span class="show-info" data-toggle="modal" data-target="#info-modal" onclick="showObservation(${data[0][i].id}},'a')" ><i class="glyphicon glyphicon-info-sign"></i></span></td>
                         <td><input name="checkbox[]" type="checkbox" id="${data[0][i].designation}" value='{"idArea":${data[0][i].id},"idProduct":${data[0][i].productId},"designation":"${data[0][i].designation}","idSection":"${data[0][i].idSection}","idCleaningFrequency":"${id}"}'></td>
                     </tr>
              `)
@@ -201,7 +223,7 @@
                         <td>${data[1][i].designation}</td>
                         <td>${data[1][i].sectionDesignation}</td>
                         <td><a href="/frontoffice/product/${data[1][i].productId}">${data[1][i].productName}</a></td>
-                        <td>${data[1][i].observation?null:''}</td>
+                        <td><span class="show-info" data-toggle="modal" data-target="#info-modal" onclick="showObservation(${data[1][i].id}},'e')" ><i class="glyphicon glyphicon-info-sign"></i></span></td>
                         <td><input name="checkbox[]" type="checkbox" id="${data[1][i].designation}" value='{"idEquipment":${data[1][i].id},"idProduct":${data[1][i].productId},"designation":"${data[1][i].designation}","idSection":"${data[1][i].idSection}","idCleaningFrequency":"${id}"}'></td>
                     </tr>
              `)
@@ -247,6 +269,14 @@
                 window.location.replace('/frontoffice/records/hygiene');
             },1000)
         );
+    }
+
+    function showObservation(id,type) {
+        $('#infomodal').html('');
+        $.get('/frontoffice/getObservation/'+id+'/'+type, function( data ) {
+            console.log(data)
+            $('#infomodal').append(data);
+        });
     }
 </script>
 
