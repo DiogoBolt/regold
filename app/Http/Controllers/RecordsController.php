@@ -565,6 +565,8 @@ class RecordsController extends Controller
                 elseif($clientthermo->thermo->signal_power >= 22) {
                     $clientthermo->signal_power = 4;
                 }
+            }else{
+                $clientthermo->signal_power = 1;
             }
         }
 
@@ -685,7 +687,9 @@ class RecordsController extends Controller
         $inputs = $request->all();
         $thermo = ClientThermo::where('id',$inputs['idThermo'])->first();
 
-        $thermo->number = $inputs['name'];
+        $thermo->number = $request->filled('name') ? $inputs['name'] : $thermo->number;
+        $thermo->imei = $request->filled('imei') ? $inputs['imei'] : $thermo->imei;
+        $thermo->updateTimer = $request->filled('update') ? $inputs['update'] : $thermo->updateTimer;
         $thermo->save();
 
         return back();
