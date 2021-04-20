@@ -69,11 +69,15 @@
                     <div class="register-arc cooling">
                         <div class="register-arc__info">
                             <div class="register-arc__info-extra">
-                                <span><img style="width:20px;height:20px" src="{{ URL::to('/') }}/img/signal-icon-{{$thermo->signal_power}}.png">{{$thermo->thermo->signal_power}}</span>
+                                <span><img style="width:20px;height:20px" src="{{ URL::to('/') }}/img/signal-icon-{{$thermo->signal_power}}.png">{{isset($thermo->thermo->signal_power) ? $thermo->thermo->signal_power : 0}}</span>
                                 <span class="show-info" data-toggle="modal" data-target="#info-modal" onclick="showLastReads({{$thermo->id}})"><i class="glyphicon glyphicon-info-sign"></i></span>
                             </div>
                             <p>arca de refrigeração</p>
-                            <h1 onclick="showEditName({{$thermo->id}})">{{$thermo->number}}</h1>
+                            @if(Session::has('impersonated'))
+                                <h1 onclick="showEditName({{$thermo->id}})">{{$thermo->number}}</h1>
+                            @else
+                                <h1>{{$thermo->number}}</h1>
+                            @endif
                         </div>
                         <div class="register-arc__data">
                             <span>{{$thermo->fridgeType->min_temp}}º/c até {{$thermo->fridgeType->max_temp}}º/c</span>
@@ -110,11 +114,15 @@
                     <div class="register-arc freezing">
                         <div class="register-arc__info">
                             <div class="register-arc__info-extra">
-                                    <span><img style="width:20px;height:20px" src="{{ URL::to('/') }}/img/signal-icon-{{$thermo->signal_power}}.png">{{$thermo->thermo->signal_power}}</span>
+                                    <span><img style="width:20px;height:20px" src="{{ URL::to('/') }}/img/signal-icon-{{$thermo->signal_power}}.png">{{isset($thermo->thermo->signal_power) ? $thermo->thermo->signal_power : 0}}</span>
                                 <span class="show-info" data-toggle="modal" data-target="#info-modal" onclick="showLastReads({{$thermo->id}})"><i class="glyphicon glyphicon-info-sign"></i></span>
                             </div>
                             <p>arca de congelação</p>
-                            <h1 class="term" onclick="showEditName({{$thermo->id}})">{{$thermo->number}}</h1>
+                            @if(Session::has('impersonated'))
+                                <h1 onclick="showEditName({{$thermo->id}})">{{$thermo->number}}</h1>
+                            @else
+                                <h1>{{$thermo->number}}</h1>
+                            @endif
                         </div>
                         <div class="register-arc__data">
                             <span>{{$thermo->fridgeType->min_temp}}º/c até {{$thermo->fridgeType->max_temp}}º/c</span>
@@ -153,11 +161,15 @@
                         <div class="register-arc cooling">
                             <div class="register-arc__info">
                                 <div class="register-arc__info-extra">
-                                    <span><img style="width:20px;height:20px" src="{{ URL::to('/') }}/img/signal-icon-{{$thermo->signal_power}}.png">{{$thermo->thermo->signal_power}}</span>
+                                    <span><img style="width:20px;height:20px" src="{{ URL::to('/') }}/img/signal-icon-{{$thermo->signal_power}}.png">{{isset($thermo->thermo->signal_power) ? $thermo->thermo->signal_power : 0}}</span>
                                     <span class="show-info" data-toggle="modal" data-target="#info-modal" onclick="showLastReads({{$thermo->id}})"><i class="glyphicon glyphicon-info-sign"></i></span>
                                 </div>
                                 <p>arca de refrigeração</p>
-                                <h1 onclick="showEditName({{$thermo->id}})">{{$thermo->number}}</h1>
+                                @if(Session::has('impersonated'))
+                                    <h1 onclick="showEditName({{$thermo->id}})">{{$thermo->number}}</h1>
+                                @else
+                                    <h1>{{$thermo->number}}</h1>
+                                @endif
                             </div>
                             <div class="register-arc__data">
                                 <span>{{$thermo->fridgeType->min_temp}}º/c até {{$thermo->fridgeType->max_temp}}º/c</span>
@@ -194,11 +206,15 @@
                         <div class="register-arc freezing">
                             <div class="register-arc__info">
                                 <div class="register-arc__info-extra">
-                                    <span><img style="width:20px;height:20px" src="{{ URL::to('/') }}/img/signal-icon-{{$thermo->signal_power}}.png">{{$thermo->thermo->signal_power}}</span>
+                                    <span><img style="width:20px;height:20px" src="{{ URL::to('/') }}/img/signal-icon-{{$thermo->signal_power}}.png">{{isset($thermo->thermo->signal_power) ? $thermo->thermo->signal_power : 0}}</span>
                                     <span class="show-info" data-toggle="modal" data-target="#info-modal" onclick="showLastReads({{$thermo->id}})"><i class="glyphicon glyphicon-info-sign"></i></span>
                                 </div>
                                 <p>arca de congelação</p>
+                                @if(Session::has('impersonated'))
                                 <h1 onclick="showEditName({{$thermo->id}})">{{$thermo->number}}</h1>
+                                    @else
+                                    <h1>{{$thermo->number}}</h1>
+                                    @endif
                             </div>
                             <div class="register-arc__data">
                                 <span>{{$thermo->fridgeType->min_temp}}º/c até {{$thermo->fridgeType->max_temp}}º/c</span>
@@ -317,7 +333,9 @@
                     <form action="/frontoffice/editthermosname" method="POST">
                         {{ csrf_field() }}
                         <input id="idThermoName" name="idThermo" type="hidden" value="">
-                        <input  name="name" class="form-control" required>
+                       Nome : <input  name="name" class="form-control" >
+                      Imei :  <input  name="imei" class="form-control" >
+                      Tempo :  <input type="number" name="update" class="form-control" >
                         <button type="submit" class="btn btn-primary">Editar</button>
                     </form>
                 </div>
