@@ -64,7 +64,19 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
+                        Secção :
+                        <select name="clientSection" class="form-control" required>
+                            <option value="" disabled selected>Seleccione Secção</option>
+                            @foreach($clientSections as $section)
+                                <option value="{{ $section->id  }}"{{-- data-type="{{ $thermo->type }}"--}}>
+                                    {{ $section->designation }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="col-sm-2">
                         Frequência :
                         <select name="cleaningFrequency" class="form-control" required>
                             <option value="" disabled selected>Seleccione Frequência</option>
@@ -97,10 +109,10 @@
                 <table id="myTable" class="table table-bordered">
                     <thead>
                     <tr>
-                        <th onclick="sortTable(0)">Área/Equipamento<i class="arrow up"></i></th>
-                        <th onclick="sortTable(1)">Dia<i class="arrow down"></i></th>
-                        <th>Secção</th>
-                        <th>Limpo</th>
+                        <th>Item</th>
+                        @for($i=1;$i<=30;$i++)
+                            <th>{{$i}}</th>
+                        @endfor
                     </tr>
                     </thead>
                     <tbody id="table-body"></tbody>
@@ -175,14 +187,11 @@
 
             response.forEach(data => {
                 /* Weird bug happening, had to send each property separately */
-                tableBody.innerHTML += `
-                    <tr>
+                tableBody.innerHTML +=
+                    `<tr>
                         <td>${data.designation}</td>
-                        <td>${data.day}</td>
-                        <td>${data.sectionDesignation}</td>
-                        <td>Limpo</td>
-                    </tr>
-                `;
+                    </tr>`
+
             });
             cacheData.push(response);
         }

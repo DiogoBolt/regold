@@ -507,6 +507,7 @@ class ProductController extends Controller
 
             foreach ($line_items as $item) {
                 $item->product = Product::where('id', $item->product_id)->first();
+                $item->ref = Product::where('id', $item->product_id)->first()->ref;
             }
 
             $total = OrderLine::where('cart_id', $cart->id)->sum('total');
@@ -723,6 +724,7 @@ class ProductController extends Controller
 
             foreach ($line_items as $item) {
                 $item->product = Product::where('id', $item->product_id)->first();
+                $item->ref = Product::where('id', $item->product_id)->first()->ref;
             }
 
             if ($type === 'single') {

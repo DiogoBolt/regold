@@ -39,6 +39,7 @@
                     <table class="table table-bordered">
                         <tr>
                             <th>Nome</th>
+                            <th>Ref</th>
                             <th>Quantidade</th>
                             <th>Preço/Unidade</th>
                             <th>Total</th>
@@ -46,6 +47,7 @@
                         @foreach($line_items as $item)
                             <tr>
                                 <td>{{$item->product->name}}</td>
+                                <td>{{$item->ref}}</td>
                                 <td>{{$item->amount}}</td>
                                 <td>{{$item->total/$item->amount}}€</td>
                                 <td>{{number_format($item->total,2)}}€</td>

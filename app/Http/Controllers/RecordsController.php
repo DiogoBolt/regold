@@ -271,7 +271,6 @@ class RecordsController extends Controller
                     $query->where('created_at','>',Carbon::today())
                         ->where('idCleaningFrequency',1);
                 })
-
                 ->orderBy('idSection')
                 ->get();
 
@@ -303,117 +302,32 @@ class RecordsController extends Controller
         foreach ($clientSections as $clientSection){
             array_push($ids,$clientSection->id);
         }
-        if($id==1){
 
             $itemsA = AreaSectionClient::whereIN('idSection',$ids)
-                ->Where(function($query) {
-                    $query->where('idCleaningFrequency',1)
-                        ->orwhere('idCleaningFrequency2',1)
-                        ->orwhere('idCleaningFrequency3',1);
+                ->Where(function($query) use ($id) {
+                    $query->where('idCleaningFrequency',$id)
+                        ->orwhere('idCleaningFrequency2',$id)
+                        ->orwhere('idCleaningFrequency3',$id);
                 })
-                ->WhereDoesntHave('hygieneRecord',function ($query){
+                ->WhereDoesntHave('hygieneRecord',function ($query) use ($id){
                     $query->where('created_at','>',Carbon::today())
-                        ->where('idCleaningFrequency',1);
+                        ->where('idCleaningFrequency',$id);
                 })
                 ->orderBy('idSection')
                 ->get();
 
             $itemsE = EquipmentSectionClient::whereIN('idSection',$ids)
-                ->Where(function($query) {
-                    $query->where('idCleaningFrequency',1)
-                        ->orwhere('idCleaningFrequency2',1)
-                        ->orwhere('idCleaningFrequency3',1);
+                ->Where(function($query) use ($id) {
+                    $query->where('idCleaningFrequency',$id)
+                        ->orwhere('idCleaningFrequency2',$id)
+                        ->orwhere('idCleaningFrequency3',$id);
                 })
-                ->WhereDoesntHave('hygieneRecordE',function ($query){
+                ->WhereDoesntHave('hygieneRecordE',function ($query) use ($id){
                     $query->where('created_at','>',Carbon::today())
-                        ->where('idCleaningFrequency',1);
+                        ->where('idCleaningFrequency', $id);
                 })
                 ->orderBy('idSection')
                 ->get();
-        }
-        elseif($id==2){
-
-            $itemsA = AreaSectionClient::whereIN('idSection',$ids)
-                ->Where(function($query) {
-                    $query->where('idCleaningFrequency',2)
-                        ->orwhere('idCleaningFrequency2',2)
-                        ->orwhere('idCleaningFrequency3',2);
-                })
-                ->WhereDoesntHave('hygieneRecord',function ($query){
-                    $query->where('created_at','>',Carbon::today()->subDay(7))
-                        ->where('idCleaningFrequency',2);
-                })
-                ->orderBy('idSection')
-                ->get();
-
-            $itemsE = EquipmentSectionClient::whereIN('idSection',$ids)
-                ->Where(function($query) {
-                    $query->where('idCleaningFrequency',2)
-                        ->orwhere('idCleaningFrequency2',2)
-                        ->orwhere('idCleaningFrequency3',2);
-                })
-                ->WhereDoesntHave('hygieneRecordE',function ($query){
-                    $query->where('created_at','>',Carbon::today()->subDay(7))
-                        ->where('idCleaningFrequency',2);
-                })
-                ->orderBy('idSection')
-                ->get();
-
-        }elseif($id==3)
-        {
-            $itemsA = AreaSectionClient::whereIN('idSection',$ids)
-                ->Where(function($query) {
-                    $query->where('idCleaningFrequency',3)
-                        ->orwhere('idCleaningFrequency2',3)
-                        ->orwhere('idCleaningFrequency3',3);
-                })
-                ->WhereDoesntHave('hygieneRecord',function ($query){
-                    $query->where('created_at','>',Carbon::today()->subDay(14))
-                        ->where('idCleaningFrequency',3);
-                })
-                ->orderBy('idSection')
-                ->get();
-
-            $itemsE = EquipmentSectionClient::whereIN('idSection',$ids)
-                ->Where(function($query) {
-                    $query->where('idCleaningFrequency',3)
-                        ->orwhere('idCleaningFrequency2',3)
-                        ->orwhere('idCleaningFrequency3',3);
-                })
-                ->WhereDoesntHave('hygieneRecordE',function ($query){
-                    $query->where('created_at','>',Carbon::today()->subDay(14))
-                        ->where('idCleaningFrequency',3);
-                })
-                ->orderBy('idSection')
-                ->get();
-
-        }elseif ($id==4){
-            $itemsA = AreaSectionClient::whereIN('idSection',$ids)
-                ->Where(function($query) {
-                    $query->where('idCleaningFrequency',4)
-                        ->orwhere('idCleaningFrequency2',4)
-                        ->orwhere('idCleaningFrequency3',4);
-                })
-                ->WhereDoesntHave('hygieneRecord',function ($query){
-                    $query->where('created_at','>',Carbon::today()->subDay(30))
-                        ->where('idCleaningFrequency',4);
-                })
-                ->orderBy('idSection')
-                ->get();
-
-            $itemsE = EquipmentSectionClient::whereIN('idSection',$ids)
-                ->Where(function($query) {
-                    $query->where('idCleaningFrequency',4)
-                        ->orwhere('idCleaningFrequency2',4)
-                        ->orwhere('idCleaningFrequency3',4);
-                })
-                ->WhereDoesntHave('hygieneRecordE',function ($query){
-                    $query->where('created_at','>',Carbon::today()->subDay(30))
-                        ->where('idCleaningFrequency',4);
-                })
-                ->orderBy('idSection')
-                ->get();
-        }
 
         foreach ($itemsA as $item){
             if($item->idCleaningFrequency == $id){
@@ -428,6 +342,7 @@ class RecordsController extends Controller
             $item->sectionDesignation = ClientSection::where('id',$item->idSection)->first()->designation;
             $item->productName = Product::where('id',$item->productId)->first()->name;
         }
+
         foreach ($itemsE as $item){
             if($item->idCleaningFrequency == $id){
                 $item->productId=$item->idProduct;
@@ -481,10 +396,13 @@ class RecordsController extends Controller
             ->groupBy('year')
             ->get();
 
+
         $cleaningFrequency=CleaningFrequency::query()->select(['id','designation'])
             ->get();
 
-        return view('frontoffice.hygieneRecordsHistory', compact(['years','months','cleaningFrequency']));
+        $clientSections = ClientSection::where('id_client',$auxClientId)->where('active',1)->get();
+
+        return view('frontoffice.hygieneRecordsHistory', compact(['years','months','cleaningFrequency','clientSections','is']));
     }
     function getHygieneByMonth(Request $request){
         $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Session::get('establismentID');;
@@ -492,26 +410,76 @@ class RecordsController extends Controller
         $start_month = $date->copy()->startOfMonth();
         $end_month = $date->copy()->endOfMonth();
         $cleaningFrequency = $request->get('cleaningFrequency');
+        $clientSection = $request->get('clientSection');
 
-        $item=HygieneRecords::query()
+        /*$nDays=cal_days_in_month (  CAL_GREGORIAN,$request->get('month'), $request->get('year') );*/
+
+        //aqui vou buscar as areas do cliente
+
+        $areas = AreaSectionClient::where('idSection',$clientSection)
+            ->Where(function($query) use ($cleaningFrequency) {
+                $query->where('idCleaningFrequency',$cleaningFrequency)
+                    ->orwhere('idCleaningFrequency2',$cleaningFrequency)
+                    ->orwhere('idCleaningFrequency3',$cleaningFrequency);
+            })
+            ->select(['id','designation'])
+            ->get();
+
+        $equipments = EquipmentSectionClient::where('idSection',$clientSection)
+            ->Where(function($query) use ($cleaningFrequency) {
+                $query->where('idCleaningFrequency',$cleaningFrequency)
+                    ->orwhere('idCleaningFrequency2',$cleaningFrequency)
+                    ->orwhere('idCleaningFrequency3',$cleaningFrequency);
+            })
+            ->select(['id','designation'])
+            ->get();
+
+
+        foreach ($areas as $area){
+
+            //aqui vou buscar os registos de higiene da area, ou seja trago os registo se foi limpo
+
+            $area->hygiene = HygieneRecords::where('idArea',$area->id)
+                ->where('idCleaningFrequency',$cleaningFrequency)
+                ->whereBetween('created_at', [$start_month, $end_month])
+                ->select([DB::raw('DAY(created_at) as day')])
+                ->get();
+        }
+        foreach ($equipments as $equipment){
+
+            $equipment->hygiene = HygieneRecords::where('idArea',$area->id)
+                ->where('idCleaningFrequency',$cleaningFrequency)
+                ->whereBetween('created_at', [$start_month, $end_month])
+                ->select([DB::raw('DAY(created_at) as day')])
+                ->get();
+        }
+
+
+        /*foreach ($equipments as $equipment){
+
+            $equipment->hygiene = HygieneRecords::where('idEquipment',$equipment->id)
+                ->where('idCleaningFrequency',$cleaningFrequency)
+                ->whereBetween('created_at', [$start_month, $end_month])
+                ->select([DB::raw('DAY(created_at) as day')])
+                ->get();
+        }*/
+
+       /* $item=HygieneRecords::query()
             ->where('idClient',$auxClientId)
             ->where('idCleaningFrequency',$cleaningFrequency)
+            ->where('idSection', $clientSection)
             ->whereBetween('updated_at', [$start_month, $end_month])
             ->select([
                 'id', 'idClient', 'idArea','idEquipment','idProduct','idCleaningFrequency','designation','idSection',DB::raw('DAY(created_at) as day'), DB::raw('DAY(updated_at) as day')
             ])
-            ->orderBy('idArea', 'asc')
-            ->orderBy('idEquipment','asc')
-            ->get();
+            ->get();*/
 
-        foreach ($item as $i){
-            if($i->idSection!=null)
-            $i->sectionDesignation = ClientSection::where('id',$i->idSection)->first()->designation;
-            else
-                $i->sectionDesignation = '';
-        }
 
-        return response()->json($item);
+
+
+
+
+        return response()->json($areas);
     }
 
     public function printRecordsHygiene(Request $request)
