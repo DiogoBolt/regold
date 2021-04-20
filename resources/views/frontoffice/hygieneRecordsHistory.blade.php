@@ -185,14 +185,45 @@
         function buildResponse(response) {
             table.classList.remove('hidden');
 
-            response.forEach(data => {
-                /* Weird bug happening, had to send each property separately */
-                tableBody.innerHTML +=
-                    `<tr>
-                        <td>${data.designation}</td>
-                    </tr>`
 
-            });
+                /* Weird bug happening, had to send each property separately */
+                for(i=0;i<response.length;i++) {
+                    tableBody.innerHTML +=
+                        `<tr>
+                            <td>${response[i].designation}</td>
+                            <td id="'i"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>`;
+                }
+
             cacheData.push(response);
         }
         function printReport() {

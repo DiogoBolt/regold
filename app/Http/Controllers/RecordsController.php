@@ -405,6 +405,7 @@ class RecordsController extends Controller
         return view('frontoffice.hygieneRecordsHistory', compact(['years','months','cleaningFrequency','clientSections','is']));
     }
     function getHygieneByMonth(Request $request){
+        
         $auxClientId = Session::has('clientImpersonatedId') ? Session::get('clientImpersonatedId') : Session::get('establismentID');;
         $date = Carbon::createFromDate($request->get('year'), $request->get('month'));
         $start_month = $date->copy()->startOfMonth();
@@ -473,7 +474,6 @@ class RecordsController extends Controller
                 'id', 'idClient', 'idArea','idEquipment','idProduct','idCleaningFrequency','designation','idSection',DB::raw('DAY(created_at) as day'), DB::raw('DAY(updated_at) as day')
             ])
             ->get();*/
-
 
 
 
