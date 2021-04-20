@@ -191,7 +191,7 @@
                     tableBody.innerHTML +=
                         `<tr>
                             <td>${response[i].designation}</td>
-                            <td id="'i"></td>
+                            <td id=`+ i + `A></td>
                             <td></td>
                             <td></td>
                             <td></td>
