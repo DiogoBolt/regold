@@ -94,11 +94,11 @@
                                 Mostrar histórico
                             </button>
                         </div>
-                        <div class="col-xs-6">
+                        {{--<div class="col-xs-6">
                             <button class="btn btn-add margin-top" type="button" id="print-btn">
                                 Imprimir Relatório
                             </button>
-                        </div>
+                        </div>--}}
                     </div>
                 </div>
             </form>
