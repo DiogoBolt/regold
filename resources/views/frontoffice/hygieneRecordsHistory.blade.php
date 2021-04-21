@@ -110,7 +110,7 @@
                     <thead>
                     <tr>
                         <th>Item</th>
-                        @for($i=1;$i<=30;$i++)
+                        @for($i=1;$i<=31;$i++)
                             <th>{{$i}}</th>
                         @endfor
                     </tr>
@@ -166,6 +166,7 @@
                 type: 'GET',
                 url: '/frontoffice/records/hygiene/history/get',
                 data,
+
                 success: function (response) {
                     cacheData = [];
                     if (response.length) {
@@ -192,37 +193,43 @@
                         `<tr>
                             <td>${response[i].designation}</td>
                             <td id=`+ i + `A></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td id=`+ i + `B></td>
+                            <td id=`+ i + `C></td>
+                            <td id=`+ i + `D></td>
+                            <td id=`+ i + `E></td>
+                            <td id=`+ i + `F></td>
+                            <td id=`+ i + `G></td>
+                            <td id=`+ i + `H></td>
+                            <td id=`+ i + `I></td>
+                            <td id=`+ i + `J></td>
+                            <td id=`+ i + `K></td>
+                            <td id=`+ i + `L></td>
+                            <td id=`+ i + `M></td>
+                            <td id=`+ i + `N></td>
+                            <td id=`+ i + `O></td>
+                            <td id=`+ i + `P></td>
+                            <td id=`+ i + `Q></td>
+                            <td id=`+ i + `R></td>
+                            <td id=`+ i + `S></td>
+                            <td id=`+ i + `T></td>
+                            <td id=`+ i + `U></td>
+                            <td id=`+ i + `V></td>
+                            <td id=`+ i + `W></td>
+                            <td id=`+ i + `X></td>
+                            <td id=`+ i + `Y></td>
+                            <td id=`+ i + `Z></td>
+                            <td id=`+ i + `AA></td>
+                            <td id=`+ i + `BB></td>
+                            <td id=`+ i + `CC></td>
+                            <td id=`+ i + `DD></td>
+                            <td id=`+ i + `EE></td>
                         </tr>`;
                 }
+            for(i=0;i<response.length;i++){
+                for(k=0;k<response[i].hygiene.length;k++){
+                    $('#'+i+map(response[i].hygiene[k].day)).html('x');
+                }
+            }
 
             cacheData.push(response);
         }
@@ -231,6 +238,74 @@
                 document.getElementById("print-items").value = JSON.stringify(cacheData);
                 document.getElementById("print-form").submit();
             }
+        }
+        function map(day) {
+            switch (day) {
+                case 1:
+                    return 'A';
+                case 2:
+                    return 'B';
+                case 3:
+                    return 'C';
+                case 4:
+                    return 'D';
+                case 5:
+                    return 'E';
+                case 6:
+                    return 'F';
+                case 7:
+                    return 'G';
+                case 8:
+                    return 'H';
+                case 9:
+                    return 'I';
+                case 10:
+                    return 'J';
+                case 11:
+                    return 'K';
+                case 12:
+                    return 'L';
+                case 13:
+                    return 'M';
+                case 14:
+                    return 'N';
+                case 15:
+                    return 'O';
+                case 16:
+                    return 'P';
+                case 17:
+                    return 'Q';
+                case 18:
+                    return 'R';
+                case 19:
+                    return 'S';
+                case 20:
+                    return 'T';
+                case 21:
+                    return 'U';
+                case 22:
+                    return 'V';
+                case 23:
+                    return 'W';
+                case 24:
+                    return 'X';
+                case 25:
+                    return 'Y';
+                case 26:
+                    return 'Z';
+                case 27:
+                    return 'AA';
+                case 28:
+                    return 'BB';
+                case 29:
+                    return 'CC';
+                case 30:
+                    return 'DD';
+                case 31:
+                    return 'EE';
+
+            }
+
         }
 
     }, false);

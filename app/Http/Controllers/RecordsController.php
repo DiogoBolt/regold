@@ -435,7 +435,6 @@ class RecordsController extends Controller
             ->select(['id','designation'])
             ->get();
 
-
         foreach ($areas as $area){
 
             //aqui vou buscar os registos de higiene da area, ou seja trago os registo se foi limpo
@@ -448,13 +447,12 @@ class RecordsController extends Controller
         }
         foreach ($equipments as $equipment){
 
-            $equipment->hygiene = HygieneRecords::where('idArea',$area->id)
+            $equipment->hygiene = HygieneRecords::where('idEquipment',$equipment->id)
                 ->where('idCleaningFrequency',$cleaningFrequency)
                 ->whereBetween('created_at', [$start_month, $end_month])
                 ->select([DB::raw('DAY(created_at) as day')])
                 ->get();
         }
-
 
         /*foreach ($equipments as $equipment){
 
@@ -475,11 +473,9 @@ class RecordsController extends Controller
             ])
             ->get();*/
 
+        $items = $areas->merge($equipments);
 
-
-
-
-        return response()->json($areas);
+        return response()->json($items);
     }
 
     public function printRecordsHygiene(Request $request)
