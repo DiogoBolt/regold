@@ -295,6 +295,7 @@ class FrontofficeController extends Controller
     {
         $inputs = $request->all();
 
+
         $auxClientId = Session::get('establismentID');
 
         $cart = Cart::where('client_id',$auxClientId)->where('processed',0)->first();
@@ -320,8 +321,8 @@ class FrontofficeController extends Controller
 
         $product = Product::where('id',$order_line->product_id)->first();
 
-
         $pvp = ClientProduct::where('client_id',$auxClientId)->where('product_id',$product->id)->first()->pvp;
+        
 
         switch ($pvp) {
             case 1:
@@ -344,7 +345,7 @@ class FrontofficeController extends Controller
 
         $order_lines = OrderLine::where('cart_id',$cart->id)->get();
 
-        foreach($order_lines as $order)
+       /* foreach($order_lines as $order)
         {
             $product = Product::where('id',$order->product_id)->first();
             if($pvp == 3)
@@ -357,7 +358,7 @@ class FrontofficeController extends Controller
                 $order->total = $product->price1 * $order->amount;
             }
             $order->save();
-        }
+        }*/
 
         $line_items = OrderLine::where('cart_id',$cart->id)->get();
 
