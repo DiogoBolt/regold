@@ -18,9 +18,6 @@
         <div class="col-md-12">
             <div class="panel">
                 <div class="panel-body table-responsive" >
-                    <div class="btn-group">
-                        <button onclick="exportCSV()">Export HTML Table To CSV File</button>
-                    </div>
 
                     @if($order->processed == 1)
                         <h5 style="color:green">Processado</h5>
@@ -100,6 +97,9 @@
                     <a href="/order/print/{{$order->id}}" target="_blank" class="btn btn-process">
                         <strong>Imprimir</strong>
                     </a>
+
+                    <button class="btn btn-process" onclick="exportCSV()">Exportar Excel</button>
+
                     <br>
                        @if(isset($salesman))
                        <h5>Vendedor: {{$salesman->name}}</h5>
@@ -113,28 +113,6 @@
 @endsection
 
 <script>
-    /*function f() {
-        $("button").on('click', function() {
-            var data = "";
-            var tableData = [];
-            var rows = $("table tr");
-            rows.each(function(index, row) {
-                var rowData = [];
-                $(row).find("th[id='csv'],td[id='csv']").each(function(index, column) {
-                    rowData.push(column.innerText);
-                });
-                tableData.push(rowData.join(","));
-            });
-            data += tableData.join("\n");
-            $(document.body).append('<a id="download-link" download="data.csv" href=' + URL.createObjectURL(new Blob([data], {
-                type: "text/csv"
-            })) + '/>');
-
-            $('#download-link')[0].click();
-            $('#download-link').remove();
-        });
-    }*/
-
     function exportCSV() {
         let data = "";
         const tableData = [];
@@ -142,7 +120,6 @@
         for (const row of rows) {
             const rowData = [];
             for (const [index, column] of row.querySelectorAll("th[id='csv'],td[id='csv']").entries()) {
-                // To retain the commas in the "Description" column, we can enclose those fields in quotation marks.
                 if ((index + 1) % 3 === 0) {
                     rowData.push('"' + column.innerText + '"');
                 } else {
@@ -153,56 +130,10 @@
         }
         data += tableData.join("\n");
         const a = document.createElement("a");
-        a.href = URL.createObjectURL(new Blob([data], { type: 'text/csv' }));
+        a.href = URL.createObjectURL(new Blob(["\uFEFF"+data], { type: 'text/csv;charset=utf-18;' }));
         a.setAttribute("download", "encomenda.csv");
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
     }
-/*
-
-    function exportTableToCSV(filename) {
-        var csv = [];
-        var rows = document.querySelectorAll("table tr");
-
-        for (var i = 0; i < rows.length; i++) {
-            var row = [], cols = rows[i].querySelectorAll("th[id='csv'],td[id='csv']");
-
-            for (var j = 0; j < cols.length; j++)
-                row.push(cols[j].innerText);
-
-            csv.push(row.join(";"));
-        }
-
-        // Download CSV file
-        downloadCSV(csv.join("\n"), filename);
-    }
-
-    function downloadCSV(csv, filename) {
-        var csvFile;
-        var downloadLink;
-
-        // CSV file
-        csvFile = new Blob([csv], {type: "text/csv"});
-
-        // Download link
-        downloadLink = document.createElement("a");
-
-        // File name
-        downloadLink.download = filename;
-
-        // Create a link to the file
-        downloadLink.href = window.URL.createObjectURL(csvFile);
-
-        // Hide download link
-        downloadLink.style.display = "none";
-
-        // Add the link to DOM
-        document.body.appendChild(downloadLink);
-
-        // Click download link
-        downloadLink.click();
-    }
-*/
-
 </script>
