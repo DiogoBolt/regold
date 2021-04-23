@@ -18,18 +18,21 @@
         <div class="col-md-12">
             <div class="panel">
                 <div class="panel-body table-responsive" >
+                    <div class="btn-group">
+                        <button onclick="f()">csv</button>
+                    </div>
 
                     @if($order->processed == 1)
                         <h5 style="color:green">Processado</h5>
                     @else
                         <h5 style="color:darkorange">Em Espera</h5>
                     @endif
-                    <table class="table table-bordered">
+                    <table id="dataTable" class="table table-bordered">
                         <tr>
                             <th>Img</th>
                             <th>Nome</th>
-                            <th>Ref</th>
-                            <th>Quantidade</th>
+                            <th id="csv">Ref</th>
+                            <th id="csv">Quantidade</th>
                             <th>Preço/Unidade</th>
                             <th>Total</th>
                             <th>Fatura</th>
@@ -39,8 +42,8 @@
                             <tr>
                                 <td><img style="height:25px;width:35px" src="/uploads/products/{{$item->product->file}}"></td>
                                 <td>{{$item->product->name}}</td>
-                                <td>{{$item->ref}}</td>
-                                <td>{{$item->amount}}</td>
+                                <td id="csv">{{$item->ref}}</td>
+                                <td id="csv">{{$item->amount}}</td>
                                 <td>{{$item->total/$item->amount}}€</td>
                                 <td>{{number_format($item->total,2)}}€</td>
                                 @if($order->invoice_id == null)
@@ -108,3 +111,55 @@
 </div>
 
 @endsection
+
+<script>
+    /*function f() {
+        $("button").on('click', function() {
+            var data = "";
+            var tableData = [];
+            var rows = $("table tr");
+            rows.each(function(index, row) {
+                var rowData = [];
+                $(row).find("th[id='csv'],td[id='csv']").each(function(index, column) {
+                    rowData.push(column.innerText);
+                });
+                tableData.push(rowData.join(","));
+            });
+            data += tableData.join("\n");
+            $(document.body).append('<a id="download-link" download="data.csv" href=' + URL.createObjectURL(new Blob([data], {
+                type: "text/csv"
+            })) + '/>');
+
+            $('#download-link')[0].click();
+            $('#download-link').remove();
+        });
+    }*/
+
+    function f() {
+        let data = "";
+        const tableData = [];
+        const rows = document.querySelectorAll("table tr");
+        for (const row of rows) {
+            const rowData = [];
+            for (const [index, column] of row.querySelectorAll("th[id='csv'],td[id='csv']").entries()) {
+                // To retain the commas in the "Description" column, we can enclose those fields in quotation marks.
+                if ((index + 1) % 3 === 0) {
+                    rowData.push('"' + column.innerText + '"');
+                } else {
+                    rowData.push(column.innerText);
+                }
+            }
+            tableData.push(rowData.join(","));
+        }
+        data += tableData.join("\n");
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(new Blob([data], { type: "text/csv" }));
+        a.setAttribute("download", "data.csv");
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+
+
+
+</script>

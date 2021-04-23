@@ -322,7 +322,7 @@ class FrontofficeController extends Controller
         $product = Product::where('id',$order_line->product_id)->first();
 
         $pvp = ClientProduct::where('client_id',$auxClientId)->where('product_id',$product->id)->first()->pvp;
-        
+
 
         switch ($pvp) {
             case 1:
