@@ -19,7 +19,7 @@
             <div class="panel">
                 <div class="panel-body table-responsive" >
                     <div class="btn-group">
-                        <button onclick="f()">csv</button>
+                        <button onclick="exportCSV()">Export HTML Table To CSV File</button>
                     </div>
 
                     @if($order->processed == 1)
@@ -30,22 +30,22 @@
                     <table id="dataTable" class="table table-bordered">
                         <tr>
                             <th>Img</th>
-                            <th>Nome</th>
+                            <th id="csv">Nome</th>
                             <th id="csv">Ref</th>
                             <th id="csv">Quantidade</th>
-                            <th>Preço/Unidade</th>
-                            <th>Total</th>
+                            <th id="csv">Preço/Unidade</th>
+                            <th id="csv">Total</th>
                             <th>Fatura</th>
                             <th>Recibo</th>
                         </tr>
                         @foreach($line_items as $item)
                             <tr>
                                 <td><img style="height:25px;width:35px" src="/uploads/products/{{$item->product->file}}"></td>
-                                <td>{{$item->product->name}}</td>
+                                <td id="csv">{{$item->product->name}}</td>
                                 <td id="csv">{{$item->ref}}</td>
                                 <td id="csv">{{$item->amount}}</td>
-                                <td>{{$item->total/$item->amount}}€</td>
-                                <td>{{number_format($item->total,2)}}€</td>
+                                <td id="csv">{{$item->total/$item->amount}}€</td>
+                                <td id="csv">{{number_format($item->total,2)}}€</td>
                                 @if($order->invoice_id == null)
                                     <td class="form-td">
                                         <form action="/orders/attachInvoice" class="order-form" method="post" enctype="multipart/form-data">
@@ -101,9 +101,9 @@
                         <strong>Imprimir</strong>
                     </a>
                     <br>
-                        @if(isset($salesman))
+                       @if(isset($salesman))
                        <h5>Vendedor: {{$salesman->name}}</h5>
-                            @endif
+                       @endif
                 </div>
             </div>
         </div>
@@ -135,7 +135,7 @@
         });
     }*/
 
-    function f() {
+    function exportCSV() {
         let data = "";
         const tableData = [];
         const rows = document.querySelectorAll("table tr");
@@ -149,17 +149,60 @@
                     rowData.push(column.innerText);
                 }
             }
-            tableData.push(rowData.join(","));
+            tableData.push(rowData.join(";"));
         }
         data += tableData.join("\n");
         const a = document.createElement("a");
-        a.href = URL.createObjectURL(new Blob([data], { type: "text/csv" }));
-        a.setAttribute("download", "data.csv");
+        a.href = URL.createObjectURL(new Blob([data], { type: 'text/csv' }));
+        a.setAttribute("download", "encomenda.csv");
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
     }
+/*
 
+    function exportTableToCSV(filename) {
+        var csv = [];
+        var rows = document.querySelectorAll("table tr");
 
+        for (var i = 0; i < rows.length; i++) {
+            var row = [], cols = rows[i].querySelectorAll("th[id='csv'],td[id='csv']");
+
+            for (var j = 0; j < cols.length; j++)
+                row.push(cols[j].innerText);
+
+            csv.push(row.join(";"));
+        }
+
+        // Download CSV file
+        downloadCSV(csv.join("\n"), filename);
+    }
+
+    function downloadCSV(csv, filename) {
+        var csvFile;
+        var downloadLink;
+
+        // CSV file
+        csvFile = new Blob([csv], {type: "text/csv"});
+
+        // Download link
+        downloadLink = document.createElement("a");
+
+        // File name
+        downloadLink.download = filename;
+
+        // Create a link to the file
+        downloadLink.href = window.URL.createObjectURL(csvFile);
+
+        // Hide download link
+        downloadLink.style.display = "none";
+
+        // Add the link to DOM
+        document.body.appendChild(downloadLink);
+
+        // Click download link
+        downloadLink.click();
+    }
+*/
 
 </script>
