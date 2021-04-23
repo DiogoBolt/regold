@@ -254,6 +254,7 @@ Route::group(['middleware' => ['backoffice']], function () {
     route::get('/billing','ProductController@showBilling');
 
     Route::get('/orders', 'ProductController@showOrders');
+    Route::get('/order/delete/{id}','ProductController@deleteOrder');
     Route::get('/processedOrders', 'ProductController@showProcessedOrders');
     Route::get('/unpaidOrders/{id}', 'ProductController@showOrdersByClient');
     Route::get('/historyOrders', 'ProductController@showHistoryOrders');

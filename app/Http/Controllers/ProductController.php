@@ -961,4 +961,11 @@ class ProductController extends Controller
         }
 
     }
+    public function deleteOrder($id){
+
+        $order = Order::where('id',$id)->first();
+        $order->delete();
+
+        return back();
+    }
 }

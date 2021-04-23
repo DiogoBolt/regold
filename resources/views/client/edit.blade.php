@@ -138,8 +138,7 @@
                                     @else
                                         <option value="{{$activityType->id}}">{{$activityType->designation}}</option>
                                     @endif
-
-                                        @endforeach
+                                @endforeach
                             </select>
                         </div>--}}
 

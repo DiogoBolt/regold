@@ -64,6 +64,7 @@
             
                 <table class="table">
                     <tr>
+                        <th></th>
                         <th>Cliente</th>
                         <th>ID Regoldi</th>
                         <th>Total</th>
@@ -74,6 +75,7 @@
                     </tr>
                     @foreach($orders as $order)
                             <tr>
+                                <td><a href="/order/delete/{{$order->id}}">x</a></td>
                                 <td><a href="/clients/{{$order->client_id}}">{{$order->name}}</a></td>
                                 <td>{{$order->regoldiID}}</td>
                                 <td>{{number_format($order->total,2)}}€</td>
