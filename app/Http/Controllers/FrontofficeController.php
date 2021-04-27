@@ -682,6 +682,7 @@ class FrontofficeController extends Controller
                     return redirect($response->url_redirect);
                     break;
             }*/
+        return back();
     }
 
     public function showCart()
