@@ -90,8 +90,12 @@
                             <b style="color:red">Nota de encomenda: </b> <b>{{$order->note}}</b>
                         </div>
                     <div class="order-info">
-                        <h4>Total : {{number_format($total + 0.23*$total,2)}}€</h4>
-                        <h5>IVA(23) : {{number_format($total * 0.23,2)}}€</h5>
+                        <h4>Total : {{number_format($order->total,2)}}€</h4>
+                        @if($serHaccp!=0)
+                        <h5 id="csv">Serviço HACCP : {{number_format($serHaccp,2)}}€</h5>
+                        @endif
+                        <h5>IVA(23) : {{number_format($order->total * 0.23,2)}}€</h5>
+                        <h5>Total + IVA(23) : {{number_format($order->total * 1.23,2)}}€</h5>
                     </div>
                     <a href="/orders/process/{{$order->id}}" class="btn btn-process">
                         <strong>Processar</strong>
@@ -131,6 +135,7 @@
             }
             tableData.push(rowData.join(";"));
         }
+
         data += tableData.join("\n");
         const a = document.createElement("a");
         a.href = URL.createObjectURL(new Blob(["\uFEFF"+data], { type: 'text/csv;charset=utf-18;' }));

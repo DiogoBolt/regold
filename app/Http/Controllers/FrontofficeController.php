@@ -411,6 +411,7 @@ class FrontofficeController extends Controller
     {
         $user = Auth::user();
 
+
         $order = Order::where('id',$id)->where('client_id',Session::get('establismentID'))->first();
 
         if(!isset($order))
@@ -428,6 +429,7 @@ class FrontofficeController extends Controller
             }
 
             $total = OrderLine::where('cart_id',$cart->id)->sum('total');
+
 
             return view('frontoffice.order',compact('line_items','total','order'));
         }else {
@@ -631,15 +633,19 @@ class FrontofficeController extends Controller
         if($orders > 0) {
             if ($total < 29.90) {
                 $total += 5;
+                $order->total = $total;
+                $order->save();
             }
         } else {
                 if ($total < $client->contract_value) {
                     $total += $client->contract_value - $total;
+                    $order->total = $total;
+                    $order->totaliva = $total * 1.23;
+                    $order->save();
                 }
             }
-            $total = 1.23 * $total;
 
-            switch ($client->payment_method) {
+            /*switch ($client->payment_method) {
                 case "Debito Direto":
                     $message = new Message();
                     $day = Date('d');
@@ -675,7 +681,7 @@ class FrontofficeController extends Controller
                     $response = $this->processPayment($cart, $order);
                     return redirect($response->url_redirect);
                     break;
-            }
+            }*/
     }
 
     public function showCart()

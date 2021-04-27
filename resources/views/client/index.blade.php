@@ -60,7 +60,7 @@
                                 @if($client->order == 1)
                                     <tr>
                                         <td><a href="/clients/{{$client->id}}">{{$client->regoldiID}}</a></td>
-                                        <td><a href="/clients/{{$client->id}}">{{$client->comercial_name}}</a></td>
+                                        <td><a href="/clients/{{$client->id}}">{{$client->name}}</a></td>
                                         <td><a href="/unpaidOrders/{{$client->id}}">{{$client->current}}</a></td>
                                         <td><a href="/clients/impersonate/{{$client->id}}">Entrar</a></td>
                                         <td>

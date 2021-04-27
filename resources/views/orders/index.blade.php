@@ -78,7 +78,7 @@
                                 <td><a href="/order/delete/{{$order->id}}">x</a></td>
                                 <td><a href="/clients/{{$order->client_id}}">{{$order->name}}</a></td>
                                 <td>{{$order->regoldiID}}</td>
-                                <td>{{number_format($order->totaliva,2)}}€</td>
+                                <td>{{number_format($order->total,2)}}€</td>
                                 @if($order->invoice_id == null)
                                     <td class="form-td">
                                     <form action="/orders/attachInvoice" class="order-form" method="post" enctype="multipart/form-data">

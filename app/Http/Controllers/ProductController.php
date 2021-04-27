@@ -513,7 +513,9 @@ class ProductController extends Controller
 
             $total = OrderLine::where('cart_id', $cart->id)->sum('total');
 
-            return view('orders.order', compact('line_items', 'total', 'order', 'client', 'salesman'));
+            $serHaccp = $order->total - $total;
+
+            return view('orders.order', compact('line_items', 'total', 'order', 'client','serHaccp', 'salesman'));
         } else {
             return back();
         }
