@@ -270,11 +270,9 @@ Route::group(['middleware' => ['backoffice']], function () {
     Route::get('/orders/filter/q', 'ProductController@filterOrders');
     Route::get('/processedOrders/filter', 'ProductController@filterProcessedOrders');
 
-
     Route::get('/messages/{id}', 'ProductController@messages');
     Route::post('/messages/new', 'ProductController@newMessage');
     Route::post('/messages/newmassmessage', 'ProductController@newMassMessage');
-
 
     // Apaga isto depois Diogo
     Route::get('/runcron', function() {

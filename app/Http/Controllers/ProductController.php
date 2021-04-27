@@ -486,6 +486,7 @@ class ProductController extends Controller
     {
 
         $order = Order::where('id', $id)->first();
+
         $client = Customer::where('id', $order->client_id)->first();
         $salesman = null;
 
@@ -514,7 +515,6 @@ class ProductController extends Controller
 
             return view('orders.order', compact('line_items', 'total', 'order', 'client', 'salesman'));
         } else {
-
             return back();
         }
     }
@@ -525,15 +525,15 @@ class ProductController extends Controller
         $user = Auth::user();
 
         $order = Order::where('id', $id)->first();
-
-        if ($order->invoice_id != null) {
+//Processar encomenda com fatura associada
+        /*if ($order->invoice_id != null) {*/
             $order->processed = 1;
             $order->processed_time = now();
             $order->save();
-        } else {
+        /*} else {
 
             $error = "Não é possivel processar esta encomenda";
-        }
+        }*/
         $clientUser = Customer::where('id', $order->client_id)->first();
 
         $message = new Message;

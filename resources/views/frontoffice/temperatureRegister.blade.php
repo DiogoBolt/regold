@@ -356,7 +356,6 @@
         $('#idThermoName').val(id);
     }
 
-    
     function showEditTemp(id,time)
     {
         $('#myModal').modal('show');

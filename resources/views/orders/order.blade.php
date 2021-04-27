@@ -25,8 +25,10 @@
                         <h5 style="color:darkorange">Em Espera</h5>
                     @endif
                     <table id="dataTable" class="table table-bordered">
+
                         <tr>
                             <th>Img</th>
+                            <th hidden id="csv">NºCliente</th>
                             <th id="csv">Nome</th>
                             <th id="csv">Ref</th>
                             <th id="csv">Quantidade</th>
@@ -38,6 +40,7 @@
                         @foreach($line_items as $item)
                             <tr>
                                 <td><img style="height:25px;width:35px" src="/uploads/products/{{$item->product->file}}"></td>
+                                <th hidden id="csv">{{$client->regoldiID}}</th>
                                 <td id="csv">{{$item->product->name}}</td>
                                 <td id="csv">{{$item->ref}}</td>
                                 <td id="csv">{{$item->amount}}</td>

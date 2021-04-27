@@ -74,7 +74,7 @@
                                         {{ csrf_field() }}
                                         <input name="amount" style="width:40%;display:inline" class="form-control">
                                         <input name="id" style="display:none" value="{{$order->id}}">
-                                        <button style="display:inline" class="btn btn-success">Abater</button></form></td>
+                                        <button style="display:inline" class="btn">Abater</button></form></td>
                                 @else
                                     <td></td>
                                 @endif
