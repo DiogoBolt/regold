@@ -60,8 +60,19 @@
                             @endforeach
 
                         </table>
-                        <h5>IVA(23) : {{number_format($total * 0.23,2)}}€</h5>
-                        <h4>Total : {{number_format($total + 0.23*$total,2)}}€</h4>
+                            <div class="order-info">
+                                <h4>Total : {{number_format($order->total,2)}}€</h4>
+                                @if($extra>0 && $extra!=5)
+                                <h5>Serviço HACCP : {{number_format($extra,2)}}€</h5>
+                                @elseif($extra==5)
+                                <h5>Portes : {{number_format($extra,2)}}€</h5>
+                                @endif
+                                <h5>IVA(23) : {{number_format($order->total * 0.23,2)}}€</h5>
+                                <h5>Total + IVA(23) : {{number_format($order->total * 1.23,2)}}€</h5>
+                            </div>
+
+                        {{--<h5>IVA(23) : {{number_format($total * 0.23,2)}}€</h5>
+                        <h4>Total : {{number_format($total + 0.23*$total,2)}}€</h4>--}}
 
                     </div>
                 </div>

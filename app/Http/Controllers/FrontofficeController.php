@@ -430,8 +430,13 @@ class FrontofficeController extends Controller
 
             $total = OrderLine::where('cart_id',$cart->id)->sum('total');
 
+            if($order->total>29.90){
+                $extra = $order->total - $total;
+            }else{
+                $extra = 5;
+            }
 
-            return view('frontoffice.order',compact('line_items','total','order'));
+            return view('frontoffice.order',compact('line_items','extra','total','order'));
         }else {
 
             return back();

@@ -32,3 +32,10 @@
   margin: 0 auto;
   display: block;
 }
+
+.order-info {
+  margin: 15px 0;
+  border-top: 3px solid var(--main-color);
+  border-bottom: 3px solid var(--main-color);
+  text-align: center;
+}
