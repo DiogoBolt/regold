@@ -36,11 +36,12 @@
                             <th id="csv">Total</th>
                             <th>Fatura</th>
                             <th>Recibo</th>
+                            <th hidden><h5 id="csv">Serviço HACCP : {{number_format($serHaccp,2)}}€</h5></th>
                         </tr>
                         @foreach($line_items as $item)
                             <tr>
                                 <td><img style="height:25px;width:35px" src="/uploads/products/{{$item->product->file}}"></td>
-                                <th hidden id="csv">{{$client->regoldiID}}</th>
+                                <td hidden id="csv">{{$client->regoldiID}}</td>
                                 <td id="csv">{{$item->product->name}}</td>
                                 <td id="csv">{{$item->ref}}</td>
                                 <td id="csv">{{$item->amount}}</td>
@@ -126,7 +127,7 @@
         const rows = document.querySelectorAll("table tr");
         for (const row of rows) {
             const rowData = [];
-            for (const [index, column] of row.querySelectorAll("th[id='csv'],td[id='csv']").entries()) {
+            for (const [index, column] of row.querySelectorAll("th[id='csv'],td[id='csv'],h5[id='csv']").entries()) {
                 if ((index + 1) % 3 === 0) {
                     rowData.push('"' + column.innerText + '"');
                 } else {
