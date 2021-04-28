@@ -357,7 +357,7 @@ class ClientController extends Controller
         foreach($clients as $client)
         {
             $orders = Order::where('client_id',$client->id)->where('processed',1)->where('created_at','>=',Carbon::now()->startOfMonth())->count();
-            $current = Order::where('client_id',$client->id)->where('status','waiting_payment')->where('invoice_id','!=',null)->sum('total');
+            $current = Order::where('client_id',$client->id)->where('status','waiting_payment')/*->where('invoice_id','!=',null)*/->sum('total');
 
             if($orders > 0)
             {

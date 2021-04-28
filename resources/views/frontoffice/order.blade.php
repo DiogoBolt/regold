@@ -33,7 +33,6 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-body table-responsive">
-
                         @if($order->processed == 1)
                             <h5 style="color:green">Processado</h5>
                         @else
@@ -46,7 +45,6 @@
                                 <th>Quantidade</th>
                                 <th>Preço/Unidade</th>
                                 <th>Total</th>
-
                             </tr>
                             @foreach($line_items as $item)
                                 <tr>
@@ -56,9 +54,7 @@
                                     <td>{{$item->total/$item->amount}}€</td>
                                     <td>{{number_format($item->total,2)}}€</td>
                                 </tr>
-
                             @endforeach
-
                         </table>
                             <div class="order-info">
                                 <h4>Total : {{number_format($order->total,2)}}€</h4>
@@ -70,15 +66,9 @@
                                 <h5>IVA(23) : {{number_format($order->total * 0.23,2)}}€</h5>
                                 <h5>Total + IVA(23) : {{number_format($order->total * 1.23,2)}}€</h5>
                             </div>
-
-                        {{--<h5>IVA(23) : {{number_format($total * 0.23,2)}}€</h5>
-                        <h4>Total : {{number_format($total + 0.23*$total,2)}}€</h4>--}}
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
 @endsection
