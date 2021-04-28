@@ -61,7 +61,7 @@
                                     <tr>
                                         <td><a href="/clients/{{$client->id}}">{{$client->regoldiID}}</a></td>
                                         <td><a href="/clients/{{$client->id}}">{{$client->name}}</a></td>
-                                        <td><a href="/unpaidOrders/{{$client->id}}">{{$client->current}}</a></td>
+                                        <td><a href="/unpaidOrders/{{$client->id}}">{{number_format($client->current,2)}}€</a></td>
                                         <td><a href="/clients/impersonate/{{$client->id}}">Entrar</a></td>
                                         <td>
                                             <button class="btn-del" data-toggle="modal" data-target="#deleteModal"
@@ -73,7 +73,7 @@
                                     <tr class="unpaid">
                                         <td><a href="/clients/{{$client->id}}">{{$client->regoldiID}}</a></td>
                                         <td><a href="/clients/{{$client->id}}">{{$client->name}}</a></td>
-                                        <td><a href="/unpaidOrders/{{$client->id}}">{{$client->current}}</a></td>
+                                        <td><a href="/unpaidOrders/{{$client->id}}">{{number_format($client->current,2)}}€</a></td>
                                         <td><a href="/clients/impersonate/{{$client->id}}">Entrar</a></td>
                                         <td>
                                             <button class="btn-del" data-toggle="modal" data-target="#deleteModal"
