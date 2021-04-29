@@ -343,8 +343,9 @@ class RecordsController extends Controller
             $exist = Product::where('id',$item->productId)->first();
             if(isset($exist)){
                 $item->productName = Product::where('id',$item->productId)->first()->name;
+            }else{
+                $item->productName = '';
             }
-            $item->productName = 'Não encontrado';
         }
 
         foreach ($itemsE as $item){
@@ -361,8 +362,10 @@ class RecordsController extends Controller
             $exist = Product::where('id',$item->productId)->first();
             if(isset($exist)){
                 $item->productName = Product::where('id',$item->productId)->first()->name;
+            }else{
+                $item->productName = '';
             }
-            $item->productName = 'Não encontrado';
+
         }
 
         return [$itemsA,$itemsE];
