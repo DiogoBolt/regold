@@ -340,7 +340,11 @@ class RecordsController extends Controller
                 $item->productId=$item->idProduct3;
             }
             $item->sectionDesignation = ClientSection::where('id',$item->idSection)->first()->designation;
-            $item->productName = Product::where('id',$item->productId)->first()->name;
+            $exist = Product::where('id',$item->productId)->first();
+            if(isset($exist)){
+                $item->productName = Product::where('id',$item->productId)->first()->name;
+            }
+            $item->productName = 'Não encontrado';
         }
 
         foreach ($itemsE as $item){
@@ -354,7 +358,11 @@ class RecordsController extends Controller
                 $item->productId=$item->idProduct3;
             }
             $item->sectionDesignation = ClientSection::where('id',$item->idSection)->first()->designation;
-            $item->productName = Product::where('id',$item->productId)->first()->name;
+            $exist = Product::where('id',$item->productId)->first();
+            if(isset($exist)){
+                $item->productName = Product::where('id',$item->productId)->first()->name;
+            }
+            $item->productName = 'Não encontrado';
         }
 
         return [$itemsA,$itemsE];
