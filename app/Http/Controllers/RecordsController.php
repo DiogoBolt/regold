@@ -190,7 +190,7 @@ class RecordsController extends Controller
 
         $years = ProductRecords::query()
             ->select([
-                DB::raw('YEAR(created_at) as year')
+                DB::raw('YEAR(date) as year')
             ])
             ->where('client_id', $auxClientId)
             ->groupBy('year')
@@ -210,7 +210,7 @@ class RecordsController extends Controller
             'id', 'date', 'product','provider','fatura_guia','temperature','cleaning','product_status','package','label','observations','image' ,DB::raw('DAY(updated_at) as day'),
         ])
             ->where('client_id',$auxClientId)
-            ->whereBetween('updated_at', [$start_month, $end_month])
+            ->whereBetween('date', [$start_month, $end_month])
             ->orderBy('updated_at', 'asc')
             ->get();
     }
