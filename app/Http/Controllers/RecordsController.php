@@ -207,7 +207,7 @@ class RecordsController extends Controller
         $end_month = $date->copy()->endOfMonth();
 
         return ProductRecords::query()->select([
-            'id', 'date', 'product','provider','fatura_guia','temperature','cleaning','product_status','package','label','observations','image' ,DB::raw('DAY(updated_at) as day'),
+            'id', 'date', 'product','provider','fatura_guia','temperature','cleaning','product_status','package','label','observations','image' ,DB::raw('DAY(date) as day'),
         ])
             ->where('client_id',$auxClientId)
             ->whereBetween('date', [$start_month, $end_month])
