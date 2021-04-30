@@ -128,15 +128,15 @@ class RecordsController extends Controller
             ->where('name',$inputs['product'])
             ->count();
 
-        if($existProduct==0)
+        if($existProduct==0 && $inputs['product']!=null)
         {
             $client_insertProducts= new ClientInsertProducts();
             $client_insertProducts->client_id=$auxClientId;
-            $client_insertProducts->name=$inputs['product'];
+            $client_insertProducts->name = isset($inputs['product']) ? $inputs['product'] : null;
             $client_insertProducts->save();
-            $product_records->product= $inputs['product'];
+            $product_records->product = isset($inputs['product']) ? $inputs['product'] : null;
         }else{
-            $product_records->product= $inputs['product'];
+            $product_records->product = isset($inputs['product']) ? $inputs['product'] : null;
         }
 
         $existProvider=ClientProviders::Where('client_id',$auxClientId)

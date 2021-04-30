@@ -172,7 +172,7 @@
                 tableBody.innerHTML += `
                     <tr>
                         <td>${data.day}</td>
-                        <td>${data.product}</td>
+                        <td>${data.product ? data.product : ''}</td>
                         <td>${data.provider}</td>
                         <td>${data.fatura_guia}</td>
                         <td>${data.temperature}</td>
@@ -181,7 +181,7 @@
                         <td>${data.package}</td>
                         <td>${data.label}</td>
                         <td>${data.observations}</td>
-                        <td><a href="/uploads/records/${data.image}">${data.image}</a></td>
+                        <td><a href="/uploads/records/${data.image}">${data.image ? data.image : ''}</a></td>
                     </tr>
                 `;
             });

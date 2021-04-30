@@ -144,8 +144,7 @@ class ProductController extends Controller
         }
         $product->delete();
 
-
-        return reduirect()->to('/products');
+        return redirect()->to('/products');
     }
 
     public function editProductPost(Request $request)

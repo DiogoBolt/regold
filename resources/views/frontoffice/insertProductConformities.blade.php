@@ -52,7 +52,7 @@
                         <input type="date" id="date" value="{{$today}}" class="input_insertProd" name="date" required>
 
                         <label class="label-insertPro" for="product_name">PRODUTO</label>
-                            <input list="clientProducts" name="product" class="input_insertProd" required />
+                            <input list="clientProducts" name="product" class="input_insertProd" />
                         <datalist id="clientProducts">
                             <option value="" disabled>Produto</option>
                                 @foreach($client_insertProducts as $product)
