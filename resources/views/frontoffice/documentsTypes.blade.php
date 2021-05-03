@@ -47,12 +47,12 @@
                             ENTRADA DE PRODUTO
                         </div>
                     </a>
-                    <a class="category {{ $super }}" >
+                   {{-- <a class="category {{ $super }}" >
                         <div class="category-body-disabled">
                             <img class="img-categories-disabled" src="{{ URL::to('/') }}/img/areas_equipamentos.png">
                             ÁREAS E EQUIPAMENTOS
                         </div>
-                    </a>
+                    </a>--}}
                     @else
                         <a class="category {{ $super }}" href="/frontoffice/records/oil">
                             <div class="category-body">
@@ -73,14 +73,14 @@
                                 ENTRADA DE PRODUTO
                             </div>
                         </a>
-                        @if($userType!=4)
+                        {{--@if($userType!=4)
                         <a class="category {{ $super }}" href="/frontoffice/personalizeAreasEquipments">
                             <div class="category-body">
                                 <img class="img-categories" src="{{ URL::to('/') }}/img/areas_equipamentos.png">
                                 ÁREAS E EQUIPAMENTOS
                             </div>
                         </a>
-                        @endif
+                        @endif--}}
                     @endif
             @endif
 
