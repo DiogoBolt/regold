@@ -112,6 +112,7 @@
                        @if(isset($salesman))
                        <h5>Vendedor: {{$salesman->name}}</h5>
                        @endif
+                    </br>
                 </div>
             </div>
         </div>
