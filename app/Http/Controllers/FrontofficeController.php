@@ -650,7 +650,7 @@ class FrontofficeController extends Controller
                 }
             }
 
-            /*switch ($client->payment_method) {
+            switch ($client->payment_method) {
                 case "Debito Direto":
                     $message = new Message();
                     $day = Date('d');
@@ -686,7 +686,7 @@ class FrontofficeController extends Controller
                     $response = $this->processPayment($cart, $order);
                     return redirect($response->url_redirect);
                     break;
-            }*/
+            }
         return back();
     }
 
