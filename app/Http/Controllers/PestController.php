@@ -827,7 +827,7 @@ class PestController extends Controller
         return view('frontoffice.punctualDataShow',compact('report_punctual_data','idReport'));
     }
 
-    public function verifyPin($id,$pin)
+    /*public function verifyPin($id,$pin)
     {
         $pinClient=User::where('id',$id)
             ->select(['pin'])
@@ -837,5 +837,5 @@ class PestController extends Controller
            return 1;
         }else
             return 0;
-    }
+    }*/
 }

@@ -129,7 +129,7 @@ Route::group(['middleware'=>['permissionStaff']],function(){
     Route::get('frontoffice/reportWarrantyShow/{id}','PestController@reportWarrantyShow');
     Route::get('/frontoffice/deviceWarranty/{id}','PestController@getDeviceWarranty');
     Route::post('/frontoffice/saveDeviceWarranty/{id}','PestController@saveDeviceWarranty');
-    Route::get('/frontoffice/verifyPin/{id}/{pin}','PestController@verifyPin');
+   /* Route::get('/frontoffice/verifyPin/{id}/{pin}','PestController@verifyPin');*/
     Route::get('/frontoffice/verifyCodeDeviceExist/{id}/{code}','PestController@verifyCodeDeviceExist');
     Route::get('/frontoffice/replaceDevice/{id}/{idR}','PestController@replaceDevice');
     Route::post('/frontoffice/replaceDevice/save/{id}/{idR}','PestController@saveReason');

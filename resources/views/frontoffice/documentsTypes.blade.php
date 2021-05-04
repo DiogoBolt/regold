@@ -159,12 +159,12 @@
                                 MANUTENÇÃO
                             </div>
                         </a>
-                                    <a class="category {{ $super }}" href="/frontoffice/warranty">
-                                        <div class="category-body">
-                                            <img class="img-categories" src="{{ URL::to('/') }}/img/novo.png">
-                                            GARANTIA
-                                        </div>
-                                    </a>
+                            <a class="category {{ $super }}" href="/frontoffice/warranty">
+                                <div class="category-body">
+                                   <img class="img-categories" src="{{ URL::to('/') }}/img/novo.png">
+                                   GARANTIA
+                                </div>
+                            </a>
                             <a class="category {{ $super }}" href="/frontoffice/punctual">
                                 <div class="category-body">
                                     <img class="img-categories" src="{{ URL::to('/') }}/img/novo.png">

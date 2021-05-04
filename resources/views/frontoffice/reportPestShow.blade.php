@@ -47,11 +47,7 @@
                                 <label id="date"> {{$report_pest->updated_at->toDateString()}} </label>
                             </div>
                             <div>
-                                <label class="lblBold">Hora de Início: </label>
-                                <label>{{$report_pest->created_at->format('H:i')}}</label>
-                            </div>
-                            <div>
-                                <label class="lblBold">Hora de Fim: </label>
+                                <label class="lblBold">Hora: </label>
                                 <label> {{$report_pest->updated_at->format('H:i')}}</label>
                             </div>
                         </div>

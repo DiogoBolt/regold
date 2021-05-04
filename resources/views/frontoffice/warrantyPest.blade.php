@@ -126,7 +126,7 @@
                             </div>
 
                             <div>
-                                <button type="button" data-toggle="modal" data-target="#myModal"  class="btn btn-add">Concluir</button>
+                                <button {{--type="button" data-toggle="modal" data-target="#myModal"  --}}class="btn btn-add">Concluir</button>
                             </div>
                         </form>
                     </div>
@@ -168,7 +168,7 @@
         </div>
     @endforeach
 
-    <div class="modal fade" id="myModal" role="dialog">
+    {{--<div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -194,7 +194,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>--}}
 
 @endsection
 
