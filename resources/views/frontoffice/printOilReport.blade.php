@@ -62,7 +62,6 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <tbody>
 
     <tfoot class="report-footer">
         <tr>

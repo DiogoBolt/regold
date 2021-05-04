@@ -288,7 +288,7 @@ class RecordsController extends Controller
 
         $today = Carbon::now()->format('Y-m-d');
 
-        return view('frontoffice.hygieneRegister', compact('today','clientSections','sections','areasMonthly','areasBiweekly','areasWeekly','areasDaily','equipDaily','equipWeekly','equipBiweekly','equipMonthly','products'));
+        return view('frontoffice.hygieneRegister', compact('today','clientSections','areasDaily','equipDaily','products'));
     }
 
     public function getByFrequency($id){
@@ -413,7 +413,7 @@ class RecordsController extends Controller
 
         $clientSections = ClientSection::where('id_client',$auxClientId)->where('active',1)->get();
 
-        return view('frontoffice.hygieneRecordsHistory', compact(['years','months','cleaningFrequency','clientSections','is']));
+        return view('frontoffice.hygieneRecordsHistory', compact(['years','months','cleaningFrequency','clientSections']));
     }
     function getHygieneByMonth(Request $request){
         

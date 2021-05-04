@@ -379,6 +379,7 @@ function printReport(){
             console.log(document.querySelectorAll('.line'));
             document.getElementById("divBtns").style.display="none";
             document.getElementById("footer").style.display="block";
+            document.getElementById("subir").style.display="none";
             lines=document.querySelectorAll('.line');
 
             for (i = 0; i < lines.length; i++) {
@@ -389,6 +390,7 @@ function printReport(){
             window.print();
             document.getElementById("divBtns").style.display="block";
             document.getElementById("footer").style.display="none";
+
             
             for (i = 0; i < lines.length; i++) {
                 lines[i].style.display = "block";
