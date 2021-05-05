@@ -756,15 +756,12 @@ class ClientController extends Controller
         $serviceTypes = ServiceType::all();
         $activityTypes = ActivityClient::all();
 
-
         $auxDistrict=$this->getCitiesById($client->city)->id_district;
         $auxDristrictInvoice= $this->getCitiesById($client->invoice_city)->id_district;
         
         $client->district = $auxDistrict;
         $client->invoice_district = $auxDristrictInvoice;
 
-        //dd($this->getParishNameByPostalCode('4809-011'));
-        
         $client->client_type = $this->getServiceTypeByUserID($id);
         $client->parish =$this->getParishNameByPostalCode($client->postal_code);
         $client->parishInvoice =$this->getParishNameByPostalCode($client->invoice_postal_code);

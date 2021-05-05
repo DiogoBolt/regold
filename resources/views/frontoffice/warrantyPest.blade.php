@@ -82,7 +82,7 @@
                             </div>
 
                             <div id="typeSpecie" class="form-group" style="display: none">
-                                Tipo de Espécie:  <select class="form-control" name="type_specie" {{--onchange="payType(this)"--}} >
+                                Tipo de Espécie:  <select class="form-control" name="type_specie">
                                     <option disabled selected value="">Selecione a Espécie</option>
                                     <option value="Roedores">Roedores</option>
                                     <option value="Blatella germanica">Blatella germanica</option>
@@ -94,7 +94,7 @@
                             </div>
 
                             <div id="subActiva" class="form-group" style="display: none">
-                                Substância Activa:  <select class="form-control" name="subs_active" {{--onchange="payType(this)"--}}>
+                                Substância Activa:  <select class="form-control" name="subs_active">
                                     <option disabled selected value="">Selecione o Isco</option>
                                     <option value="A-Cipermetrina">A-Cipermetrina</option>
                                     <option value="Clotiamidina">"Clotiamidina</option>
