@@ -66,8 +66,6 @@ class ProductController extends Controller
 
         if ($request->hasfile('foto')) {
             $product = new Product;
-
-
             $product->name = $inputs['name'];
             $product->price1 = $inputs['price1'];
             $product->price2 = $inputs['price2'];
@@ -77,7 +75,6 @@ class ProductController extends Controller
             $product->details = $inputs['details'];
             $product->ref = $inputs['ref'];
             $product->category = $inputs['category'];
-
 
             if ($request->hasFile('foto')) {
                 $file = $request->file('foto');
@@ -120,15 +117,12 @@ class ProductController extends Controller
 
         $categories = Category::all();
         return view('product.index', compact('categories'));
-
     }
 
     public function editProduct($cat, $id)
     {
-
         $product = Product::where('id', $id)->first();
         $categories = Category::all();
-
         $selected = Category::where('id', $product->category)->first();
 
         return view('product.edit', compact('product', 'categories', 'selected'));
@@ -152,7 +146,6 @@ class ProductController extends Controller
         $inputs = $request->all();
 
         $product = Product::where('id', $inputs['id'])->first();
-
         $product->name = $inputs['name'];
         $product->price1 = $inputs['price1'];
         $product->price2 = $inputs['price2'];
@@ -181,7 +174,6 @@ class ProductController extends Controller
             $product->manual = $filename;
         }
 
-
         if ($request->hasFile('seguranca')) {
             $file = $request->file('seguranca');
             $extension = $file->getClientOriginalExtension(); // getting image extension
@@ -195,7 +187,6 @@ class ProductController extends Controller
         $selected = Category::where('id', $product->category)->first();
         $categories = Category::all();
         return view('product.edit', compact('product', 'categories', 'selected'));
-
     }
 
     public function showOrders()
@@ -280,7 +271,6 @@ class ProductController extends Controller
 
             $filteredOrders->where('o.created_at', '<=', $request->end_date);
         }
-
 
         $orders = $filteredOrders->orderBy('o.id', 'DESC')->paginate(25);
 
@@ -423,7 +413,6 @@ class ProductController extends Controller
             $order->invoice = Receipt::where('id', $order->invoice_id)->first()->file ?? null;
         }
 
-
         return view('orders.unPaidOrders', compact('orders'));
     }
 
@@ -477,21 +466,17 @@ class ProductController extends Controller
             $order->invoice = Receipt::where('id', $order->invoice_id)->first()->file ?? null;
         }
 
-
         return view('orders.historyOrders', compact('orders'));
     }
 
     public function viewOrder($id)
     {
-
         $order = Order::where('id', $id)->first();
-
         $client = Customer::where('id', $order->client_id)->first();
         $salesman = null;
 
         if (!isset($order))
             return back();
-
 
         $salesPayment = SalesPayment::where('order_id', $id)->first();
         if (isset($salesPayment)) {
@@ -511,7 +496,6 @@ class ProductController extends Controller
             }
 
             $total = OrderLine::where('cart_id', $cart->id)->sum('total');
-
             $serHaccp = $order->total - $total;
 
             return view('orders.order', compact('line_items', 'total', 'order', 'client','serHaccp', 'salesman'));
@@ -526,25 +510,22 @@ class ProductController extends Controller
         $user = Auth::user();
 
         $order = Order::where('id', $id)->first();
-//Processar encomenda com fatura associada
+        //Processar encomenda com fatura associada
         /*if ($order->invoice_id != null) {*/
             $order->processed = 1;
             $order->processed_time = now();
             $order->save();
         /*} else {
-
             $error = "Não é possivel processar esta encomenda";
         }*/
         $clientUser = Customer::where('id', $order->client_id)->first();
 
         $message = new Message;
-
         $message->sender_id = $user->id;
         $message->receiver_id = $clientUser->ownerID;
         $message->text = "A sua encomenda nº" . $order->id ." do estabelecimento " . $clientUser->name . " foi processada. Obrigado.";
         $message->type = 5;
         $message->viewed = 0;
-
         $message->save();
 
         if ($user->userType == 5) {
@@ -584,13 +565,11 @@ class ProductController extends Controller
             ])->first();
 
         $message = new Message();
-
         $message->sender_id = $user->id;
         $message->receiver_id = $clientUser->id;
         $message->text = "Pagamento da Encomenda nº" . $order->id ." do estabelecimento " . $clientUser->name . " recebida pelo vendedor " . $user->name . ". Obrigado.";
         $message->type = 5;
         $message->viewed = 0;
-
         $message->save();
 
         $salesPayment = new SalesPayment;
@@ -640,7 +619,6 @@ class ProductController extends Controller
         $clientUser = User::where('client_id', $order->client_id)->first();
 
         $order->status = 'waiting_payment';
-
         $order->save();
 
         $salesPayment = SalesPayment::where('order_id', $id)->first();
@@ -649,14 +627,12 @@ class ProductController extends Controller
         return redirect('/processedOrders');
     }
 
-
     public function semiPayOrder(Request $request)
     {
         $inputs = $request->all();
         $order = Order::where('id', $inputs['id'])->first();
         $amount = $inputs['amount'];
         $user = Auth::user();
-
 
         $order->total -= $amount;
         $order->save();
@@ -773,16 +749,12 @@ class ProductController extends Controller
         $inputs = $request->all();
         $text = $inputs['message'];
 
-
         $message = new Message;
-
         $message->sender_id = $user->id;
         $message->receiver_id = $inputs['id'];
         $message->text = $inputs['message'];
         $message->viewed = 0;
-
         $message->save();
-
 
         Mail::send('emails.welcome', compact('user', 'text'),
             function ($m) use ($user) {
@@ -793,7 +765,6 @@ class ProductController extends Controller
             });
 
         return back();
-
     }
 
     public function newMassMessage(Request $request)
@@ -808,7 +779,6 @@ class ProductController extends Controller
 
             foreach ($clients as $client) {
                 $message = new Message;
-
                 $message->sender_id = $user->id;
                 $message->receiver_id = $client->id;
                 $message->text = $inputs['message'];
@@ -821,7 +791,6 @@ class ProductController extends Controller
 
             foreach ($clients as $client) {
                 $message = new Message;
-
                 $message->sender_id = $user->id;
                 $message->receiver_id = $client->id;
                 $message->text = $inputs['message'];
@@ -831,7 +800,6 @@ class ProductController extends Controller
         }
         return back();
     }
-
 
     public function attachReceipt(Request $request)
     {
@@ -848,7 +816,6 @@ class ProductController extends Controller
 
         if ($request->hasfile('receipt')) {
             $receipt = new Receipt;
-
             $receipt->client_id = $order->client_id;
             $receipt->name = date('Y-m-d');
             $receipt->document_type_id = 2;
@@ -858,7 +825,6 @@ class ProductController extends Controller
             $extension = $file->getClientOriginalExtension(); // getting image extension
             $filename = $file->getClientOriginalName() . '.' . $extension;
             $file->move('uploads/' . $order->client_id . '/', $filename);
-
 
             //TODO Envio de email
 
@@ -871,21 +837,17 @@ class ProductController extends Controller
             ])->first();
 
         $message = new Message;
-
         $message->sender_id = $user->id;
         $message->receiver_id = $clientUser->ownerID;
         $message->text = "Foi adicionado o recibo à sua encomenda nº" . $order->id . " do estabelecimento " . $clientUser->name . " . Obrigado.";
         $message->type = 4;
         $message->viewed = 0;
-
         $message->save();
 
         $order->receipt_id = $receipt->id;
         $order->save();
 
         return back();
-
-
     }
 
     public function attachInvoice(Request $request)
@@ -913,7 +875,6 @@ class ProductController extends Controller
             $filename = $file->getClientOriginalName() . '.' . $extension;
             $file->move('uploads/' . $order->client_id . '/', $filename);
 
-
             //TODO Envio de email
 
             $receipt->file = $filename;
@@ -924,7 +885,6 @@ class ProductController extends Controller
         $order->save();
 
         return redirect('/orders');
-
     }
 
     public function showBilling()
@@ -957,7 +917,6 @@ class ProductController extends Controller
             }
             return view('product.billing', compact('clients','totalUnpaidAmount','totalUnpaid','totalPaid'));
         }
-
     }
     public function deleteOrder($id){
 
