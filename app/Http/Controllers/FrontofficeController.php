@@ -846,7 +846,7 @@ class FrontofficeController extends Controller
             'url_confirm' => 'http://www.regolfood.pt',
         ];
 
-        $url = 'https://services.meowallet.pt/api/v2/checkout';
+        $url = 'https://services.wallet.pt/api/v2/checkout';
 
         $response = $this->http($url, $request_data);
 
@@ -920,7 +920,7 @@ class FrontofficeController extends Controller
             'url_confirm' => 'http://www.regolfood.pt',
         ];
 
-        $url = 'https://services.meowallet.pt/api/v2/checkout';
+        $url = 'https://services.wallet.pt/api/v2/checkout';
 
         $response = $this->http($url, $request_data);
 
