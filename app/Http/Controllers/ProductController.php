@@ -918,11 +918,10 @@ class ProductController extends Controller
             return view('product.billing', compact('clients','totalUnpaidAmount','totalUnpaid','totalPaid'));
         }
     }
-    public function deleteOrder($id){
+    public function deleteOrder(Request $request){
 
-        $order = Order::where('id',$id)->first();
-        $order->delete();
+        $order = Order::where('id',$request->id)->delete();
 
-        return back();
+        return redirect()->to('/orders');
     }
 }

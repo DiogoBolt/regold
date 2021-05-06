@@ -75,7 +75,11 @@
                     </tr>
                     @foreach($orders as $order)
                             <tr>
-                                <td><a href="/order/delete/{{$order->id}}">x</a></td>
+                                <td>
+                                    <i class="fa fa-trash fa-lg" data-toggle="modal" data-target="#deleteModal"
+                                            data-item="{{ $order }}">
+                                    </i>
+                                </td>
                                 <td><a href="/clients/{{$order->client_id}}">{{$order->name}}</a></td>
                                 <td>{{$order->regoldiID}}</td>
                                 <td>{{number_format($order->total,2)}}€</td>
@@ -127,6 +131,33 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">x</button>
+                <h4 class="modal-title">Apagar Encomenda</h4>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn modal-del" id="delete-user">
+                    <strong>Apagar</strong>
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <strong>Cancelar</strong>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form action="/order/delete" method="post" id="delete-form">
+    {{ csrf_field() }}
+    <input type="hidden" name="_method" value="delete"/>
+    <input type="hidden" id="order-id" value="" name="id">
+</form>
+
 @endsection
 
 
@@ -177,5 +208,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    /*const greenlist=document.getElementsByClassName('green');
+    const redlist=document.getElementsByClassName('red');
+    $(greenlist).hide();*/
+
+
+    $('#deleteModal').on('show.bs.modal', function (event) {
+        let item = $(event.relatedTarget);
+        let data = item.data('item');
+
+        $(this).find('.modal-body').text(`Tem a certeza que pretende apagar esta encomenda? `);
+
+        $('#delete-user').on('click', function () {
+            $('#order-id').val(data.id);
+            $('#delete-form').submit();
+        });
+
+    });
+
+    $("#deleteModal").on("hidden.bs.modal", function () {
+        $('#delete-user').unbind('click');
+    });
+
+}, false);
+
 
 </script>
