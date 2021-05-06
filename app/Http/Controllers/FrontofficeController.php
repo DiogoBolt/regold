@@ -846,7 +846,7 @@ class FrontofficeController extends Controller
             'url_confirm' => 'http://www.regolfood.pt',
         ];
 
-        $url = 'https://services.sandbox.meowallet.pt/api/v2/checkout';
+        $url = 'https://services.wallet.pt/api/v2/checkout';
 
         $response = $this->http($url, $request_data);
 
@@ -920,7 +920,7 @@ class FrontofficeController extends Controller
             'url_confirm' => 'http://www.regolfood.pt',
         ];
 
-        $url = 'https://services.sandbox.meowallet.pt/api/v2/checkout';
+        $url = 'https://services.wallet.pt/api/v2/checkout';
 
         $response = $this->http($url, $request_data);
 
@@ -929,7 +929,7 @@ class FrontofficeController extends Controller
 
     private function http($url, $data = null, $method = null){
 
-        $authToken    = '123a6ad89ac961d885f089ff4b82b57d19c3406e';
+        $authToken    = 'e5e46b4e88f5b8deb29d4bbfb754cdd90cf8324f';
         $headers      = [
             'Authorization: WalletPT ' . $authToken,
             'Content-Type: application/json'
