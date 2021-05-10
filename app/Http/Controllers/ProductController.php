@@ -424,8 +424,8 @@ class ProductController extends Controller
             $orders = Order::from(Order::alias('o'))
                 ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
                 ->where('processed', 1)
-                ->where('receipt_id', '!=', null)
-                ->where('invoice_id', '!=', null)
+               /* ->where('receipt_id', '!=', null)
+                ->where('invoice_id', '!=', null)*/
                 ->where('status', 'paid')
                 ->select([
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
@@ -436,8 +436,8 @@ class ProductController extends Controller
             $orders = Order::from(Order::alias('o'))
                 ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
                 ->where('c.salesman', $user->userTypeID)
-                ->where('receipt_id', '=', null)
-                ->where('invoice_id', '=', null)
+                /*->where('receipt_id', '=', null)
+                ->where('invoice_id', '=', null)*/
                 ->where('processed', 1)
                 ->where('status', 'paid')
                 ->orderBy('o.id', 'DESC')
@@ -450,8 +450,8 @@ class ProductController extends Controller
         } else {
             $orders = Order::from(Order::alias('o'))
                 ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
-                ->where('receipt_id', '=', null)
-                ->where('invoice_id', '=', null)
+                /*->where('receipt_id', '=', null)
+                ->where('invoice_id', '=', null)*/
                 ->where('processed', 1)
                 ->where('status', 'paid')
                 ->orderBy('o.id', 'DESC')
