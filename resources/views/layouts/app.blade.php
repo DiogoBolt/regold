@@ -110,11 +110,10 @@
                             </li>
 
                             <li>
-                                <a href="/frontoffice/reports/punctualList">
-                                    Relatório Pontual
+                                <a href="/historyOrders">
+                                    Historico Encomendas
                                 </a>
                             </li>
-
                             @if(Auth::user()->userType == 5||1)
                                 <li>
                                     <a href="/billing">
@@ -122,12 +121,6 @@
                                     </a>
                                 </li>
                             @endif
-
-                            <li>
-                                <a href="/historyOrders">
-                                    Historico Encomendas
-                                </a>
-                            </li>
                             <li>
                                 <a href="/possiblecustomers/">
                                     + Clientes
@@ -163,6 +156,14 @@
                                             </a>
                                         </li>
                                     @endif
+
+                                        @if(Auth::user()->sales_id == null)
+                                            <li>
+                                                <a href="/frontoffice/reports/punctualList">
+                                                    Relatório Pontual
+                                                </a>
+                                            </li>
+                                        @endif
 
                                     @if(Auth::user()->sales_id == null)
                                         <li>
