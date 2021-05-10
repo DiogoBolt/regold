@@ -236,14 +236,15 @@ class ProductController extends Controller
         $user = Auth::user();
         $filteredOrders = Order::from(Order::alias('o'))
             ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
+            ->where('processed',0)
             ->select([
                 'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
                 'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
             ]);
 
-        if ($user->userType) {
+       /* if ($user->userType) {
             $filteredOrders->where('c.salesman', $user->userType);
-        }
+        }*/
 
         if ($request->filled('client')) {
             $filteredOrders->where('c.name', 'like', '%' . $request->client . '%');
@@ -289,9 +290,9 @@ class ProductController extends Controller
                 'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
             ]);
 
-        if ($user->userType = 4) {
+      /*  if ($user->userType = 4) {
             $filteredOrders->where('c.salesman', $user->sales_id);
-        }
+        }*/
 
         if ($request->filled('client')) {
             $filteredOrders->where('c.name', 'like', '%' . $request->client . '%');

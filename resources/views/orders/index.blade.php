@@ -67,6 +67,7 @@
                         <th></th>
                         <th>Cliente</th>
                         <th>ID Regoldi</th>
+                        <th>Data</th>
                         <th>Total</th>
                         <th>Fatura</th>
                         <th>Detalhes</th>
@@ -82,6 +83,7 @@
                                 </td>
                                 <td><a href="/clients/{{$order->client_id}}">{{$order->name}}</a></td>
                                 <td>{{$order->regoldiID}}</td>
+                                <td>{{$order->created_at->format('d-m-Y')}}</td>
                                 <td>{{number_format($order->total,2)}}€</td>
                                 @if($order->invoice_id == null)
                                     <td class="form-td">

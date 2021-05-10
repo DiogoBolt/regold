@@ -57,6 +57,7 @@
                     <tr>
                         <th>Cliente</th>
                         <th>ID Regoldi</th>
+                        <th>Data</th>
                         <th>Total</th>
                         <th>Abater</th>
                         <th>Estado</th>
@@ -68,6 +69,7 @@
                             <tr>
                                 <td><a href="/clients/{{$order->client_id}}">{{$order->name}}</a></td>
                                 <td>{{$order->regoldiID}}</td>
+                                <td>{{$order->created_at->format('d-m-Y')}}</td>
                                 <td>{{number_format($order->total,2)}}€</td>
                                 @if($order->status != 'paid')
                                 <td><form  method="post" action="/orders/semipay">

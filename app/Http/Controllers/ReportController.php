@@ -36,6 +36,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -389,83 +390,110 @@ class ReportController extends Controller
 
     public function saveAnswers($id,Request $request){
 
-        $inputs = $request->all();
-        $answers = json_decode($inputs['answers']);
-        $obs = json_decode($inputs['obs']);
-        $idSection = json_decode($inputs['idSection']);
+        DB::transaction(function () use ($id,$request){
 
-        $idReport = $id;
-        $arrayAuxSection=Session::get('sectionsReport');
+            $inputs = $request->all();
+            $answers = json_decode($inputs['answers']);
+            $obs = json_decode($inputs['obs']);
+            $idSection = json_decode($inputs['idSection']);
 
-        if($arrayAuxSection != null){
+            $idReport = $id;
+            $arrayAuxSection=Session::get('sectionsReport');
 
-            if(in_array($idSection,$arrayAuxSection)){
-                foreach($answers as $answer){
+            if($arrayAuxSection != null){
 
-                    $change1=false;
-                    $change2=false;
-                    $change3=false;
+                if(in_array($idSection,$arrayAuxSection)){
+                    foreach($answers as $answer){
 
-                    $rulesAnswerReport=RulesAnswerReport::where('idReport',$idReport)
-                    ->where('idRule',$answer->idRule)
-                    ->first();
-                    
-                    if(!($rulesAnswerReport->answer == $answer->resp)){
-                        $rulesAnswerReport->answer = $answer->resp;
-                        $change1=true;
+                        $change1=false;
+                        $change2=false;
+                        $change3=false;
+
+                        $rulesAnswerReport=RulesAnswerReport::where('idReport',$idReport)
+                            ->where('idRule',$answer->idRule)
+                            ->first();
+
+                        if(!($rulesAnswerReport->answer == $answer->resp)){
+                            $rulesAnswerReport->answer = $answer->resp;
+                            $change1=true;
+                        }
+
+                        if(!($rulesAnswerReport->corrective == $answer->corrective)){
+                            $rulesAnswerReport->corrective = $answer->corrective;
+                            $change2=true;
+                        }
+
+                        if(!($rulesAnswerReport->severityValue == $answer->severityValue)){
+                            $rulesAnswerReport->severityValue = $answer->severityValue;
+                            $change3=true;
+                        }
+
+                        if($change1 || $change2 || $change3){
+
+                            $rulesAnswerReport->save();
+                        }
+
                     }
 
-                    if(!($rulesAnswerReport->corrective == $answer->corrective)){
-                        $rulesAnswerReport->corrective = $answer->corrective;
-                        $change2=true;
+                    //obs
+                    $idObsList=ReportSectionObs::where('idReport',$idReport)
+                        ->where('idClientSection',$idSection)
+                        ->select(['id',])
+                        ->pluck('id')->all();
+
+                    foreach($obs as $o){
+                        if($o->idObs == 0){
+                            $reportSectionObs = new ReportSectionObs;
+                            $reportSectionObs->idReport=$idReport;
+                            $reportSectionObs->observation=$o->observations;
+                            $reportSectionObs->idRule=$o->rule;
+                            $reportSectionObs->idClientSection=$idSection;
+                            $reportSectionObs->save();
+                        }else{
+                            $obsBD=ReportSectionObs::where('id',$o->idObs)
+                                ->select(['id','observation'])
+                                ->first();
+
+                            if($obsBD->observation != $o->observations ){
+                                $obsBD->observation=$o->observations;
+                                $obsBD->save();
+                            }
+
+                            if (($key = array_search($o->idObs,$idObsList)) !== false) {
+                                unset($idObsList[$key]);
+                            }
+                        }
+                    }
+                    foreach($idObsList as $idObs){
+                        $obsDelete=ReportSectionObs::where('id',$idObs)
+                            ->delete();
                     }
 
-                    if(!($rulesAnswerReport->severityValue == $answer->severityValue)){
-                        $rulesAnswerReport->severityValue = $answer->severityValue;
-                        $change3=true;
-                    }
-        
-                    if($change1 || $change2 || $change3){
-
-                       $rulesAnswerReport->save();
-                    }
-
-                }
-
-            //obs
-            $idObsList=ReportSectionObs::where('idReport',$idReport)
-            ->where('idClientSection',$idSection)
-            ->select(['id',])
-            ->pluck('id')->all();
-
-            foreach($obs as $o){
-                if($o->idObs == 0){
-                    $reportSectionObs = new ReportSectionObs;
-                    $reportSectionObs->idReport=$idReport;
-                    $reportSectionObs->observation=$o->observations;
-                    $reportSectionObs->idRule=$o->rule;
-                    $reportSectionObs->idClientSection=$idSection;
-                    $reportSectionObs->save();
                 }else{
-                    $obsBD=ReportSectionObs::where('id',$o->idObs)
-                    ->select(['id','observation'])
-                    ->first();
-    
-                    if($obsBD->observation != $o->observations ){
-                        $obsBD->observation=$o->observations;
-                       $obsBD->save();
+                    if(count($answers)>0){
+                        foreach($answers as $answer){
+                            $rulesAnswerReport = new RulesAnswerReport;
+                            $rulesAnswerReport->idReport=$idReport;
+                            $rulesAnswerReport->idRule=$answer->idRule;
+                            $rulesAnswerReport->answer=$answer->resp;
+                            $rulesAnswerReport->corrective=$answer->corrective;
+                            $rulesAnswerReport->severityValue=$answer->severityValue;
+                            $rulesAnswerReport->idClientSection=$idSection;
+                            $rulesAnswerReport->save();
+                        }
                     }
 
-                    if (($key = array_search($o->idObs,$idObsList)) !== false) {
-                        unset($idObsList[$key]);
+                    if(count($obs)>0){
+                        foreach($obs as $o){
+                            $reportSectionObs = new ReportSectionObs;
+                            $reportSectionObs->idReport=$idReport;
+                            $reportSectionObs->observation=$o->observations;
+                            $reportSectionObs->idRule=$o->rule;
+                            $reportSectionObs->idClientSection=$idSection;
+                            $reportSectionObs->save();
+                        }
                     }
-                } 
-            }
-            foreach($idObsList as $idObs){
-                $obsDelete=ReportSectionObs::where('id',$idObs)
-                    ->delete();
-            }
-
+                }
             }else{
                 if(count($answers)>0){
                     foreach($answers as $answer){
@@ -491,33 +519,12 @@ class ReportController extends Controller
                     }
                 }
             }
-        }else{
-            if(count($answers)>0){
-                foreach($answers as $answer){
-                    $rulesAnswerReport = new RulesAnswerReport;
-                    $rulesAnswerReport->idReport=$idReport;
-                    $rulesAnswerReport->idRule=$answer->idRule;
-                    $rulesAnswerReport->answer=$answer->resp;
-                    $rulesAnswerReport->corrective=$answer->corrective;
-                    $rulesAnswerReport->severityValue=$answer->severityValue;
-                    $rulesAnswerReport->idClientSection=$idSection;
-                    $rulesAnswerReport->save();
-                }
-            }
 
-            if(count($obs)>0){
-                foreach($obs as $o){
-                    $reportSectionObs = new ReportSectionObs;
-                    $reportSectionObs->idReport=$idReport;
-                    $reportSectionObs->observation=$o->observations;
-                    $reportSectionObs->idRule=$o->rule;
-                    $reportSectionObs->idClientSection=$idSection;
-                    $reportSectionObs->save();
-                }
-            }
-        }
+            $this->addSectionReport($idSection);
 
-        $this->addSectionReport($idSection);
+        });
+
+
     }
 
     public function saveReport($visitNumber,$id){
