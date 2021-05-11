@@ -1008,10 +1008,7 @@ class ClientController extends Controller
     }
     function deleteReceipt(Request $request){
 
-        $receipt = Receipt::where('id',$request->id)->first();
-        $receipt->delete('uploads/'.$request->client_id.'/', $receipt->file);
-        $receipt->delete();
-
+        $receipt = Receipt::where('id',$request->id)->delete();
         return back();
     }
     public function getDocuments($id){

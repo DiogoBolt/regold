@@ -73,7 +73,6 @@
     {{ csrf_field() }}
     <input type="hidden" name="_method" value="delete"/>
     <input type="hidden" id="receipt-id" value="" name="id">
-    <input type="hidden" id="client-id" value="" name="id">
 </form>
 
 
@@ -90,7 +89,6 @@
 
             $('#delete-receipt').on('click', function () {
                 $('#receipt-id').val(data.id);
-                $('#client-id').val(data.client_id);
                 $('#delete-form').submit();
             });
 
