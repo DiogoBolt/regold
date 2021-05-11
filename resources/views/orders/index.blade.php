@@ -143,7 +143,7 @@
             </div>
             <div class="modal-body"></div>
             <div class="modal-footer">
-                <button type="button" class="btn modal-del" id="delete-user">
+                <button type="button" class="btn modal-del" id="delete-order">
                     <strong>Apagar</strong>
                 </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">
@@ -208,14 +208,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-    /*const greenlist=document.getElementsByClassName('green');
-    const redlist=document.getElementsByClassName('red');
-    $(greenlist).hide();*/
-
 
     $('#deleteModal').on('show.bs.modal', function (event) {
         let item = $(event.relatedTarget);
@@ -223,7 +218,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         $(this).find('.modal-body').text(`Tem a certeza que pretende apagar esta encomenda? `);
 
-        $('#delete-user').on('click', function () {
+        $('#delete-order').on('click', function () {
             $('#order-id').val(data.id);
             $('#delete-form').submit();
         });
@@ -231,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     $("#deleteModal").on("hidden.bs.modal", function () {
-        $('#delete-user').unbind('click');
+        $('#delete-order').unbind('click');
     });
 
 }, false);

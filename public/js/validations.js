@@ -136,8 +136,6 @@ function getParishName(postalCode,id) {
     }
 }
 
-
-
     function showRegistedMail(){
         document.getElementById("EmailInvoice").style.display="none";
         document.getElementById('ReceiptEmail').required=false;

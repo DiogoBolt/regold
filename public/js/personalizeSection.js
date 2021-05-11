@@ -191,9 +191,7 @@ function addAreasTable(){
 //função adicionar areas existentess
 function addArea() {
     var area = $('#allAreas').val();
-    console.log(area)
     var areaClone = JSON.parse(area);
-    console.log(areaClone)
     var row = document.getElementsByClassName("tableRowArea")[0];
 
     for( var i=0; i< areaClone.length; i++) {
@@ -316,7 +314,6 @@ function saveEachPersonalize(){
                area.idCleaningFrequency3 = rowsArea[i].cells[7].children[0].value;
 
                area.idSection = idSection;
-               console.log(area)
                areasSelected.push(area);
            }
        }

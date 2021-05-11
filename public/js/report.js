@@ -567,7 +567,7 @@ function verifyPin(id) {
                 document.getElementById("error").style.display="inline"
             }
         }
-    })
+    });
 }
 
 

@@ -973,7 +973,6 @@ class ClientController extends Controller
         {
             $files = $request->file('receipt');
 
-
             foreach ($files as $file){
                 $receipt = new Receipt;
                 $receipt->client_id = $inputs['client'];
@@ -984,6 +983,7 @@ class ClientController extends Controller
                 $extension = $file->getClientOriginalExtension(); // getting image extension
                 $filename = $file->getClientOriginalName().'.'.$extension;
                 $file->move('uploads/'.$inputs['client'].'/', $filename);
+
 
                 //TODO Envio de email
                 //dd($inputs['client']);
@@ -1006,9 +1006,10 @@ class ClientController extends Controller
         }
         return back();
     }
-    function deleteReceipt($id){
+    function deleteReceipt(Request $request){
 
-        $receipt = Receipt::where('id',$id)->first();
+        $receipt = Receipt::where('id',$request->id)->first();
+        $receipt->delete('uploads/'.$request->id.'/', $receipt->file);
         $receipt->delete();
 
         return back();

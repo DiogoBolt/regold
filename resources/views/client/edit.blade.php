@@ -21,6 +21,7 @@
                     <form action="/clients/edit"  method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <input value="{{$client->id}}" style="display:none" name="id">
+
                         <div class="col-sm-6">
                             <div class="form-group">
                                 Vendedor: <select class="form-control" name="salesman" required>
@@ -128,30 +129,13 @@
                                 Telefone: <input class="form-control" value="{{$client->telephone}}" placeholder="9********/2********" type="tel" name="telephone" required>
                             </div>
                         </div>
+
+
                         <div class="col-sm-6">
-                       {{-- <div class="form-group">
-                            Actividade do Cliente: <select class="form-control" name="activity" required>
-                                <option disabled  value="">Selecione a Atividade/Tipo de Cliente</option>
-                                @foreach($activityTypes as $activityType)
-                                    @if($activityType->id==$client->activity)
-                                        <option selected value="{{$activityType->id}}">{{$activityType->designation}}</option>
-                                    @else
-                                        <option value="{{$activityType->id}}">{{$activityType->designation}}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>--}}
 
                             <div class="form-group">
                                 NIB: <input type="number" placeholder="Insira o nib" class="form-control" type="number" value="{{$client->nib}}" name="nib">
                             </div>
-                            {{--<div class="form-group">
-                                Tipo de Pack: <input type="number" placeholder="Insira o nib" class="form-control" type="number" value="{{$client->nib}}" name="nib">
-                            </div>--}}
-                            {{--<div class="form-group">
-                                NIB: <input type="number" placeholder="Insira o nib" class="form-control" type="number" value="{{$client->nib}}" name="nib">
-                            </div>--}}
-
 
                             <div class="form-group">
                                 Valor Contrato: <input type="number" step="0.01" placeholder="Valor de Contrato" value="{{$client->contract_value}}" min=0 class="form-control" name="value">
