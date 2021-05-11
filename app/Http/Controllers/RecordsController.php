@@ -253,10 +253,10 @@ class RecordsController extends Controller
                 if($areaDaily->idCleaningFrequency == 1){
                     $areaDaily->productId=$areaDaily->idProduct;
                 }
-                if($areaDaily->idCleaningFrequency2 == 1){
+                elseif($areaDaily->idCleaningFrequency2 == 1){
                     $areaDaily->productId=$areaDaily->idProduct2;
                 }
-                if($areaDaily->idCleaningFrequency3 == 1){
+                elseif($areaDaily->idCleaningFrequency3 == 1){
                     $areaDaily->productId=$areaDaily->idProduct3;
                 }
             }
@@ -278,10 +278,10 @@ class RecordsController extends Controller
                 if($equipD->idCleaningFrequency == 1){
                     $equipD->productId=$equipD->idProduct;
                 }
-                if($equipD->idCleaningFrequency2 == 1){
+                elseif($equipD->idCleaningFrequency2 == 1){
                     $equipD->productId=$equipD->idProduct2;
                 }
-                if($equipD->idCleaningFrequency3 == 1){
+                elseif($equipD->idCleaningFrequency3 == 1){
                     $equipD->productId=$equipD->idProduct3;
                 }
             }
@@ -416,10 +416,10 @@ class RecordsController extends Controller
             if($item->idCleaningFrequency == $id){
                 $item->productId=$item->idProduct;
             }
-            if($item->idCleaningFrequency2 == $id){
+            elseif($item->idCleaningFrequency2 == $id){
                 $item->productId=$item->idProduct2;
             }
-            if($item->idCleaningFrequency3 == $id){
+            elseif($item->idCleaningFrequency3 == $id){
                 $item->productId=$item->idProduct3;
             }
             $item->sectionDesignation = ClientSection::where('id',$item->idSection)->first()->designation;
@@ -435,10 +435,10 @@ class RecordsController extends Controller
             if($item->idCleaningFrequency == $id){
                 $item->productId=$item->idProduct;
             }
-            if($item->idCleaningFrequency2 == $id){
+            elseif($item->idCleaningFrequency2 == $id){
                 $item->productId=$item->idProduct2;
             }
-            if($item->idCleaningFrequency3 == $id){
+            elseif($item->idCleaningFrequency3 == $id){
                 $item->productId=$item->idProduct3;
             }
             $item->sectionDesignation = ClientSection::where('id',$item->idSection)->first()->designation;
