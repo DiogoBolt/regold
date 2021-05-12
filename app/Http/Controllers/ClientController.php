@@ -984,7 +984,6 @@ class ClientController extends Controller
                 $filename = $file->getClientOriginalName().'.'.$extension;
                 $file->move('uploads/'.$inputs['client'].'/', $filename);
 
-
                 //TODO Envio de email
                 //dd($inputs['client']);
                 $receipt->file = $filename;

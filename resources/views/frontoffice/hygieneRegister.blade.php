@@ -212,7 +212,7 @@
                         <td>${data[0][i].designation}</td>
                         <td>${data[0][i].sectionDesignation}</td>
                         <td><a href="/frontoffice/product/${data[0][i].productId}">${data[0][i].productName}</a></td>
-                        <td><span class="show-info" data-toggle="modal" data-target="#info-modal" onclick="showObservation(${data[0][i].id}},'a')" ><i class="glyphicon glyphicon-info-sign"></i></span></td>
+                        <td><span class="show-info" data-toggle="modal" data-target="#info-modal" onclick="showObservation(${data[0][i].id},'a')" ><i class="glyphicon glyphicon-info-sign"></i></span></td>
                         <td><input name="checkbox[]" type="checkbox" id="${data[0][i].designation}" value='{"idArea":${data[0][i].id},"idProduct":${data[0][i].productId},"designation":"${data[0][i].designation}","idSection":"${data[0][i].idSection}","idCleaningFrequency":"${id}"}'></td>
                     </tr>
              `)
@@ -223,7 +223,7 @@
                         <td>${data[1][i].designation}</td>
                         <td>${data[1][i].sectionDesignation}</td>
                         <td><a href="/frontoffice/product/${data[1][i].productId}">${data[1][i].productName}</a></td>
-                        <td><span class="show-info" data-toggle="modal" data-target="#info-modal" onclick="showObservation(${data[1][i].id}},'e')" ><i class="glyphicon glyphicon-info-sign"></i></span></td>
+                        <td><span class="show-info" data-toggle="modal" data-target="#info-modal" onclick="showObservation(${data[1][i].id},'e')" ><i class="glyphicon glyphicon-info-sign"></i></span></td>
                         <td><input name="checkbox[]" type="checkbox" id="${data[1][i].designation}" value='{"idEquipment":${data[1][i].id},"idProduct":${data[1][i].productId},"designation":"${data[1][i].designation}","idSection":"${data[1][i].idSection}","idCleaningFrequency":"${id}"}'></td>
                     </tr>
              `)
@@ -274,7 +274,6 @@
     function showObservation(id,type) {
         $('#infomodal').html('');
         $.get('/frontoffice/getObservation/'+id+'/'+type, function( data ) {
-            console.log(data)
             $('#infomodal').append(data);
         });
     }
