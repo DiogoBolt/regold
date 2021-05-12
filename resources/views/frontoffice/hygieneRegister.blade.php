@@ -202,10 +202,11 @@
             type: 'GET',
             url: "/frontoffice/records/hygieneFreq/" + id,
         }).done(function (data) {
-            $('#tbody-area').empty()
-            $('#tbody-equip').empty()
-            $('#table-area').css("display", "block")
-            $('#table-equip').css("display", "block")
+            $('#tbody-area').empty();
+            $('#tbody-equip').empty();
+            $('#infomodal').html('');
+            $('#table-area').css("display", "block");
+            $('#table-equip').css("display", "block");
             for(var i=0;i<data[0].length;i++ ) {
                 $('#tbody-area').append(`
                     <tr>
