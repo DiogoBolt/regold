@@ -257,7 +257,6 @@ function verifyEmailExist(email){
 function IsEmail(email){
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
-    
 }
 
 function validateEmailExist(email){
@@ -287,7 +286,6 @@ function myFunction() {
         success: success
       }) .done(window.location.reload());
   }
-
 
   //função para saber o typo de pagemento
 

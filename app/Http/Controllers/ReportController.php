@@ -184,7 +184,7 @@ class ReportController extends Controller
 
             for($i=0; $i<count($rules); $i++){
 
-                if($answersSection[$i]->corrective != null){
+                if($answersSection[$i]->answer == 'nc'){
                     $showTableCorrective=1;
                     $rules[$i]->corrective= $answersSection[$i]->corrective;
                     $rules[$i]->showCorrective=1;
@@ -324,7 +324,8 @@ class ReportController extends Controller
                 }
             }
         }
-        //dd($showColumnRecidivist);
+
+
         return view('frontoffice.newReportRules',compact('rules','x','section','showTableCorrective','reportSectionObs','showColumnRecidivist','idReport'));
     }
 

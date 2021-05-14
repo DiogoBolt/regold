@@ -683,7 +683,6 @@ class ClientController extends Controller
             $section=Section::where('activityClientId',$establisment->activity)->first();
             $clientSection->id_section=$section->id;
             $clientSection->designation=$section->name;
-
             $clientSection->save();
 
             $ControlCustomizationClient->personalizeSections=1;

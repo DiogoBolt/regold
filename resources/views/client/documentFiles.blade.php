@@ -75,7 +75,6 @@
     <input type="hidden" id="receipt-id" value="" name="id">
 </form>
 
-
 @endsection
 
 <script>
@@ -91,7 +90,6 @@
                 $('#receipt-id').val(data.id);
                 $('#delete-form').submit();
             });
-
         });
 
         $("#deleteModal").on("hidden.bs.modal", function () {
