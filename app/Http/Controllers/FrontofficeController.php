@@ -681,14 +681,10 @@ class FrontofficeController extends Controller
                     return redirect($response->url_redirect);
                     break;
                 case "30 dias":
-                    $order->total = $total;
-                    $order->save();
                     $response = $this->processPayment($cart, $order);
                     return redirect($response->url_redirect);
                     break;
                 case "Tranferência/30 dias":
-                    $order->total = $total;
-                    $order->save();
                     $response = $this->processPayment($cart, $order);
                     return redirect($response->url_redirect);
                     break;
@@ -829,8 +825,8 @@ class FrontofficeController extends Controller
 
         array_push($items,$iva);
 
-        $order->total = number_format($order->total > 29.90 ? $order->total*1.23 : $order->total*1.23+5,2);
-        $order->save();
+        /*$order->total = number_format($order->total > 29.90 ? $order->total*1.23 : $order->total*1.23+5,2);
+        $order->save();*/
 
         $payment = [
             'client' => ['address' => ['address' => $customer->address,'city'=>$customer->city,'country'=>'PT'], 'email' => $customer->email,'name' => $customer->name],
@@ -901,14 +897,14 @@ class FrontofficeController extends Controller
         $iva['name'] = "Iva";
         $iva['amount'] = number_format($order->total > $client->contract_value ? $order->total*1.23 - $order->total : $client->contract_value*1.23 - $client->contract_value ,2);
 
-        $order->total = number_format($order->total > $client->contract_value ? $order->total * 1.23 : $client->contract_value * 1.23,2);
-        $order->save();
+        /*$order->total = number_format($order->total > $client->contract_value ? $order->total * 1.23 : $client->contract_value * 1.23,2);
+        $order->save();*/
 
         array_push($items,$iva);
 
         $payment = [
             'client' => ['address' => ['address' => $customer->address,'city'=>$customer->city,'country'=>'PT'], 'email' => $customer->email,'name' => $customer->name],
-            'amount' => number_format($order->total,2),
+            'amount' => number_format($order->total*1.23,2),
             'currency' => 'EUR',
             'items' =>$items,
             'ext_invoiceid' => $order->external_id,
