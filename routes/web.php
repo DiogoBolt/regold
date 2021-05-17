@@ -198,10 +198,13 @@ Route::group(['middleware' => ['backoffice']], function () {
     Route::post('/salesman/add', 'SalesmanController@addSales');
     Route::delete('/salesman/delete', 'SalesmanController@deleteSales');
 
-    Route::get('/clients/regolfood', 'ClientController@indexRegolfood');
+    //route schedule
+    Route::get('/schedule/regolfood', 'ScheduleController@getSchedule');
+
+  /*  Route::get('/clients/regolfood', 'ClientController@indexRegolfood');
     Route::post('/schedule/regolfood/save/{id}','ClientController@saveScheduleRegolfood');
     Route::get('/clients/regolpest', 'ClientController@indexRegolpest');
-    Route::get('/schedule','ClientController@getSchedule');
+    Route::get('/schedule','ClientController@getSchedule');*/
 
     Route::get('/clients', 'ClientController@index');
     Route::get('/clients/new', 'ClientController@newCustomer');

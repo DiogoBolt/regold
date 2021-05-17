@@ -552,27 +552,36 @@ class ReportController extends Controller
     }
 
     public function concludeReport($id){
-        
+
+        $user = Auth::user();
+        $auxClientId = Session::get('establismentID');
+        $n = Customer::where('id',$auxClientId)->first()->haccp_visits;
+
         $idReport= $id;
-        $auxClientId = Session::get('clientImpersonatedId');
 
         $report = Report::where('id',$idReport)
         ->first();
         $report->concluded=1;
         $report->save();
 
-        $scheduled_client=Schedule::where('idClient',$auxClientId)
-            ->where('month',Carbon::now()->month)
+        /*$scheduled_haccp = Schedule::where('idClient',$auxClientId)
+            ->where('check_s',0)
             ->first();
-        if(isset($scheduled_client))
-        {
-            $scheduled_client->check_s=1;
-            $scheduled_client->save();
+
+        if($scheduled_haccp){
+            $scheduled_haccp->check_s = 1;
+            $scheduled_haccp->save();
         }
 
+        $schedule_haccp = new Schedule;
+        $schedule_haccp->technical = $user->userTypeID;
+        $schedule_haccp->idClient = $auxClientId;
+        $schedule_haccp->date = Carbon::now()->addMonth(12/$n);
+        $schedule_haccp->check_s = 0;
+        $schedule_haccp->save();*/
+
         Session::forget('sectionsReport');
-       /* Session::forget('reportId');*/
-        
+
         return redirect('/frontoffice/documents/HACCP');
     }
 

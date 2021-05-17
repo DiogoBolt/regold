@@ -376,7 +376,7 @@ class ClientController extends Controller
         return view('client.index',compact('clients','unpaid','total', 'districts'));
     }
 
-    public function indexRegolfood(Request $request)
+    /*public function indexRegolfood(Request $request)
     {
       $inputs = $request->all();
 
@@ -449,7 +449,7 @@ class ClientController extends Controller
         $cities=Cities::all();
 
         return view('client.schedule',compact('scheduledClients','districts','cities'));
-    }
+    }*/
 
     public function newCustomer()
     {

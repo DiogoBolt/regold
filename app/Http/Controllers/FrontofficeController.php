@@ -671,12 +671,14 @@ class FrontofficeController extends Controller
                 case "Contra Entrega":
                     $order->total = $total;
                     $order->save();
-                    return redirect('/frontoffice/orders');
+                    $response = $this->processPayment($cart, $order);
+                    return redirect($response->url_redirect);
                     break;
                 case "Fatura Contra Fatura":
                     $order->total = $total;
                     $order->save();
-                    return redirect('/frontoffice/orders');
+                    $response = $this->processPayment($cart, $order);
+                    return redirect($response->url_redirect);
                     break;
                 case "30 dias":
                     $response = $this->processPayment($cart, $order);
