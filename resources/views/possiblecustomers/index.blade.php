@@ -47,7 +47,7 @@
                             @endforeach
                         </table>
 
-                        <a href="/possiblecustomers/new" class="btn btn-primary"> Cliente </a>
+                        <a href="/possiblecustomers/new" class="btn btn-primary">Novo Cliente </a>
                     </div>
                 </div>
             </div>
