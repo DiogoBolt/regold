@@ -376,7 +376,7 @@ class ClientController extends Controller
         return view('client.index',compact('clients','unpaid','total', 'districts'));
     }
 
-    public function indexRegolfood(Request $request)
+    /*public function indexRegolfood(Request $request)
     {
       $inputs = $request->all();
 
@@ -449,7 +449,7 @@ class ClientController extends Controller
         $cities=Cities::all();
 
         return view('client.schedule',compact('scheduledClients','districts','cities'));
-    }
+    }*/
 
     public function newCustomer()
     {
@@ -683,7 +683,6 @@ class ClientController extends Controller
             $section=Section::where('activityClientId',$establisment->activity)->first();
             $clientSection->id_section=$section->id;
             $clientSection->designation=$section->name;
-
             $clientSection->save();
 
             $ControlCustomizationClient->personalizeSections=1;
