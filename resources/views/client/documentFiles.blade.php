@@ -16,7 +16,7 @@
     </div>
 </div>
 <div class="container">
-    <div class="container-docs">
+    <div style="font-size: 18px" class="container-docs">
 
         @if(count($receipts) > 0)
             <table class="table">

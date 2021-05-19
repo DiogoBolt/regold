@@ -75,7 +75,7 @@
                     </div>
                 </form>
 
-                <a href="{{asset('RegoldiApp.apk')}}" class="download-link">
+                <a href="{{asset('RegolfoodApp.apk')}}" class="download-link">
                     <span>DOWNLOAD </span><span> APP!</span><img src="{{ asset('img/android2.png') }}" width="30" height="30" alt="login logo"/>
                 </a>
             </div>
