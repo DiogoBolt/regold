@@ -44,7 +44,6 @@ class ScheduleController extends Controller
 
         $schedule = Schedule::from(Schedule::alias('s'))
             ->leftJoin(Customer::alias('c'),'c.id','=','s.idClient')
-            ->whereMonth('s.date', Carbon::now()->month)
             ->when($request->filled('year'), function ($query) use ($inputs){
                 return $query->whereYear('s.date', $inputs['year']);
             })
