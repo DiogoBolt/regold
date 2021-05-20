@@ -41,9 +41,15 @@
                         <select name="year" class="form-control" required>
                             <option value="" disabled selected>Seleccione Ano</option>
                             @foreach($years as $year)
-                                <option value="{{ $year->year }}">
-                                    {{ $year->year }}
-                                </option>
+                                @if(date('Y') == $year->year)
+                                    <option value="{{ $year->year }}" selected>
+                                        {{ $year->year }}
+                                    </option>
+                                @else
+                                    <option value="{{ $year->year }}">
+                                        {{ $year->year }}
+                                    </option>
+                                @endif
                             @endforeach
                         </select>
                     </div>

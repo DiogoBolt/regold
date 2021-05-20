@@ -564,7 +564,7 @@ class ReportController extends Controller
         $report->concluded=1;
         $report->save();
 
-        /*$scheduled_haccp = Schedule::where('idClient',$auxClientId)
+        $scheduled_haccp = Schedule::where('idClient',$auxClientId)
             ->where('check_s',0)
             ->first();
 
@@ -578,7 +578,7 @@ class ReportController extends Controller
         $schedule_haccp->idClient = $auxClientId;
         $schedule_haccp->date = Carbon::now()->addMonth(12/$n);
         $schedule_haccp->check_s = 0;
-        $schedule_haccp->save();*/
+        $schedule_haccp->save();
 
         Session::forget('sectionsReport');
 

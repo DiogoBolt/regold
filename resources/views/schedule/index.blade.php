@@ -15,16 +15,22 @@
     <div class="container">
 
         <div class="row">
-            <form method="get" action="/schedule/regolfood" id="history-form">
+            <form method="get" action="/schedule/haccp" id="schedule-form">
                 <div class="row">
                     <div class="col-sm-2">
                         Ano :
                         <select name="year" class="form-control" required>
                             <option value="" disabled selected>Seleccione Ano</option>
                             @foreach($years as $year)
+                                @if(date('Y') == $year->year)
+                                    <option value="{{ $year->year }}" selected>
+                                        {{ $year->year }}
+                                    </option>
+                                @else
                                 <option value="{{ $year->year }}">
                                     {{ $year->year }}
                                 </option>
+                                @endif
                             @endforeach
                         </select>
                     </div>
@@ -47,8 +53,8 @@
                     </div>
                     <div class="col-sm-4 text-right">
                         <div class="col-xs-6">
-                            <button class="btn btn-add margin-top" type="submit" id="submit-btn" form="history-form">
-                                Mostrar histórico
+                            <button class="btn btn-add margin-top" type="submit" id="submit-btn" form="schedule-form">
+                                Mostrar Agenda
                             </button>
                         </div>
                     </div>
@@ -102,13 +108,13 @@
                                         <td><a href="/clients/{{$client->id}}">{{$client->name}}</a></td>
                                         <td>
                                             <div>
-                                                <select class="dropdown" name="technical" >
+                                                <select class="dropdown" name="technical" onchange="sendPost({{$client->id}}, this.value)">
                                                     <option disabled value="">Tecnico HACCP</option>
                                                     @foreach($technicals as $technical)
                                                         @if($client->technical == $technical->id)
                                                             <option value="{{$technical->id}}" selected>{{$technical->name}}</option>
                                                         @else
-                                                            <option value="{{$technical->id}}">{{$technical->name}}</option>
+                                                            <option value="{{$technical->id}}" >{{$technical->name}}</option>
                                                         @endif
                                                     @endforeach
                                                 </select>
@@ -130,4 +136,25 @@
     </div>
 
 @endsection
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js" type="text/javascript"></script>
+<script>
+    function sendPost(idSchedule,idTechnical)
+    {
+        $.ajax({
+            type: "POST",
+            url: "/editTechnical",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                idSchedule: idSchedule, // < note use of 'this' here
+                idTechnical: idTechnical
+            },
+            success: function(result) {
+                window.location.reload()
+            },
+            error: function(result) {
+                alert('error');
+            }
+        });
+    }
+</script>
 

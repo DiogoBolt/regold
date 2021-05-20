@@ -28,11 +28,11 @@ class ScheduleController extends Controller
         $this->middleware('auth');
     }
 
-    public function getSchedule()
+    public function getSchedule(Request $request)
     {
+        $inputs = $request->all();
 
         $months = $this->months;
-
         $years = Schedule::query()
             ->select([
                 DB::raw('YEAR(created_at) as year')
@@ -45,15 +45,27 @@ class ScheduleController extends Controller
         $schedule = Schedule::from(Schedule::alias('s'))
             ->leftJoin(Customer::alias('c'),'c.id','=','s.idClient')
             ->whereMonth('s.date', Carbon::now()->month)
-            ->select(['c.name','c.regoldiID','c.city','c.id','s.technical','s.check_s'])
+            ->when($request->filled('year'), function ($query) use ($inputs){
+                return $query->whereYear('s.date', $inputs['year']);
+            })
+            ->when($request->filled('month'), function ($query) use ($inputs){
+                return $query->whereMonth('s.date', $inputs['month']);
+            })
+            ->select(['c.name','c.regoldiID','c.city','c.id','s.technical','s.check_s','s.id'])
             ->get();
 
         return view('schedule.index',compact('schedule','technicals','months','years'));
     }
 
-    public function addPossibleCustomer()
+    public function editTechnical(Request $request)
     {
+        $inputs = $request->all();
 
+        $schedule = Schedule::where('id',$inputs['idSchedule'])->first();
+        $schedule->technical = $inputs['idTechnical'];
+        $schedule->save();
+
+        return redirect('/schedule/haccp');
     }
 
     public function addPossibleCustomerPost(Request $request)

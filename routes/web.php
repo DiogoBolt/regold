@@ -199,7 +199,8 @@ Route::group(['middleware' => ['backoffice']], function () {
     Route::delete('/salesman/delete', 'SalesmanController@deleteSales');
 
     //route schedule
-    Route::get('/schedule/regolfood', 'ScheduleController@getSchedule');
+    Route::get('/schedule/haccp', 'ScheduleController@getSchedule');
+    Route::post('/editTechnical', 'ScheduleController@editTechnical');
 
   /*  Route::get('/clients/regolfood', 'ClientController@indexRegolfood');
     Route::post('/schedule/regolfood/save/{id}','ClientController@saveScheduleRegolfood');
