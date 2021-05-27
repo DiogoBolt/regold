@@ -13,9 +13,8 @@
         </div>
     </div>
     <div class="container">
-
         <div class="row">
-            <form method="get" action="/schedule/haccp" id="schedule-form">
+            <form method="get" action="/schedule/haccp/get" id="schedule-form">
                 <div class="row">
                     <div class="col-sm-2">
                         Ano :
@@ -61,78 +60,81 @@
                 </div>
             </form>
             <div class="col-md-8 col-md-offset-2">
-                <div class="panel">
-                    <div class="panel-body table-responsive">
-
-
-
-
-                       {{-- <form method="get" action="/clients">
-                            <input id="client-search" name="search" class="form-control"
-                                   placeholder="Pesquisa de clientes..."/>
-                        </form>--}}
                         <script src="{{ URL::asset('/js/validations.js') }}"></script>
-                        {{--<a data-toggle="collapse" href="#collapseFilter" role="button"
-                           aria-expanded="false" aria-controls="collapseFilter">
-                            <strong>Filtrar por cidade</strong>
-                        </a>
-                        <div class="collapse" id="collapseFilter">
-                            <form action="/clients" method="GET" id="filter-form">
-                                <div class="card card-body">
-                                    <label for="district-filter">Distrito</label>
-                                    <select class="form-control" id="city-filter"  name="district" onchange="listCities(this)">
-                                        <option value="" selected disabled>Seleccione o Distrito</option>
-                                        @foreach($districts as $district)
-                                            <option  class="form-control" value="{{$district->id}}">{{$district->name}}</option>
-                                        @endforeach
-                                    </select>
-                                    <label for="city-filter">Cidade</label>
-                                        <select id="selectCityInvoice" class="form-control" name="cityInvoice" >
-                                            <option disabled selected value="">Selecione a Cidade</option>
-                                        </select>
-                                </div>
-                                <button class="btn" type="submit" form="filter-form">Filtrar</button>
-                            </form>
-                        </div>--}}
-
-                        <table class="table">
-                            <tr>
-                                <th>Id</th>
-                                <th>Nome</th>
-                                <th>Técnico</th>
-                                <th></th>
-                            </tr>
-                            @foreach($schedule as $client)
+                        <div class="col-xs-12">
+                            <div id="no-results"></div>
+                            <div id="results-table" {{--class="hidden margin-top table-responsive"--}}>
+                                <table class="table table-bordered">
+                                    <thead>
                                     <tr>
-                                        <td><a href="/clients/{{$client->id}}">{{$client->regoldiID}}</a></td>
-                                        <td><a href="/clients/{{$client->id}}">{{$client->name}}</a></td>
-                                        <td>
-                                            <div>
-                                                <select class="dropdown" name="technical" onchange="sendPost({{$client->id}}, this.value)">
-                                                    <option disabled value="">Tecnico HACCP</option>
-                                                    @foreach($technicals as $technical)
-                                                        @if($client->technical == $technical->id)
-                                                            <option value="{{$technical->id}}" selected>{{$technical->name}}</option>
-                                                        @else
-                                                            <option value="{{$technical->id}}" >{{$technical->name}}</option>
-                                                        @endif
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </td>
-                                        <td>@if($client->check_s==1)
-                                                <input type="checkbox" checked disabled>
-                                            @else
-                                                <input type="checkbox" disabled>
-                                            @endif
-                                        </td>
+                                        <th>Id</th>
+                                        <th>Nome</th>
+                                        <th>Técnico</th>
+                                        <th></th>
                                     </tr>
-                            @endforeach
-                        </table>
+                                    </thead>
+                                    <tbody id="table-body">
+                                    @foreach($items as $client)
+                                        <tr>
+                                            <td><a href="/clients/{{$client->id}}">{{$client->regoldiID}}</a></td>
+                                            <td><a href="/clients/{{$client->id}}">{{$client->name}}</a></td>
+                                            <td>
+                                                <div>
+                                                    <select class="dropdown" name="technical" onchange="sendPost({{$client->id}}, this.value)">
+                                                        <option disabled value="">Tecnico HACCP</option>
+                                                        @foreach($technicals as $technical)
+                                                            @if($client->technical == $technical->id)
+                                                                <option value="{{$technical->id}}" selected>{{$technical->name}}</option>
+                                                            @else
+                                                                <option value="{{$technical->id}}" >{{$technical->name}}</option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td>@if($client->check_s==1)
+                                                    <input type="checkbox" checked disabled>
+                                                @else
+                                                    <input type="checkbox" disabled>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                        {{--<tr>
+                                            Agendamentos Anteriores
+                                        </tr>
+                                    @foreach($oldSchedule as $client)
+                                        <tr>
+                                            <td><a href="/clients/{{$client->id}}">{{$client->regoldiID}}</a></td>
+                                            <td><a href="/clients/{{$client->id}}">{{$client->name}}</a></td>
+                                            <td>
+                                                <div>
+                                                    <select class="dropdown" name="technical" onchange="sendPost({{$client->id}}, this.value)">
+                                                        <option disabled value="">Tecnico HACCP</option>
+                                                        @foreach($technicals as $technical)
+                                                            @if($client->technical == $technical->id)
+                                                                <option value="{{$technical->id}}" selected>{{$technical->name}}</option>
+                                                            @else
+                                                                <option value="{{$technical->id}}" >{{$technical->name}}</option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td>@if($client->check_s==1)
+                                                    <input type="checkbox" checked disabled>
+                                                @else
+                                                    <input type="checkbox" disabled>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach--}}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
     </div>
 
 @endsection
@@ -156,5 +158,74 @@
             }
         });
     }
+
+   /* document.addEventListener('DOMContentLoaded', function () {
+        // const historyForm = document.getElementById('history-form');
+        // const noResults = document.getElementById('no-results');
+        // const table = document.getElementById('results-table');
+        // const tableBody = document.getElementById('table-body');
+        //
+        // const printBtn = document.getElementById('print-btn');
+        //
+        // historyForm.addEventListener('submit', event => handleSubmit(event));
+        // printBtn.addEventListener('click', () => printReport(event));
+        //
+        // $.ajaxSetup({
+        //     headers: {
+        //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //     }
+        // });
+        //
+        // function handleSubmit(event) {
+        //     event.preventDefault();
+        //     noResults.innerHTML = '';
+        //     tableBody.innerHTML = '';
+        //     table.classList.add('hidden');
+        //
+        //     let data = {};
+        //     Object.keys(historyForm.elements).forEach(key => {
+        //         const element = historyForm.elements[key];
+        //         if (element.type !== "submit") {
+        //             data[element.name] = element.value;
+        //         }
+        //     });
+        //     submitForm(data);
+        // }
+
+        function submitForm(data) {
+            $.ajax({
+                type: 'GET',
+                url: '/schedule/haccp/get',
+                data,
+                success: function (response) {
+                    cacheData = [];
+                    if (response.length) {
+                        cacheData.push(data);
+                        buildResponse(response);
+                    } else {
+                        noResults.innerHTML = '<h2 class="text-center margin-top">Sem dados para o filtro fornecido.</h2>';
+                    }
+                },
+                error: function () {
+                    cacheData = [];
+                    noResults.innerHTML = '<h2 class="text-center margin-top">Ocorreu um erro, por favor, tente mais tarde.</h2>';
+                }
+            });
+        }
+        function buildResponse(response) {
+            table.classList.remove('hidden');
+
+            response.forEach(data => {
+                /!* Weird bug happening, had to send each property separately *!/
+                tableBody.innerHTML += `
+                    <tr>
+                        <td><a href="/clients/${data.id}">${data.regoldiID}</a></td>
+                        <td><a href="/clients/${data.id}">${data.name}</a></td>
+                    </tr>
+                `;
+            });
+            cacheData.push(response);
+        }
+    }, false);*/
 </script>
 

@@ -28,10 +28,40 @@ class ScheduleController extends Controller
         $this->middleware('auth');
     }
 
-    public function getSchedule(Request $request)
+    public function getSchedule()
+    {
+        $months = $this->months;
+        $years = Schedule::query()
+            ->select([
+                DB::raw('YEAR(created_at) as year')
+            ])
+            ->groupBy('year')
+            ->get();
+
+        $technicals = TechnicalHACCP::all();
+
+        $scheduleCheck = Schedule::from(Schedule::alias('s'))
+            ->where('s.check_s',0)
+            ->leftJoin(Customer::alias('c'),'c.id','=','s.idClient')
+            ->whereMonth('s.date','<=', Carbon::now()->month)
+            ->select(['c.name','c.regoldiID','c.city','c.id','s.technical','s.check_s','s.id'])
+            ->get();
+
+        $scheduleUncheck = Schedule::from(Schedule::alias('s'))
+            ->where('s.check_s',1)
+            ->leftJoin(Customer::alias('c'),'c.id','=','s.idClient')
+            ->whereMonth('s.date', Carbon::now()->month)
+            ->select(['c.name','c.regoldiID','c.city','c.id','s.technical','s.check_s','s.id'])
+            ->get();
+
+        $items = $scheduleCheck->merge($scheduleUncheck);
+
+        return view('schedule.index',compact('items','technicals','months','years'));
+    }
+
+   /* public function getScheduleMonth(Request $request)
     {
         $inputs = $request->all();
-
         $months = $this->months;
         $years = Schedule::query()
             ->select([
@@ -54,7 +84,8 @@ class ScheduleController extends Controller
             ->get();
 
         return view('schedule.index',compact('schedule','technicals','months','years'));
-    }
+
+    }*/
 
     public function editTechnical(Request $request)
     {

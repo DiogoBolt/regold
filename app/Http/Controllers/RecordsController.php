@@ -337,7 +337,7 @@ class RecordsController extends Controller
                         ->orwhere('idCleaningFrequency3',$id);
                 })
                 ->WhereDoesntHave('hygieneRecord',function ($query) use ($id){
-                    $query->where('created_at','>',Carbon::today()->subDay(7))
+                    $query->where('created_at','>',Carbon::today()->subDay(6))
                         ->where('idCleaningFrequency',$id);
                 })
                 ->orderBy('idSection')
@@ -350,7 +350,7 @@ class RecordsController extends Controller
                         ->orwhere('idCleaningFrequency3',$id);
                 })
                 ->WhereDoesntHave('hygieneRecordE',function ($query) use ($id){
-                    $query->where('created_at','>',Carbon::today()->subDay(7))
+                    $query->where('created_at','>',Carbon::today()->subDay(6))
                         ->where('idCleaningFrequency', $id);
                 })
                 ->orderBy('idSection')
@@ -364,7 +364,7 @@ class RecordsController extends Controller
                         ->orwhere('idCleaningFrequency3',$id);
                 })
                 ->WhereDoesntHave('hygieneRecord',function ($query) use ($id){
-                    $query->where('created_at','>',Carbon::today()->subDay(14))
+                    $query->where('created_at','>',Carbon::today()->subDay(13))
                         ->where('idCleaningFrequency',$id);
                 })
                 ->orderBy('idSection')
@@ -377,7 +377,7 @@ class RecordsController extends Controller
                         ->orwhere('idCleaningFrequency3',$id);
                 })
                 ->WhereDoesntHave('hygieneRecordE',function ($query) use ($id){
-                    $query->where('created_at','>',Carbon::today()->subDay(14))
+                    $query->where('created_at','>',Carbon::today()->subDay(13))
                         ->where('idCleaningFrequency', $id);
                 })
                 ->orderBy('idSection')
@@ -391,7 +391,7 @@ class RecordsController extends Controller
                         ->orwhere('idCleaningFrequency3',$id);
                 })
                 ->WhereDoesntHave('hygieneRecord',function ($query) use ($id){
-                    $query->where('created_at','>',Carbon::today()->subDay(30))
+                    $query->where('created_at','>',Carbon::today()->subDay(29))
                         ->where('idCleaningFrequency',$id);
                 })
                 ->orderBy('idSection')
@@ -404,7 +404,7 @@ class RecordsController extends Controller
                         ->orwhere('idCleaningFrequency3',$id);
                 })
                 ->WhereDoesntHave('hygieneRecordE',function ($query) use ($id){
-                    $query->where('created_at','>',Carbon::today()->subDay(30))
+                    $query->where('created_at','>',Carbon::today()->subDay(29))
                         ->where('idCleaningFrequency', $id);
                 })
                 ->orderBy('idSection')
