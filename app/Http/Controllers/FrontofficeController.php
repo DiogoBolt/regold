@@ -684,7 +684,7 @@ class FrontofficeController extends Controller
                     $response = $this->processPayment($cart, $order);
                     return redirect($response->url_redirect);
                     break;
-                case "Tranferência/30 dias":
+                case "Tranferência/30dias":
                     $response = $this->processPayment($cart, $order);
                     return redirect($response->url_redirect);
                     break;
