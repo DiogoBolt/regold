@@ -14,7 +14,7 @@
     </div>
     <div class="container">
         <div class="row">
-            <form method="get" action="/schedule/haccp/get" id="schedule-form">
+            <form method="get" action="/schedule/haccp" id="schedule-form">
                 <div class="row">
                     <div class="col-sm-2">
                         Ano :
@@ -38,15 +38,9 @@
                         <select name="month" class="form-control" required>
                             <option value="" disabled selected>Seleccione Mês</option>
                             @foreach($months as $idx => $month)
-                                @if(date('m') == $idx)
-                                    <option value="{{ $idx  }}" selected>
-                                        {{ $month }}
-                                    </option>
-                                @else
                                     <option value="{{ $idx  }}">
                                         {{ $month }}
                                     </option>
-                                @endif
                             @endforeach
                         </select>
                     </div>
