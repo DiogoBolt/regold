@@ -94,35 +94,6 @@
                                             </td>
                                         </tr>
                                     @endforeach
-                                        {{--<tr>
-                                            Agendamentos Anteriores
-                                        </tr>
-                                    @foreach($oldSchedule as $client)
-                                        <tr>
-                                            <td><a href="/clients/{{$client->id}}">{{$client->regoldiID}}</a></td>
-                                            <td><a href="/clients/{{$client->id}}">{{$client->name}}</a></td>
-                                            <td>
-                                                <div>
-                                                    <select class="dropdown" name="technical" onchange="sendPost({{$client->id}}, this.value)">
-                                                        <option disabled value="">Tecnico HACCP</option>
-                                                        @foreach($technicals as $technical)
-                                                            @if($client->technical == $technical->id)
-                                                                <option value="{{$technical->id}}" selected>{{$technical->name}}</option>
-                                                            @else
-                                                                <option value="{{$technical->id}}" >{{$technical->name}}</option>
-                                                            @endif
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td>@if($client->check_s==1)
-                                                    <input type="checkbox" checked disabled>
-                                                @else
-                                                    <input type="checkbox" disabled>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                    @endforeach--}}
                                     </tbody>
                                 </table>
                             </div>
@@ -153,38 +124,35 @@
         });
     }
 
-   /* document.addEventListener('DOMContentLoaded', function () {
-        // const historyForm = document.getElementById('history-form');
-        // const noResults = document.getElementById('no-results');
-        // const table = document.getElementById('results-table');
-        // const tableBody = document.getElementById('table-body');
-        //
-        // const printBtn = document.getElementById('print-btn');
-        //
-        // historyForm.addEventListener('submit', event => handleSubmit(event));
-        // printBtn.addEventListener('click', () => printReport(event));
-        //
-        // $.ajaxSetup({
-        //     headers: {
-        //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //     }
-        // });
-        //
-        // function handleSubmit(event) {
-        //     event.preventDefault();
-        //     noResults.innerHTML = '';
-        //     tableBody.innerHTML = '';
-        //     table.classList.add('hidden');
-        //
-        //     let data = {};
-        //     Object.keys(historyForm.elements).forEach(key => {
-        //         const element = historyForm.elements[key];
-        //         if (element.type !== "submit") {
-        //             data[element.name] = element.value;
-        //         }
-        //     });
-        //     submitForm(data);
-        // }
+    document.addEventListener('DOMContentLoaded', function () {
+        const historyForm = document.getElementById('schedule-form');
+        const noResults = document.getElementById('no-results');
+        const table = document.getElementById('results-table');
+        const tableBody = document.getElementById('table-body');
+
+        historyForm.addEventListener('submit', event => handleSubmit(event));
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            noResults.innerHTML = '';
+            tableBody.innerHTML = '';
+            table.classList.add('hidden');
+
+            let data = {};
+            Object.keys(historyForm.elements).forEach(key => {
+                const element = historyForm.elements[key];
+                if (element.type !== "submit") {
+                    data[element.name] = element.value;
+                }
+            });
+            submitForm(data);
+        }
 
         function submitForm(data) {
             $.ajax({
@@ -210,16 +178,18 @@
             table.classList.remove('hidden');
 
             response.forEach(data => {
-                /!* Weird bug happening, had to send each property separately *!/
+                /* Weird bug happening, had to send each property separately */
                 tableBody.innerHTML += `
                     <tr>
                         <td><a href="/clients/${data.id}">${data.regoldiID}</a></td>
                         <td><a href="/clients/${data.id}">${data.name}</a></td>
+                        <td>${data.nameTechnical}</td>
                     </tr>
                 `;
             });
             cacheData.push(response);
         }
-    }, false);*/
+    }, false);
+
 </script>
 

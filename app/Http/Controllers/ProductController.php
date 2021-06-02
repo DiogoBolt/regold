@@ -321,7 +321,7 @@ class ProductController extends Controller
             $filteredOrders->where('o.created_at', '<=', $request->end_date);
         }
 
-        $orders = $filteredOrders->orderBy('o.id', 'DESC')->get();
+        $orders = $filteredOrders->orderBy('o.id', 'DESC')->paginate(25);
 
         return view('orders.processedOrders', compact('orders'));
     }

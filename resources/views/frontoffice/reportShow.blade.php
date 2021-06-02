@@ -263,7 +263,7 @@
                 <tfoot class="report-footer">
                     <tr>
                         <td class="report-content-cell">
-                  <footer class="footer_1"id="footer" style="display:none" >
+                  <footer class="footer_1" id="footer" style="display:none" >
                        <img class="report_footer" src="{{ URL::to('/') }}/img/footer3.png" alt="logo">
                   </footer>
                         </td>
@@ -278,6 +278,7 @@
         </div>
     </div>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" type="text/javascript"></script>
     <script>
         $(document).ready(function() {
             $('#subir').click(function(){

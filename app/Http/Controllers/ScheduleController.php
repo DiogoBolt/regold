@@ -30,7 +30,7 @@ class ScheduleController extends Controller
 
     public function getSchedule(Request $request)
     {
-        $inputs = $request->all();
+        /*$inputs = $request->all();*/
         $months = $this->months;
         $years = Schedule::query()
             ->select([
@@ -41,7 +41,7 @@ class ScheduleController extends Controller
 
         $technicals = TechnicalHACCP::all();
 
-        if(isset($inputs['year']) && isset($inputs['month'])){
+        /*if(isset($inputs['year']) && isset($inputs['month'])){
             $scheduleCheck = Schedule::from(Schedule::alias('s'))
                 ->where('s.check_s',0)
                 ->leftJoin(Customer::alias('c'),'c.id','=','s.idClient')
@@ -57,7 +57,7 @@ class ScheduleController extends Controller
                 ->whereMonth('s.date', $inputs['month'])
                 ->select(['c.name','c.regoldiID','c.city','c.id','s.technical','s.check_s','s.id'])
                 ->get();
-        }else{
+        }else{*/
             $scheduleCheck = Schedule::from(Schedule::alias('s'))
                 ->where('s.check_s',0)
                 ->leftJoin(Customer::alias('c'),'c.id','=','s.idClient')
@@ -71,7 +71,7 @@ class ScheduleController extends Controller
                 ->whereMonth('s.date', Carbon::now()->month)
                 ->select(['c.name','c.regoldiID','c.city','c.id','s.technical','s.check_s','s.id'])
                 ->get();
-        }
+        /*}*/
         $items = $scheduleCheck->merge($scheduleUncheck);
 
         return view('schedule.index',compact('items','technicals','months','years'));
@@ -88,9 +88,22 @@ class ScheduleController extends Controller
         return redirect('/schedule/haccp');
     }
 
-    public function addPossibleCustomerPost(Request $request)
+    public function getScheduleByMonth(Request $request)
     {
+        $date = Carbon::createFromDate($request->get('year'), $request->get('month'));
+        $start_month = $date->copy()->startOfMonth();
+        $end_month = $date->copy()->endOfMonth();
 
+        $a=Schedule::from(Schedule::alias('s'))
+            ->Join(Customer::alias('c'),'c.id','=','s.idClient')
+            ->Join(TechnicalHACCP::alias('t'),'t.id','=','s.technical')
+            ->select([
+            's.idClient','s.technical','s.check_s','c.id','c.regoldiID','c.name','t.name as nameTechnical'
+        ])
+            ->whereBetween('s.date', [$start_month, $end_month])
+            ->get();
+
+        return $a;
     }
 
     public function editPossibleCustomer($id)
