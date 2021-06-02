@@ -38,9 +38,15 @@
                         <select name="month" class="form-control" required>
                             <option value="" disabled selected>Seleccione Mês</option>
                             @foreach($months as $idx => $month)
+                                @if(date('m') == $idx)
+                                    <option value="{{ $idx  }}" selected>
+                                        {{ $month }}
+                                    </option>
+                                @else
                                     <option value="{{ $idx  }}">
                                         {{ $month }}
                                     </option>
+                                @endif
                             @endforeach
                         </select>
                     </div>

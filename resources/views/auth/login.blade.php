@@ -84,3 +84,22 @@
     
 </div>
 @endsection
+
+
+<script>
+    let externalUserId = "your User ID fetched from backend server";
+
+    OneSignal.push(function() {
+        OneSignal.isPushNotificationsEnabled(function(isEnabled) {
+            if (isEnabled)
+            {
+                console.log("Push notifications are enabled!");
+                OneSignal.setExternalUserId(externalUserId);
+            }
+            else
+            {
+                console.log("Push notifications are not enabled yet.");
+            }
+        });
+    });
+</script>
