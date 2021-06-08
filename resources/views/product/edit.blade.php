@@ -80,6 +80,9 @@
                                 Ficha Segurança:  <input class="form-control" type="file" name="seguranca">
                             </div>
                             <div class="form-group">
+                                IVA: <input class="form-control"  name="IVA" value="{{$product->IVA}}">
+                            </div>
+                            <div class="form-group">
                                 <a href="/uploads/products/{{$product->seguranca}}">{{$product->seguranca}}</a>
                             </div>
                         </div>

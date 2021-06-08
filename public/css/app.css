@@ -14275,5 +14275,17 @@ img.logoReport{
   img.logoReport {
     position: fixed;
   }
+  .footer_copy {
+    color: #0d3625;
+    border: #0d3625;
+    background-color: darkgreen;
+  }
+  .foot{
+    color: white;
+    background-color: #0d3625;
+    display: inline-block;
+
+  }
+
 
 }
