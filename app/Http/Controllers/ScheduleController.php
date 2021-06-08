@@ -28,8 +28,9 @@ class ScheduleController extends Controller
         $this->middleware('auth');
     }
 
-    public function getSchedule()
+    public function getSchedule(Request $request)
     {
+        /*$inputs = $request->all();*/
         $months = $this->months;
         $years = Schedule::query()
             ->select([
@@ -40,52 +41,41 @@ class ScheduleController extends Controller
 
         $technicals = TechnicalHACCP::all();
 
-        $scheduleCheck = Schedule::from(Schedule::alias('s'))
-            ->where('s.check_s',0)
-            ->leftJoin(Customer::alias('c'),'c.id','=','s.idClient')
-            ->whereMonth('s.date','<=', Carbon::now()->month)
-            ->select(['c.name','c.regoldiID','c.city','c.id','s.technical','s.check_s','s.id'])
-            ->get();
+        /*if(isset($inputs['year']) && isset($inputs['month'])){
+            $scheduleCheck = Schedule::from(Schedule::alias('s'))
+                ->where('s.check_s',0)
+                ->leftJoin(Customer::alias('c'),'c.id','=','s.idClient')
+                ->whereYear('s.date', $inputs['year'])
+                ->whereMonth('s.date', $inputs['month'])
+                ->select(['c.name','c.regoldiID','c.city','c.id','s.technical','s.check_s','s.id'])
+                ->get();
 
-        $scheduleUncheck = Schedule::from(Schedule::alias('s'))
-            ->where('s.check_s',1)
-            ->leftJoin(Customer::alias('c'),'c.id','=','s.idClient')
-            ->whereMonth('s.date', Carbon::now()->month)
-            ->select(['c.name','c.regoldiID','c.city','c.id','s.technical','s.check_s','s.id'])
-            ->get();
+            $scheduleUncheck = Schedule::from(Schedule::alias('s'))
+                ->where('s.check_s',1)
+                ->leftJoin(Customer::alias('c'),'c.id','=','s.idClient')
+                ->whereYear('s.date', $inputs['year'])
+                ->whereMonth('s.date', $inputs['month'])
+                ->select(['c.name','c.regoldiID','c.city','c.id','s.technical','s.check_s','s.id'])
+                ->get();
+        }else{*/
+            $scheduleCheck = Schedule::from(Schedule::alias('s'))
+                ->where('s.check_s',0)
+                ->leftJoin(Customer::alias('c'),'c.id','=','s.idClient')
+                ->whereMonth('s.date','<=', Carbon::now()->month)
+                ->select(['c.name','c.regoldiID','c.city','c.id','s.technical','s.check_s','s.id'])
+                ->get();
 
+            $scheduleUncheck = Schedule::from(Schedule::alias('s'))
+                ->where('s.check_s',1)
+                ->leftJoin(Customer::alias('c'),'c.id','=','s.idClient')
+                ->whereMonth('s.date', Carbon::now()->month)
+                ->select(['c.name','c.regoldiID','c.city','c.id','s.technical','s.check_s','s.id'])
+                ->get();
+        /*}*/
         $items = $scheduleCheck->merge($scheduleUncheck);
 
         return view('schedule.index',compact('items','technicals','months','years'));
     }
-
-   /* public function getScheduleMonth(Request $request)
-    {
-        $inputs = $request->all();
-        $months = $this->months;
-        $years = Schedule::query()
-            ->select([
-                DB::raw('YEAR(created_at) as year')
-            ])
-            ->groupBy('year')
-            ->get();
-
-        $technicals = TechnicalHACCP::all();
-
-        $schedule = Schedule::from(Schedule::alias('s'))
-            ->leftJoin(Customer::alias('c'),'c.id','=','s.idClient')
-            ->when($request->filled('year'), function ($query) use ($inputs){
-                return $query->whereYear('s.date', $inputs['year']);
-            })
-            ->when($request->filled('month'), function ($query) use ($inputs){
-                return $query->whereMonth('s.date', $inputs['month']);
-            })
-            ->select(['c.name','c.regoldiID','c.city','c.id','s.technical','s.check_s','s.id'])
-            ->get();
-
-        return view('schedule.index',compact('schedule','technicals','months','years'));
-
-    }*/
 
     public function editTechnical(Request $request)
     {
@@ -98,9 +88,22 @@ class ScheduleController extends Controller
         return redirect('/schedule/haccp');
     }
 
-    public function addPossibleCustomerPost(Request $request)
+    public function getScheduleByMonth(Request $request)
     {
+        $date = Carbon::createFromDate($request->get('year'), $request->get('month'));
+        $start_month = $date->copy()->startOfMonth();
+        $end_month = $date->copy()->endOfMonth();
 
+        $a=Schedule::from(Schedule::alias('s'))
+            ->Join(Customer::alias('c'),'c.id','=','s.idClient')
+            ->Join(TechnicalHACCP::alias('t'),'t.id','=','s.technical')
+            ->select([
+            's.idClient','s.technical','s.check_s','c.id','c.regoldiID','c.name','t.name as nameTechnical'
+        ])
+            ->whereBetween('s.date', [$start_month, $end_month])
+            ->get();
+
+        return $a;
     }
 
     public function editPossibleCustomer($id)

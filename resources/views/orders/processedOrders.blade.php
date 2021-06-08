@@ -111,9 +111,10 @@
                                     <td><a href="/orders/unpay/{{$order->id}}" onclick="return confirm('Tem a certeza?')">Pago</a></td>
                                 @endif
                                 <td>@if($order->cart_id==null)(SP FREE s/ encomenda)@else<a href="/orders/{{$order->id}}">Detalhes</a>@endif</td>
-                                </tr>
+                            </tr>
                     @endforeach
                 </table>
+                {{ $orders->links() }}
             </div>
         </div>
     </div>

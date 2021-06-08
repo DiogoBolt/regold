@@ -39,11 +39,11 @@
                                 <th>Total</th>
                                 <th>Total + Iva</th>
                                 <th>Estado</th>
-
+                                <th>Detalhes</th>
                             </tr>
                             @foreach($orders as $order)
                                 <tr>
-                                    <td><a href="/frontoffice/orders/{{$order->id}}">{{date_format($order->created_at,'d-m-y')}}</a></td>
+                                    <td>{{date_format($order->created_at,'d-m-y')}}</td>
                                     <td>{{number_format($order->total,2)}}€</td>
                                     <td>{{number_format($order->totaliva,2)}}€</td>
                                     @if($order->processed == 1)
@@ -51,10 +51,9 @@
                                         @else
                                         <td>Em Espera</td>
                                     @endif
+                                    <td><a href="/frontoffice/orders/{{$order->id}}">Ver Encomenda</a></td>
                                 </tr>
-
                             @endforeach
-
                         </table>
                     </div>
                 </div>

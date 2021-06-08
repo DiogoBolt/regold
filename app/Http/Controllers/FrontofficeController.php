@@ -797,7 +797,7 @@ class FrontofficeController extends Controller
             $item['descr'] = $product->name;
             $item['name'] = $product->name;
             $item['qt'] = $orderline->amount;
-            $item['amount'] = $orderline->total;
+            $item['amount'] = number_format($orderline->total,2);
 
             array_push($items,$item);
         }
@@ -872,7 +872,7 @@ class FrontofficeController extends Controller
             $item['descr'] = $product->name;
             $item['name'] = $product->name;
             $item['qt'] = $orderline->amount;
-            $item['amount'] = $orderline->total;
+            $item['amount'] = number_format($orderline->total,2);
 
             array_push($items,$item);
         }

@@ -555,7 +555,12 @@ class ReportController extends Controller
 
         $user = Auth::user();
         $auxClientId = Session::get('establismentID');
+        $auxTechnical = Session::get('impersonated');
         $n = Customer::where('id',$auxClientId)->first()->haccp_visits;
+
+        $technicalInfo = User::where('id',$auxTechnical)
+            ->select(['id','name','userTypeID'])
+            ->first();
 
         $idReport= $id;
 
@@ -573,13 +578,15 @@ class ReportController extends Controller
             $scheduled_haccp->save();
         }
 
-        $schedule_haccp = new Schedule;
-        $schedule_haccp->technical = $user->userTypeID;
-        $schedule_haccp->idClient = $auxClientId;
-        $schedule_haccp->date = Carbon::now()->addMonth(12/$n);
-        $schedule_haccp->check_s = 0;
-        $schedule_haccp->save();
-
+        if(isset($n)){
+            $schedule_haccp = new Schedule;
+            $schedule_haccp->technical = $technicalInfo->userTypeID;
+            $schedule_haccp->idClient = $auxClientId;
+            $schedule_haccp->date = Carbon::now()->addMonth(12/$n);
+            $schedule_haccp->check_s = 0;
+            $schedule_haccp->save();
+        }
+        
         Session::forget('sectionsReport');
 
         return redirect('/frontoffice/documents/HACCP');
