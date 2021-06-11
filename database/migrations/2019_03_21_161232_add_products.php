@@ -21,6 +21,7 @@ class AddProducts extends Migration
             $table->string('price1');
             $table->string('price2');
             $table->string('price3');
+            $table->string('IVA');
             $table->string('amount2');
             $table->string('amount3');
             $table->string('category');

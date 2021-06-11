@@ -14287,5 +14287,15 @@ img.logoReport{
 
   }
 
+  .footer_cop{
+    text-align: left;
+    padding: 4px 4px;
+    background-color: #153E35;
+    position: absolute;
+    width: 100%;
+    display: inline-block;
+    bottom: 0;
+  }
+
 
 }

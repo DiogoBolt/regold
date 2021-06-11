@@ -13,6 +13,8 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link href="https://cdn.onesignal.com/sdks/OneSignalSDKWorker.js" rel="stylesheet">
+
     <script src="{{ asset('js/app.js') }}"></script>
 
     <!--Start of Tawk.to Script-->
@@ -26,6 +28,24 @@
             s1.setAttribute('crossorigin','*');
             s0.parentNode.insertBefore(s1,s0);
         })();
+    </script>
+
+    <script>
+        let externalUserId = "your User ID fetched from backend server";
+
+        OneSignal.push(function() {
+            OneSignal.isPushNotificationsEnabled(function(isEnabled) {
+                if (isEnabled)
+                {
+                    console.log("Push notifications are enabled!");
+                    OneSignal.setExternalUserId(externalUserId);
+                }
+                else
+                {
+                    console.log("Push notifications are not enabled yet.");
+                }
+            });
+        });
     </script>
     <!--End of Tawk.to Script-->
 
@@ -126,11 +146,15 @@
         @yield('content')
     </div>
 
+
     <!-- Scripts -->
 
 </body>
-<footer style="text-align: left;left: 0;bottom: 0; padding: 4px 4px;background-color: #153E35;position: -ms-device-fixed;width: 100%;right: 0;">
-    <p style="color: whitesmoke; margin-top: 10px;">Direitos reservados à JALE SGPS © {{date('Y')}}</p>
-</footer>
+<div id="footer">
+    <footer style="background-color: #153E35; clear: both; position:relative; padding: 4px 4px; margin-top: 30px;">
+        <p style="color: whitesmoke; margin-top: 10px;">Direitos reservados à JALE SGPS © {{date('Y')}}</p>
+    </footer>
+</div>
 </html>
+
 

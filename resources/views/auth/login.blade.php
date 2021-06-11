@@ -81,9 +81,10 @@
             </div>
         </div>
     </div>
-
+</div>
 
 @endsection
+
 
 <script>
     let externalUserId = "your User ID fetched from backend server";

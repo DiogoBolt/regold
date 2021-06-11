@@ -66,6 +66,9 @@
                             <div class="form-group">
                                 Preço Escalão 2: <input class="form-control"  name="price2" required>
                             </div>
+                            <div class="form-group">
+                                IVA: <input type="number" class="form-control"  name="IVA" required>
+                            </div>
                         </div>
 
                         <div class="col-sm-6">

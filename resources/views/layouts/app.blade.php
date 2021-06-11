@@ -194,13 +194,9 @@
         @yield('content')
 
     </div>
-    <footer style="text-align: left;left: 0;bottom: 0; padding: 4px 4px;background-color: #153E35;position: -ms-device-fixed;width: 100%;right: 0;">
-        <p style="color: whitesmoke; margin-top: 10px;">Direitos reservados à JALE SGPS © {{date('Y')}}</p>
-    </footer>
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
 
 </body>
-
 
 </html>

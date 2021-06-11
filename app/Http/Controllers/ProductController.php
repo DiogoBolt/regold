@@ -72,6 +72,7 @@ class ProductController extends Controller
             $product->price3 = $inputs['price3'];
             $product->price4 = $inputs['price4'];
             $product->price5 = $inputs['price5'];
+            $product->IVA = $inputs['IVA'];
             $product->details = $inputs['details'];
             $product->ref = $inputs['ref'];
             $product->category = $inputs['category'];
@@ -152,6 +153,7 @@ class ProductController extends Controller
         $product->price3 = $inputs['price3'];
         $product->price4 = $inputs['price4'];
         $product->price5 = $inputs['price5'];
+        $product->IVA = $inputs['IVA'];
         $product->ref = $inputs['ref'];
         $product->details = $inputs['details'];
         $product->category = $inputs['category'];

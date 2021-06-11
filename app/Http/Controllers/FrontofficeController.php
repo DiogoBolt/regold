@@ -613,7 +613,17 @@ class FrontofficeController extends Controller
 
         $total = OrderLine::where('cart_id',$cart->id)->sum('total');
 
-        $totaliva = $total*1.23;
+        $iva = 0;
+
+        $items = OrderLine::where('cart_id',$cart->id)->get();
+
+        foreach($items as $item)
+        {
+            $product = Product::where('id',$item->product_id)->first();
+            $iva+=$product->IVA*$item->total;
+        }
+
+        $totaliva = $total*$iva;
 
         /*$order = Order::where('client_id',$auxClientId)->where('status','waiting_payment')
         ->where('invoice_id',null)->first();
@@ -637,15 +647,15 @@ class FrontofficeController extends Controller
 
         if($orders > 0) {
             if ($total < 29.90) {
-                $total += 5;
-                $order->total = $total;
+                $totaliva += 5;
+                $order->total = $totaliva;
                 $order->save();
             }
         } else {
                 if ($total < $client->contract_value) {
-                    $total += $client->contract_value - $total;
-                    $order->total = $total;
-                    $order->totaliva = $total * 1.23;
+                    $totaliva += $client->contract_value - $total;
+                    $order->total = $totaliva;
+                    $order->totaliva = $totaliva;
                     $order->save();
                 }
             }

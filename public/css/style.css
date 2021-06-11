@@ -3756,9 +3756,21 @@ img.img-center,.img-center img {margin-left: auto; margin-right: auto;}
 .navbar-nav li img {
     margin-top:0 !important;
     width: 40px !important;
-}
+
 
 }
+.footer_new{
+    background-color: #153E35;
+    padding: 4px 4px;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}
+.footer
+
+
+}
+
 
 
  /*** End ***/
