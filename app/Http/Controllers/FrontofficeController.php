@@ -601,7 +601,7 @@ class FrontofficeController extends Controller
         $cart = Cart::where('client_id',$auxClientId)->where('processed',0)->first();
 
         $orders = Order::where('client_id',$auxClientId)
-        //->where('processed',1)
+        ->where('processed',1)
         ->where('created_at','>=',Carbon::now()->startOfMonth())->count();
 
         if(!isset($cart))
@@ -620,10 +620,9 @@ class FrontofficeController extends Controller
         foreach($items as $item)
         {
             $product = Product::where('id',$item->product_id)->first();
-            $iva+=$product->IVA*$item->total;
+            $iva+=$product->IVA/100*$item->total;
         }
 
-        $totaliva = $total*$iva;
 
         /*$order = Order::where('client_id',$auxClientId)->where('status','waiting_payment')
         ->where('invoice_id',null)->first();
@@ -633,7 +632,7 @@ class FrontofficeController extends Controller
         $order->client_id = $auxClientId;
         $order->cart_id = $cart->id;
         $order->total = $total;
-        $order->totaliva = $totaliva;
+        $order->totaliva =  $iva;
         $order->processed = 0;
         $order->status = 'waiting_payment';
         $order->external_id = uniqid();
@@ -647,15 +646,13 @@ class FrontofficeController extends Controller
 
         if($orders > 0) {
             if ($total < 29.90) {
-                $totaliva += 5;
-                $order->total = $totaliva;
+                $order->total += 5;
                 $order->save();
             }
         } else {
                 if ($total < $client->contract_value) {
-                    $totaliva += $client->contract_value - $total;
-                    $order->total = $totaliva;
-                    $order->totaliva = $totaliva;
+                    $order->total += $client->contract_value - $total;
+                    $order->totaliva += ($client->contract_value - $total) * 0.23;
                     $order->save();
                 }
             }
@@ -726,10 +723,13 @@ class FrontofficeController extends Controller
         }
 
         $line_items = OrderLine::where('cart_id',$cart->id)->get();
+        $ivatotal = 0;
+        $total = 0;
 
         foreach($line_items as $item)
         {
             $item->product = Product::where('id',$item->product_id)->first();
+            $ivatotal += $item->product->IVA / 100 * $item->total;
         }
 
         $total = OrderLine::where('cart_id',$cart->id)->sum('total');
@@ -745,6 +745,7 @@ class FrontofficeController extends Controller
                $servico['amount'] = 5;
                array_push($items,$servico);
                $total += $servico['amount'];
+               $ivatotal += $servico['amount'] * 0.23;
            }
 
         }else{
@@ -755,6 +756,7 @@ class FrontofficeController extends Controller
                 $servico['descr'] = "Serviço HACCP";
                 $servico['name'] = "Serviço HACCP";
                 $servico['amount'] = $client->contract_value - $total;
+                $ivatotal += $servico['amount'] * 0.23;
                 array_push($items,$servico);
                 $total += $servico['amount'];
             }
@@ -765,7 +767,7 @@ class FrontofficeController extends Controller
         $iva['qt'] = 1;
         $iva['descr'] = "Iva";
         $iva['name'] = "Iva";
-        $iva['amount'] = number_format($total*1.23 - $total,2);
+        $iva['amount'] = number_format($ivatotal,2);
         $total += $iva['amount'];
         array_push($items,$iva);
 
@@ -831,16 +833,14 @@ class FrontofficeController extends Controller
         $iva['qt'] = 1;
         $iva['descr'] = "Iva";
         $iva['name'] = "Iva";
-        $iva['amount'] = number_format($order->total*1.23 - $order->total,2);
+        $iva['amount'] = number_format($order->totaliva,2);
 
         array_push($items,$iva);
 
-        /*$order->total = number_format($order->total > 29.90 ? $order->total*1.23 : $order->total*1.23+5,2);
-        $order->save();*/
 
         $payment = [
             'client' => ['address' => ['address' => $customer->address,'city'=>$customer->city,'country'=>'PT'], 'email' => $customer->email,'name' => $customer->name],
-            'amount' => number_format($order->total > 29.90 ? $order->total*1.23 : $order->total*1.23+5,2),
+            'amount' => number_format($order->total > 29.90 ? $order->total + $order->totaliva : $order->total + $order->totaliva + 5,2),
             'currency' => 'EUR',
             'items' =>$items,
             'ext_invoiceid' => $order->external_id,
@@ -871,6 +871,7 @@ class FrontofficeController extends Controller
         $auxClientId = Session::get('establismentID');
 
         $orderlines = OrderLine::where('cart_id',$cart->id)->get();
+        $total = OrderLine::where('cart_id',$cart->id)->sum('total');
         $client = Customer::where('id',$auxClientId)->first();
         $customer = Customer::where('id',$auxClientId)->first();
 
@@ -891,13 +892,13 @@ class FrontofficeController extends Controller
             'cost' => 10,
         ];
 
-        if($order->totaliva < $client->contract_value)
+        if($total < $client->contract_value)
         {
             $servico = [];
             $servico['qt'] = 1;
             $servico['descr'] = "Serviço HACCP";
             $servico['name'] = "Serviço HACCP";
-            $servico['amount'] = $client->contract_value - $order->total;
+            $servico['amount'] = number_format($client->contract_value - $total,2);
             array_push($items,$servico);
         }
 
@@ -905,16 +906,14 @@ class FrontofficeController extends Controller
         $iva['qt'] = 1;
         $iva['descr'] = "Iva";
         $iva['name'] = "Iva";
-        $iva['amount'] = number_format($order->total > $client->contract_value ? $order->total*1.23 - $order->total : $client->contract_value*1.23 - $client->contract_value ,2);
+        $iva['amount'] = number_format($order->totaliva,2);
 
-        /*$order->total = number_format($order->total > $client->contract_value ? $order->total * 1.23 : $client->contract_value * 1.23,2);
-        $order->save();*/
 
         array_push($items,$iva);
 
         $payment = [
             'client' => ['address' => ['address' => $customer->address,'city'=>$customer->city,'country'=>'PT'], 'email' => $customer->email,'name' => $customer->name],
-            'amount' => number_format($order->total*1.23,2),
+            'amount' => number_format($order->total + $order->totaliva,2),
             'currency' => 'EUR',
             'items' =>$items,
             'ext_invoiceid' => $order->external_id,
