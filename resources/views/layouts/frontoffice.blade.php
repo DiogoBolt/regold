@@ -150,11 +150,7 @@
     <!-- Scripts -->
 
 </body>
-<div id="footer">
-    <footer style="background-color: #153E35; clear: both; position:relative; padding: 4px 4px; margin-top: 30px;">
-        <p style="color: whitesmoke; margin-top: 10px;">Direitos reservados à JALE SGPS © {{date('Y')}}</p>
-    </footer>
-</div>
+
 </html>
 
 
