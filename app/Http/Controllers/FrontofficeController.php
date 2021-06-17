@@ -651,8 +651,8 @@ class FrontofficeController extends Controller
             }
         } else {
                 if ($total < $client->contract_value) {
-                    $order->total += $client->contract_value - $total;
-                    $order->totaliva += ($client->contract_value - $total) * 0.23;
+                    $order->total = $client->contract_value;
+                    $order->totaliva = $client->contract_value * 0.23;
                     $order->save();
                 }
             }
