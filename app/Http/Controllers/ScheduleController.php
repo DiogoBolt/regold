@@ -105,7 +105,7 @@ class ScheduleController extends Controller
             ->whereBetween('s.date', [$start_month, $end_month])
             ->get();
 
-        return $a;
+        return [$a,$technicals];
     }
 
     public function editPossibleCustomer($id)

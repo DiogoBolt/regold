@@ -53,7 +53,7 @@
             @endforeach
         @else
             <h1> Ainda não possui nenhum produto adicionado aos favoritos. </h1>
-            <h1> Visite a nossa página de <a href="/frontoffice/products">productos</a>.</h1>
+            <h1> Visite a nossa página de <a href="/frontoffice/categories">produtos</a>.</h1>
         @endif
 
     </div>

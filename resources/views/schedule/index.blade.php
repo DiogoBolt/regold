@@ -135,6 +135,7 @@
         const noResults = document.getElementById('no-results');
         const table = document.getElementById('results-table');
         const tableBody = document.getElementById('table-body');
+        const select = document.getElementById('aa');
 
         historyForm.addEventListener('submit', event => handleSubmit(event));
 
@@ -184,7 +185,7 @@
         function buildResponse(response) {
             table.classList.remove('hidden');
 
-            response.forEach(data => {
+            response[0].forEach(data => {
                 /* Weird bug happening, had to send each property separately */
                 if(data.check_s==1){
                     tableBody.innerHTML += `
@@ -192,11 +193,11 @@
                         <td><a href="/clients/${data.id}">${data.regoldiID}</a></td>
                         <td><a href="/clients/${data.id}">${data.name}</a></td>
                         <td><div>
-                                                    <select class="dropdown" name="technical" onchange="sendPost(${data.id}, this.value)">
-                                                        <option disabled value="">Tecnico HACCP</option>
-
-                                                    </select>
-                                                </div></td>
+                                <select id="aa" class="dropdown" name="technical" onchange="sendPost(${data.id}, this.value)">
+                                     <option disabled value="">Tecnico HACCP</option>
+                                </select>
+                            </div>
+                        </td>
                         <td><input type="checkbox" checked disabled></td>
                     </tr>`;
                 }else{
@@ -205,14 +206,15 @@
                         <td><a href="/clients/${data.id}">${data.regoldiID}</a></td>
                         <td><a href="/clients/${data.id}">${data.name}</a></td>
                         <td><div>
-                               <select class="dropdown" name="technical" onchange="sendPost(${data.id}, this.value)">
-                                   <option disabled value="">Tecnico HACCP</option>
+                                <select class="dropdown" name="technical" onchange="sendPost(${data.id}, this.value)">
+                                     <option disabled value="">Tecnico HACCP</option>
                                 </select>
                             </div>
                         </td>
                         <td><input type="checkbox" disabled></td>
                     </tr>`;
                 }
+                let options = response[1]
             });
             cacheData.push(response);
         }
