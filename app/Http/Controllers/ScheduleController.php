@@ -94,6 +94,8 @@ class ScheduleController extends Controller
         $start_month = $date->copy()->startOfMonth();
         $end_month = $date->copy()->endOfMonth();
 
+        $technicals = TechnicalHACCP::all();
+
         $a=Schedule::from(Schedule::alias('s'))
             ->Join(Customer::alias('c'),'c.id','=','s.idClient')
             ->Join(TechnicalHACCP::alias('t'),'t.id','=','s.technical')

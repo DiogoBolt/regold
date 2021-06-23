@@ -499,7 +499,7 @@ class ProductController extends Controller
             }
 
             $total = OrderLine::where('cart_id', $cart->id)->sum('total');
-            $serHaccp = $order->total - $total;
+            $serHaccp = $client->contract_value - $total;
 
             return view('orders.order', compact('line_items', 'total', 'order', 'client','serHaccp', 'salesman'));
         } else {

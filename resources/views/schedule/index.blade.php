@@ -161,6 +161,7 @@
         }
 
         function submitForm(data) {
+
             $.ajax({
                 type: 'GET',
                 url: '/schedule/haccp/get',
@@ -185,13 +186,33 @@
 
             response.forEach(data => {
                 /* Weird bug happening, had to send each property separately */
-                tableBody.innerHTML += `
+                if(data.check_s==1){
+                    tableBody.innerHTML += `
                     <tr>
                         <td><a href="/clients/${data.id}">${data.regoldiID}</a></td>
                         <td><a href="/clients/${data.id}">${data.name}</a></td>
-                        <td>${data.nameTechnical}</td>
-                    </tr>
-                `;
+                        <td><div>
+                                                    <select class="dropdown" name="technical" onchange="sendPost(${data.id}, this.value)">
+                                                        <option disabled value="">Tecnico HACCP</option>
+
+                                                    </select>
+                                                </div></td>
+                        <td><input type="checkbox" checked disabled></td>
+                    </tr>`;
+                }else{
+                    tableBody.innerHTML += `
+                    <tr>
+                        <td><a href="/clients/${data.id}">${data.regoldiID}</a></td>
+                        <td><a href="/clients/${data.id}">${data.name}</a></td>
+                        <td><div>
+                               <select class="dropdown" name="technical" onchange="sendPost(${data.id}, this.value)">
+                                   <option disabled value="">Tecnico HACCP</option>
+                                </select>
+                            </div>
+                        </td>
+                        <td><input type="checkbox" disabled></td>
+                    </tr>`;
+                }
             });
             cacheData.push(response);
         }

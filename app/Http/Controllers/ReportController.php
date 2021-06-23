@@ -586,7 +586,7 @@ class ReportController extends Controller
             $schedule_haccp->check_s = 0;
             $schedule_haccp->save();
         }
-        
+
         Session::forget('sectionsReport');
 
         return redirect('/frontoffice/documents/HACCP');
