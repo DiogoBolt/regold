@@ -601,8 +601,7 @@ class FrontofficeController extends Controller
         $cart = Cart::where('client_id',$auxClientId)->where('processed',0)->first();
 
         $orders = Order::where('client_id',$auxClientId)
-        ->where('processed',1)
-        ->where('created_at','>=',Carbon::now()->startOfMonth())->count();
+            ->where('created_at','>=',Carbon::now()->startOfMonth())->count();
 
         if(!isset($cart))
         {
@@ -622,7 +621,6 @@ class FrontofficeController extends Controller
             $product = Product::where('id',$item->product_id)->first();
             $iva+=$product->IVA/100*$item->total;
         }
-
 
         /*$order = Order::where('client_id',$auxClientId)->where('status','waiting_payment')
         ->where('invoice_id',null)->first();
@@ -676,14 +674,14 @@ class FrontofficeController extends Controller
                     return redirect('/frontoffice/orders');
                     break;
                 case "Contra Entrega":
-                    $order->total = $total;
-                    $order->save();
+                    /*$order->total = $total;
+                    $order->save();*/
                     $response = $this->processPayment($cart, $order);
                     return redirect($response->url_redirect);
                     break;
                 case "Fatura Contra Fatura":
-                    $order->total = $total;
-                    $order->save();
+                    /*$order->total = $total;
+                    $order->save();*/
                     $response = $this->processPayment($cart, $order);
                     return redirect($response->url_redirect);
                     break;
