@@ -112,11 +112,11 @@ function saveSections(){
         type: 'POST',
         url: "/frontoffice/personalizeSection/save",
         data:{sections: sectionsJson}
-    })/*.done(
+    }).done(
         setTimeout(function(){
             window.location.replace('/frontoffice/documents/HACCP');
         },1000)
-    )*/;
+    );
 }
 
 //function clonar uma "linha " no modal 

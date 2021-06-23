@@ -135,7 +135,7 @@
         const noResults = document.getElementById('no-results');
         const table = document.getElementById('results-table');
         const tableBody = document.getElementById('table-body');
-        const select = document.getElementById('aa');
+
 
         historyForm.addEventListener('submit', event => handleSubmit(event));
 
@@ -193,28 +193,34 @@
                         <td><a href="/clients/${data.id}">${data.regoldiID}</a></td>
                         <td><a href="/clients/${data.id}">${data.name}</a></td>
                         <td><div>
-                                <select id="aa" class="dropdown" name="technical" onchange="sendPost(${data.id}, this.value)">
+                                <select id="${data.id}" class="dropdown" name="technical" onchange="sendPost(${data.id}, this.value)">
                                      <option disabled value="">Tecnico HACCP</option>
                                 </select>
                             </div>
                         </td>
                         <td><input type="checkbox" checked disabled></td>
                     </tr>`;
+                    let select = $('#'+data.id);
+                    let options = response[1].map(technical =>`<option value=${technical.id}>${technical.name}</option>`).join('\n');
+                    select.innerHTML = options;
                 }else{
                     tableBody.innerHTML += `
                     <tr>
                         <td><a href="/clients/${data.id}">${data.regoldiID}</a></td>
                         <td><a href="/clients/${data.id}">${data.name}</a></td>
                         <td><div>
-                                <select class="dropdown" name="technical" onchange="sendPost(${data.id}, this.value)">
+                                <select id="${data.id}" class="dropdown" name="technical" onchange="sendPost(${data.id}, this.value)">
                                      <option disabled value="">Tecnico HACCP</option>
                                 </select>
                             </div>
                         </td>
                         <td><input type="checkbox" disabled></td>
                     </tr>`;
+                    let select = $('#'+data.id);
+                    let options = response[1].map(technical =>`<option value=${technical.id}>${technical.name}</option>`).join('\n');
+                    select.innerHTML = options;
                 }
-                let options = response[1]
+
             });
             cacheData.push(response);
         }

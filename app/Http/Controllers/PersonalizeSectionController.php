@@ -102,7 +102,7 @@ class PersonalizeSectionController extends Controller
     public function saveClientSection(Request $request){
         $inputs = $request->all();
         $sections = json_decode($inputs['sections']);
-        
+
         $auxClientId = Session::get('clientImpersonatedId');
 
         $sectionsClient = ClientSection::where('id_client',$auxClientId)
