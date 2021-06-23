@@ -669,8 +669,8 @@ class FrontofficeController extends Controller
                     $message->viewed = 0;
                     $message->type = 5;
                     $message->save();
-                    $order->total = $total;
-                    $order->save();
+                   /* $order->total = $total;
+                    $order->save();*/
                     return redirect('/frontoffice/orders');
                     break;
                 case "Contra Entrega":
