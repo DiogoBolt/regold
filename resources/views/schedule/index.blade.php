@@ -2,7 +2,7 @@
 
 @section('styles')
     <!-- Custom CSS -->
-    <link href="{{ asset('css/documents/temp-register.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/schedule/schedule.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -67,16 +67,15 @@
                                 <table class="table table-bordered">
                                     <thead>
                                     <tr>
-                                        <th>Id</th>
                                         <th>Nome</th>
                                         <th>Técnico</th>
+                                        <th>Data</th>
                                         <th></th>
                                     </tr>
                                     </thead>
                                     <tbody id="table-body">
                                     @foreach($items as $client)
                                         <tr>
-                                            <td><a href="/clients/{{$client->id}}">{{$client->regoldiID}}</a></td>
                                             <td><a href="/clients/{{$client->id}}">{{$client->name}}</a></td>
                                             <td>
                                                 <div>
@@ -91,6 +90,15 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
+                                            </td>
+                                            <td>
+                                                <input class="input-date" type="datetime-local" id="birthdaytime" name="birthdaytime">
+                                            </td>
+                                            <td>
+                                                <input class="input-date" type="datetime-local" id="birthdaytime" name="birthdaytime">
+                                            </td>
+                                            <td>
+                                                <input class="input-date" type="datetime-local" id="birthdaytime" name="birthdaytime">
                                             </td>
                                             <td>@if($client->check_s==1)
                                                     <input type="checkbox" checked disabled>
@@ -190,37 +198,46 @@
                 if(data.check_s==1){
                     tableBody.innerHTML += `
                     <tr>
-                        <td><a href="/clients/${data.id}">${data.regoldiID}</a></td>
                         <td><a href="/clients/${data.id}">${data.name}</a></td>
                         <td><div>
                                 <select id="${data.id}" class="dropdown" name="technical" onchange="sendPost(${data.id}, this.value)">
-                                     <option disabled value="">Tecnico HACCP</option>
+                                     <option value="">Tecnico HACCP</option>
                                 </select>
                             </div>
+                        </td>
+                        <td>
+                            <input class="input-date" type="datetime-local" id="birthdaytime" name="birthdaytime">
+                            <input class="input-date" type="datetime-local" id="birthdaytime" name="birthdaytime">
+                            <input class="input-date" type="datetime-local" id="birthdaytime" name="birthdaytime">
                         </td>
                         <td><input type="checkbox" checked disabled></td>
                     </tr>`;
-                    let select = $('#'+data.id);
-                    let options = response[1].map(technical =>`<option value=${technical.id}>${technical.name}</option>`).join('\n');
-                    select.innerHTML = options;
                 }else{
                     tableBody.innerHTML += `
                     <tr>
-                        <td><a href="/clients/${data.id}">${data.regoldiID}</a></td>
                         <td><a href="/clients/${data.id}">${data.name}</a></td>
                         <td><div>
                                 <select id="${data.id}" class="dropdown" name="technical" onchange="sendPost(${data.id}, this.value)">
-                                     <option disabled value="">Tecnico HACCP</option>
+                                     <option value="">Tecnico HACCP</option>
                                 </select>
                             </div>
                         </td>
+                        <td>
+                            <input class="input-date" type="datetime-local" id="birthdaytime" name="birthdaytime">
+                            <input class="input-date" type="datetime-local" id="birthdaytime" name="birthdaytime">
+                            <input class="input-date" type="datetime-local" id="birthdaytime" name="birthdaytime">
+                        </td>
                         <td><input type="checkbox" disabled></td>
                     </tr>`;
-                    let select = $('#'+data.id);
-                    let options = response[1].map(technical =>`<option value=${technical.id}>${technical.name}</option>`).join('\n');
-                    select.innerHTML = options;
                 }
-
+                var options = response[1];
+                options.forEach( function(option) {
+                    if(data.technical==option.id){
+                        $('#'+data.id).append($('<option selected></option>').val(option.id).html(option.name));
+                    }else{
+                        $('#'+data.id).append($('<option></option>').val(option.id).html(option.name));
+                    }
+                });
             });
             cacheData.push(response);
         }
