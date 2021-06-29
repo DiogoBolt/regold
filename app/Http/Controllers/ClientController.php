@@ -1351,7 +1351,5 @@ class ClientController extends Controller
         $pvp = ClientProduct::where('id',$inputs['id'])->first();
         $pvp->pvp = $inputs['value'];
         $pvp->save();
-
     }
-
 }

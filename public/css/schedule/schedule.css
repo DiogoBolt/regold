@@ -1,0 +1,59 @@
+.table {
+    background-color: #fff;
+}
+
+.table > tbody > tr > td,
+.table > tbody > tr > th,
+.table > tfoot > tr > td,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > thead > tr > th {
+    border-top: none;
+    vertical-align: middle;
+}
+
+.table th {
+    background-color: var(--main-color);
+    color: #fff;
+}
+
+.table tr:nth-child(odd) {
+    background-color: var(--light-green);
+}
+
+.btn-history {
+    border-radius: 0;
+    font-weight: bold;
+    text-transform: uppercase;
+    width: 100%;
+    background-color: var(--main-color);
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.margin-top {
+    margin-top: 20px;
+}
+
+.input-date{
+    width: 150px;
+    font-size: 15px;
+}
+
+@media (max-width: 480px) {
+    .register-container {
+        grid-template-columns: repeat(2, minmax(0px, 1fr));
+    }
+
+    .register-arc__info p, .register-arc__data p {
+        font-size: 10px;
+    }
+
+    .register-arc__data span {
+        font-size: 10px;
+    }
+
+    .register-arc__data_temps {
+        grid-column-gap: 15px;
+    }
+}
