@@ -61,18 +61,19 @@ class ScheduleController extends Controller
             $scheduleCheck = Schedule::from(Schedule::alias('s'))
                 ->where('s.check_s',0)
                 ->leftJoin(Customer::alias('c'),'c.id','=','s.idClient')
-                ->whereMonth('s.date','<=', Carbon::now()->month)
-                ->select(['c.name','c.regoldiID','c.city','c.id','s.technical','s.check_s','s.id'])
+                ->whereMonth('s.date','<=', Carbon::now()->month(8))
+                ->select(['c.name','c.regoldiID','c.city','c.id','s.technical','s.check_s','s.id as scheduleId','s.option1','s.option2','s.option3'])
                 ->get();
 
             $scheduleUncheck = Schedule::from(Schedule::alias('s'))
                 ->where('s.check_s',1)
                 ->leftJoin(Customer::alias('c'),'c.id','=','s.idClient')
-                ->whereMonth('s.date', Carbon::now()->month)
-                ->select(['c.name','c.regoldiID','c.city','c.id','s.technical','s.check_s','s.id'])
+                ->whereMonth('s.date', Carbon::now()->month(8))
+                ->select(['c.name','c.regoldiID','c.city','c.id','s.technical','s.check_s','s.id as scheduleId','s.option1','s.option2','s.option3'])
                 ->get();
         /*}*/
         $items = $scheduleCheck->merge($scheduleUncheck);
+
 
         return view('schedule.index',compact('items','technicals','months','years'));
     }
@@ -100,7 +101,7 @@ class ScheduleController extends Controller
             ->Join(Customer::alias('c'),'c.id','=','s.idClient')
             ->Join(TechnicalHACCP::alias('t'),'t.id','=','s.technical')
             ->select([
-            's.idClient','s.technical','s.check_s','c.id','c.regoldiID','c.name','t.name as nameTechnical'
+                's.id','s.idClient','s.technical','s.check_s','c.id','c.regoldiID','c.name','t.name as nameTechnical'
         ])
             ->whereBetween('s.date', [$start_month, $end_month])
             ->get();
@@ -108,9 +109,17 @@ class ScheduleController extends Controller
         return [$a,$technicals];
     }
 
-    public function editPossibleCustomer($id)
+    public function sendDate(Request $request)
     {
+        $inputs = $request->all();
 
+        $schedule = Schedule::where('id',$inputs['idSchedule'])->first();
+        $schedule->option1 = $inputs['datetime1'];
+        $schedule->option1 = $inputs['datetime2'];
+        $schedule->option1 = $inputs['datetime3'];
+        $schedule->save();
+
+        return back();
     }
 
     public function editPossibleCustomerPost(Request $request,$id)

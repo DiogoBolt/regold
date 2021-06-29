@@ -59,7 +59,7 @@
                     </div>
                 </div>
             </form>
-            <div class="col-md-8 col-md-offset-2">
+            <div class="panel-body table-responsive">
                         <script src="{{ URL::asset('/js/validations.js') }}"></script>
                         <div class="col-xs-12">
                             <div id="no-results"></div>
@@ -92,13 +92,14 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <input class="input-date" type="datetime-local" id="birthdaytime" name="birthdaytime">
-                                            </td>
-                                            <td>
-                                                <input class="input-date" type="datetime-local" id="birthdaytime" name="birthdaytime">
-                                            </td>
-                                            <td>
-                                                <input class="input-date" type="datetime-local" id="birthdaytime" name="birthdaytime">
+                                                <form method="post" action="/sendDate">
+                                                    {{ csrf_field() }}
+                                                    <input type="hidden" value="{{$client->scheduleId}}" name="idSchedule">
+                                                    <input class="input-date" type="datetime-local" id="birthdaytime" name="datetime1" value="{{$client->option1}}" {{--oninput="sendDate({{$client->id}},this.value)"--}}>
+                                                    <input class="input-date" type="datetime-local" id="birthdaytime" name="datetime2" value="{{$client->option2}}" {{--oninput="sendDate({{$client->id}},this.value)"--}}>
+                                                    <input class="input-date" type="datetime-local" id="birthdaytime" name="datetime3" value="{{$client->option3}}" {{--oninput="sendDate({{$client->id}},this.value)"--}}>
+                                                    <button>Ok</button>
+                                                </form>
                                             </td>
                                             <td>@if($client->check_s==1)
                                                     <input type="checkbox" checked disabled>
@@ -128,6 +129,24 @@
                 "_token": "{{ csrf_token() }}",
                 idSchedule: idSchedule, // < note use of 'this' here
                 idTechnical: idTechnical
+            },
+            success: function(result) {
+                window.location.reload()
+            },
+            error: function(result) {
+                alert('error');
+            }
+        });
+    }
+    function sendDate(idSchedule,date)
+    {
+        $.ajax({
+            type: "POST",
+            url: "/sendDate",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                idSchedule: idSchedule,
+                date: date// < note use of 'this' here
             },
             success: function(result) {
                 window.location.reload()
@@ -206,9 +225,9 @@
                             </div>
                         </td>
                         <td>
-                            <input class="input-date" type="datetime-local" id="birthdaytime" name="birthdaytime">
-                            <input class="input-date" type="datetime-local" id="birthdaytime" name="birthdaytime">
-                            <input class="input-date" type="datetime-local" id="birthdaytime" name="birthdaytime">
+                            <input class="input-date" type="datetime-local" id="birthdaytime" name="birthdaytime1">
+                            <input class="input-date" type="datetime-local" id="birthdaytime" name="birthdaytime2">
+                            <input class="input-date" type="datetime-local" id="birthdaytime" name="birthdaytime3">
                         </td>
                         <td><input type="checkbox" checked disabled></td>
                     </tr>`;
@@ -223,9 +242,9 @@
                             </div>
                         </td>
                         <td>
-                            <input class="input-date" type="datetime-local" id="birthdaytime" name="birthdaytime">
-                            <input class="input-date" type="datetime-local" id="birthdaytime" name="birthdaytime">
-                            <input class="input-date" type="datetime-local" id="birthdaytime" name="birthdaytime">
+                            <input class="input-date" type="datetime-local" id="birthdaytime" name="birthdaytime1">
+                            <input class="input-date" type="datetime-local" id="birthdaytime" name="birthdaytime2">
+                            <input class="input-date" type="datetime-local" id="birthdaytime" name="birthdaytime3">
                         </td>
                         <td><input type="checkbox" disabled></td>
                     </tr>`;
