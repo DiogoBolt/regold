@@ -293,11 +293,15 @@ class ClientController extends Controller
                 })
                 ->when($request->filled('search'), function ($query) use ($inputs) {
                     return $query->where('c.name', 'LIKE', '%' . $inputs['search'] . '%')
-                        ->orWhere('c.id', 'LIKE', '%' . $inputs['search'] . '%');
+                        ->orWhere('c.nif', 'LIKE', '%' . $inputs['search'] . '%')
+                        ->orWhere('c.id' , 'LIKE', '%' . $inputs['search'] . '%');
                 })
+
+
                 ->select([
                     'c.id',
                     'u.id as userid',
+                    'c.nif',
                     'c.name',
                     'c.regoldiID',
                     'c.comercial_name',
