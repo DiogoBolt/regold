@@ -167,7 +167,8 @@ function packType(type) {
             $("#divHaccp").show();
             $("#divCp").show();
             $("#divPayment").show();
-            $("#divContract_value").show();
+            $("#divContract_value").hide();
+            $("#divContract_value_inf").show();
             $("#divEscalao").hide();
             $("#divNib").hide();
             $("#divThermos").hide();
@@ -177,6 +178,7 @@ function packType(type) {
             $("#divHaccp").hide();
             $("#divCp").hide();
             $("#divContract_value").hide();
+            $("#divContract_value_inf").hide();
             $("#divNib").hide();
             $("#divPayment").show();
             $("#divEscalao").show();
@@ -187,6 +189,7 @@ function packType(type) {
             $("#divHaccp").hide();
             $("#divCp").hide();
             $("#divContract_value").hide();
+            $("#divContract_value_inf").hide();
             $("#divPayment").show();
             $("#divEscalao").show();
             $("#divThermos").hide();
@@ -198,6 +201,7 @@ function packType(type) {
             $("#divPayment").hide();
             $("#divEscalao").show();
             $("#divContract_value").show();
+            $("#divContract_value_inf").hide();
             $("#divNib").show();
             $("#divThermos").show();
             break;
@@ -207,7 +211,8 @@ function packType(type) {
             $("#divCp").hide();
             $("#divPayment").show();
             $("#divEscalao").hide();
-            $("#divContract_value").show();
+            $("#divContract_value").hide();
+            $("#divContract_value_inf").show();
             $("#divNib").show();
             $("#divThermos").show();
             break;

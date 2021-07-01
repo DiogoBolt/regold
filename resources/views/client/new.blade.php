@@ -75,7 +75,7 @@
                                 </select>
                             </div>
 
-                            <div class="form-group">
+                           {{-- <div class="form-group">
                                 Técnico HACCP: <select class="form-control" name="technicalhaccp" required>
                                     <option  selected value="">Selecione o Técnico HACCP</option>
                                     @foreach($technicalhaccp as $technical)
@@ -99,7 +99,7 @@
                                         @endif
                                     @endforeach
                                 </select>
-                            </div>
+                            </div>--}}
 
                             <div class="form-group">
                                 Nome Comercial:<input class="form-control" placeholder="Nome Comercial" name="name" required>
@@ -242,6 +242,10 @@
                             <div class="form-group" id="divContract_value" style="display: none">
                                 Valor Contrato(Mensal): <input type="number" step="0.01" placeholder="Valor de Contrato" min=0 class="form-control" name="value">
                             </div>
+                            <div class="form-group" id="divContract_value_inf" style="display: none">
+                                Valor Contrato(Mensal): <input type="number" step="0.01" placeholder="Valor de Contrato" min=0 class="form-control" name="contract_value_inf">
+                            </div>
+
 
                             <div class="form-group">
                                 Id Regoldi <input type="number" class="form-control" name="regoldiID" >
