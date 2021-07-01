@@ -82,7 +82,7 @@
                                         <label class="labelParish" id="labelParish">{{$client->parish}}</label>
                                     </div>  
                                 <div class="form-group">
-                                    Rua e número da porta<input class="form-control" placeholder="Morada de Entrega" name="deliveryAddress"  value="{{$client->address}}"required> 
+                                    Rua e número da porta<input class="form-control" placeholder="Morada de Entrega" name="deliveryAddress"  value="{{$client->address}}" required>
                                 </div>
                             </div>
                             <div id="AddressInvoice" class="form-group" >

@@ -202,6 +202,7 @@ Route::group(['middleware' => ['backoffice']], function () {
     Route::get('/schedule/haccp', 'ScheduleController@getSchedule');
     Route::get('/schedule/haccp/get', 'ScheduleController@getScheduleByMonth');
     Route::post('/editTechnical', 'ScheduleController@editTechnical');
+    Route::post('/sendDate', 'ScheduleController@sendDate');
 
   /*  Route::get('/clients/regolfood', 'ClientController@indexRegolfood');
     Route::post('/schedule/regolfood/save/{id}','ClientController@saveScheduleRegolfood');
