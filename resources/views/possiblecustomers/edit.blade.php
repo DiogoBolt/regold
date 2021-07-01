@@ -15,7 +15,6 @@
     </div>
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <form action="/possiblecustomers/edit/{{$possiblecustomer->id}}" method="post" >
@@ -23,27 +22,33 @@
 
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    Nome:<input class="form-control" placeholder="Nome" id='ownerName'  value="{{$possiblecustomer->name}}" name="name">
+                                    Estabelecimento:<input class="form-control" placeholder="Nome Estabelecimento" id='ownerName'  value="{{$possiblecustomer->name}}" name="name" required>
                                 </div>
                                 <div class="form-group">
-                                    Nome Proprietario:<input class="form-control" placeholder="Nome" id='ownerName'  value="{{$possiblecustomer->nome_cliente}}" name="nome_cliente">
+                                    Nome:<input class="form-control" placeholder="Nome Cliente" id='ownerName'  value="{{$possiblecustomer->nome_cliente}}" name="nome_cliente" required>
                                 </div>
                                 <div class="form-group">
-                                    Email:<input class="form-control" placeholder="Nome" id='ownerName' value="{{$possiblecustomer->email}}" name="email">
+                                    Contacto:<input class="form-control" placeholder="Contacto Cliente" id='ownerName' value="{{$possiblecustomer->contacto}}" name="contacto" required>
                                 </div>
                                 <div class="form-group">
-                                    Contacto:<input class="form-control" placeholder="Nome" id='ownerName' value="{{$possiblecustomer->contacto}}" name="contacto">
+                                    Morada:<input class="form-control" placeholder="Morada Cliente" id='ownerName' value="{{$possiblecustomer->address}}" name="address" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    Concorrente: <input class="form-control" placeholder="Nome Concorrente" value="{{$possiblecustomer->competitor}}" name="competitor">
                                 </div>
                                 <div class="form-group">
-                                    Morada: <input class="form-control" value="{{$possiblecustomer->address}}" name="address" required>
+                                    Pack Sugerido: <input class="form-control" placeholder="Sugerir Pack" value="{{$possiblecustomer->suggested_pack}}" name="suggested_pack" >
                                 </div>
                                 <div class="form-group">
-                                    Empresa Atual: <input  name="current_contract"  value="{{$possiblecustomer->current_contract}}">
+                                    Final Contrato: <input class="form-control"  type="date" name="contract_end"  value="{{date('Y-m-d', strtotime($possiblecustomer->contract_end))}}" required>
                                 </div>
 
                                 <div class="form-group">
-                                    Data Final Contrato: <input type="date" name="contract_end"  value="{{date('Y-m-d', strtotime($possiblecustomer->contract_end))}}" >
+                                    Data Visita   : <input class="form-control"  type="date" name="visit_day"  value="{{date('Y-m-d', strtotime($possiblecustomer->visit_day))}}" >
                                 </div>
+
                             </div>
                             <div>
                                 <button class="btn btn-add" >Editar</button>
@@ -51,7 +56,6 @@
                         </form>
                     </div>
                 </div>
-            </div>
         </div>
     </div>
 @endsection
