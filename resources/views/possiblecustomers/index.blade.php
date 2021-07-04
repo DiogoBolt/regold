@@ -6,53 +6,52 @@
 @endsection
 
 @section('content')
+
     <div class="container-bar">
         <p class="container-bar_txt">Possiveis Clientes</p>
         <div class="container-bar_img">
             <img src="{{ asset('img/clientes.jpg') }}"/>
         </div>
     </div>
+
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
                 <div class="panel">
+
                     <div class="panel-body table-responsive">
+                        <a href="/possiblecustomers/new" style="margin-top: 20px; float: left;" class="btn btn-add">Novo Cliente </a>
                         <table class="table">
                             <tr>
-                                <th>Id</th>
+                                <th>Estabelecimento</th>
                                 <th>Nome</th>
-                                <th>Nome Cliente</th>
-                                <th>Email</th>
                                 <th>Contacto</th>
                                 <th>Morada</th>
-                                <th>Contrato Atual</th>
+                                <th>Concorrente</th>
                                 <th>Final Contrato</th>
-                                <th>Vendedor</th>
+                                <th>Data Visita</th>
+                                <th>Pack Sugerido</th>
                                 <th>Apagar</th>
                             </tr>
                             @foreach($possibleCustomers as $client)
 
                                     <tr>
-                                        <td><a href="/possiblecustomers/edit/{{$client->id}}">{{$client->id}}</a></td>
                                         <td><a href="/possiblecustomers/edit/{{$client->id}}">{{$client->name}}</a></td>
                                         <td>{{$client->nome_cliente}}</td>
-                                        <td>{{$client->email}}</td>
                                         <td>{{$client->contacto}}</td>
                                         <td>{{$client->address}}</td>
-                                        <td>{{$client->current_contract}}</td>
+                                        <td>{{$client->competitor}}</td>
                                         <td>{{date('y-m-d',strtotime($client->contract_end))}}</td>
-                                        <td>{{$client->sales_id}}</td>
+                                        <td>{{date('y-m-d',strtotime($client->visit_day))}}</td>
+                                        <td>{{$client->suggested_pack}}</td>
                                         <td><a href="/possiblecustomers/deletecustomer/{{$client->id}}">X</a></td>
                                     </tr>
                             @endforeach
                         </table>
 
-                        <a href="/possiblecustomers/new" class="btn btn-primary">Novo Cliente </a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
     <!-- Modal -->
     <div class="modal fade" id="deleteModal" role="dialog">

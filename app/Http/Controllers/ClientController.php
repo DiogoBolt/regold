@@ -293,11 +293,15 @@ class ClientController extends Controller
                 })
                 ->when($request->filled('search'), function ($query) use ($inputs) {
                     return $query->where('c.name', 'LIKE', '%' . $inputs['search'] . '%')
-                        ->orWhere('c.id', 'LIKE', '%' . $inputs['search'] . '%');
+                        ->orWhere('c.nif', 'LIKE', '%' . $inputs['search'] . '%')
+                        ->orWhere('c.id' , 'LIKE', '%' . $inputs['search'] . '%');
                 })
+
+
                 ->select([
                     'c.id',
                     'u.id as userid',
+                    'c.nif',
                     'c.name',
                     'c.regoldiID',
                     'c.comercial_name',
@@ -646,6 +650,8 @@ class ClientController extends Controller
         if(isset($inputs['nib'])==0) $establisment->nib = null; else $establisment->nib=$inputs['nib'];
         if(isset($inputs['n_thermos'])==0) $establisment->n_thermos=null; else $establisment->n_thermos=$inputs['n_thermos'];
 
+        if($inputs['packs']=='s' || $inputs['packs']=='t')
+            $establisment->contract_value_inf = $inputs['contract_value_inf'];
         //fim packs
 
         //permissoes

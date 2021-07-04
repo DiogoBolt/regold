@@ -74,6 +74,7 @@
                                         <option disabled selected value="">Selecione a Espécie</option>
                                         <option value="Roedores">Roedores</option>
                                         <option value="Blatídeos">Blatídeos</option>
+                                        <option value="Roedores e Blatídeos">Roedores e Blatídeos</option>
                                         <option value="Formigas">Formigas</option>
                                         <option value="Insectos voadores">Insectos voadores</option>
                                     </select>

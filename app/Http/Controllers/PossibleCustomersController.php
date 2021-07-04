@@ -45,18 +45,18 @@ class PossibleCustomersController extends Controller
 
         $newpossiblecustomer = new PossibleCustomer;
 
-        $newpossiblecustomer->sales_id = $user->id;
         $newpossiblecustomer->name = $inputs['name'];
         $newpossiblecustomer->nome_cliente = $inputs['nome_cliente'];
-        $newpossiblecustomer->email = $inputs['email'];
+        $newpossiblecustomer->competitor = $inputs['competitor'];
         $newpossiblecustomer->contacto = $inputs['contacto'];
         $newpossiblecustomer->address = $inputs['address'];
         $newpossiblecustomer->contract_end = $inputs['contract_end'];
-        $newpossiblecustomer->current_contract = $inputs['current_contract'];
+        $newpossiblecustomer->visit_day = $inputs['visit_day'];
+        $newpossiblecustomer->suggested_pack = $inputs['suggested_pack'];
 
         $newpossiblecustomer->save();
 
-        return back();
+        return redirect('possiblecustomers/');
     }
 
     public function editPossibleCustomer($id)
@@ -74,11 +74,12 @@ class PossibleCustomersController extends Controller
 
         $possiblecustomer->name = $inputs['name'];
         $possiblecustomer->nome_cliente = $inputs['nome_cliente'];
-        $possiblecustomer->email = $inputs['email'];
+        $possiblecustomer->competitor = $inputs['competitor'];
         $possiblecustomer->contacto = $inputs['contacto'];
         $possiblecustomer->address = $inputs['address'];
         $possiblecustomer->contract_end = $inputs['contract_end'];
-        $possiblecustomer->current_contract = $inputs['current_contract'];
+        $possiblecustomer->visit_day = $inputs['visit_day'];
+        $possiblecustomer->suggested_pack = $inputs['suggested_pack'];
 
         $possiblecustomer->save();
 
