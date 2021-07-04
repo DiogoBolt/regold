@@ -66,13 +66,11 @@
                     <tr>
                         <th></th>
                         <th>Cliente</th>
-                        <th>ID Regoldi</th>
+                        <th>ID RegolPest</th>
                         <th>Data</th>
-                        <th>Total</th>
-                        <th>Fatura</th>
+                        <th>Total s/iva</th>
                         <th>Detalhes</th>
-                        <th>Processar</th>
-                        <th>Imprimir</th>
+                        <th>Lançada</th>
                     </tr>
                     @foreach($orders as $order)
                             <tr>
@@ -85,7 +83,7 @@
                                 <td>{{$order->regoldiID}}</td>
                                 <td>{{$order->created_at->format('d-m-Y')}}</td>
                                 <td>{{number_format($order->total,2)}}€</td>
-                                @if($order->invoice_id == null)
+                                {{--@if($order->invoice_id == null)
                                     <td class="form-td">
                                     <form action="/orders/attachInvoice" class="order-form" method="post" enctype="multipart/form-data">
                                         {{ csrf_field() }}
@@ -107,20 +105,20 @@
                                     <td class="form-td">
                                         <a href="{{asset('uploads/' . $order->client_id . '/' . $order->invoice)}}" class="file-link"><strong>Visualizar Factura</strong></a>
                                     </td>
-                                @endif
+                                @endif--}}
 
-                                <td>@if($order->cart_id==null)(SP FREE s/ encomenda)@else<a href="/orders/{{$order->id}}">Detalhes</a>@endif</td>
+                                <td>@if($order->cart_id==null)(SP FREE s/ encomenda)@else<a href="/orders/{{$order->id}}">Ver Encomenda</a>@endif</td>
 
 
                                 <td><a href="/orders/process/{{$order->id}}" class="btn btn-process">
-                                    <strong>Processar</strong>
+                                    <strong>Lançar</strong>
                                 </a></td>
-                                <td class="table-checkbox">
+                                {{--<td class="table-checkbox">
                                     <label> 
                                         <input type="checkbox" name="print" class="print" data-id="{{ $order->id }}">
                                         <span class="checkmark"></span>
                                     </label>
-                                </td>
+                                </td>--}}
                             </tr>
                     @endforeach
                 </table>

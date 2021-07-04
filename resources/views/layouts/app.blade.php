@@ -102,10 +102,16 @@
                                         Encomendas 
                                     </a>
                                 </li>
-
+                            @if(Auth::user()->userType == 5)
                             <li>
                                 <a href="/processedOrders">
                                     Encomendas Processadas
+                                </a>
+                            </li>
+                            @endif
+                            <li>
+                                <a href="/shippedOrders">
+                                    Encomendas Expedidas
                                 </a>
                             </li>
 
@@ -114,18 +120,40 @@
                                     Historico Encomendas
                                 </a>
                             </li>
-                            @if(Auth::user()->userType == 5||1)
+                            @if(Auth::user()->userType == 1)
+                                <li>
+                                    <a href="/homePageSales">
+                                        -----Menu-----
+                                    </a>
+                                </li>
+                                <li>
+                                    <a >
+                                        Estatísticas
+                                    </a>
+                                </li>
+                                <li>
+                                    <a >
+                                        Prospeção
+                                    </a>
+                                </li>
+                                <li>
+                                    <a >
+                                        Agenda
+                                    </a>
+                                </li>
+                            @endif
+                            {{--@if(Auth::user()->userType == 5||1)
                                 <li>
                                     <a href="/billing">
                                         Faturação
                                     </a>
                                 </li>
-                            @endif
-                            <li>
+                            @endif--}}
+                            {{--<li>
                                 <a href="/possiblecustomers/">
                                     + Clientes
                                 </a>
-                            </li>
+                            </li>--}}
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>

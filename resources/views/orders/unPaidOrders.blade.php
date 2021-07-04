@@ -9,7 +9,7 @@
 <div class="container-bar">
     <p class="container-bar_txt">encomendas</p>
     <div class="container-bar_img">
-        <img src="{{ asset('img/encomendas.jpg') }}" />
+        <img src="{{ asset('img/encomendas.jpg') }}"/>
     </div>
 </div>
 <div class="container">
@@ -21,20 +21,20 @@
                         <th>Cliente</th>
                         <th>ID Regoldi</th>
                         <th>Data</th>
-                        <th>Total</th>
+                        <th>Total c/iva</th>
                         <th>Estado</th>
-                        <th>Fatura</th>
-                        <th>Recibo</th>
                         <th>Detalhes</th>
+                        <th>Pagamento</th>
+                        <th>Expedição</th>
                     </tr>
                     @foreach($orders as $order)
                             <tr>
                                 <td><a href="/clients/{{$order->client_id}}">{{$order->name}}</a></td>
                                 <td>{{$order->regoldiID}}</td>
                                 <td>{{$order->created_at->format('d-m-Y')}}</td>
-                                <td>{{number_format($order->total,2)}}€</td>
+                                <td>{{number_format($order->total+$order->totaliva,2)}}€</td>
                                 <td>{{$order->status}}</td>
-                                @if($order->invoice_id == null)
+                               {{-- @if($order->invoice_id == null)
                                     <td class="form-td">
                                     <form action="/orders/attachInvoice" class="order-form" method="post" enctype="multipart/form-data">
                                         {{ csrf_field() }}
@@ -51,9 +51,9 @@
                                     <td class="form-td">
                                         <a href="{{asset('uploads/' . $order->client_id . '/' . $order->invoice)}}" class="file-link"><strong>Visualizar Factura</strong></a>
                                     </td>
-                                @endif
+                                @endif--}}
 
-                                @if($order->receipt_id == null)
+                                {{--@if($order->receipt_id == null)
                                     <td class="form-td">
                                         <form action="/orders/attachReceipt" class="order-form" method="post" enctype="multipart/form-data">
                                             {{ csrf_field() }}
@@ -70,11 +70,28 @@
                                     <td class="form-td">
                                         <a href="{{asset('uploads/' . $order->client_id . '/' . $order->receipt)}}" class="file-link"><strong>Visualizar Recibo</strong></a>
                                     </td>
-                                @endif
+                                @endif--}}
                                 <td><a href="/orders/{{$order->id}}">Detalhes</a></td>
-                                </tr>
+                                @if($user->userType==1)
+                                <@if($order->status_salesman == 0)
+                                    <td><a href="/salesman/orderPay/{{$order->id}}" onclick="return confirm('Tem a certeza?')">Por liquidar</a></td>
+                                @else
+                                    <td><a href="/salesman/orderUnpay/{{$order->id}}" onclick="return confirm('Tem a certeza?')">Pago</a></td>
+                                @endif
+                                @else
+                                    @if($user->status=='paid')
+                                        <td>Pago</td>
+                                    @else
+                                        <td>Não Pago</td>
+                                    @endif
+                                @endif
+                                @if($user->shipped==0)
+                                    <td>Por expedir</td>
+                                @else
+                                    <td>Expedida</td>
+                                @endif
+                            </tr>
                     @endforeach
-
                 </table>
             </div>
         </div>
@@ -96,9 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             $(this).prev('label').text('Adicionar Factura');
         }
-        
     });
-
 });
 
 </script>

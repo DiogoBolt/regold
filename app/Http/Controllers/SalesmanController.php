@@ -39,6 +39,62 @@ class SalesmanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function homePage(){
+
+        $user = Auth::user();
+
+
+        if($user->userType == 1){
+            $clients = Customer::where('salesman',$user->userTypeID)->count();
+            $clients_sp = Customer::where('salesman',$user->userTypeID)->where('pack_type','sp')->count();
+            $clients_spfree = Customer::where('salesman',$user->userTypeID)->where('pack_type','sp free')->count();
+            $clients_s = Customer::where('salesman',$user->userTypeID)->where('pack_type','s')->count();
+            $clients_st = Customer::where('salesman',$user->userTypeID)->where('pack_type','st')->count();
+            $clients_t = Customer::where('salesman',$user->userTypeID)->where('pack_type','t')->count();
+
+            $clientsOrder = Customer::from(Customer::alias('c'))
+                ->leftJoin(Order::alias('o'), 'c.id', '=', 'o.client_id')
+                ->where('c.salesman',$user->userTypeID)
+                ->where('o.created_at','>=',Carbon::now()->startOfMonth())
+                ->count();
+
+            $clients_spOrder = Customer::from(Customer::alias('c'))
+                ->leftJoin(Order::alias('o'), 'c.id', '=', 'o.client_id')
+                ->where('c.salesman',$user->userTypeID)
+                ->where('c.pack_type','sp')
+                ->where('o.created_at','>=',Carbon::now()->startOfMonth())
+                ->count();
+            $clients_spfreeOrder = Customer::from(Customer::alias('c'))
+                ->leftJoin(Order::alias('o'), 'c.id', '=', 'o.client_id')
+                ->where('c.salesman',$user->userTypeID)
+                ->where('c.pack_type','sp free')
+                ->where('o.created_at','>=',Carbon::now()->startOfMonth())
+                ->count();
+            $clients_sOrder = Customer::from(Customer::alias('c'))
+                ->leftJoin(Order::alias('o'), 'c.id', '=', 'o.client_id')
+                ->where('c.salesman',$user->userTypeID)
+                ->where('c.pack_type','s')
+                ->where('o.created_at','>=',Carbon::now()->startOfMonth())
+                ->count();
+            $clients_stOrder = Customer::from(Customer::alias('c'))
+                ->leftJoin(Order::alias('o'), 'c.id', '=', 'o.client_id')
+                ->where('c.salesman',$user->userTypeID)
+                ->where('c.pack_type','st')
+                ->where('o.created_at','>=',Carbon::now()->startOfMonth())
+                ->count();
+            $clients_tOrder = Customer::from(Customer::alias('c'))
+                ->leftJoin(Order::alias('o'), 'c.id', '=', 'o.client_id')
+                ->where('c.salesman',$user->userTypeID)
+                ->where('c.pack_type','st')
+                ->where('o.created_at','>=',Carbon::now()->startOfMonth())
+                ->count();
+        }
+
+
+        return view('salesman.homePage',compact('clients','clients_s','clients_sp','clients_spfree','clients_st','clients_t','clients_sOrder','clients_spfreeOrder','clients_spOrder','clients_stOrder','clients_tOrder','clientsOrder'));
+    }
+
+
     public function index(Request $request)
     {
         
@@ -78,14 +134,24 @@ class SalesmanController extends Controller
             //dd($user);
             if ($user->userType == 1) {
                 $salesman = Salesman::where('id', $user->userTypeID)->first();
-                $salesPayments = SalesPayment::where('sales_id', $id)->where('delivered', 0)->get();
+                $salesPayments = SalesPayment::where('sales_id', $user->userTypeID)->where('delivered', 0)->get();
+
+                $orders=[];
                 foreach ($salesPayments as $payment) {
-                    $payment->invoice = Order::where('id', $payment->order_id)->first()->invoice_id;
+                    $order = Order::from(Order::alias('o'))
+                        ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
+                        ->where('o.id', $payment->order_id)
+                        ->select([
+                            'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
+                            'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
+                        ])
+                        ->first();
+                        array_push($orders,$order);
                 }
 
-                $total = SalesPayment::where('sales_id', $id)->where('delivered', 0)->sum('value');
+                $total = SalesPayment::where('sales_id', $user->userTypeID)->where('delivered', 0)->sum('value');
 
-                return view('salesman.show', compact('salesman', 'salesPayments', 'user', 'total'));
+                return view('salesman.show', compact('salesman', 'salesPayments','user', 'total','orders'));
 
             }
             if ($user->userType == 2) {
@@ -174,15 +240,72 @@ class SalesmanController extends Controller
             //meter aqui o resto das verificacoes
         return redirect()->to('/salesman'); 
     }
-    public function deliverSalesman($id)
+    public function deliverSalesman(Request $request)
     {
-        if(Auth::user()->client_id == null and Auth::user()->sales_id == null) {
-            $salesPayments = SalesPayment::where('sales_id', $id)->where('delivered', 0)->get();
-            foreach ($salesPayments as $payment) {
-                $payment->delivered = 1;
-                $payment->save();
+
+        $inputs = $request->all();
+
+        $idOrder = explode(' , ',$request->payOrders[0]);
+
+        if(Auth::user()->client_id == null and Auth::user()->sales_id == null){
+            foreach ($idOrder as $id){
+                $salesPayments = SalesPayment::where('order_id', $id)->first();
+                $salesPayments->delivered = 1;
+                $salesPayments->save();
+                $order = Order::where('id',$id)->first();
+                $order->status = 'paid';
+                $order->save();
             }
         }
         return back();
+    }
+    public function orderPay($id){
+        $user = Auth::user();
+
+        $order = Order::where('id',$id)->first();
+
+        $order->status_salesman = 1;
+        $order->save();
+
+        $clientUser = Customer::where('id', $order->client_id)
+            ->select([
+                'ownerID','id','name'
+            ])->first();
+
+        $salesPayment = new SalesPayment;
+        if ($user->userType == 5) {
+            $salesPayment->admin_id = $user->id;
+            $salesPayment->order_id = $order->id;
+            $salesPayment->value = number_format($order->total+$order->totaliva,2);
+            $salesPayment->delivered = 0;
+            $salesPayment->save();
+        } else {
+            $salesPayment->sales_id = $user->userTypeID;
+            $salesPayment->order_id = $order->id;
+            $salesPayment->value = number_format($order->total+$order->totaliva,2);
+            $salesPayment->delivered = 0;
+            $salesPayment->save();
+        }
+
+        $message = new Message;
+        $message->sender_id = $user->id;
+        $message->receiver_id = $clientUser->ownerID;
+        $message->text = "O pagamento da encomenda nº" . $order->id . " do estabelecimento " . $clientUser->name . "foi recebido pelo vendedor " . $user->name . ". Obrigado.";
+        $message->type = 5;
+        $message->viewed = 0;
+        $message->save();
+
+        return back();
+    }
+    public function orderUnpay($id){
+        $salesPayment = SalesPayment::where('order_id',$id)->first();
+        $salesPayment->delete();
+
+        return back();
+    }
+
+    public function teste(){
+
+        return view('salesman.teste');
     }
 }

@@ -58,66 +58,22 @@
                         <th>Cliente</th>
                         <th>ID RegolPest</th>
                         <th>Data</th>
-                        <th>Metodo Pagamento</th>
-                        <th>Vendedor</th>
                         <th>Total c/iva</th>
                         <th>Detalhes</th>
                         <th>Pago</th>
-                        <th>Expedir</th>
                     </tr>
                     @foreach($orders as $order)
                             <tr>
                                 <td><a href="/clients/{{$order->client_id}}">{{$order->name}}</a></td>
                                 <td>{{$order->regoldiID}}</td>
                                 <td>{{$order->created_at->format('d-m-Y')}}</td>
-                                <td>{{$order->payment_method}}</td>
-                                <td>{{$order->salesman}}</td>
                                 <td>{{number_format($order->total+$order->totaliva,2)}}€</td>
                                 <td>@if($order->cart_id==null)(SP FREE s/ encomenda)@else<a href="/orders/{{$order->id}}">Ver encomenda</a>@endif</td>
-                                {{--@if($order->status != 'paid')
-                                <td><form  method="post" action="/orders/semipay">
-                                        {{ csrf_field() }}
-                                        <input name="amount" style="width:40%;display:inline" class="form-control">
-                                        <input name="id" style="display:none" value="{{$order->id}}">
-                                        <button style="display:inline" class="btn">Abater</button></form></td>
-                                @else
-                                    <td></td>
-                                @endif--}}
-                                {{--<td>@if($order->cart_id==null)(SP FREE s/ encomenda)@else<a href="/orders/{{$order->id}}">Detalhes</a>@endif</td>
-                                <td>{{$order->status}}</td>
-                                @if($order->receipt_id == null)
-                                    <td class="form-td">
-                                        <form action="/orders/attachReceipt" class="order-form" method="post" enctype="multipart/form-data">
-                                            {{ csrf_field() }}
-
-                                            <input value="{{$order->id}}" type="hidden" name="order">
-
-                                            <label for="{{$order->id}}" class="btn"><strong>Adicionar Recibo</strong></label>
-                                            <input id="{{$order->id}}" class="input-order" type="file" name="receipt">
-
-                                            <button class="btn">Associar</button>
-                                        </form>
-                                        @if ($errors->has('receipt'))
-                                            <div class="alert-danger">
-                                                {{  $errors->first('receipt') }}
-                                            </div>
-                                        @endif
-                                    </td>
-                                @else
-                                    <td class="form-td">
-                                        <a href="{{asset('uploads/' . $order->client_id . '/' . $order->receipt)}}" class="file-link"><strong>Visualizar Recibo</strong></a>
-                                    </td>
-                                @endif--}}
 
                                 @if($order->status != 'paid')
                                     <td><a href="/orders/pay/{{$order->id}}" onclick="return confirm('Tem a certeza?')">Liquidar</a></td>
                                 @else
                                     <td><a href="/orders/unpay/{{$order->id}}" onclick="return confirm('Tem a certeza?')">Pago</a></td>
-                                @endif
-                                @if($order->shipped==1)
-                                    <td><a href="/orders/unshipped/{{$order->id}}" onclick="return confirm('Tem a certeza?')">Expedida</a></td>
-                                @else
-                                    <td><a href="/orders/shipped/{{$order->id}}" onclick="return confirm('Tem a certeza?')">Expedir</a></td>
                                 @endif
                             </tr>
                     @endforeach

@@ -633,6 +633,7 @@ class FrontofficeController extends Controller
         $order->totaliva =  $iva;
         $order->processed = 0;
         $order->status = 'waiting_payment';
+        $order->status_salesman = 0;
         $order->external_id = uniqid();
         $order->note = $inputs['order_note'];
         $order->save();

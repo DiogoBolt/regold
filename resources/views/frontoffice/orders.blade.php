@@ -36,22 +36,32 @@
                         <table class="table table-responsive">
                             <tr>
                                 <th>Data</th>
-                                <th>Total</th>
                                 <th>Total + Iva</th>
                                 <th>Estado</th>
                                 <th>Detalhes</th>
+                                <th>Pagamento</th>
+                                <th>Expedição</th>
                             </tr>
                             @foreach($orders as $order)
                                 <tr>
                                     <td>{{date_format($order->created_at,'d-m-y')}}</td>
-                                    <td>{{number_format($order->total,2)}}€</td>
-                                    <td>{{number_format($order->totaliva,2)}}€</td>
+                                    <td>{{number_format($order->total+$order->totaliva,2)}}€</td>
                                     @if($order->processed == 1)
                                         <td>Processado</td>
                                         @else
                                         <td>Em Espera</td>
                                     @endif
                                     <td><a href="/frontoffice/orders/{{$order->id}}">Ver Encomenda</a></td>
+                                    @if($order->status=='paid')
+                                        <td>Pago</td>
+                                    @else
+                                        <td>Não Pago</td>
+                                    @endif
+                                    @if($order->shipped==0)
+                                        <td>Por Expedir</td>
+                                    @else
+                                        <td>Expedida</td>
+                                    @endif
                                 </tr>
                             @endforeach
                         </table>

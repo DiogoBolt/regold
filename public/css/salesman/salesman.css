@@ -1,3 +1,25 @@
+
+.file-link {
+  display: inline-block;
+  color: var(--main-color);
+  padding: 3px 12px;
+  text-align: center;
+  border: 2px solid var(--main-color);
+  border-radius: 15px;
+}
+
+.file-link:hover {
+  text-decoration: none;
+  color: #fff;
+  background-color: var(--main-color);
+}
+
+#print-link, #filter-link {
+  display: block;
+  margin-bottom: 20px;
+  padding: 6px 12px;
+}
+
 .btn-add {
   width: 100%;
   text-transform: uppercase;
@@ -32,4 +54,15 @@
 }
 #postal_code{
   width: 40%;
+}
+
+.divChart1{
+  width: 30%;
+  height: 30%;
+  float: right;
+}
+
+
+.file-link{
+  width:100%;
 }

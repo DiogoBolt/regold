@@ -189,14 +189,20 @@ Route::group(['middleware' => ['backoffice']], function () {
     Route::get('/possiblecustomers/deletecustomer/{id}', 'PossibleCustomersController@deletePossibleCustomer');
 
     /////
-
+    Route::get('/homePageSales', 'SalesmanController@homePage');
     Route::get('/salesman', 'SalesmanController@index');
     Route::get('/salesman/{id}', 'SalesmanController@salesman');
     Route::get('/newsalesman', 'SalesmanController@newSales');
-    Route::get('/salesman/deliver/{id}', 'SalesmanController@deliverSalesman');
+    Route::get('/salesman/deliver/pay', 'SalesmanController@deliverSalesman');
     //Route::get('/salesman/new', 'ClientController@newSales');
     Route::post('/salesman/add', 'SalesmanController@addSales');
     Route::delete('/salesman/delete', 'SalesmanController@deleteSales');
+    Route::get('/salesman/orderPay/{id}', 'SalesmanController@orderPay');
+    Route::get('/salesman/orderUnpay/{id}', 'SalesmanController@orderUnpay');
+
+    //TESTE
+    Route::get('/teste','SalesmanController@teste');
+    //
 
     //route schedule
     Route::get('/schedule/haccp', 'ScheduleController@getSchedule');
@@ -262,6 +268,7 @@ Route::group(['middleware' => ['backoffice']], function () {
     Route::get('/orders', 'ProductController@showOrders');
     Route::delete('/order/delete','ProductController@deleteOrder');
     Route::get('/processedOrders', 'ProductController@showProcessedOrders');
+    Route::get('/shippedOrders', 'ProductController@showShippedOrders');
     Route::get('/unpaidOrders/{id}', 'ProductController@showOrdersByClient');
     Route::get('/historyOrders', 'ProductController@showHistoryOrders');
     Route::get('/orders/{id}', 'ProductController@viewOrder');
@@ -275,6 +282,9 @@ Route::group(['middleware' => ['backoffice']], function () {
     Route::post('/orders/semipay', 'ProductController@semiPayOrder');
     Route::get('/orders/filter/q', 'ProductController@filterOrders');
     Route::get('/processedOrders/filter', 'ProductController@filterProcessedOrders');
+    Route::get('/orders/shipped/{id}', 'ProductController@shippedOrder');
+    Route::get('/orders/unshipped/{id}', 'ProductController@unshippedOrder');
+
 
     Route::get('/messages/{id}', 'ProductController@messages');
     Route::post('/messages/new', 'ProductController@newMessage');

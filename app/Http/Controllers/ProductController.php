@@ -13,6 +13,7 @@ use App\Order;
 use App\OrderLine;
 use App\Product;
 use App\Receipt;
+use App\Salesman;
 use App\SalesPayment;
 use App\User;
 use http\Client;
@@ -334,32 +335,35 @@ class ProductController extends Controller
         if ($user->userType == 5) {
             $orders = Order::from(Order::alias('o'))
                 ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
-                ->where('processed', 1)
-                ->where('receipt_id', '=', null)
+                ->where('o.shipped', null)
+                ->where('o.processed', 1)
+                ->where('o.status', '=' ,'waiting_payment')
                 ->select([
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                    'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
+                    'o.receipt_id', 'o.created_at', 'c.name', 'c.salesman','c.payment_method','c.regoldiID', 'o.status', 'o.invoice_id'
                 ])
                 ->orderBy('o.id', 'DESC')->paginate(25);
         } else if ($user->userType == 1) {
             $orders = Order::from(Order::alias('o'))
                 ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
                 ->where('c.salesman', $user->userTypeID)
-                ->where('receipt_id', '=', null)
-                ->where('processed', 1)
+                ->where('o.shipped', null)
+                ->where('o.processed', 1)
+                ->where('o.status', '=' ,'waiting_payment')
                 ->select([
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                    'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
+                    'o.receipt_id', 'o.created_at', 'c.name', 'c.salesman','c.payment_method','c.regoldiID', 'o.status', 'o.invoice_id'
                 ])
                 ->orderBy('o.id', 'DESC')->paginate(25);
         } else {
             $orders = Order::from(Order::alias('o'))
                 ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
-                ->where('receipt_id', '=', null)
-                ->where('processed', 1)
+                ->where('o.shipped', null)
+                ->where('o.processed', 1)
+                ->where('o.status', '=' ,'waiting_payment')
                 ->select([
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                    'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
+                    'o.receipt_id', 'o.created_at', 'c.name', 'c.salesman','c.payment_method','c.regoldiID', 'o.status', 'o.invoice_id'
                 ])
                 ->orderBy('o.id', 'DESC')->paginate(25);
         }
@@ -367,9 +371,133 @@ class ProductController extends Controller
         foreach ($orders as $order) {
             $order->receipt = Receipt::where('id', $order->receipt_id)->first()->file ?? null;
             $order->invoice = Receipt::where('id', $order->invoice_id)->first()->file ?? null;
+            $order->salesman = $this->getSalesmanNameById($order->salesman);
         }
 
         return view('orders.processedOrders', compact('orders'));
+    }
+
+    public function showShippedOrders()
+    {
+        $user = Auth::user();
+        if ($user->userType == 5) {
+            $orders = Order::from(Order::alias('o'))
+                ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
+                ->where('o.shipped',1)
+                ->select([
+                    'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
+                    'o.receipt_id', 'o.created_at', 'c.name', 'c.salesman','c.payment_method','c.regoldiID', 'o.status', 'o.invoice_id'
+                ])
+                ->orderBy('o.id', 'DESC')->paginate(25);
+        } else if ($user->userType == 1) {
+            $orders = Order::from(Order::alias('o'))
+                ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
+                ->where('c.salesman', $user->userTypeID)
+                ->where('o.shipped', 1)
+                ->select([
+                    'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
+                    'o.receipt_id', 'o.created_at', 'c.name', 'c.salesman','c.payment_method','c.regoldiID', 'o.status', 'o.invoice_id'
+                ])
+                ->orderBy('o.id', 'DESC')->paginate(25);
+        } else {
+            $orders = Order::from(Order::alias('o'))
+                ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
+                ->where('o.shipped', 1)
+                ->select([
+                    'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
+                    'o.receipt_id', 'o.created_at', 'c.name', 'c.salesman','c.payment_method','c.regoldiID', 'o.status', 'o.invoice_id'
+                ])
+                ->orderBy('o.id', 'DESC')->paginate(25);
+        }
+
+        foreach ($orders as $order) {
+            $order->receipt = Receipt::where('id', $order->receipt_id)->first()->file ?? null;
+            $order->invoice = Receipt::where('id', $order->invoice_id)->first()->file ?? null;
+            $order->salesman = $this->getSalesmanNameById($order->salesman);
+        }
+
+        return view('orders.shippedOrders', compact('orders'));
+    }
+
+    public function shippedOrder($id)
+    {
+        $user = Auth::user();
+
+        $order = Order::where('id', $id)->first();
+        $order->shipped = 1;
+        $order->save();
+
+        $clientUser = Customer::where('id', $order->client_id)
+            ->select([
+                'ownerID','id','name'
+            ])->first();
+
+        $message = new Message();
+        $message->sender_id = $user->id;
+        $message->receiver_id = $clientUser->id;
+        $message->text = "A sua encomenda nº " . $order->id ." do estabelecimento " . $clientUser->name . " foi expedida. Obrigado ";
+        $message->type = 5;
+        $message->viewed = 0;
+        $message->save();
+
+        if ($user->userType == 5) {
+            $orders = Order::from(Order::alias('o'))
+                ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
+                ->where('o.processed', 1)
+                ->select([
+                    'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
+                    'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
+                ])
+                ->orderBy('o.id', 'DESC')->get();
+        } else if ($user->userType == 1) {
+            $orders = Order::from(Order::alias('o'))
+                ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
+                ->where('c.salesman', $user->userTypeID)
+                ->where('o.processed', 1)
+                ->select([
+                    'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
+                    'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
+                ])
+                ->orderBy('o.id', 'DESC')->get();
+        }
+
+        return redirect('/processedOrders');
+    }
+
+    public function unshippedOrder($id)
+    {
+        $order = Order::where('id', $id)->first();
+        $user = Auth::user();
+        $order->shipped = null;
+        $order->save();
+
+        $clientUser = Customer::where('id', $order->client_id)
+            ->select([
+                'ownerID','id','name'
+            ])->first();
+
+        if ($user->userType == 5) {
+            $orders = Order::from(Order::alias('o'))
+                ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
+                ->where('o.processed', 1)
+                ->select([
+                    'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
+                    'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
+                ])
+                ->orderBy('o.id', 'DESC')->get();
+        } else if ($user->userType == 1) {
+            $orders = Order::from(Order::alias('o'))
+                ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
+                ->where('c.salesman', $user->userTypeID)
+                ->where('o.processed', 1)
+                ->select([
+                    'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
+                    'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
+                ])
+                ->orderBy('o.id', 'DESC')->get();
+        }
+
+        return redirect('/processedOrders');
     }
 
     public function showOrdersByClient($id)
@@ -382,8 +510,8 @@ class ProductController extends Controller
                 ->where('status', 'waiting_payment')
                 ->where('receipt_id', '=', null)
                 ->select([
-                    'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                    'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
+                    'o.id', 'o.client_id', 'o.cart_id', 'o.total','o.shipped', 'o.totaliva', 'o.processed',
+                    'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status','o.status_salesman', 'o.invoice_id'
                 ])
                 ->orderBy('o.id', 'DESC')->get();
         } else if ($user->userType == 1) {
@@ -394,8 +522,8 @@ class ProductController extends Controller
                 ->where('c.salesman', $user->userTypeID)
                 ->where('receipt_id', '=', null)
                 ->select([
-                    'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                    'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
+                    'o.id', 'o.client_id', 'o.cart_id', 'o.total','o.shipped', 'o.totaliva', 'o.processed',
+                    'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status','o.status_salesman', 'o.invoice_id'
                 ])
                 ->orderBy('o.id', 'DESC')->get();
         } else {
@@ -405,8 +533,8 @@ class ProductController extends Controller
                 ->where('status', 'waiting_payment')
                 ->where('receipt_id', '=', null)
                 ->select([
-                    'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                    'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
+                    'o.id', 'o.client_id', 'o.cart_id', 'o.total','o.shipped', 'o.totaliva', 'o.processed',
+                    'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status','o.status_salesman', 'o.invoice_id'
                 ])
                 ->orderBy('o.id', 'DESC')->get();
         }
@@ -416,7 +544,7 @@ class ProductController extends Controller
             $order->invoice = Receipt::where('id', $order->invoice_id)->first()->file ?? null;
         }
 
-        return view('orders.unPaidOrders', compact('orders'));
+        return view('orders.unPaidOrders', compact('orders','user'));
     }
 
     public function showHistoryOrders()
@@ -575,21 +703,6 @@ class ProductController extends Controller
         $message->viewed = 0;
         $message->save();
 
-        $salesPayment = new SalesPayment;
-        if ($user->userType == 5) {
-            $salesPayment->admin_id = $user->id;
-            $salesPayment->order_id = $order->id;
-            $salesPayment->value = $order->total;
-            $salesPayment->delivered = 0;
-            $salesPayment->save();
-        } else {
-            $salesPayment->sales_id = $user->sales_id;
-            $salesPayment->order_id = $order->id;
-            $salesPayment->value = $order->total;
-            $salesPayment->delivered = 0;
-            $salesPayment->save();
-        }
-
         if ($user->userType == 5) {
             $orders = Order::from(Order::alias('o'))
                 ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
@@ -630,7 +743,7 @@ class ProductController extends Controller
         return redirect('/processedOrders');
     }
 
-    public function semiPayOrder(Request $request)
+    /*public function semiPayOrder(Request $request)
     {
         $inputs = $request->all();
         $order = Order::where('id', $inputs['id'])->first();
@@ -678,7 +791,7 @@ class ProductController extends Controller
         }
 
         return redirect('/processedOrders');
-    }
+    }*/
 
     public function printOrder($id, $type = 'single')
     {
@@ -926,5 +1039,14 @@ class ProductController extends Controller
         $order = Order::where('id',$request->id)->delete();
 
         return redirect()->to('/orders');
+    }
+
+    private function getSalesmanNameById($salesman)
+    {
+        $salesmanName = Salesman::where('id',$salesman)
+            ->select([
+                'name'
+            ])->first();
+        return $salesmanName->name;
     }
 }

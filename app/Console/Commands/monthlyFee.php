@@ -51,7 +51,7 @@ class monthlyFee extends Command
                 $order->cart_id=null;
                 $order->totaliva=$order->total*1.23;
                 $order->processed=0;
-                $order->status='Waiting Payment';
+                $order->status='waiting_payment';
                 $order->save();
             }
         }

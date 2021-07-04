@@ -1,0 +1,76 @@
+.panel {
+    border: none;
+    box-shadow: 0 8px 5px rgba(0, 0, 0, 0.12);
+    background-color: #fff;
+}
+
+table.customTable {
+    width: 25%;
+    background-color: #FFFFFF;
+    border-collapse: collapse;
+    border-width: 1px;
+    border-color: var(--main-color);
+    border-style: solid;
+    color: #000000;
+    margin-bottom: 30px;
+    text-align: center
+}
+
+table.customTable td, table.customTable th {
+    border-width: 1px;
+    border-color: var(--main-color);
+    border-style: solid;
+    padding: 6px;
+    width: 50%;
+}
+
+table.customTable thead {
+    background-color: var(--main-color);
+    color: #E5E1E6;
+    width: 25%;
+    font-size: 16px;
+
+}
+
+
+.divChart1 {
+    width: 25%;
+    height: 25%;
+    margin-top: 20px;
+    float: right;
+
+}
+
+.anychart-credits {
+    display: none;
+}
+
+table.customTableAg {
+    width: 70%;
+    background-color: #FFFFFF;
+    border-collapse: collapse;
+    border-width: 1px;
+    border-color: var(--main-color);
+    border-style: solid;
+    color: #000000;
+    margin-bottom: 30px;
+    text-align: center;
+    float: right;
+
+}
+
+table.customTableAg td, table.customTableAg th {
+    border-width: 1px;
+    border-color: var(--main-color);
+    border-style: solid;
+    padding: 6px;
+    width: 14.5%;
+}
+
+table.customTableAg thead {
+    background-color: var(--main-color);
+    color: #E5E1E6;
+    width: 25%;
+    font-size: 16px;
+
+}
