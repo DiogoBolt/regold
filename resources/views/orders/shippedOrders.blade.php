@@ -22,7 +22,7 @@
                 </a>
         
                 <div class="collapse" id="collapseFilter">
-                    <form action="/processedOrders/filter" method="GET" id="filter-form">
+                    <form action="/shippedOrders/filter" method="GET" id="filter-form">
                         <div class="card card-body">
                             <label for="client-filter">Cliente</label>
                             <input type="text" id="client-filter" class="form-control" name="client">

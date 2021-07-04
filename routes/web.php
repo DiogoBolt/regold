@@ -282,6 +282,8 @@ Route::group(['middleware' => ['backoffice']], function () {
     Route::post('/orders/semipay', 'ProductController@semiPayOrder');
     Route::get('/orders/filter/q', 'ProductController@filterOrders');
     Route::get('/processedOrders/filter', 'ProductController@filterProcessedOrders');
+    Route::get('/shippedOrders/filter', 'ProductController@filterShippedOrders');
+    Route::get('/historyOrders/filter', 'ProductController@filterHistoryOrders');
     Route::get('/orders/shipped/{id}', 'ProductController@shippedOrder');
     Route::get('/orders/unshipped/{id}', 'ProductController@unshippedOrder');
 

@@ -286,8 +286,9 @@ class ProductController extends Controller
         $user = Auth::user();
         $filteredOrders = Order::from(Order::alias('o'))
             ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
-            ->where('receipt_id', '=', null)
-            ->where('processed', 1)
+            ->where('o.processed', 1)
+            ->where('o.shipped', 0)
+            ->where('o.status','=','waiting_payment')
             ->select([
                 'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
                 'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
@@ -327,6 +328,104 @@ class ProductController extends Controller
         $orders = $filteredOrders->orderBy('o.id', 'DESC')->paginate(25);
 
         return view('orders.processedOrders', compact('orders'));
+    }
+
+    public function filterHistoryOrders(Request $request)
+    {
+        $user = Auth::user();
+        $filteredOrders = Order::from(Order::alias('o'))
+            ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
+            ->where('o.processed', 1)
+            ->where('o.shipped', 1)
+            ->where('o.status','=','paid')
+            ->select([
+                'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
+                'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
+            ]);
+
+        /*  if ($user->userType = 4) {
+              $filteredOrders->where('c.salesman', $user->sales_id);
+          }*/
+
+        if ($request->filled('client')) {
+            $filteredOrders->where('c.name', 'like', '%' . $request->client . '%');
+        }
+
+        if ($request->filled('payment_method')) {
+            $filteredOrders->where('c.payment_method', '=', $request->payment_method);
+        }
+
+        if ($request->filled('status')) {
+            $filteredOrders->where('o.status', '=', $request->status);
+        }
+
+        if ($request->filled('start_date') && $request->filled('end_date')) {
+            $start = $request->start_date;
+            $end = $request->end_date;
+
+            $filteredOrders->whereBetween('o.created_at', [$start, $end]);
+
+        } else if ($request->filled('start_date')) {
+
+            $filteredOrders->where('o.created_at', '>=', $request->start_date);
+
+        } else if ($request->filled('end_date')) {
+
+            $filteredOrders->where('o.created_at', '<=', $request->end_date);
+        }
+
+        $orders = $filteredOrders->orderBy('o.id', 'DESC')->paginate(25);
+
+        return view('orders.historyOrders', compact('orders'));
+    }
+
+    public function filterShippedOrders(Request $request)
+    {
+        $user = Auth::user();
+        $filteredOrders = Order::from(Order::alias('o'))
+            ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
+            ->where('o.processed', 1)
+            ->where('o.shipped', 1)
+            ->where('o.shipped','=','waiting_payment')
+            ->select([
+                'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
+                'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
+            ]);
+
+        /*  if ($user->userType = 4) {
+              $filteredOrders->where('c.salesman', $user->sales_id);
+          }*/
+
+        if ($request->filled('client')) {
+            $filteredOrders->where('c.name', 'like', '%' . $request->client . '%');
+        }
+
+        if ($request->filled('payment_method')) {
+            $filteredOrders->where('c.payment_method', '=', $request->payment_method);
+        }
+
+        if ($request->filled('status')) {
+            $filteredOrders->where('o.status', '=', $request->status);
+        }
+
+        if ($request->filled('start_date') && $request->filled('end_date')) {
+            $start = $request->start_date;
+            $end = $request->end_date;
+
+            $filteredOrders->whereBetween('o.created_at', [$start, $end]);
+
+        } else if ($request->filled('start_date')) {
+
+            $filteredOrders->where('o.created_at', '>=', $request->start_date);
+
+        } else if ($request->filled('end_date')) {
+
+            $filteredOrders->where('o.created_at', '<=', $request->end_date);
+        }
+
+        $orders = $filteredOrders->orderBy('o.id', 'DESC')->paginate(25);
+
+        return view('orders.shippedOrders', compact('orders'));
     }
 
     public function showProcessedOrders()
