@@ -126,7 +126,7 @@
                                         -----Menu-----
                                     </a>
                                 </li>--}}
-                                <li>
+                                {{--<li>
                                     <a >
                                         Estatísticas
                                     </a>
@@ -140,7 +140,7 @@
                                     <a >
                                         Agenda
                                     </a>
-                                </li>
+                                </li>--}}
                             @endif
                             {{--@if(Auth::user()->userType == 5||1)
                                 <li>
