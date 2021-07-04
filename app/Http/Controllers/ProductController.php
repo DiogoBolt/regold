@@ -384,6 +384,7 @@ class ProductController extends Controller
             $orders = Order::from(Order::alias('o'))
                 ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
                 ->where('o.shipped',1)
+                ->where('o.status', 'waiting_payment')
                 ->select([
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
                     'o.receipt_id', 'o.created_at', 'c.name', 'c.salesman','c.payment_method','c.regoldiID', 'o.status', 'o.invoice_id'
@@ -394,6 +395,7 @@ class ProductController extends Controller
                 ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
                 ->where('c.salesman', $user->userTypeID)
                 ->where('o.shipped', 1)
+                ->where('o.status', 'waiting_payment')
                 ->select([
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
                     'o.receipt_id', 'o.created_at', 'c.name', 'c.salesman','c.payment_method','c.regoldiID', 'o.status', 'o.invoice_id'
@@ -403,6 +405,7 @@ class ProductController extends Controller
             $orders = Order::from(Order::alias('o'))
                 ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
                 ->where('o.shipped', 1)
+                ->where('o.status', 'waiting_payment')
                 ->select([
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
                     'o.receipt_id', 'o.created_at', 'c.name', 'c.salesman','c.payment_method','c.regoldiID', 'o.status', 'o.invoice_id'
