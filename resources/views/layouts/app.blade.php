@@ -121,11 +121,11 @@
                                 </a>
                             </li>
                             @if(Auth::user()->userType == 1)
-                                <li>
+                                {{--<li>
                                     <a href="/homePageSales">
                                         -----Menu-----
                                     </a>
-                                </li>
+                                </li>--}}
                                 <li>
                                     <a >
                                         Estatísticas
