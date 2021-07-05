@@ -156,8 +156,14 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             type: "POST",
-            url: '/products/hidden'+'/'+id
-        }).done(window.location.reload());
+            url: '/products/hidden'+'/'+id,
+            success: function(result) {
+                window.location.reload()
+            },
+            error: function(result) {
+                alert('error');
+            }
+        });
     }
     function showProduct(id) {
         $.ajax({
@@ -165,7 +171,13 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             type: "POST",
-            url: '/products/show'+'/'+id
+            url: '/products/show'+'/'+id,
+            success: function(result) {
+                window.location.reload()
+            },
+            error: function(result) {
+                alert('error');
+            }
         }).done(window.location.reload());
     }
 
