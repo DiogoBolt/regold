@@ -57,10 +57,9 @@
                     <tr>
                         <th>Cliente</th>
                         <th>ID Regoldi</th>
-                        <th>Total</th>
+                        <th>Total s/iva</th>
+                        <th>Total c/iva</th>
                         <th>Estado</th>
-                        <th>Fatura</th>
-                        <th>Recibo</th>
                         <th>Detalhes</th>
                     </tr>
                     @foreach($orders as $order)
@@ -69,8 +68,9 @@
                                 <td><a href="/clients/{{$order->client_id}}">{{$order->name}}</a></td>
                                 <td>{{$order->regoldiID}}</td>
                                 <td>{{number_format($order->total,2)}}€</td>
+                                <td>{{number_format($order->total+$order->totaliva,2)}}€</td>
                                 <td>{{$order->status}}</td>
-                                @if($order->invoice_id == null)
+                                {{--@if($order->invoice_id == null)
                                     <td class="form-td">
                                     <form action="/orders/attachInvoice" class="order-form" method="post" enctype="multipart/form-data">
                                         {{ csrf_field() }}
@@ -87,9 +87,9 @@
                                     <td class="form-td">
                                         <a href="{{asset('uploads/' . $order->client_id . '/' . $order->invoice)}}" class="file-link"><strong>Visualizar Factura</strong></a>
                                     </td>
-                                @endif
+                                @endif--}}
 
-                                @if($order->receipt_id == null)
+                                {{--@if($order->receipt_id == null)
                                     <td class="form-td">
                                         <form action="/orders/attachReceipt" class="order-form" method="post" enctype="multipart/form-data">
                                             {{ csrf_field() }}
@@ -106,8 +106,8 @@
                                     <td class="form-td">
                                         <a href="{{asset('uploads/' . $order->client_id . '/' . $order->receipt)}}" class="file-link"><strong>Visualizar Recibo</strong></a>
                                     </td>
-                                @endif
-                                <td><a href="/orders/{{$order->id}}">Detalhes</a></td>
+                                @endif--}}
+                                <td><a href="/orders/{{$order->id}}">Ver Encomenda</a></td>
                                 </tr>
                     @endforeach
 
