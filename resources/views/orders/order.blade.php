@@ -90,6 +90,9 @@
                         <div class="form-group">
                             <b style="color:red">Nota de encomenda: </b> <b>{{$order->note}}</b>
                         </div>
+                        <div class="form-group">
+                            <b style="color:red">Nota de transporte: </b> <b>{{$order->transport_note}}</b>
+                        </div>
                     <div class="order-info">
                         <h4>Total : {{number_format($order->total,2)}}€</h4>
                         @if($serHaccp!=0)

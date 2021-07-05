@@ -636,6 +636,7 @@ class FrontofficeController extends Controller
         $order->status_salesman = 0;
         $order->external_id = uniqid();
         $order->note = $inputs['order_note'];
+        $order->transport_note = $client->transport_note;
         $order->save();
 
         $total = $order->total;
