@@ -1151,4 +1151,19 @@ class ProductController extends Controller
             ])->first();
         return $salesmanName->name;
     }
+
+    public function hiddenProduct($id){
+
+        $product = Product::where('id',$id)->first();
+        $product->hidden = 1;
+        $product-> save();
+
+    }
+    public function showProduct($id){
+
+        $product = Product::where('id',$id)->first();
+        $product->hidden = null;
+        $product-> save();
+
+    }
 }

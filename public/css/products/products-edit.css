@@ -56,6 +56,26 @@
   border-color: rgb(235, 72, 72);
 }
 
+.btn-hidden {
+  margin-top: 10px;
+  display: inline-block;
+  color: #E5E1E6;
+  background-color: var(--main-color);
+  text-align: center;
+
+  width: 100%;
+  border: 1px solid transparent;
+  padding: 6px 12px;
+}
+
+.btn-hidden:hover {
+  text-decoration: none;
+  color: var(--main-color);
+  background-color: white;
+  border: 1px solid var(--main-color);
+
+}
+
 @media (max-width: 767px) {
   .product-img {
     width: 100%;
