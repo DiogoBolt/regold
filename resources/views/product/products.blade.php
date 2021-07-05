@@ -39,12 +39,13 @@
                   
                         <div class="product-info__footer">
                             {{$product->details}}
+                            @if($product->hidden==1)
+                            <h5 style="color: red">Sem stock</h5>
+                            @endif
                         </div>
                     </div>
-                       
                 </div>
             @endforeach
-            
         </div>
     </div>
 

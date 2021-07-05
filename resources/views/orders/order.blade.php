@@ -98,9 +98,12 @@
                         <h5>IVA(23) : {{number_format($order->total * 0.23,2)}}€</h5>
                         <h5>Total + IVA(23) : {{number_format($order->total * 1.23,2)}}€</h5>
                     </div>
-                    <a href="/orders/process/{{$order->id}}" class="btn btn-process">
-                        <strong>Processar</strong>
-                    </a>
+                        @if($order->processed == 1)
+                        @else
+                            <a href="/orders/process/{{$order->id}}" class="btn btn-process">
+                                <strong>Lançar</strong>
+                            </a>
+                        @endif
 
                     <a href="/order/print/{{$order->id}}" target="_blank" class="btn btn-process">
                         <strong>Imprimir</strong>

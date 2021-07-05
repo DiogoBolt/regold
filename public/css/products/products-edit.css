@@ -57,21 +57,21 @@
 }
 
 .btn-hidden {
-  margin-top: 10px !important;
-  display: inline-block !important;
-  color: #E5E1E6 !important;
-  background-color: var(--main-color) !important;
-  text-align: center !important;
-  width: 100% !important;
-  border: 1px solid transparent !important;
-  padding: 6px 12px !important;
+  margin-top: 10px;
+  display: inline-block;
+  color: #E5E1E6;
+  background-color: var(--main-color);
+  text-align: center;
+  width: 100%;
+  border: 1px solid transparent;
+  padding: 6px 12px;
 }
 
 .btn-hidden:hover {
-  text-decoration: none !important;
-  color: var(--main-color) !important;
-  background-color: white !important;
-  border: 1px solid var(--main-color) !important;
+  text-decoration: none;
+  color: var(--main-color);
+  background-color: white;
+  border: 1px solid var(--main-color);
 
 }
 
