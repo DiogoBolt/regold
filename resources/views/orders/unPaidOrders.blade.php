@@ -72,19 +72,19 @@
                                     </td>
                                 @endif--}}
                                 <td><a href="/orders/{{$order->id}}">Detalhes</a></td>
-                                @if($user->userType==1)
+                                {{--@if($user->userType==1)--}}
                                 <@if($order->status_salesman == 0)
-                                    <td><a href="/salesman/orderPay/{{$order->id}}" onclick="return confirm('Tem a certeza?')">Por liquidar</a></td>
+                                    <td><a href="/salesman/orderPay/{{$order->id}}" onclick="return confirm('Tem a certeza?')">Liquidar</a></td>
                                 @else
                                     <td><a href="/salesman/orderUnpay/{{$order->id}}" onclick="return confirm('Tem a certeza?')">Pago</a></td>
                                 @endif
-                                @else
+                                {{--@else
                                     @if($user->status=='paid')
                                         <td>Pago</td>
                                     @else
                                         <td>Não Pago</td>
                                     @endif
-                                @endif
+                                @endif--}}
                                 @if($user->shipped==0)
                                     <td>Por expedir</td>
                                 @else

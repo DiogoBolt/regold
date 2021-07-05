@@ -273,18 +273,16 @@ class SalesmanController extends Controller
             ])->first();
 
         $salesPayment = new SalesPayment;
-        if ($user->userType == 5) {
-            $salesPayment->admin_id = $user->id;
-            $salesPayment->order_id = $order->id;
-            $salesPayment->value = number_format($order->total+$order->totaliva,2);
-            $salesPayment->delivered = 0;
-            $salesPayment->save();
-        } else {
+
+        if($user->userType==1){
             $salesPayment->sales_id = $user->userTypeID;
             $salesPayment->order_id = $order->id;
             $salesPayment->value = number_format($order->total+$order->totaliva,2);
             $salesPayment->delivered = 0;
             $salesPayment->save();
+        }else{
+            $order->status='paid';
+            $order->save();
         }
 
         $message = new Message;
