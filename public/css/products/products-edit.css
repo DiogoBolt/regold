@@ -57,10 +57,10 @@
 }
 
 .btn-hidden {
-  margin-top: 10px;
+  margin-top: 10px ;
   display: inline-block;
   color: #E5E1E6;
-  background-color: var(--main-color);
+  background-color: #c1c10b;
   text-align: center;
   width: 100%;
   border: 1px solid transparent;
@@ -69,9 +69,9 @@
 
 .btn-hidden:hover {
   text-decoration: none;
-  color: var(--main-color);
+  color: #c1c10b;
   background-color: white;
-  border: 1px solid var(--main-color);
+  border: 1px solid #c1c10b;
 
 }
 

@@ -19,7 +19,7 @@
             <div class="panel">
                 <div class="panel-body">
                     <div>
-                        <img class="img-responsive add-img" src="/img/navbar/logoindexcolor.png"/>
+                        <img class="img-responsive add-img" src="/img/navbar/logoRegolfood.png"/>
                     </div>
                     <form action="/products/add"  method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
