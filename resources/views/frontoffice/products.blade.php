@@ -32,7 +32,7 @@
             @foreach($products as $product)
                 @if($product->hidden == 1)
                 <div class="product">
-                    <div class="product-img" style="filter: grayscale(1);background-image: url('/uploads/products/{{$product->file}}')">
+                    <div class="product-img-hidden" style="background-image: url('/uploads/products/{{$product->file}}')">
                         <a href="/frontoffice/product/{{$product->id}}"></a>
                         <span class="product-img__price">
                             @switch($product->pvp)
@@ -55,9 +55,9 @@
                         </span>
                     </div>
                     <div class="product-desc">
-                        <h2 style="filter: grayscale(1);" class="product-desc__title">{{$product->name}}</h2>
+                        <h2 class="product-desc__title">{{$product->name}}</h2>
                         <h6 style="color: red" class="product-desc__title">SEM STOCK</h6>
-                        <div style="filter: grayscale(1);" class="product-desc__txt">
+                        <div class="product-desc__txt">
                             {{$product->details}}
                         </div>
                     </div>

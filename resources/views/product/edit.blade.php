@@ -89,9 +89,9 @@
                         <div>
                             <button class="btn btn-edit" type="submit">Editar</button>
                             @if($product->hidden == 1)
-                                <button onclick="showProduct({{$product->id}})" class="btn btn-hidden" >MOSTRAR PRODUTO</button>
+                                <button onclick="showProduct({{$product->id}})" class="btn-hidden" >MOSTRAR PRODUTO</button>
                             @else
-                                <button onclick="hiddenProduct({{$product->id}})" class="btn btn-hidden" >OCULTAR PRODUTO</button>
+                                <button onclick="hiddenProduct({{$product->id}})" class="btn-hidden" >OCULTAR PRODUTO</button>
                             @endif
                             <button class="btn btn-del" type="button" data-toggle="modal" data-target="#deleteModal">Apagar</button>
                         </div>
