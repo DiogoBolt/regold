@@ -3,7 +3,8 @@
 @section('styles')
     <!-- Custom CSS -->
     <link href="{{ asset('css/salesman/homepage.css') }}" rel="stylesheet">
-    <script src="https://cdn.anychart.com/releases/8.0.0/js/anychart-base.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js%22%3E"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.0.0-rc.1/chartjs-plugin-datalabels.min.js" integrity="sha512-+UYTD5L/bU1sgAfWA0ELK5RlQ811q8wZIocqI7+K0Lhh8yVdIoAMEs96wJAIbgFvzynPm36ZCXtkydxu1cs27w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 @endsection
 
 @section('content')
@@ -13,13 +14,16 @@
         <img src="{{ asset('img/encomendas.jpg') }}" />
     </div>
 </div>
+<div  class="container">
+    <div  class="row">
+            <div  class="panel">
+                <div  class="panel-body table-responsive">
 
-            <div class="panel-body table-responsive">
+                {{--<div class="divChart1">
+                    <canvas id="myChart"></canvas>
+                </div>--}}
 
-                <div id="chart1" class="divChart1"></div>
-                <div id="chart2" class="divChart1"></div>
-                <div id="chart3" class="divChart1"></div>
-                <table class="customTable">
+                <table class="table">
                     <thead>
                     <tr>
                         <th colspan="2">ENCOMENDAS</th>
@@ -28,32 +32,31 @@
                     <tbody>
                     <tr>
                         <td>CLIENTES SP</td>
-                        <td><a style="color: red">{{$clients_spOrder}}</a> / <a>{{$clients_sp}}</a></td>
+                        <td><a href="/clients" style="color: red">{{$clients_spOrder}}</a> / <a>{{$clients_sp}}</a></td>
                     </tr>
                     <tr>
                         <td>CLIENTES SP Free</td>
-                        <td><a style="color: red">{{$clients_spfreeOrder}}</a> / <a>{{$clients_spfree}}</a></td>
+                        <td><a href="/clients" style="color: red">{{$clients_spfreeOrder}}</a> / <a>{{$clients_spfree}}</a></td>
                     </tr>
                     <tr>
                         <td>CLIENTES S</td>
-                        <td><a style="color: red">{{$clients_sOrder}}</a> / <a>{{$clients_s}}</a></td>
+                        <td><a href="/clients" style="color: red">{{$clients_sOrder}}</a> / <a>{{$clients_s}}</a></td>
                     </tr>
                     <tr>
                         <td>CLIENTES ST</td>
-                        <td><a style="color: red">{{$clients_stOrder}}</a> / <a>{{$clients_st}}</a></td>
+                        <td><a href="/clients" style="color: red">{{$clients_stOrder}}</a> / <a>{{$clients_st}}</a></td>
                     </tr>
                     <tr>
                         <td>CLIENTES T</td>
-                        <td><a style="color: red">{{$clients_tOrder}}</a> / <a>{{$clients_t}}</a></td>
+                        <td><a href="/clients" style="color: red">{{$clients_tOrder}}</a> / <a>{{$clients_t}}</a></td>
                     </tr>
                     <tr>
                         <td>TOTAL</td>
-                        <td><a style="color: red">{{$clientsOrder}}</a> / <a>{{$clients}}</a></td>
+                        <td><a href="/clients" style="color: red">{{$clientsOrder}}</a> / <a>{{$clients}}</a></td>
                     </tr>
                     </tbody>
                 </table>
-
-                <table class="customTableAg">
+                <table  id="table" class="table">
                     <thead>
                     <tr>
                         <td>Nome</td>
@@ -78,7 +81,8 @@
                     </tbody>
                 </table>
 
-                <table class="customTable">
+
+                <table class="table">
                     <thead>
                     <tr>
                         <td>VALOR COMISSÃO ACUMULADO</td>
@@ -92,92 +96,58 @@
                     </tr>
                     </tbody>
                 </table>
-
-
+                </div>
             </div>
+        </div>
+</div>
 
 
 
-<script>
 
 
-    anychart.onDocumentReady(function() {
-        // set the data
-        var data = {
-            /*header: ["Name", "Death toll"],*/
+    <script>
+    window.onload = function (){
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Red', 'Blue'],
+                datasets: [{
+                    label: '# of Votes',
+
+                    data: [12, 19],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+
+                    ],
+                    borderWidth: 1,
+                    barPercentage: 0.2,
+                }]
+            },
+            plugins: [ChartDataLabels],
             options: {
+                plugins: {
+                    legend: {
+                        display: false
+                    },
 
-            },
-            chart: {
-                type: 'bar',
-                height: 10000,
-                stacked: true,
-                stackType: '100%'
-            },
-            credits: {
-                enabled: false
-            },
-            rows: [
-                ["Real", 15000],
-                ["Objetivo", 87000],
-            ]};
+                },
 
-        // create the chart
-        var chart = anychart.column();
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
 
-        // add data
-        chart.data(data);
-
-        // draw
-        chart.container("chart1");
-        chart.draw();
-    });
-
-    anychart.onDocumentReady(function() {
-        // set the data
-        var data = {
-            /*header: ["Name", "Death toll"],*/
-            credits: {
-                enabled: false
-            },
-            rows: [
-                ["Real", 15000],
-                ["Objetivo", 87000],
-            ]};
-
-        // create the chart
-        var chart = anychart.column();
-
-        // add data
-        chart.data(data);
-
-        // draw
-        chart.container("chart2");
-        chart.draw();
-    });
-
-    anychart.onDocumentReady(function() {
-        // set the data
-        var data = {
-            /*header: ["Name", "Death toll"],*/
-            credits: {
-                enabled: false
-            },
-            rows: [
-                ["Real", 15000],
-                ["Objetivo", 87000],
-            ]};
-
-        // create the chart
-        var chart = anychart.column();
-
-        // add data
-        chart.data(data);
-
-        // draw
-        chart.container("chart3");
-        chart.draw();
-    });
+                }
+            }
+        });
+    }
 
 </script>
 

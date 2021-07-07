@@ -1,40 +1,54 @@
 .panel {
     border: none;
-    box-shadow: 0 8px 5px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 8px 5px rgba(0, 0, 0, 0.12) !important;
     background-color: #fff;
 }
 
-table.customTable {
+
+
+
+table.table {
     width: 25%;
     background-color: #FFFFFF;
-    border-collapse: collapse;
-    border-width: 1px;
-    border-color: var(--main-color);
-    border-style: solid;
     color: #000000;
-    margin-bottom: 30px;
-    text-align: center
+    margin-bottom: 30px !important;
+    text-align: center;
 }
 
-table.customTable td, table.customTable th {
+table.table td, table.table th {
     border-width: 1px;
-    border-color: var(--main-color);
-    border-style: solid;
     padding: 6px;
-    width: 50%;
 }
 
-table.customTable thead {
+table.table thead {
     background-color: var(--main-color);
     color: #E5E1E6;
     width: 25%;
-    font-size: 16px;
+    font-size: 14px;
+    text-align: center;
 
 }
 
+:root {
+    --main-color: #153e35;
+    --secondary-green: darkgreen;
+    --light-green: #ddf0de;
+}
+
+/*#table{
+    float: right;
+    width: 72%;
+}*/
+
+@media (min-width: 992px) {
+    #table{
+        float: right;
+        width: 74%;
+    }
+}
 
 .divChart1 {
-    width: 25%;
+    width: 75%;
     height: 25%;
     margin-top: 20px;
     float: right;
