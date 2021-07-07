@@ -9,49 +9,93 @@
 
     <div class="container">
         <div class="divChart1">
-            <canvas id="myChart"></canvas>
+            <canvas  id="chart-01" width="700" height="400"  style="background-color:rgba(255,252,252,1);border-radius:0px;width:700px;height:400px;padding-left:0px;padding-right:0px;padding-top:0px;padding-bottom:0px"></canvas>
         </div>
     </div>
 
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.0.0-rc.1/chartjs-plugin-datalabels.min.js" integrity="sha512-+UYTD5L/bU1sgAfWA0ELK5RlQ811q8wZIocqI7+K0Lhh8yVdIoAMEs96wJAIbgFvzynPm36ZCXtkydxu1cs27w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<script>
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
+<script> window.onload = function MoreChartOptions(){}
+    var ChartData = {
+        labels : ["January","February","NMarc",],
+        datasets : [
+            {
+                data : [65,8,2,],
+                backgroundColor :'#0a630a',
+                borderColor : 'rgba(0,0,0,0.5)',
+                label:"2013"},
+
+            {
+                data : [21,48,3,],
+                backgroundColor :'rgba(93,176,37,0.68)',
+                borderColor : '#aaaaaa',
+                label:"2014"},
+
+        ]
+    };
+    ChartOptions= {
+        responsive:false,
+        layout:{padding:{top:12,left:60,bottom:12,},},
+        scales: {
+            xAxes:[{
+                gridLines:{color:'rgba(255,252,252,0)',lineWidth:0,borderDash:[],},
+            }],
+
+            yAxes:[{
+                gridLines:{color:'rgba(255,252,252,0)',lineWidth:0,borderDash:[],},
+            }],
+        },plugins:{
+            datalabels:{display:true,
+                anchor:'end',
+                align:'end',
+                offset:1,
+                font:{
+                    style:' bold',},},
         },
-        plugins: [ChartDataLabels],
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-</script>
+        legend:{
+            labels:{
+                fontColor:'#000000',
+                boxWidth:39,
+                generateLabels: function(chart){
+                    return  chart.data.datasets.map( function( dataset, i ){
+                        return{
+                            text:dataset.label,
+                            lineCap:dataset.borderCapStyle,
+                            lineDash:[],
+                            lineDashOffset: 0,
+                            lineJoin:dataset.borderJoinStyle,
+                            fillStyle:dataset.backgroundColor,
+                            strokeStyle:dataset.borderColor,
+                            lineWidth:dataset.pointBorderWidth,
+                            lineDash:dataset.borderDash,
+                        }
+                    })
+                },
+
+            },
+        },
+
+        title:{
+            display:true,
+            text:'Chart Title',
+            fontColor:'#3498db',
+            fontSize:32,
+            fontStyle:' bold',
+        },
+        elements: {
+            arc: {
+            },
+            line: {
+            },
+            rectangle: {
+                borderWidth:0.01,
+            },
+        },
+        tooltips:{
+        },
+        hover:{
+            mode:'nearest',
+            animationDuration:400,
+        },
+    };
+    DrawTheChart(ChartData,ChartOptions,"chart-01","bar");</script>

@@ -42,7 +42,7 @@ table.table thead {
 
 .divChart1 {
     width: 75%;
-    height: 25%;
+    height: auto;
     float: right;
     margin-bottom: 20px;
 }

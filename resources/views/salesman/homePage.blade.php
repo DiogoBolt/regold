@@ -3,10 +3,7 @@
 @section('styles')
     <!-- Custom CSS -->
     <link href="{{ asset('css/salesman/homepage.css') }}" rel="stylesheet">
-
-    <script src="https://cdn.anychart.com/releases/8.0.0/js/anychart-base.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.0.0-rc.1/chartjs-plugin-datalabels.min.js" integrity="sha512-+UYTD5L/bU1sgAfWA0ELK5RlQ811q8wZIocqI7+K0Lhh8yVdIoAMEs96wJAIbgFvzynPm36ZCXtkydxu1cs27w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
 
 @endsection
 
@@ -23,9 +20,7 @@
                 <div  class="panel-body table-responsive">
                     
                     <div class="divChart1">
-                        <canvas id="myChart1"></canvas>
-                        <canvas id="myChart2"></canvas>
-                        <canvas id="myChart3"></canvas>
+                        <canvas id="myChart" style="background-color:rgba(255,255,255,1.00);border-radius:0px; width:100%;height:50%;padding-left:0px;padding-right:0px;padding-top:0px;padding-bottom:0px"></canvas>
                     </div>
 
                     <table class="table">
@@ -114,121 +109,125 @@
 
     <script>
         window.onload = function () {
-            var ctx1 = document.getElementById('myChart1').getContext('2d');
-            var ctx2 = document.getElementById('myChart2').getContext('2d');
-            var ctx3 = document.getElementById('myChart3').getContext('2d');
-            var myChart1 = new Chart(ctx1, {
-                type: 'bar',
-                data: {
-                    labels: ['Red', 'Blue'],
-                    datasets: [{
-                        label: '# of Votes',
-
-                        data: [12, 19],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var data = {
+                "labels": [
+                    "Vendas",
+                    "Cobrança",
+                    "Clientes Novos"
+                ],
+                "datasets": [
+                    {
+                        "label": "Real",
+                        "backgroundColor": "#aaadff",
+                        "fill": true,
+                        "data": [
+                            "230",
+                            "250",
+                            "240"
                         ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-
-                        ],
-                        borderWidth: 1,
-                        barPercentage: 0.2,
-                    }]
-                },
-                plugins: [ChartDataLabels],
-                options: {
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-
+                        "borderColor": "#ffffff",
+                        "borderWidth": "1"
                     },
-                    scales: {
-                        y: {
-                            beginAtZero: true
+                    {
+                        "label": "Objetivo",
+                        "backgroundColor": "#407aaa",
+                        "fill": true,
+                        "data": [
+                            "200",
+                            "300",
+                            "280"
+                        ]
+                    }
+                ]
+            };
+            var options = {
+                "title": {
+                    "display": false,
+                    "text": "Ad Revenue Comparison 2014-2015",
+                    "position": "top",
+                    "fullWidth": true,
+                    "fontColor": "#aa7942",
+                    "fontSize": 16,
+                    "fontFamily": ""
+                },
+                "legend": {
+                    "display": true,
+                    "fullWidth": true,
+                    "position": "top",
+                    "labels": {
+                        "boxWidth": 50,
+                        "padding": 20
+                    }
+                },
+                "scales": {
+                    "yAxes": [
+                        {
+                            "ticks": {
+                                "beginAtZero": true,
+                                "display": true
+                            },
+                            "gridLines": {
+                                "display": false,
+                                "lineWidth": 2,
+                                "drawOnChartArea": true,
+                                "drawTicks": true,
+                                "tickMarkLength": 1,
+                                "offsetGridLines": true,
+                                "zeroLineColor": "#942192",
+                                "color": "#d6d6d6",
+                                "zeroLineWidth": 2
+                            },
+                            "scaleLabel": {
+                                "display": false,
+                                "labelString": "USD in Millions",
+                                "fontSize": 17
+                            },
+                            "display": true
+                        }
+                    ],
+                    "xAxes": {
+                        "0": {
+                            "ticks": {
+                                "display": true,
+                                "fontSize": 14,
+                                "fontStyle": "italic"
+                            },
+                            "display": true,
+                            "gridLines": {
+                                "display": false,
+                                "lineWidth": 2,
+                                "drawOnChartArea": false,
+                                "drawTicks": true,
+                                "tickMarkLength": 12,
+                                "zeroLineWidth": 2,
+                                "offsetGridLines": true,
+                                "color": "#942192",
+                                "zeroLineColor": "#942192"
+                            },
+                            "scaleLabel": {
+                                "fontSize": 16,
+                                "display": false,
+                                "fontStyle": "normal"
+                            }
                         }
                     }
-                }
-            });
-            var myChart2 = new Chart(ctx2, {
-                type: 'bar',
-                data: {
-                    labels: ['Red', 'Blue'],
-                    datasets: [{
-                        label: '# of Votes',
-
-                        data: [12, 19],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-
-                        ],
-                        borderWidth: 1,
-                        barPercentage: 0.2,
-                    }]
                 },
-                plugins: [ChartDataLabels],
-                options: {
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
+                "tooltips": {
+                    "enabled": true,
+                    "mode": "label",
+                    "caretSize": 10,
+                    "backgroundColor": "#00fa92"
                 }
-            });
-            var myChart3 = new Chart(ctx3, {
+            };
+
+            var myChart = new Chart(ctx, {
                 type: 'bar',
-                data: {
-                    labels: ['Red', 'Blue'],
-                    datasets: [{
-                        label: '# of Votes',
-
-                        data: [12, 19],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-
-                        ],
-                        borderWidth: 1,
-                        barPercentage: 0.2,
-                    }]
-                },
-                plugins: [ChartDataLabels],
-                options: {
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
+                data: data,
+                options: options
             });
+
         }
-
 
     </script>
 
