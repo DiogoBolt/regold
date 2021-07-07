@@ -50,10 +50,11 @@ table.table thead {
 .divChart1 {
     width: 75%;
     height: 25%;
-    margin-top: 20px;
     float: right;
-
+    margin-bottom: 20px;
 }
+
+
 
 .anychart-credits {
     display: none;
