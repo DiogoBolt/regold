@@ -4,9 +4,6 @@
     background-color: #fff;
 }
 
-
-
-
 table.table {
     width: 25%;
     background-color: #FFFFFF;
@@ -29,11 +26,7 @@ table.table thead {
 
 }
 
-:root {
-    --main-color: #153e35;
-    --secondary-green: darkgreen;
-    --light-green: #ddf0de;
-}
+
 
 /*#table{
     float: right;
