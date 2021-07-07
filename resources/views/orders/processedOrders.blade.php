@@ -62,7 +62,7 @@
                         <th>Vendedor</th>
                         <th>Total c/iva</th>
                         <th>Detalhes</th>
-                        <th>Pago</th>
+                       {{-- <th>Pago</th>--}}
                         <th>Expedir</th>
                     </tr>
                     @foreach($orders as $order)
@@ -109,11 +109,11 @@
                                     </td>
                                 @endif--}}
 
-                                @if($order->status != 'paid')
+                                {{--@if($order->status != 'paid')
                                     <td><a href="/orders/pay/{{$order->id}}" onclick="return confirm('Tem a certeza?')">Liquidar</a></td>
                                 @else
                                     <td><a href="/orders/unpay/{{$order->id}}" onclick="return confirm('Tem a certeza?')">Pago</a></td>
-                                @endif
+                                @endif--}}
                                 @if($order->shipped==1)
                                     <td><a href="/orders/unshipped/{{$order->id}}" onclick="return confirm('Tem a certeza?')">Expedida</a></td>
                                 @else

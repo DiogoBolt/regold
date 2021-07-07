@@ -88,6 +88,11 @@
                         </div>
                         <div>
                             <button class="btn btn-edit" type="submit">Editar</button>
+                            @if($product->hidden == 1)
+                                <button onclick="showProduct({{$product->id}})" class="btn-hidden" >MOSTRAR PRODUTO</button>
+                            @else
+                                <button onclick="hiddenProduct({{$product->id}})" class="btn-hidden" >OCULTAR PRODUTO</button>
+                            @endif
                             <button class="btn btn-del" type="button" data-toggle="modal" data-target="#deleteModal">Apagar</button>
                         </div>
                     </form>
@@ -144,5 +149,36 @@
         });
 
     }, false);
+
+    function hiddenProduct(id) {
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            url: '/products/hidden'+'/'+id,
+            success: function(result) {
+                window.location.reload()
+            },
+            error: function(result) {
+                alert('error');
+            }
+        });
+    }
+    function showProduct(id) {
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            url: '/products/show'+'/'+id,
+            success: function(result) {
+                window.location.reload()
+            },
+            error: function(result) {
+                alert('error');
+            }
+        }).done(window.location.reload());
+    }
 
 </script>

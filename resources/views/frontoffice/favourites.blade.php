@@ -52,8 +52,8 @@
                 </div>
             @endforeach
         @else
-            <h1> Ainda não possui nenhum produto adicionado aos favoritos. </h1>
-            <h1> Visite a nossa página de <a href="/frontoffice/categories">produtos</a>.</h1>
+            <h4 style="text-align: center;"> Ainda não possui nenhum produto adicionado aos favoritos. </h4>
+            <h4 style="text-align: center;"> Visite a nossa página de <a href="/frontoffice/categories">produtos</a>.</h4>
         @endif
 
     </div>

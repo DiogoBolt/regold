@@ -262,6 +262,9 @@ Route::group(['middleware' => ['backoffice']], function () {
     Route::get('/products/{cat}/{id}', 'ProductController@editProduct');
     Route::delete('/products/delete', 'ProductController@deleteProduct');
     Route::post('/products/edit', 'ProductController@editProductPost');
+    Route::post('/products/hidden/{id}', 'ProductController@hiddenProduct');
+    Route::post('/products/show/{id}', 'ProductController@showProduct');
+
     /*luis*/
     route::get('/billing','ProductController@showBilling');
 

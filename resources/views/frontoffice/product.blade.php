@@ -48,7 +48,11 @@
             <div class="product__body-main">
                 <form action="/frontoffice/products/addcart/" method="get">
                     {{ csrf_field() }}
-                    <button class="btn btn-add">Adicionar</button>
+                    @if($product->hidden==1)
+                        <button disabled class="btn btn-add">Adicionar</button>
+                    @else
+                        <button class="btn btn-add">Adicionar</button>
+                    @endif
                     <input value="{{$product->id}}" name="id" type="hidden" id="product-id">
                     <select name="amount" id="amount">
                         @for($i = 1; $i <= 20; $i++) <option value="{{ $i }}"> {{ $i }}</option>

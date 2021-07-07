@@ -16,6 +16,22 @@
   margin-right: auto;
 }
 
+.product-img-hidden {
+  position: relative;
+  width: 100%;
+  height: 150px;
+  background: no-repeat center center;
+  background-size: contain;
+  border: 5px solid #fff;
+  background-color: #fff;
+  box-shadow: 0 8px 5px #f38282;
+}
+.product-img-hidden a {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
 .product-img {
   position: relative;
   width: 100%;

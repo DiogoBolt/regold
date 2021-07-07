@@ -90,6 +90,9 @@
                         <div class="form-group">
                             <b style="color:red">Nota de encomenda: </b> <b>{{$order->note}}</b>
                         </div>
+                        <div class="form-group">
+                            <b style="color:red">Nota de transporte: </b> <b>{{$order->transport_note}}</b>
+                        </div>
                     <div class="order-info">
                         <h4>Total : {{number_format($order->total,2)}}€</h4>
                         @if($serHaccp!=0)
@@ -98,9 +101,12 @@
                         <h5>IVA(23) : {{number_format($order->total * 0.23,2)}}€</h5>
                         <h5>Total + IVA(23) : {{number_format($order->total * 1.23,2)}}€</h5>
                     </div>
-                    <a href="/orders/process/{{$order->id}}" class="btn btn-process">
-                        <strong>Processar</strong>
-                    </a>
+                        @if($order->processed == 1)
+                        @else
+                            <a href="/orders/process/{{$order->id}}" class="btn btn-process">
+                                <strong>Lançar</strong>
+                            </a>
+                        @endif
 
                     <a href="/order/print/{{$order->id}}" target="_blank" class="btn btn-process">
                         <strong>Imprimir</strong>
