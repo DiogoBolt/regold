@@ -36,10 +36,11 @@ table.customTable thead {
 .divChart1 {
     width: 25%;
     height: 25%;
-    margin-top: 20px;
     float: right;
-
+    margin-bottom: 20px;
 }
+
+
 
 .anychart-credits {
     display: none;
