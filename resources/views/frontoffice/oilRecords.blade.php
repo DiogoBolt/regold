@@ -47,9 +47,9 @@
                     <td>
                         <input class="input_insertProd" type="date" value={{$today}} id="record_date" name="record_date">
                         <label class="label-insertPro" for="equipment_name">Nome Equipamento</label>
-                        <input name="equipment_name" class="input_insertProd"/>
+                        <input required name="equipment_name" class="input_insertProd"/>
                         <label class="label-insertPro" for="equipment_number">NºEquipamento</label>
-                        <input  name="equipment_number" class="input_insertProd"/>
+                        <input required name="equipment_number" class="input_insertProd"/>
                     </td>
                 </tr>
                 <tr>
