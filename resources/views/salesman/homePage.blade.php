@@ -14,22 +14,112 @@
         <img src="{{ asset('img/encomendas.jpg') }}" />
     </div>
 </div>
-<div  class="container">
-    <div  class="row">
-            <div  class="panel">
-                <div  class="panel-body table-responsive">
-                    
-                    <div class="divChart1">
-                        <canvas id="myChart" style="background-color:rgba(255,255,255,1.00);border-radius:0px; width:100%;height:50%;padding-left:0px;padding-right:0px;padding-top:0px;padding-bottom:0px"></canvas>
-                    </div>
 
-                    <table class="table">
+<div  class="container">
+    <div class="homePage_container">
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th colspan="2">ENCOMENDAS</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr>
+                <td>CLIENTES SP</td>
+                <td><a href="/clients" style="color: red">{{$clients_spOrder}}</a> / <a>{{$clients_sp}}</a></td>
+            </tr>
+            <tr>
+                <td>CLIENTES SP Free</td>
+                <td><a href="/clients" style="color: red">{{$clients_spfreeOrder}}</a> / <a>{{$clients_spfree}}</a></td>
+            </tr>
+            <tr>
+                <td>CLIENTES S</td>
+                <td><a href="/clients" style="color: red">{{$clients_sOrder}}</a> / <a>{{$clients_s}}</a></td>
+            </tr>
+            <tr>
+                <td>CLIENTES ST</td>
+                <td><a href="/clients" style="color: red">{{$clients_stOrder}}</a> / <a>{{$clients_st}}</a></td>
+            </tr>
+            <tr>
+                <td>CLIENTES T</td>
+                <td><a href="/clients" style="color: red">{{$clients_tOrder}}</a> / <a>{{$clients_t}}</a></td>
+            </tr>
+            <tr>
+                <td>TOTAL</td>
+                <td><a href="/clients" style="color: red">{{$clientsOrder}}</a> / <a>{{$clients}}</a></td>
+            </tr>
+            </tbody>
+
+
+
+        </table>
+
+        <div class="chart">
+            <canvas id="myChart" ></canvas>
+        </div>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <td>VALOR COMISSÃO ACUMULADO</td>
+                <td>107.75€</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>VALOR COMISSÃO ESTIMADO</td>
+                <td>707.78€</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div style="overflow-x:auto;">
+            <table  id="table" class="table">
+                <thead>
+                <tr>
+                    <td>Nome</td>
+                    <td>Pessoa Contacto</td>
+                    <td>Contacto</td>
+                    <td>Localidade</td>
+                    <td>Intervenção</td>
+                    <td>Final contrato</td>
+                    <td>Hora</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Cafe Rampa</td>
+                    <td>José</td>
+                    <td>9191919191</td>
+                    <td><a>Requiao</a></td>
+                    <td>Cobrança</td>
+                    <td>Outubro</td>
+                    <td>11:00</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+                   {{-- <table class="table">
                         <thead>
                             <tr>
                                 <th colspan="2">ENCOMENDAS</th>
                             </tr>
                         </thead>
+
                         <tbody>
+
                             <tr>
                                 <td>CLIENTES SP</td>
                                 <td><a href="/clients" style="color: red">{{$clients_spOrder}}</a> / <a>{{$clients_sp}}</a></td>
@@ -55,7 +145,25 @@
                                 <td><a href="/clients" style="color: red">{{$clientsOrder}}</a> / <a>{{$clients}}</a></td>
                             </tr>
                         </tbody>
-                    </table>
+
+
+
+                    </table>--}}
+
+                       {{-- <table class="table">
+                            <thead>
+                            <tr>
+                                <td>VALOR COMISSÃO ACUMULADO</td>
+                                <td>107.75€</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>VALOR COMISSÃO ESTIMADO</td>
+                                <td>707.78€</td>
+                            </tr>
+                            </tbody>
+                        </table>
 
                     <table  id="table" class="table">
                         <thead>
@@ -80,27 +188,10 @@
                                 <td>11:00</td>
                             </tr>
                         </tbody>
-                    </table>
+                    </table>--}}
 
 
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <td>VALOR COMISSÃO ACUMULADO</td>
-                                <td>107.75€</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>VALOR COMISSÃO ESTIMADO</td>
-                                <td>707.78€</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+
 </div>
 
 
@@ -119,7 +210,7 @@
                 "datasets": [
                     {
                         "label": "Real",
-                        "backgroundColor": "#aaadff",
+                        "backgroundColor": "#199400",
                         "fill": true,
                         "data": [
                             "230",
@@ -131,7 +222,7 @@
                     },
                     {
                         "label": "Objetivo",
-                        "backgroundColor": "#407aaa",
+                        "backgroundColor": "#afd7b3",
                         "fill": true,
                         "data": [
                             "200",
@@ -142,20 +233,25 @@
                 ]
             };
             var options = {
+                "responsive": true,
+                "maintainAspectRatio": false,
+
                 "title": {
                     "display": false,
                     "text": "Ad Revenue Comparison 2014-2015",
                     "position": "top",
                     "fullWidth": true,
                     "fontColor": "#aa7942",
-                    "fontSize": 16,
+                    "fontSize": 30,
                     "fontFamily": ""
                 },
                 "legend": {
                     "display": true,
                     "fullWidth": true,
                     "position": "top",
+                    "align": "left",
                     "labels": {
+                        "fontSize": 20,
                         "boxWidth": 50,
                         "padding": 20
                     }
@@ -166,44 +262,28 @@
                             "ticks": {
                                 "beginAtZero": true,
                                 "display": true
+
                             },
-                            "gridLines": {
-                                "display": false,
-                                "lineWidth": 2,
-                                "drawOnChartArea": true,
-                                "drawTicks": true,
-                                "tickMarkLength": 1,
-                                "offsetGridLines": true,
-                                "zeroLineColor": "#942192",
-                                "color": "#d6d6d6",
-                                "zeroLineWidth": 2
-                            },
-                            "scaleLabel": {
-                                "display": false,
-                                "labelString": "USD in Millions",
-                                "fontSize": 17
-                            },
-                            "display": true
+                            "display": false
                         }
                     ],
                     "xAxes": {
                         "0": {
                             "ticks": {
                                 "display": true,
-                                "fontSize": 14,
-                                "fontStyle": "italic"
+                                "fontSize": 18,
                             },
                             "display": true,
                             "gridLines": {
                                 "display": false,
-                                "lineWidth": 2,
+                                "lineWidth": 1,
                                 "drawOnChartArea": false,
                                 "drawTicks": true,
                                 "tickMarkLength": 12,
                                 "zeroLineWidth": 2,
                                 "offsetGridLines": true,
-                                "color": "#942192",
-                                "zeroLineColor": "#942192"
+                                "color": "#b0adb0",
+                                "zeroLineColor": "#b0adb0"
                             },
                             "scaleLabel": {
                                 "fontSize": 16,
@@ -217,7 +297,8 @@
                     "enabled": true,
                     "mode": "label",
                     "caretSize": 10,
-                    "backgroundColor": "#00fa92"
+                    "backgroundColor": "#000000",
+                    "color": "#001009"
                 }
             };
 
