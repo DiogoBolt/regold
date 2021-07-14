@@ -251,9 +251,9 @@
                     "position": "top",
                     "align": "left",
                     "labels": {
-                        "fontSize": 20,
-                        "boxWidth": 50,
-                        "padding": 20
+                        "fontSize": 15,
+                        "boxWidth": 25,
+                        "padding": 10
                     }
                 },
                 "scales": {
@@ -262,20 +262,19 @@
                             "ticks": {
                                 "beginAtZero": true,
                                 "display": true
-
                             },
-                            "display": false
+                            "display": true
                         }
                     ],
                     "xAxes": {
                         "0": {
                             "ticks": {
                                 "display": true,
-                                "fontSize": 18,
+                                "fontSize": 15,
                             },
                             "display": true,
                             "gridLines": {
-                                "display": false,
+                                "display": true,
                                 "lineWidth": 1,
                                 "drawOnChartArea": false,
                                 "drawTicks": true,

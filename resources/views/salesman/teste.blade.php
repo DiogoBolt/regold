@@ -15,19 +15,19 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.0.0-rc.1/chartjs-plugin-datalabels.min.js" integrity="sha512-+UYTD5L/bU1sgAfWA0ELK5RlQ811q8wZIocqI7+K0Lhh8yVdIoAMEs96wJAIbgFvzynPm36ZCXtkydxu1cs27w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<script> window.onload = function MoreChartOptions(){}
+<script> function MoreChartOptions(){}
     var ChartData = {
-        labels : ["January","February","NMarc",],
+        labels : ["January","February","March","April","May","June","July",],
         datasets : [
             {
-                data : [65,8,2,],
-                backgroundColor :'#0a630a',
-                borderColor : 'rgba(0,0,0,0.5)',
+                data : [65,8,90,81,56,55,40,],
+                backgroundColor :'#3498db',
+                borderColor : 'rgba(136,136,136,0.5)',
                 label:"2013"},
 
             {
-                data : [21,48,3,],
-                backgroundColor :'rgba(93,176,37,0.68)',
+                data : [21,48,40,19,96,27,100,],
+                backgroundColor :'#2ecc71',
                 borderColor : '#aaaaaa',
                 label:"2014"},
 
@@ -35,46 +35,26 @@
     };
     ChartOptions= {
         responsive:false,
-        layout:{padding:{top:12,left:60,bottom:12,},},
+        layout:{padding:{top:12,left:12,bottom:12,},},
         scales: {
             xAxes:[{
-                gridLines:{color:'rgba(255,252,252,0)',lineWidth:0,borderDash:[],},
+                gridLines:{borderDash:[],},
             }],
 
             yAxes:[{
-                gridLines:{color:'rgba(255,252,252,0)',lineWidth:0,borderDash:[],},
+                gridLines:{borderDash:[],},
             }],
         },plugins:{
             datalabels:{display:true,
+                color:'#241d1d',
                 anchor:'end',
-                align:'end',
-                offset:1,
+                rotation:6,
+                offset:10,
                 font:{
+                    size:20,
                     style:' bold',},},
         },
-        legend:{
-            labels:{
-                fontColor:'#000000',
-                boxWidth:39,
-                generateLabels: function(chart){
-                    return  chart.data.datasets.map( function( dataset, i ){
-                        return{
-                            text:dataset.label,
-                            lineCap:dataset.borderCapStyle,
-                            lineDash:[],
-                            lineDashOffset: 0,
-                            lineJoin:dataset.borderJoinStyle,
-                            fillStyle:dataset.backgroundColor,
-                            strokeStyle:dataset.borderColor,
-                            lineWidth:dataset.pointBorderWidth,
-                            lineDash:dataset.borderDash,
-                        }
-                    })
-                },
-
-            },
-        },
-
+        legend:{display:false},
         title:{
             display:true,
             text:'Chart Title',
@@ -88,7 +68,7 @@
             line: {
             },
             rectangle: {
-                borderWidth:0.01,
+                borderWidth:3,
             },
         },
         tooltips:{
