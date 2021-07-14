@@ -19,13 +19,9 @@
     <div class="homePage_container">
 
         <table class="table">
-            <thead>
             <tr>
                 <th colspan="2">ENCOMENDAS</th>
             </tr>
-            </thead>
-
-            <tbody>
 
             <tr>
                 <td>CLIENTES SP</td>
@@ -51,10 +47,6 @@
                 <td>TOTAL</td>
                 <td><a href="/clients" style="color: red">{{$clientsOrder}}</a> / <a>{{$clients}}</a></td>
             </tr>
-            </tbody>
-
-
-
         </table>
 
         <div class="chart">
@@ -62,34 +54,27 @@
         </div>
 
         <table class="table">
-            <thead>
             <tr>
-                <td>VALOR COMISSÃO ACUMULADO</td>
-                <td>107.75€</td>
+                <th>VALOR COMISSÃO ACUMULADO</th>
+                <th>107.75€</th>
             </tr>
-            </thead>
-            <tbody>
             <tr>
                 <td>VALOR COMISSÃO ESTIMADO</td>
                 <td>707.78€</td>
             </tr>
-            </tbody>
         </table>
 
         <div style="overflow-x:auto;">
-            <table  id="table" class="table">
-                <thead>
+            <table class="table">
                 <tr>
-                    <td>Nome</td>
-                    <td>Pessoa Contacto</td>
-                    <td>Contacto</td>
-                    <td>Localidade</td>
-                    <td>Intervenção</td>
-                    <td>Final contrato</td>
-                    <td>Hora</td>
+                    <th>Nome</th>
+                    <th>Pessoa Contacto</th>
+                    <th>Contacto</th>
+                    <th>Localidade</th>
+                    <th>Intervenção</th>
+                    <th>Final contrato</th>
+                    <th>Hora</th>
                 </tr>
-                </thead>
-                <tbody>
                 <tr>
                     <td>Cafe Rampa</td>
                     <td>José</td>
@@ -99,11 +84,8 @@
                     <td>Outubro</td>
                     <td>11:00</td>
                 </tr>
-                </tbody>
             </table>
         </div>
-
-
 
     </div>
 
@@ -268,6 +250,8 @@
                     ],
                     "xAxes": {
                         "0": {
+                            "barPercentage": 0.8,
+                            "categoryPercentage": 0.5,
                             "ticks": {
                                 "display": true,
                                 "fontSize": 15,
