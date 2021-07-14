@@ -294,9 +294,9 @@ class ClientController extends Controller
                 ->when($request->filled('search'), function ($query) use ($inputs) {
                     return $query->where('c.name', 'LIKE', '%' . $inputs['search'] . '%')
                         ->orWhere('c.nif', 'LIKE', '%' . $inputs['search'] . '%')
-                        ->orWhere('c.id' , 'LIKE', '%' . $inputs['search'] . '%');
+                        ->orWhere('c.id' , 'LIKE', '%' . $inputs['search'] . '%')
+                        ->orWhere('c.comercial_name' , 'LIKE', '%' . $inputs['search'] . '%');
                 })
-
 
                 ->select([
                     'c.id',
@@ -320,7 +320,9 @@ class ClientController extends Controller
                     })
                     ->when($request->filled('search'), function ($query) use ($inputs) {
                         return $query->where('c.name', 'LIKE', '%' . $inputs['search'] . '%')
-                            ->orWhere('c.id', 'LIKE', '%' . $inputs['search'] . '%');
+                            ->orWhere('c.id', 'LIKE', '%' . $inputs['search'] . '%')
+                            ->orWhere('c.id' , 'LIKE', '%' . $inputs['search'] . '%')
+                            ->orWhere('c.comercial_name' , 'LIKE', '%' . $inputs['search'] . '%');
                     })
                     ->select([
                         'c.id',
@@ -342,7 +344,9 @@ class ClientController extends Controller
                     })
                     ->when($request->filled('search'), function ($query) use ($inputs) {
                         return $query->where('c.name', 'LIKE', '%' . $inputs['search'] . '%')
-                            ->orWhere('c.id', 'LIKE', '%' . $inputs['search'] . '%');
+                            ->orWhere('c.id', 'LIKE', '%' . $inputs['search'] . '%')
+                            ->orWhere('c.id' , 'LIKE', '%' . $inputs['search'] . '%')
+                            ->orWhere('c.comercial_name' , 'LIKE', '%' . $inputs['search'] . '%');
                     })
 
                     ->select([
@@ -1353,5 +1357,48 @@ class ClientController extends Controller
         $pvp = ClientProduct::where('id',$inputs['id'])->first();
         $pvp->pvp = $inputs['value'];
         $pvp->save();
+    }
+
+    public function clientsByPack($pack){
+
+        $user = Auth::user();
+
+        $clients = Customer::from(Customer::alias('c'))
+            ->where('u.userType','!=',6)
+            ->leftJoin(User::alias('u'), 'u.id', '=', 'c.ownerID')
+            ->where('c.salesman',$user->userTypeID)
+            ->where('c.pack_type',$pack)
+            ->select([
+                'c.id',
+                'u.id as userid',
+                'c.name',
+                'c.regoldiID',
+                'c.comercial_name',
+                'c.pack_type'
+            ])->get();
+
+        $unpaid = 0;
+        $total = 15;
+
+        foreach($clients as $client)
+        {
+            $orders = Order::where('client_id',$client->id)->where('processed',1)->where('created_at','>=',Carbon::now()->startOfMonth())->count();
+            $current = Order::where('client_id',$client->id)->where('status','waiting_payment')/*->where('invoice_id','!=',null)*/->sum('total');
+
+            if($orders > 0)
+            {
+                $client->order = 1;
+            }else{
+                $client->order = 0;
+                $unpaid += 1;
+            }
+            $client->current = $current;
+        }
+
+        $districts = Districts::all();
+        $clients =$clients->sortBy('order');
+        $clients->values()->all();
+
+        return view('client.indexPack',compact('clients','unpaid','total', 'districts'));
     }
 }

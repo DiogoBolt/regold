@@ -427,6 +427,7 @@ class PestController extends Controller
         if(isset($inputs['action'])==0) $report_MaintenancePest->action = null; else $report_MaintenancePest->action=$inputs['action'];
         $report_MaintenancePest->note=$inputs['note'];
         $report_MaintenancePest->concluded=1;
+        $report_MaintenancePest->updated_at = now();
         $report_MaintenancePest->save();
 
         $devices=Devices::where('idClient',$auxClientId)

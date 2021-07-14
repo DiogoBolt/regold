@@ -56,6 +56,7 @@
                 <table class="table">
                     <tr>
                         <th>Cliente</th>
+                        <th>Data</th>
                         <th>ID Regoldi</th>
                         <th>Total s/iva</th>
                         <th>Total c/iva</th>
@@ -63,9 +64,9 @@
                         <th>Detalhes</th>
                     </tr>
                     @foreach($orders as $order)
-                    
                             <tr>
                                 <td><a href="/clients/{{$order->client_id}}">{{$order->name}}</a></td>
+                                <td>{{$order->created_at->format('d-m-Y')}}</td>
                                 <td>{{$order->regoldiID}}</td>
                                 <td>{{number_format($order->total,2)}}€</td>
                                 <td>{{number_format($order->total+$order->totaliva,2)}}€</td>
@@ -110,7 +111,6 @@
                                 <td><a href="/orders/{{$order->id}}">Ver Encomenda</a></td>
                                 </tr>
                     @endforeach
-
                 </table>
                 <div style="text-align:center;">
                     {{ $orders->links() }}

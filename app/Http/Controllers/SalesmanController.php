@@ -62,34 +62,33 @@ class SalesmanController extends Controller
                 ->leftJoin(Order::alias('o'), 'c.id', '=', 'o.client_id')
                 ->where('c.salesman',$user->userTypeID)
                 ->where('c.pack_type','sp')
-                ->where('o.created_at','>=',Carbon::now()->startOfMonth())
+                ->where('o.created_at','<=',Carbon::now()->startOfMonth())
                 ->count();
             $clients_spfreeOrder = Customer::from(Customer::alias('c'))
                 ->leftJoin(Order::alias('o'), 'c.id', '=', 'o.client_id')
                 ->where('c.salesman',$user->userTypeID)
                 ->where('c.pack_type','sp free')
-                ->where('o.created_at','>=',Carbon::now()->startOfMonth())
+                ->where('o.created_at','<=',Carbon::now()->startOfMonth())
                 ->count();
             $clients_sOrder = Customer::from(Customer::alias('c'))
                 ->leftJoin(Order::alias('o'), 'c.id', '=', 'o.client_id')
                 ->where('c.salesman',$user->userTypeID)
                 ->where('c.pack_type','s')
-                ->where('o.created_at','>=',Carbon::now()->startOfMonth())
+                ->where('o.created_at','<=',Carbon::now()->startOfMonth())
                 ->count();
             $clients_stOrder = Customer::from(Customer::alias('c'))
                 ->leftJoin(Order::alias('o'), 'c.id', '=', 'o.client_id')
                 ->where('c.salesman',$user->userTypeID)
                 ->where('c.pack_type','st')
-                ->where('o.created_at','>=',Carbon::now()->startOfMonth())
+                ->where('o.created_at','<=',Carbon::now()->startOfMonth())
                 ->count();
             $clients_tOrder = Customer::from(Customer::alias('c'))
                 ->leftJoin(Order::alias('o'), 'c.id', '=', 'o.client_id')
                 ->where('c.salesman',$user->userTypeID)
                 ->where('c.pack_type','st')
-                ->where('o.created_at','>=',Carbon::now()->startOfMonth())
+                ->where('o.created_at','<=',Carbon::now()->startOfMonth())
                 ->count();
         }
-
 
         return view('salesman.homePage',compact('clients','clients_s','clients_sp','clients_spfree','clients_st','clients_t','clients_sOrder','clients_spfreeOrder','clients_spOrder','clients_stOrder','clients_tOrder','clientsOrder'));
     }

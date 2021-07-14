@@ -239,11 +239,14 @@ class ProductController extends Controller
         $user = Auth::user();
         $filteredOrders = Order::from(Order::alias('o'))
             ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
-            ->where('processed',0)
+            ->where('o.processed',0)
+            ->where('o.status','=','waiting_payment')
+            ->where('o.shipped',null)
             ->select([
                 'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
+                'o.receipt_id', 'o.created_at', 'c.name','o.shipped','c.nif','c.comercial_name','c.regoldiID', 'o.status', 'o.invoice_id'
             ]);
+
 
        /* if ($user->userType) {
             $filteredOrders->where('c.salesman', $user->userType);
@@ -255,10 +258,6 @@ class ProductController extends Controller
 
         if ($request->filled('payment_method')) {
             $filteredOrders->where('c.payment_method', '=', $request->payment_method);
-        }
-
-        if ($request->filled('status')) {
-            $filteredOrders->where('o.status', '=', $request->status);
         }
 
         if ($request->filled('start_date') && $request->filled('end_date')) {
@@ -291,7 +290,7 @@ class ProductController extends Controller
             ->where('o.status','=','waiting_payment')
             ->select([
                 'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
+                'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID','o.processed_time', 'o.status', 'o.invoice_id'
             ]);
 
       /*  if ($user->userType = 4) {
@@ -314,15 +313,15 @@ class ProductController extends Controller
             $start = $request->start_date;
             $end = $request->end_date;
 
-            $filteredOrders->whereBetween('o.created_at', [$start, $end]);
+            $filteredOrders->whereBetween('o.processed_time', [$start, $end]);
 
         } else if ($request->filled('start_date')) {
 
-            $filteredOrders->where('o.created_at', '>=', $request->start_date);
+            $filteredOrders->where('o.processed_time', '>=', $request->start_date);
 
         } else if ($request->filled('end_date')) {
 
-            $filteredOrders->where('o.created_at', '<=', $request->end_date);
+            $filteredOrders->where('o.processed_time', '<=', $request->end_date);
         }
 
         $orders = $filteredOrders->orderBy('o.id', 'DESC')->paginate(25);
@@ -389,7 +388,7 @@ class ProductController extends Controller
             ->where('o.shipped','=','waiting_payment')
             ->select([
                 'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
+                'o.receipt_id', 'o.created_at', 'o.shipped_time','c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
             ]);
 
         /*  if ($user->userType = 4) {
@@ -412,15 +411,15 @@ class ProductController extends Controller
             $start = $request->start_date;
             $end = $request->end_date;
 
-            $filteredOrders->whereBetween('o.created_at', [$start, $end]);
+            $filteredOrders->whereBetween('o.shipped_time', [$start, $end]);
 
         } else if ($request->filled('start_date')) {
 
-            $filteredOrders->where('o.created_at', '>=', $request->start_date);
+            $filteredOrders->where('o.shipped_time', '>=', $request->start_date);
 
         } else if ($request->filled('end_date')) {
 
-            $filteredOrders->where('o.created_at', '<=', $request->end_date);
+            $filteredOrders->where('o.shipped_time', '<=', $request->end_date);
         }
 
         $orders = $filteredOrders->orderBy('o.id', 'DESC')->paginate(25);
@@ -486,7 +485,7 @@ class ProductController extends Controller
                 ->where('o.status', 'waiting_payment')
                 ->select([
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                    'o.receipt_id', 'o.created_at', 'c.name', 'c.salesman','c.payment_method','c.regoldiID', 'o.status', 'o.invoice_id'
+                    'o.receipt_id', 'o.created_at', 'c.name','o.shipped_time', 'c.salesman','c.payment_method','c.regoldiID', 'o.status', 'o.invoice_id'
                 ])
                 ->orderBy('o.id', 'DESC')->paginate(25);
         } else if ($user->userType == 1) {
@@ -497,7 +496,7 @@ class ProductController extends Controller
                 ->where('o.status', 'waiting_payment')
                 ->select([
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                    'o.receipt_id', 'o.created_at', 'c.name', 'c.salesman','c.payment_method','c.regoldiID', 'o.status', 'o.invoice_id'
+                    'o.receipt_id', 'o.created_at', 'c.name','o.shipped_time', 'c.salesman','c.payment_method','c.regoldiID', 'o.status', 'o.invoice_id'
                 ])
                 ->orderBy('o.id', 'DESC')->paginate(25);
         } else {
@@ -507,7 +506,7 @@ class ProductController extends Controller
                 ->where('o.status', 'waiting_payment')
                 ->select([
                     'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                    'o.receipt_id', 'o.created_at', 'c.name', 'c.salesman','c.payment_method','c.regoldiID', 'o.status', 'o.invoice_id'
+                    'o.receipt_id', 'o.created_at', 'c.name','o.shipped_time', 'c.salesman','c.payment_method','c.regoldiID', 'o.status', 'o.invoice_id'
                 ])
                 ->orderBy('o.id', 'DESC')->paginate(25);
         }
@@ -527,6 +526,7 @@ class ProductController extends Controller
 
         $order = Order::where('id', $id)->first();
         $order->shipped = 1;
+        $order->shipped_time = now();
         $order->save();
 
         $clientUser = Customer::where('id', $order->client_id)
@@ -640,6 +640,7 @@ class ProductController extends Controller
                 ])
                 ->orderBy('o.id', 'DESC')->get();
         }
+
 
         foreach ($orders as $order) {
             $order->receipt = Receipt::where('id', $order->receipt_id)->first()->file ?? null;

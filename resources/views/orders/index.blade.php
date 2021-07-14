@@ -45,14 +45,7 @@
                                     <option value="30 dias">30 dias</option>
                             </select>
 
-                            <label for="status-filter">Estado</label>
-                            <select class="form-control" id="status-filter" name="status">
-                                    <option value="" selected disabled>Seleccione estado</option>
-                                    <option value="paid">Pago</option>
-                                    <option value="waiting_payment">Aguardando pagamento</option>
-                            </select>
-
-                            <label for="process-filter">Data de Processamento</label>
+                            <label for="process-filter">Data de Encomenda</label>
                             <input type="date" id="process-filter" class="form-control" name="start_date">
                             - entre - 
                             <input type="date" class="form-control" name="end_date">

@@ -195,11 +195,11 @@ function packType(type) {
             $("#divThermos").hide();
             break;
         case 'st':
-            $("#divServicesType").hide();
-            $("#divHaccp").hide();
-            $("#divCp").hide();
+            $("#divServicesType").show();
+            $("#divHaccp").show();
+            $("#divCp").show();
             $("#divPayment").hide();
-            $("#divEscalao").show();
+            $("#divEscalao").hide();
             $("#divContract_value").show();
             $("#divContract_value_inf").hide();
             $("#divNib").show();

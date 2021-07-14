@@ -230,6 +230,7 @@ Route::group(['middleware' => ['backoffice']], function () {
     Route::get('/clients/documents/{id}', 'ClientController@getDocuments');
     Route::post('/editpricepvp/', 'ClientController@editClientPvp');
     Route::get('/impersonate/leaveuser', 'ClientController@leaveUser');
+    Route::get('/clientsPack/{pack}', 'ClientController@clientsByPack');
     //pedro                             
     Route::get('/users/getCities/{id}','ClientController@getCitiesByDistrict');
     Route::get('/users/verifyEmailExist/{email}','ClientController@verifyEmailExist');

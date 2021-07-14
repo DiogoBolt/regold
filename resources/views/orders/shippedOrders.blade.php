@@ -58,6 +58,7 @@
                         <th>Cliente</th>
                         <th>ID RegolPest</th>
                         <th>Data</th>
+                        <th>Data Expedição</th>
                         <th>Total c/iva</th>
                         <th>Detalhes</th>
                         <th>Pago</th>
@@ -67,6 +68,7 @@
                                 <td><a href="/clients/{{$order->client_id}}">{{$order->name}}</a></td>
                                 <td>{{$order->regoldiID}}</td>
                                 <td>{{$order->created_at->format('d-m-Y')}}</td>
+                                <td>{{$order->shipped_time}}</td>
                                 <td>{{number_format($order->total+$order->totaliva,2)}}€</td>
                                 <td>@if($order->cart_id==null)(SP FREE s/ encomenda)@else<a href="/orders/{{$order->id}}">Ver encomenda</a>@endif</td>
 
