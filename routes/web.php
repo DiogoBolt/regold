@@ -190,6 +190,8 @@ Route::group(['middleware' => ['backoffice']], function () {
 
     /////
     Route::get('/homePageSales', 'SalesmanController@homePage');
+    Route::get('/statistics', 'SalesmanController@statistics');
+    Route::get('/schedule', 'SalesmanController@schedule');
     Route::get('/salesman', 'SalesmanController@index');
     Route::get('/salesman/{id}', 'SalesmanController@salesman');
     Route::get('/newsalesman', 'SalesmanController@newSales');

@@ -128,6 +128,25 @@ class SalesmanController extends Controller
         return view('salesman.homePage',compact('count_clients','clientsOrder','count_s','clients_sOrder','count_sp','clients_spOrder','count_spfree','clients_spfreeOrder','count_st','clients_stOrder','count_t','clients_tOrder'));
     }
 
+    public function statistics(){
+
+        $user = Auth::user();
+
+
+
+        return view('salesman.statistics');
+    }
+
+    public function schedule(){
+
+        $user = Auth::user();
+
+
+
+        return view('salesman.schedule');
+    }
+
+
 
     public function index(Request $request)
     {
