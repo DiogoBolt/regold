@@ -65,19 +65,7 @@
                 </tr>
             </table>
         </div>
-
-        <table class="table">
-            <tr>
-                <th>VALOR COMISSÃO ACUMULADO</th>
-                <th>107.75€</th>
-            </tr>
-            <tr>
-                <td>VALOR COMISSÃO ESTIMADO</td>
-                <td>707.78€</td>
-            </tr>
-
-        </table>
-
+        
         <div style="overflow-x:auto;">
             <table class="table">
                 <tr>
