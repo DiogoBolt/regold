@@ -286,11 +286,11 @@ class ProductController extends Controller
         $filteredOrders = Order::from(Order::alias('o'))
             ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
             ->where('o.processed', 1)
-            ->where('o.shipped', 0)
+            ->where('o.shipped', null)
             ->where('o.status','=','waiting_payment')
             ->select([
                 'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
-                'o.receipt_id', 'o.created_at', 'c.name', 'c.regoldiID','o.processed_time', 'o.status', 'o.invoice_id'
+                'o.receipt_id', 'o.created_at','c.payment_method','c.salesman','c.name', 'c.regoldiID','o.processed_time', 'o.status', 'o.invoice_id'
             ]);
 
       /*  if ($user->userType = 4) {
@@ -383,9 +383,8 @@ class ProductController extends Controller
         $user = Auth::user();
         $filteredOrders = Order::from(Order::alias('o'))
             ->leftJoin(Customer::alias('c'), 'o.client_id', '=', 'c.id')
-            ->where('o.processed', 1)
             ->where('o.shipped', 1)
-            ->where('o.shipped','=','waiting_payment')
+            ->where('o.status','=','waiting_payment')
             ->select([
                 'o.id', 'o.client_id', 'o.cart_id', 'o.total', 'o.totaliva', 'o.processed',
                 'o.receipt_id', 'o.created_at', 'o.shipped_time','c.name', 'c.regoldiID', 'o.status', 'o.invoice_id'
@@ -394,6 +393,7 @@ class ProductController extends Controller
         /*  if ($user->userType = 4) {
               $filteredOrders->where('c.salesman', $user->sales_id);
           }*/
+
 
         if ($request->filled('client')) {
             $filteredOrders->where('c.name', 'like', '%' . $request->client . '%');

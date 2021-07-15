@@ -1364,7 +1364,6 @@ class ClientController extends Controller
         $user = Auth::user();
 
         $clients = Customer::from(Customer::alias('c'))
-            ->where('u.userType','!=',6)
             ->leftJoin(User::alias('u'), 'u.id', '=', 'c.ownerID')
             ->where('c.salesman',$user->userTypeID)
             ->where('c.pack_type',$pack)
@@ -1400,5 +1399,64 @@ class ClientController extends Controller
         $clients->values()->all();
 
         return view('client.indexPack',compact('clients','unpaid','total', 'districts'));
+    }
+
+    public function ordersByPack($pack){
+
+        $user = Auth::user();
+
+        if($pack=='all'){
+            $allClients = Customer::from(Customer::alias('c'))
+                ->leftJoin(User::alias('u'), 'u.id', '=', 'c.ownerID')
+                ->where('c.salesman',$user->userTypeID)
+                ->select([
+                    'c.id',
+                    'u.id as userid',
+                    'c.name',
+                    'c.regoldiID',
+                    'c.comercial_name',
+                    'c.pack_type'
+                ])->get();
+        }else{
+            $allClients = Customer::from(Customer::alias('c'))
+                ->leftJoin(User::alias('u'), 'u.id', '=', 'c.ownerID')
+                ->where('c.salesman',$user->userTypeID)
+                ->where('c.pack_type',$pack)
+                ->select([
+                    'c.id',
+                    'u.id as userid',
+                    'c.name',
+                    'c.regoldiID',
+                    'c.comercial_name',
+                    'c.pack_type'
+                ])->get();
+        }
+
+        $unpaid = 0;
+        $total = 15;
+
+        $clients = [];
+        foreach($allClients as $client)
+        {
+            $orders = Order::where('client_id',$client->id)->where('created_at','>=',Carbon::now()->startOfMonth())->count();
+
+            if($orders == 0){
+                array_push($clients,$client);
+            }
+
+            $current = Order::where('client_id',$client->id)->where('status','waiting_payment')/*->where('invoice_id','!=',null)*/->sum('total');
+
+            if($orders > 0)
+            {
+                $client->order = 1;
+            }else{
+                $client->order = 0;
+                $unpaid += 1;
+            }
+            $client->current = $current;
+        }
+        $districts = Districts::all();
+
+        return view('client.indexOrder',compact('clients','unpaid','total', 'districts'));
     }
 }

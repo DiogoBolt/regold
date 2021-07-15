@@ -45,52 +45,87 @@ class SalesmanController extends Controller
 
 
         if($user->userType == 1){
-            $clients = Customer::where('salesman',$user->userTypeID)->count();
-            $clients_sp = Customer::where('salesman',$user->userTypeID)->where('pack_type','sp')->count();
-            $clients_spfree = Customer::where('salesman',$user->userTypeID)->where('pack_type','sp free')->count();
-            $clients_s = Customer::where('salesman',$user->userTypeID)->where('pack_type','s')->count();
-            $clients_st = Customer::where('salesman',$user->userTypeID)->where('pack_type','st')->count();
-            $clients_t = Customer::where('salesman',$user->userTypeID)->where('pack_type','t')->count();
 
-            $clientsOrder = Customer::from(Customer::alias('c'))
-                ->leftJoin(Order::alias('o'), 'c.id', '=', 'o.client_id')
-                ->where('c.salesman',$user->userTypeID)
-                ->where('o.created_at','>=',Carbon::now()->startOfMonth())
-                ->count();
+            $clientsOrder = 0;
+            $clients_spOrder = 0;
+            $clients_spfreeOrder = 0;
+            $clients_sOrder = 0;
+            $clients_stOrder = 0;
+            $clients_tOrder = 0;
 
-            $clients_spOrder = Customer::from(Customer::alias('c'))
-                ->leftJoin(Order::alias('o'), 'c.id', '=', 'o.client_id')
-                ->where('c.salesman',$user->userTypeID)
-                ->where('c.pack_type','sp')
-                ->where('o.created_at','<=',Carbon::now()->startOfMonth())
-                ->count();
-            $clients_spfreeOrder = Customer::from(Customer::alias('c'))
-                ->leftJoin(Order::alias('o'), 'c.id', '=', 'o.client_id')
-                ->where('c.salesman',$user->userTypeID)
-                ->where('c.pack_type','sp free')
-                ->where('o.created_at','<=',Carbon::now()->startOfMonth())
-                ->count();
-            $clients_sOrder = Customer::from(Customer::alias('c'))
-                ->leftJoin(Order::alias('o'), 'c.id', '=', 'o.client_id')
-                ->where('c.salesman',$user->userTypeID)
-                ->where('c.pack_type','s')
-                ->where('o.created_at','<=',Carbon::now()->startOfMonth())
-                ->count();
-            $clients_stOrder = Customer::from(Customer::alias('c'))
-                ->leftJoin(Order::alias('o'), 'c.id', '=', 'o.client_id')
-                ->where('c.salesman',$user->userTypeID)
-                ->where('c.pack_type','st')
-                ->where('o.created_at','<=',Carbon::now()->startOfMonth())
-                ->count();
-            $clients_tOrder = Customer::from(Customer::alias('c'))
-                ->leftJoin(Order::alias('o'), 'c.id', '=', 'o.client_id')
-                ->where('c.salesman',$user->userTypeID)
-                ->where('c.pack_type','st')
-                ->where('o.created_at','<=',Carbon::now()->startOfMonth())
-                ->count();
+
+            $clients = Customer::where('salesman',$user->userTypeID)->get();
+            $count_clients = count($clients);
+
+            foreach ($clients as $client){
+                $orders = Order::where('client_id',$client->id)->where('created_at','>=',Carbon::now()->startOfMonth())->count();
+
+                if($orders == 0){
+                    $clientsOrder += 1;
+                }
+            }
+
+            $clients_sp = Customer::where('salesman',$user->userTypeID)->where('pack_type','sp')->get();
+            $count_sp = count($clients_sp);
+
+            foreach ($clients_sp as $client){
+                $orders = Order::where('client_id',$client->id)->where('created_at','>=',Carbon::now()->startOfMonth())->count();
+
+                if($orders == 0){
+                    $clients_spOrder += 1;
+                }
+            }
+
+            $clients_spfree = Customer::where('salesman',$user->userTypeID)->where('pack_type','sp free')->get();
+            $count_spfree = count($clients_spfree);
+
+            foreach ($clients_spfree as $client){
+                $orders = Order::where('client_id',$client->id)->where('created_at','>=',Carbon::now()->startOfMonth())->count();
+
+                if($orders == 0){
+                    $clients_spfreeOrder += 1;
+                }
+            }
+
+            $clients_s = Customer::where('salesman',$user->userTypeID)->where('pack_type','s')->get();
+            $count_s = count($clients_s);
+
+            foreach ($clients_s as $client){
+                $orders = Order::where('client_id',$client->id)->where('created_at','>=',Carbon::now()->startOfMonth())->count();
+
+                if($orders == 0){
+                    $clients_sOrder += 1;
+                }
+            }
+
+            $clients_st = Customer::where('salesman',$user->userTypeID)->where('pack_type','st')->get();
+            $count_st = count($clients_st);
+
+            foreach ($clients_st as $client){
+                $orders = Order::where('client_id',$client->id)->where('created_at','>=',Carbon::now()->startOfMonth())->count();
+
+                if($orders == 0){
+                    $clients_stOrder += 1;
+                }
+            }
+
+            $clients_t = Customer::where('salesman',$user->userTypeID)->where('pack_type','t')->get();
+            $count_t = count($clients_t);
+
+            foreach ($clients_t as $client){
+                $orders = Order::where('client_id',$client->id)->where('created_at','>=',Carbon::now()->startOfMonth())->count();
+
+                if($orders == 0){
+                    $clients_tOrder += 1;
+                }
+            }
+
+
+
+
         }
 
-        return view('salesman.homePage',compact('clients','clients_s','clients_sp','clients_spfree','clients_st','clients_t','clients_sOrder','clients_spfreeOrder','clients_spOrder','clients_stOrder','clients_tOrder','clientsOrder'));
+        return view('salesman.homePage',compact('count_clients','clientsOrder','count_s','clients_sOrder','count_sp','clients_spOrder','count_spfree','clients_spfreeOrder','count_st','clients_stOrder','count_t','clients_tOrder'));
     }
 
 
@@ -304,5 +339,35 @@ class SalesmanController extends Controller
     public function teste(){
 
         return view('salesman.teste');
+    }
+
+    public function math($idSalesman){
+
+        $real_sales = 0;
+        $target_sales = 0;
+
+        $real_collection = 0;
+        $target_collection = 0;
+
+        $real_newCustomers = 0;
+        $target_newCustomers = 0;
+
+        $clients = Customer::where('salesman',$idSalesman)->get();
+
+        foreach ($clients as $client){
+
+            $orders = Order::where('client_id',$client->id)->where('created_at','>=',Carbon::now()->startOfMonth())->sum('total');
+
+
+        }
+
+
+        $client->orders = Order::where('client_id', $client->id)->where('status', 'waiting_payment')->orderby('created_at','ASC')->get();
+        $client->totalUnpaidAmount = Order::where('client_id',$client->id)->where('status','waiting_payment')->sum('total');
+        $totalUnpaid=$clients->sum('totalUnpaidAmount');
+        $client->totalPaidAmount = Order::where('client_id',$client->id)->where('status','paid')->sum('total');
+        $totalPaid=$clients->sum('totalPaidAmount');
+        $totalBilled=$totalUnpaid+$totalPaid;
+
     }
 }

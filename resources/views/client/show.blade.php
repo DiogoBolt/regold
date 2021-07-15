@@ -31,7 +31,10 @@
                     <br/>
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <b>Designação Comercial:</b> {{$client->comercial_name}}
+                            <b>Designação Comercial:</b> {{$client->name}}
+                        </div>
+                        <div class="form-group">
+                            <b>Nome Faturação:</b> {{$client->comercial_name}}
                         </div>
                         <div class="form-group">
                             <b>Morada de Entrega</b>

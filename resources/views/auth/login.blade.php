@@ -84,7 +84,7 @@
 </div>
 
 @endsection
-<div id="footer">
+<div id="footer" >
     <footer style="background-color: #153E35; padding: 4px 4px; bottom: 0px;left:0px; right:0px;position: absolute; margin-bottom: -30px;">
         <p style="color: whitesmoke; margin-top: 10px;">Direitos reservados à JALE SGPS © {{date('Y')}}</p>
     </footer>

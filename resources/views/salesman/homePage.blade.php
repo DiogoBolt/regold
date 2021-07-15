@@ -25,27 +25,27 @@
 
             <tr>
                 <td>CLIENTES SP</td>
-                <td><a href="/clients" style="color: red">{{$clients_spOrder}}</a> / <a>{{$clients_sp}}</a></td>
+                <td><a href="/clientsOrder/sp" style="color: red">{{$clients_spOrder}}</a> / <a href="/clientsPack/sp">{{$count_sp}}</a></td>
             </tr>
             <tr>
                 <td>CLIENTES SP Free</td>
-                <td><a href="/clients" style="color: red">{{$clients_spfreeOrder}}</a> / <a>{{$clients_spfree}}</a></td>
+                <td><a href="/clientsOrder/sp free" style="color: red">{{$clients_spfreeOrder}}</a> / <a href="/clientsPack/sp free">{{$count_spfree}}</a></td>
             </tr>
             <tr>
                 <td>CLIENTES S</td>
-                <td><a href="/clients" style="color: red">{{$clients_sOrder}}</a> / <a>{{$clients_s}}</a></td>
+                <td><a href="/clientsOrder/s" style="color: red">{{$clients_sOrder}}</a> / <a href="/clientsPack/s">{{$count_s}}</a></td>
             </tr>
             <tr>
                 <td>CLIENTES ST</td>
-                <td><a href="/clients" style="color: red">{{$clients_stOrder}}</a> / <a>{{$clients_st}}</a></td>
+                <td><a href="/clientsOrder/st" style="color: red">{{$clients_stOrder}}</a> / <a href="/clientsPack/st">{{$count_st}}</a></td>
             </tr>
             <tr>
                 <td>CLIENTES T</td>
-                <td><a href="/clients" style="color: red">{{$clients_tOrder}}</a> / <a>{{$clients_t}}</a></td>
+                <td><a href="/clientsOrder/t" style="color: red">{{$clients_tOrder}}</a> / <a href="/clientsPack/t">{{$count_t}}</a></td>
             </tr>
             <tr>
                 <td>TOTAL</td>
-                <td><a href="/clients" style="color: red">{{$clientsOrder}}</a> / <a>{{$clients}}</a></td>
+                <td><a style="color: red" href="/clientsOrder/all">{{$clientsOrder}}</a> / <a href="/clients">{{$count_clients}}</a></td>
             </tr>
         </table>
 
@@ -53,16 +53,19 @@
             <canvas id="myChart" ></canvas>
         </div>
 
-        <table class="table">
-            <tr>
-                <th>VALOR COMISSÃO ACUMULADO</th>
-                <th>107.75€</th>
-            </tr>
-            <tr>
-                <td>VALOR COMISSÃO ESTIMADO</td>
-                <td>707.78€</td>
-            </tr>
-        </table>
+        <div>
+            <table class="table">
+                <tr>
+                    <th>VALOR COMISSÃO ACUMULADO</th>
+                    <th>107.75€</th>
+                </tr>
+                <tr>
+                    <td>VALOR COMISSÃO ESTIMADO</td>
+                    <td>707.78€</td>
+                </tr>
+            </table>
+        </div>
+
 
         <div style="overflow-x:auto;">
             <table class="table">
