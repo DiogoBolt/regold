@@ -49,7 +49,7 @@
             </tr>
         </table>
 
-        <div class="chart">
+        <div>
             <canvas id="myChart" ></canvas>
         </div>
 
@@ -57,15 +57,15 @@
             <table class="table">
                 <tr>
                     <th>VALOR COMISSÃO ACUMULADO</th>
-                    <th>107.75€</th>
+                    <th>{{$commission[0]}}€</th>
                 </tr>
                 <tr>
                     <td>VALOR COMISSÃO ESTIMADO</td>
-                    <td>707.78€</td>
+                    <td>{{$commission[1]}}€</td>
                 </tr>
             </table>
         </div>
-        
+
         <div style="overflow-x:auto;">
             <table class="table">
                 <tr>
@@ -108,9 +108,9 @@
                         "backgroundColor": "#199400",
                         "fill": true,
                         "data": [
-                            "230",
-                            "250",
-                            "240"
+                            "{{$real[0]}}",
+                            "{{$real[1]}}",
+                            "{{$real[2]}}"
                         ],
                         "borderColor": "#ffffff",
                         "borderWidth": "1"
@@ -120,9 +120,9 @@
                         "backgroundColor": "#afd7b3",
                         "fill": true,
                         "data": [
-                            "200",
-                            "300",
-                            "280"
+                            "{{$target[0]}}",
+                            "{{$target[1]}}",
+                            "{{$target[2]}}"
                         ]
                     }
                 ]

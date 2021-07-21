@@ -9,7 +9,7 @@
 
 @section('content')
     <div class="container-bar">
-        <p class="container-bar_txt">Home</p>
+        <p class="container-bar_txt">Estatísticas</p>
         <div class="container-bar_img">
             <img src="{{ asset('img/encomendas.jpg') }}" />
         </div>
@@ -17,15 +17,18 @@
 
     <div  class="container">
         <div class="charts_container">
-
-            <div class="chart">
+            <div>
+                <div>
+                    <p class="title"> acumulado mensal </p>
+                </div>
                 <canvas id="myChart" ></canvas>
             </div>
-
-            <div class="chart2">
+            <div>
+                <div>
+                    <p class="title"> acumulado anual </p>
+                </div>
                 <canvas id="myChart2" ></canvas>
             </div>
-
         </div>
 
         <div class="statisticsTable_container">
@@ -39,46 +42,38 @@
                         <td>VALOR OBJETIVO ESTIMADO</td>
                         <td>707.78€</td>
                     </tr>
-
                 </table>
             </div>
 
+            <div>
+                <table class="table">
+                    <tr>
+                        <th style="background-color:#ea7f4f;">VALOR ACUMULADO</th>
+                        <th style="background-color:#ea7f4f;">107.75€</th>
+                    </tr>
+                    <tr>
+                        <td>VALOR OBJETIVO ESTIMADO</td>
+                        <td>707.78€</td>
+                    </tr>
+                </table>
+            </div>
 
-                <div>
-                    <table class="table">
-                        <tr>
-                            <th style="background-color:#ea7f4f;">VALOR ACUMULADO</th>
-                            <th style="background-color:#ea7f4f;">107.75€</th>
-                        </tr>
-                        <tr>
-                            <td>VALOR OBJETIVO ESTIMADO</td>
-                            <td>707.78€</td>
-                        </tr>
-
-                    </table>
-                </div>
-
-
-                    <div>
-                        <table class="table">
-                            <tr>
-                                <th style="background-color:#e59c1f;">MELHOR MÊS VENDAS</th>
-                                <th style="background-color:#e59c1f;">AGOSTO</th>
-                            </tr>
-                            <tr>
-                                <td>MELHOR MÊS COBRANÇA</td>
-                                <td>SETEMBRO</td>
-                            </tr>
-
-                        </table>
-                    </div>
-            
+            <div>
+                <table class="table">
+                    <tr>
+                        <th style="background-color:#e59c1f;">MELHOR MÊS VENDAS</th>
+                        <th style="background-color:#e59c1f;">AGOSTO</th>
+                    </tr>
+                    <tr>
+                        <td>MELHOR MÊS COBRANÇA</td>
+                        <td>SETEMBRO</td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 
-
 @endsection
-
 
 <script>
     window.onload = function () {
@@ -191,8 +186,6 @@
             options: options
         });
 
-
-
         var ctx2 = document.getElementById('myChart2').getContext('2d');
         var data2 = {
             "labels": [
@@ -301,8 +294,6 @@
             data: data2,
             options: options2
         });
-
-
     }
 
 </script>

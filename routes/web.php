@@ -189,8 +189,9 @@ Route::group(['middleware' => ['backoffice']], function () {
     Route::get('/possiblecustomers/deletecustomer/{id}', 'PossibleCustomersController@deletePossibleCustomer');
 
     /////
-    Route::get('/homePageSales', 'SalesmanController@homePage');
-    Route::get('/statistics', 'SalesmanController@statistics');
+    Route::get('/salesman/homePageSales', 'SalesmanController@homePage');
+    Route::get('/salesman/statistics', 'SalesmanController@statistics');
+    Route::get('/salesman/prospection', 'SalesmanController@prospection');
     Route::get('/schedule', 'SalesmanController@schedule');
     Route::get('/salesman', 'SalesmanController@index');
     Route::get('/salesman/{id}', 'SalesmanController@salesman');
@@ -303,6 +304,11 @@ Route::group(['middleware' => ['backoffice']], function () {
     Route::get('/runcron', function() {
         \Illuminate\Support\Facades\Artisan::call('update:temperatures');
     });
+
+    Route::get('/cron', function() {
+        \Illuminate\Support\Facades\Artisan::call('averageSalesman');
+    });
+
 });
 
 

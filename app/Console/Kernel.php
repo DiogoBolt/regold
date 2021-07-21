@@ -5,6 +5,7 @@ namespace App\Console;
 use App\Console\Commands\alertTemperatures;
 use App\Console\Commands\createPrices;
 use App\Console\Commands\monthlyFee;
+use App\Console\Commands\averageSalesman;
 use App\Console\Commands\productUpdate;
 use App\Console\Commands\UpdateTemperatures;
 use Illuminate\Console\Scheduling\Schedule;
@@ -21,6 +22,7 @@ class Kernel extends ConsoleKernel
         UpdateTemperatures::class,
         alertTemperatures::class,
         monthlyFee::class,
+        averageSalesman::class,
         productUpdate::class,
         createPrices::class,
     ];
@@ -38,6 +40,9 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('update:temperatures')->hourly();
         //$schedule->command('monthlyFee')->lastDayOfMonth('23:59');
+        $schedule->command('averageSalesman')->lastDayOfMonth('22:59');
+
+
     }
 
 

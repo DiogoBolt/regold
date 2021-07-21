@@ -1,5 +1,8 @@
 <?php
 namespace App\Http\Controllers;
+use App\AverageNewCustomers;
+use App\AverageOrders;
+use App\AverageOrdersPaid;
 use App\Cart;
 use App\Category;
 use App\Customer;
@@ -42,7 +45,6 @@ class SalesmanController extends Controller
     public function homePage(){
 
         $user = Auth::user();
-
 
         if($user->userType == 1){
 
@@ -119,13 +121,13 @@ class SalesmanController extends Controller
                     $clients_tOrder += 1;
                 }
             }
-
-
-
+            $real = $this->real($user->userTypeID);
+            $target = $this->target($user->userTypeID);
+            $commission = $this->commission($user->userTypeID);
 
         }
 
-        return view('salesman.homePage',compact('count_clients','clientsOrder','count_s','clients_sOrder','count_sp','clients_spOrder','count_spfree','clients_spfreeOrder','count_st','clients_stOrder','count_t','clients_tOrder'));
+        return view('salesman.homePage',compact('count_clients','clientsOrder','count_s','clients_sOrder','count_sp','clients_spOrder','count_spfree','clients_spfreeOrder','count_st','clients_stOrder','count_t','clients_tOrder','real','target','commission'));
     }
 
     public function statistics(){
@@ -307,6 +309,7 @@ class SalesmanController extends Controller
                 $salesPayments->save();
                 $order = Order::where('id',$id)->first();
                 $order->status = 'paid';
+                $order->payment_time = now();
                 $order->save();
             }
         }
@@ -335,6 +338,7 @@ class SalesmanController extends Controller
             $salesPayment->save();
         }else{
             $order->status='paid';
+            $order->payment_time = now();
             $order->save();
         }
 
@@ -360,33 +364,130 @@ class SalesmanController extends Controller
         return view('salesman.teste');
     }
 
-    public function math($idSalesman){
+    public function real($idSalesman){
 
-        $real_sales = 0;
-        $target_sales = 0;
-
-        $real_collection = 0;
-        $target_collection = 0;
-
-        $real_newCustomers = 0;
-        $target_newCustomers = 0;
+        $real_orders = 0;
+        $real_ordersPaid = 0;
 
         $clients = Customer::where('salesman',$idSalesman)->get();
 
         foreach ($clients as $client){
 
             $orders = Order::where('client_id',$client->id)->where('created_at','>=',Carbon::now()->startOfMonth())->sum('total');
+            $real_orders += $orders;
+            $ordersPaid = Order::where('client_id',$client->id)->where('created_at','>=',Carbon::now()->startOfMonth())->where('status','=','paid')->sum('total');
+            $real_ordersPaid += $ordersPaid;
+        }
+        $newCustomers = Customer::where('salesman',$idSalesman)->where('created_at','>=', Carbon::now()->startOfMonth())->count();
 
+        $real_orders =  number_format($real_orders/1000,2);
+        $real_ordersPaid = number_format($real_ordersPaid/1000,2);
 
+        return[
+            $real_orders,
+            $real_ordersPaid,
+            $newCustomers
+        ];
+    }
+
+    public function target($idSalesman){
+
+        $average_newcustomers = AverageNewCustomers::where('salesman',$idSalesman)->sum('average');
+        $average_orders = AverageOrders::where('salesman',$idSalesman)->sum('average');
+        $average_ordersPaid = AverageOrdersPaid::where('salesman',$idSalesman)->sum('average');
+
+        $n_average_newcustomers = AverageNewCustomers::where('salesman',$idSalesman)->count();
+        $n_average_orders = AverageOrders::where('salesman',$idSalesman)->count();
+        $n_average_ordersPaid = AverageOrdersPaid::where('salesman',$idSalesman)->count();
+
+        if($n_average_newcustomers != 0)
+            $target_newcustomers = $average_newcustomers/$n_average_newcustomers;
+        else
+            $target_newcustomers = 0;
+
+        if($n_average_orders !=0)
+            $target_orders = $average_orders/$n_average_orders;
+        else
+            $target_orders = 0;
+
+        if($n_average_ordersPaid !=0)
+            $target_ordersPaid = $average_ordersPaid/$n_average_ordersPaid;
+        else
+            $target_ordersPaid = 0;
+
+        $target_newcustomers = number_format($target_newcustomers/1000,2);
+        $target_ordersPaid = number_format($target_ordersPaid/1000,2);
+        $target_orders = number_format($target_orders/1000,2);
+
+        return[
+            $target_orders,
+            $target_ordersPaid,
+            $target_newcustomers
+        ];
+    }
+
+    public function commission($idSalesman){
+
+        $ordersPaid = 0;
+        $ordersUnpaid = 0;
+
+        $clients = Customer::where('salesman',$idSalesman)->get();
+
+        foreach ($clients as $client){
+
+            $orders = Order::where('client_id',$client->id)->where('status','=','paid')->where('payment_time','>=',Carbon::now()->startOfMonth())->sum('total');
+            $ordersPaid += $orders;
+            $ordersU = Order::where('client_id',$client->id)->where('status','=','waiting_payment')->sum('total');
+            $ordersUnpaid += $ordersU;
+        }
+        $newCustomers = Customer::where('salesman',$idSalesman)->where('created_at','>=', Carbon::now()->startOfMonth())->count();
+
+        if($ordersPaid <= 5000){
+            $accumulated_commissions = 0;
+        }elseif ($ordersPaid > 5000 && $ordersPaid < 10000){
+            $accumulated_commissions = $ordersPaid * 0.03;
+        }elseif ($ordersPaid >= 10000 && $ordersPaid < 15000){
+            $accumulated_commissions = $ordersPaid * 0.04;
+        }elseif ($ordersPaid >= 15000 && $ordersPaid < 20000){
+            $accumulated_commissions = $ordersPaid * 0.05;
+        }elseif ($ordersPaid >= 20000){
+            $accumulated_commissions = $ordersPaid * 0.075;
         }
 
+        if($newCustomers <= 5){
+            $commissions_contract = $newCustomers * 10;
+        }elseif ($newCustomers > 5 && $newCustomers < 15){
+            $commissions_contract = $newCustomers * 15;
+        }elseif ($newCustomers >= 15){
+            $commissions_contract = $newCustomers * 20;
+        }
 
-        $client->orders = Order::where('client_id', $client->id)->where('status', 'waiting_payment')->orderby('created_at','ASC')->get();
-        $client->totalUnpaidAmount = Order::where('client_id',$client->id)->where('status','waiting_payment')->sum('total');
-        $totalUnpaid=$clients->sum('totalUnpaidAmount');
-        $client->totalPaidAmount = Order::where('client_id',$client->id)->where('status','paid')->sum('total');
-        $totalPaid=$clients->sum('totalPaidAmount');
-        $totalBilled=$totalUnpaid+$totalPaid;
+        $accumulated_commissions = $accumulated_commissions + $commissions_contract;
 
+        $orderTotal = $ordersPaid + $ordersUnpaid;
+
+        if($orderTotal <= 5000){
+            $estimated_commissions = 0;
+        }elseif ($orderTotal > 5000 && $orderTotal < 10000){
+            $estimated_commissions = $orderTotal * 0.03;
+        }elseif ($orderTotal >= 10000 && $orderTotal < 15000){
+            $estimated_commissions = $orderTotal * 0.04;
+        }elseif ($orderTotal >= 15000 && $orderTotal < 20000){
+            $estimated_commissions = $orderTotal * 0.05;
+        }elseif ($orderTotal >= 20000){
+            $estimated_commissions = $orderTotal * 0.075;
+        }
+
+        $estimated_commissions = $estimated_commissions + $commissions_contract;
+
+        return[
+            $accumulated_commissions,
+            $estimated_commissions
+        ];
+    }
+
+    public function prospection(){
+
+        return view('salesman.prospection');
     }
 }

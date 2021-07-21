@@ -55,6 +55,14 @@ canvas {
 
     .charts_container {
         grid-template-columns: repeat(1, minmax(0px, 1fr));
+        grid-template-rows: 1.5fr 1.5fr;
     }
+    canvas {
+        padding: 0;
+    }
+}
 
+.title {
+    color: var(--main-color);
+    text-transform: uppercase;
 }

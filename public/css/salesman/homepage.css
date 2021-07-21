@@ -178,6 +178,9 @@ canvas {
     .homePage_container {
         grid-template-columns: repeat(1, minmax(0px, 1fr));
     }
+    canvas{
+        padding: 0;
+    }
 
 }
 
