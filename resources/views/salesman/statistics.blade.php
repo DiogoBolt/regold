@@ -35,7 +35,7 @@
             <div>
                 <table class="table">
                     <tr>
-                        <th style="background-color:#199400;">VALOR ACUMULADO</th>
+                        <th style="background-color:#199400;">VALOR ACUMULADO MENSAL</th>
                         <th style="background-color:#199400;">107.75€</th>
                     </tr>
                     <tr>
@@ -48,7 +48,7 @@
             <div>
                 <table class="table">
                     <tr>
-                        <th style="background-color:#ea7f4f;">VALOR ACUMULADO</th>
+                        <th style="background-color:#ea7f4f;">VALOR ACUMULADO ANUAL</th>
                         <th style="background-color:#ea7f4f;">107.75€</th>
                     </tr>
                     <tr>

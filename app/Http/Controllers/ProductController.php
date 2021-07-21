@@ -791,6 +791,7 @@ class ProductController extends Controller
         $order = Order::where('id', $id)->first();
         $user = Auth::user();
         $order->status = 'paid';
+        $order->payment_time = now();
         $order->save();
 
         $clientUser = Customer::where('id', $order->client_id)

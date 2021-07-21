@@ -415,7 +415,7 @@ class SalesmanController extends Controller
         else
             $target_ordersPaid = 0;
 
-        $target_newcustomers = number_format($target_newcustomers/1000,2);
+        $target_newcustomers = number_format($target_newcustomers);
         $target_ordersPaid = number_format($target_ordersPaid/1000,2);
         $target_orders = number_format($target_orders/1000,2);
 
