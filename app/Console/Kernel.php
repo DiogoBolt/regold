@@ -40,7 +40,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('update:temperatures')->hourly();
         //$schedule->command('monthlyFee')->lastDayOfMonth('23:59');
-        $schedule->command('averageSalesman')->lastDayOfMonth('22:59');
+        //$schedule->command('averageSalesman')->lastDayOfMonth('22:59');
 
 
     }
