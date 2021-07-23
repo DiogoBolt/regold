@@ -311,7 +311,7 @@
                         {{ csrf_field() }}
                     <input id="dayTime" name="dayTime" type="hidden" value="">
                     <input id="idThermo" name="idThermo" type="hidden" value="">
-                    <input type="number" step=".01" name="valor"  class="form-control" required>
+                    <input onkeyup="isNumber()" placeholder="exemplo: (2.3 ou -2.3)" name="valor" id="valor" class="form-control" required>
                     <button type="submit" class="btn btn-primary">Editar</button>
                     </form>
                 </div>
@@ -349,6 +349,12 @@
 @endsection
 
 <script>
+    function isNumber() {
+        var inputField = document.getElementById('valor');
+        if (!inputField.value.match(/^(\d|-)+$/)) {
+            inputField.value = inputField.value.replace(/[^0-9-.,]/g, '');
+        }
+    }
 
     function showEditName(id)
     {

@@ -11,9 +11,11 @@ use App\Group;
 use App\Message;
 use App\Order;
 use App\OrderLine;
+use App\PossibleCustomer;
 use App\Product;
 use App\Receipt;
 use App\Salesman;
+use App\SalesmanCommissions;
 use App\SalesPayment;
 use App\TechnicalCP;
 use App\User;
@@ -33,6 +35,7 @@ class SalesmanController extends Controller
      *
      * @return void
      */
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -54,7 +57,6 @@ class SalesmanController extends Controller
             $clients_sOrder = 0;
             $clients_stOrder = 0;
             $clients_tOrder = 0;
-
 
             $clients = Customer::where('salesman',$user->userTypeID)->get();
             $count_clients = count($clients);
@@ -121,9 +123,9 @@ class SalesmanController extends Controller
                     $clients_tOrder += 1;
                 }
             }
-            $real = $this->real($user->userTypeID);
-            $target = $this->target($user->userTypeID);
-            $commission = $this->commission($user->userTypeID);
+            $real = $this->realByMonth($user->userTypeID);
+            $target = $this->targetByMonth($user->userTypeID);
+            $commission = $this->commissionByMonth($user->userTypeID);
 
         }
 
@@ -132,11 +134,46 @@ class SalesmanController extends Controller
 
     public function statistics(){
 
+        $mes_extenso = array(
+            'Jan' => 'Janeiro',
+            'Feb' => 'Fevereiro',
+            'Mar' => 'Marco',
+            'Apr' => 'Abril',
+            'May' => 'Maio',
+            'Jun' => 'Junho',
+            'Jul' => 'Julho',
+            'Aug' => 'Agosto',
+            'Sep' => 'Setembro',
+            'Oct' => 'Outubro',
+            'Nov' => 'Novembro',
+            'Dec' => 'Dezembro'
+        );
+
         $user = Auth::user();
 
+        $real_month = $this->realByMonth($user->userTypeID);
+        $target_month = $this->targetByMonth($user->userTypeID);
 
+        $real_year = $this->realByYear($user->userTypeID);
+        $target_year = $this->targetByYear($user->userTypeID);
 
-        return view('salesman.statistics');
+        $commissionByMonth = $this->commissionByMonth($user->userTypeID);
+        $commissionByYear = $this->commissionByYear($user->userTypeID);
+
+        $bestMonthSales = AverageOrders::where('salesman', $user->userTypeID)->orderBy('total_orders','desc')->first()->created_at ?? null;
+        $bestMonthPaid = AverageOrdersPaid::where('salesman', $user->userTypeID)->orderBy('total_orders_paid','desc')->first()->created_at ?? null;
+
+        if(isset($bestMonthPaid)){
+            $bestMonthSales = $bestMonthSales->format('M');
+            $bestMonthSales = $mes_extenso[$bestMonthSales];
+        }
+
+        if(isset($bestMonthSales)){
+            $bestMonthPaid = $bestMonthPaid->format('M');
+            $bestMonthPaid = $mes_extenso[$bestMonthPaid];
+        }
+
+        return view('salesman.statistics',compact('real_month','real_year','target_month','target_year','commissionByMonth','commissionByYear','bestMonthSales','bestMonthPaid'));
     }
 
     public function schedule(){
@@ -364,7 +401,7 @@ class SalesmanController extends Controller
         return view('salesman.teste');
     }
 
-    public function real($idSalesman){
+    public function realByMonth($idSalesman){
 
         $real_orders = 0;
         $real_ordersPaid = 0;
@@ -373,7 +410,7 @@ class SalesmanController extends Controller
 
         foreach ($clients as $client){
 
-            $orders = Order::where('client_id',$client->id)->where('created_at','>=',Carbon::now()->startOfMonth())->sum('total');
+            $orders = Order::where('client_id',$client->id)->where('processed',1)->where('created_at','>=',Carbon::now()->startOfMonth())->sum('total');
             $real_orders += $orders;
             $ordersPaid = Order::where('client_id',$client->id)->where('created_at','>=',Carbon::now()->startOfMonth())->where('status','=','paid')->sum('total');
             $real_ordersPaid += $ordersPaid;
@@ -390,11 +427,11 @@ class SalesmanController extends Controller
         ];
     }
 
-    public function target($idSalesman){
+    public function targetByMonth($idSalesman){
 
-        $average_newcustomers = AverageNewCustomers::where('salesman',$idSalesman)->sum('average');
-        $average_orders = AverageOrders::where('salesman',$idSalesman)->sum('average');
-        $average_ordersPaid = AverageOrdersPaid::where('salesman',$idSalesman)->sum('average');
+        $average_newcustomers = AverageNewCustomers::where('salesman',$idSalesman)->sum('new_clients');
+        $average_orders = AverageOrders::where('salesman',$idSalesman)->sum('total_orders');
+        $average_ordersPaid = AverageOrdersPaid::where('salesman',$idSalesman)->sum('total_orders_paid');
 
         $n_average_newcustomers = AverageNewCustomers::where('salesman',$idSalesman)->count();
         $n_average_orders = AverageOrders::where('salesman',$idSalesman)->count();
@@ -415,7 +452,6 @@ class SalesmanController extends Controller
         else
             $target_ordersPaid = 0;
 
-        $target_newcustomers = number_format($target_newcustomers);
         $target_ordersPaid = number_format($target_ordersPaid/1000,2);
         $target_orders = number_format($target_orders/1000,2);
 
@@ -426,7 +462,41 @@ class SalesmanController extends Controller
         ];
     }
 
-    public function commission($idSalesman){
+    public function realByYear($idSalesman){
+
+        $orders_paid = AverageOrdersPaid::where('salesman',$idSalesman)->where('created_at','>=', Carbon::now()->startOfYear())
+            ->sum('total_orders_paid');
+
+        $orders = AverageOrders::where('salesman',$idSalesman)->where('created_at','>=', Carbon::now()->startOfYear())
+            ->sum('total_orders');
+
+        $newClients_byYear = AverageNewCustomers::where('salesman',$idSalesman)->where('created_at','>=', Carbon::now()->startOfYear())
+            ->sum('new_clients');
+
+        $real_orders_byYear = number_format($orders/1000,2);
+        $real_orders_paid_byYear = number_format($orders_paid/1000,2);
+
+        return[
+            $real_orders_byYear,
+            $real_orders_paid_byYear,
+            $newClients_byYear
+        ];
+
+    }
+    public function targetByYear($idSalesman){
+
+        $target_orders_byYear = 0;
+        $target_orders_paid_byYear = 0;
+        $newClients_byYear = 0;
+
+        return[
+            $target_orders_byYear,
+            $target_orders_paid_byYear,
+            $newClients_byYear
+        ];
+    }
+
+    public function commissionByMonth($idSalesman){
 
         $ordersPaid = 0;
         $ordersUnpaid = 0;
@@ -437,7 +507,7 @@ class SalesmanController extends Controller
 
             $orders = Order::where('client_id',$client->id)->where('status','=','paid')->where('payment_time','>=',Carbon::now()->startOfMonth())->sum('total');
             $ordersPaid += $orders;
-            $ordersU = Order::where('client_id',$client->id)->where('status','=','waiting_payment')->sum('total');
+            $ordersU = Order::where('client_id',$client->id)->where('processed',1)->where('status','=','waiting_payment')->sum('total');
             $ordersUnpaid += $ordersU;
         }
         $newCustomers = Customer::where('salesman',$idSalesman)->where('created_at','>=', Carbon::now()->startOfMonth())->count();
@@ -486,8 +556,26 @@ class SalesmanController extends Controller
         ];
     }
 
-    public function prospection(){
+    public function commissionByYear($idSalesman){
 
-        return view('salesman.prospection');
+        $accumulated_commissions = SalesmanCommissions::where('salesman', $idSalesman)->where('created_at','>=', Carbon::now()->startOfYear())
+            ->sum('commissions');
+
+        $estimated_commissions = 0;
+
+        return[
+            $accumulated_commissions,
+            $estimated_commissions
+        ];
+    }
+
+    public function prospection(){
+        $user = Auth::user();
+
+        $possibleCustomers = PossibleCustomer::where('sales_id',$user->userTypeID)
+            ->select(['id','name','nome_cliente','contacto','address','contract_end','visit_day'])
+            ->get();
+
+        return view('salesman.prospection',compact('possibleCustomers'));
     }
 }

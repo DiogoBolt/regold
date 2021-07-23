@@ -53,10 +53,11 @@ class PossibleCustomersController extends Controller
         $newpossiblecustomer->contract_end = $inputs['contract_end'];
         $newpossiblecustomer->visit_day = $inputs['visit_day'];
         $newpossiblecustomer->suggested_pack = $inputs['suggested_pack'];
+        $newpossiblecustomer->sales_id = $user->userTypeID;
 
         $newpossiblecustomer->save();
 
-        return redirect('possiblecustomers/');
+        return redirect('salesman/prospection');
     }
 
     public function editPossibleCustomer($id)

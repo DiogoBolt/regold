@@ -34,11 +34,12 @@ class HomeController extends Controller
         {
             if($user->client_id != null) {
                 return redirect('/home');
+            }elseif ($user->userType == 1) {
+                return redirect('/salesman/homePageSales');
             }else{
                 return redirect('/clients');
             }
         }
-
 
         return redirect('/login');
     }

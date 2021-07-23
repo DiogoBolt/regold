@@ -105,7 +105,7 @@
                 "datasets": [
                     {
                         "label": "Real",
-                        "backgroundColor": "#199400",
+                        "backgroundColor": "#5CA86A",
                         "fill": true,
                         "data": [
                             "{{$real[0]}}",
@@ -117,7 +117,7 @@
                     },
                     {
                         "label": "Objetivo",
-                        "backgroundColor": "#afd7b3",
+                        "backgroundColor": "#ABDAB5",
                         "fill": true,
                         "data": [
                             "{{$target[0]}}",

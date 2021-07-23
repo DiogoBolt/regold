@@ -36,24 +36,30 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                Concorrente: <input class="form-control" placeholder="Nome Concorrente" name="competitor" >
+                                Concorrente: <input class="form-control" placeholder="Nome Concorrente" name="competitor" required>
+                            </div>
+                            <div id="packs" class="form-group" >
+                                Tipo de Pack:  <select class="form-control" name="suggested_pack" onchange="packType(this)" >
+                                    <option disabled selected value="">Selecione o Tipo de Pack</option>
+                                    <option value="s">Pack S</option>
+                                    <option value="sp">Pack SP</option>
+                                    <option value="sp free">Pack SP Free</option>
+                                    <option value="st">Pack ST</option>
+                                    <option value="t">Pack T</option>
+                                    <option value="indefinido">Indefinido</option>
+                                </select>
                             </div>
                             <div class="form-group">
-                                Pack sugerido: <input class="form-control" placeholder="Sugerir pack" name="suggested_pack" >
+                                Final Contrato: <input type="date" class="form-control" placeholder="Nome"  name="contract_end" required>
                             </div>
                             <div class="form-group">
-                                Final Contrato: <input type="date" class="form-control" placeholder="Nome"  name="contract_end" required >
+                                Data Visita: <input type="date" class="form-control" placeholder="Nome" name="visit_day" required>
                             </div>
-                            <div class="form-group">
-                                Data Visita: <input type="date" class="form-control" placeholder="Nome" name="visit_day"  >
-                            </div>
-
-
                         </div>
                         <div>
-                        <button class="btn btn-add" >Criar</button>
-                    </div>
-                </form>
+                            <button class="btn btn-add" >Criar</button>
+                        </div>
+                    </form>
                 </div>
             </div>
     </div>

@@ -360,10 +360,11 @@ class ClientController extends Controller
         }
 
         $unpaid = 0;
-        $total = 15;
+        $total = 0;
 
         foreach($clients as $client)
         {
+            $total += 1;
             $orders = Order::where('client_id',$client->id)->where('processed',1)->where('created_at','>=',Carbon::now()->startOfMonth())->count();
             $current = Order::where('client_id',$client->id)->where('status','waiting_payment')/*->where('invoice_id','!=',null)*/->sum('total');
 
@@ -654,8 +655,10 @@ class ClientController extends Controller
         if(isset($inputs['nib'])==0) $establisment->nib = null; else $establisment->nib=$inputs['nib'];
         if(isset($inputs['n_thermos'])==0) $establisment->n_thermos=null; else $establisment->n_thermos=$inputs['n_thermos'];
 
-        if($inputs['packs']=='s' || $inputs['packs']=='t')
+        if($inputs['packs']=='s' || $inputs['packs']=='t' || $inputs['packs']=='st'){
             $establisment->contract_value_inf = $inputs['contract_value_inf'];
+            $establisment->contract_value_inf = null;
+        }
         //fim packs
 
         //permissoes

@@ -46,7 +46,7 @@ class averageSalesman extends Command
             $totalOrdersPaid = 0;
 
             foreach ($clients as $client){
-                $orders = Order::where('client_id',$client->id)->where('created_at','>=', \Illuminate\Support\Carbon::now()->startOfMonth())->sum('total');
+                $orders = Order::where('client_id',$client->id)->where('processed',1)->where('created_at','>=', \Illuminate\Support\Carbon::now()->startOfMonth())->sum('total');
                 $paidOrders = Order::where('client_id',$client->id)->where('created_at','>=', \Illuminate\Support\Carbon::now()->startOfMonth())->where('status','=','paid')->sum('total');
                 $totalOrders += $orders;
                 $totalOrdersPaid += $paidOrders;
@@ -54,13 +54,13 @@ class averageSalesman extends Command
             /*dd($totalOrders);*/ //valor total das encomendas no mes
             $average_orders = new AverageOrders();
             $average_orders->salesman = $salesman->id;
-            $average_orders->average = $totalOrders;
+            $average_orders->total_orders = $totalOrders;
             $average_orders->save();
 
             /*dd($totalPaidOrders);*/ //valor total das encomendas PAGAS no mes
             $average_orders_paid = new AverageOrdersPaid();
             $average_orders_paid->salesman = $salesman->id;
-            $average_orders_paid->average = $totalOrdersPaid;
+            $average_orders_paid->total_orders_paid = $totalOrdersPaid;
             $average_orders_paid->save();
 
             $newClients = Customer::where('salesman',$salesman->id)->where('created_at','>=', \Illuminate\Support\Carbon::now()->startOfMonth())->count();
@@ -68,7 +68,7 @@ class averageSalesman extends Command
             /*dd($newClients);*/ //numero clientes novos no mes
             $average_newCustomers = new AverageNewCustomers();
             $average_newCustomers->salesman = $salesman->id;
-            $average_newCustomers->average = $newClients;
+            $average_newCustomers->new_clients = $newClients;
             $average_newCustomers->save();
 
             //comissões:

@@ -31,9 +31,15 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/clients') }}">
+                    @if(Auth::user()->userType == 1)
+                    <a class="navbar-brand" href="{{ url('/salesman/homePageSales') }}">
                         <img src="{{ URL::to('/') }}/img/navbar/logoRegolfood.png" alt="logo">
                     </a>
+                    @else
+                        <a class="navbar-brand" href="{{ url('/clients') }}">
+                            <img src="{{ URL::to('/') }}/img/navbar/logoRegolfood.png" alt="logo">
+                        </a>
+                    @endif
 
                 </div>
 
@@ -126,17 +132,17 @@
                                         -----Menu-----
                                     </a>
                                 </li>--}}
-                                {{--<li>
-                                    <a >
+                                <li>
+                                    <a href="/salesman/statistics">
                                         Estatísticas
                                     </a>
                                 </li>
                                 <li>
-                                    <a >
+                                    <a href="/salesman/prospection">
                                         Prospeção
                                     </a>
                                 </li>
-                                <li>
+                                {{--<li>
                                     <a >
                                         Agenda
                                     </a>

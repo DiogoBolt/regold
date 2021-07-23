@@ -19,28 +19,32 @@
         <div class="charts_container">
             <div>
                 <div>
-                    <p class="title"> acumulado mensal </p>
+                    <p class="title" style="font-size: 16px"> acumulado mensal </p>
                 </div>
                 <canvas id="myChart" ></canvas>
             </div>
             <div>
                 <div>
-                    <p class="title"> acumulado anual </p>
+                    <p class="title" style="font-size: 16px"> acumulado anual </p>
                 </div>
                 <canvas id="myChart2" ></canvas>
             </div>
+        </div>
+
+        <div>
+            <p class="title" style="font-size: 16px"> comissões </p>
         </div>
 
         <div class="statisticsTable_container">
             <div>
                 <table class="table">
                     <tr>
-                        <th style="background-color:#199400;">VALOR ACUMULADO MENSAL</th>
-                        <th style="background-color:#199400;">107.75€</th>
+                        <th style="background-color:#62B873;">VALOR ACUMULADO MENSAL</th>
+                        <th style="background-color:#62B873;">{{$commissionByMonth[0]}}€</th>
                     </tr>
                     <tr>
                         <td>VALOR OBJETIVO ESTIMADO</td>
-                        <td>707.78€</td>
+                        <td>{{$commissionByMonth[1]}}€</td>
                     </tr>
                 </table>
             </div>
@@ -48,12 +52,12 @@
             <div>
                 <table class="table">
                     <tr>
-                        <th style="background-color:#ea7f4f;">VALOR ACUMULADO ANUAL</th>
-                        <th style="background-color:#ea7f4f;">107.75€</th>
+                        <th style="background-color:#E9824E;">VALOR ACUMULADO ANUAL</th>
+                        <th style="background-color:#ea7f4f;">{{$commissionByYear[0]}}€</th>
                     </tr>
                     <tr>
                         <td>VALOR OBJETIVO ESTIMADO</td>
-                        <td>707.78€</td>
+                        <td>{{$commissionByYear[1]}}€</td>
                     </tr>
                 </table>
             </div>
@@ -61,12 +65,12 @@
             <div>
                 <table class="table">
                     <tr>
-                        <th style="background-color:#e59c1f;">MELHOR MÊS VENDAS</th>
-                        <th style="background-color:#e59c1f;">AGOSTO</th>
+                        <th style="background-color:#EE9C15;">MELHOR MÊS VENDAS</th>
+                        <th style="background-color:#e59c1f;">{{$bestMonthSales}}</th>
                     </tr>
                     <tr>
                         <td>MELHOR MÊS COBRANÇA</td>
-                        <td>SETEMBRO</td>
+                        <td>{{$bestMonthPaid}}</td>
                     </tr>
                 </table>
             </div>
@@ -87,24 +91,24 @@
             "datasets": [
                 {
                     "label": "Real",
-                    "backgroundColor": "#199400",
+                    "backgroundColor": "#5CA86A",
                     "fill": true,
                     "data": [
-                        "230",
-                        "250",
-                        "240"
+                        "{{$real_month[0]}}",
+                        "{{$real_month[1]}}",
+                        "{{$real_month[2]}}"
                     ],
                     "borderColor": "#ffffff",
                     "borderWidth": "1"
                 },
                 {
                     "label": "Objetivo",
-                    "backgroundColor": "#afd7b3",
+                    "backgroundColor": "#ABDAB5",
                     "fill": true,
                     "data": [
-                        "200",
-                        "300",
-                        "280"
+                        "{{$target_month[0]}}",
+                        "{{$target_month[1]}}",
+                        "{{$target_month[2]}}"
                     ]
                 }
             ]
@@ -196,24 +200,24 @@
             "datasets": [
                 {
                     "label": "Real",
-                    "backgroundColor": "#f36122",
+                    "backgroundColor": "#E28054",
                     "fill": true,
                     "data": [
-                        "230",
-                        "250",
-                        "240"
+                        "{{$real_year[0]}}",
+                        "{{$real_year[1]}}",
+                        "{{$real_year[2]}}"
                     ],
                     "borderColor": "#ffffff",
                     "borderWidth": "1"
                 },
                 {
                     "label": "Objetivo",
-                    "backgroundColor": "#ff9483",
+                    "backgroundColor": "#F7B392",
                     "fill": true,
                     "data": [
-                        "200",
-                        "300",
-                        "280"
+                        "{{$target_year[0]}}",
+                        "{{$target_year[1]}}",
+                        "{{$target_year[2]}}"
                     ]
                 }
             ]

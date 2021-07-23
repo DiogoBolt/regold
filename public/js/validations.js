@@ -200,8 +200,8 @@ function packType(type) {
             $("#divCp").show();
             $("#divPayment").hide();
             $("#divEscalao").hide();
-            $("#divContract_value").show();
-            $("#divContract_value_inf").hide();
+            $("#divContract_value").hide();
+            $("#divContract_value_inf").show();
             $("#divNib").show();
             $("#divThermos").show();
             break;

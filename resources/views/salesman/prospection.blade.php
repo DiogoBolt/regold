@@ -56,27 +56,30 @@
         <div style="overflow-x:auto;">
             <table class="table">
                 <tr>
+                    <th></th>
                     <th>Nome</th>
                     <th>Pessoa Contacto</th>
                     <th>Contacto</th>
                     <th>Localidade</th>
-                    <th>Intervenção</th>
                     <th>Final contrato</th>
-                    <th>Hora</th>
+                    <th>Data Visita</th>
                 </tr>
+                @foreach($possibleCustomers as $possible_customer)
                 <tr>
-                    <td>Cafe Rampa</td>
-                    <td>José</td>
-                    <td>9191919191</td>
-                    <td><a>Requiao</a></td>
-                    <td>Cobrança</td>
-                    <td>Outubro</td>
-                    <td>11:00</td>
+                    <td><a href="/possiblecustomers/deletecustomer/{{$possible_customer->id}}">X</a></td>
+                    <td>{{$possible_customer->name}}</td>
+                    <td>{{$possible_customer->nome_cliente}}</td>
+                    <td>{{$possible_customer->contacto}}</td>
+                    <td><a>{{$possible_customer->address}}</a></td>
+                    <td>{{$possible_customer->contract_end}}</td>
+                    <td>{{$possible_customer->visit_day}}</td>
                 </tr>
+                @endforeach
             </table>
         </div>
     </div>
 </div>
+
 
 @endsection
 
